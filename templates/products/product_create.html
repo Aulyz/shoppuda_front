@@ -1,0 +1,1277 @@
+{% extends 'base.html' %}
+
+{% comment %} templates/products/product_create.html - 현대적인 상품 등록 페이지 {% endcomment %}
+
+{% block title %}상품 등록 - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'products:list' %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">상품 관리</a>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>상품 등록</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300" x-data="productCreate()">
+    <!-- Page Header -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300 mb-6">
+        <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-700 px-6 py-8">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <i class="fas fa-plus-circle text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl lg:text-3xl font-bold text-white">새 상품 등록</h1>
+                        <p class="text-emerald-100 font-medium">새로운 상품을 시스템에 등록하세요</p>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button type="button" 
+                            @click="saveDraft()"
+                            class="inline-flex items-center px-4 py-2 backdrop-blur-sm border border-white/30 rounded-lg text-white font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg hover:bg-white/10">
+                        <i class="fas fa-save mr-2"></i>
+                        임시저장
+                    </button>
+                    <a href="{% url 'products:list' %}" 
+                       class="inline-flex items-center px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30 rounded-lg text-white font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        목록으로
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-6 shadow-lg">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">등록 진행단계</h3>
+            <span class="text-sm text-gray-500 dark:text-gray-400" x-text="`${currentStep}/4 단계`"></span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <template x-for="(step, index) in steps" :key="index">
+                <div class="flex items-center flex-1">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300"
+                             :class="currentStep > index + 1 ? 'bg-emerald-600 text-white' : 
+                                     currentStep === index + 1 ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 ring-2 ring-emerald-600' : 
+                                     'bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400'">
+                            <i x-show="currentStep > index + 1" class="fas fa-check"></i>
+                            <span x-show="currentStep <= index + 1" x-text="index + 1"></span>
+                        </div>
+                        <span class="text-sm font-medium" 
+                              :class="currentStep >= index + 1 ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'"
+                              x-text="step.title"></span>
+                    </div>
+                    <div x-show="index < steps.length - 1" class="flex-1 h-px bg-gray-200 dark:bg-gray-700 mx-4"
+                         :class="currentStep > index + 1 ? 'bg-emerald-600' : ''"></div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <!-- Form Container -->
+    <form method="POST" enctype="multipart/form-data" @submit.prevent="submitForm()" class="space-y-6">
+        {% csrf_token %}
+        
+        <!-- Step 1: 기본 정보 -->
+        <div x-show="currentStep === 1" x-transition class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-xl">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                    <i class="fas fa-info-circle text-emerald-600 dark:text-emerald-400 mr-3"></i>
+                    기본 정보
+                </h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">상품의 기본적인 정보를 입력하세요</p>
+            </div>
+            
+            <div class="p-6 space-y-6">
+                <!-- SKU와 상품명 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            SKU <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <input type="text" 
+                                   name="sku" 
+                                   x-model="formData.sku"
+                                   placeholder="예: PROD-001"
+                                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200"
+                                   required>
+                            <button type="button" 
+                                    @click="generateSKU()"
+                                    class="absolute right-2 top-1/2 transform -translate-y-1/2 px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded text-xs font-medium hover:bg-emerald-200 dark:hover:bg-emerald-900/50 transition-colors duration-200">
+                                자동생성
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">고유한 상품 식별 코드</p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            상품명 <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" 
+                               name="name" 
+                               x-model="formData.name"
+                               placeholder="상품명을 입력하세요"
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200"
+                               required>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">고객에게 표시될 상품명</p>
+                    </div>
+                </div>
+
+                <!-- 카테고리와 브랜드 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            카테고리 <span class="text-red-500">*</span>
+                        </label>
+                        <select name="category" 
+                                x-model="formData.category"
+                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200"
+                                required>
+                            <option value="">카테고리를 선택하세요</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.full_path }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">브랜드</label>
+                        <div class="flex space-x-2">
+                            <select name="brand" 
+                                    x-model="formData.brand"
+                                    class="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200">
+                                <option value="">브랜드를 선택하세요</option>
+                                {% for brand in brands %}
+                                    <option value="{{ brand.id }}">{{ brand.name }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="button" 
+                                    @click="showNewBrandModal = true"
+                                    class="px-3 py-3 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded-lg hover:bg-emerald-200 dark:hover:bg-emerald-900/50 transition-colors duration-200"
+                                    title="새 브랜드 추가">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 상품 설명 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">간단 설명</label>
+                        <textarea name="short_description" 
+                                  x-model="formData.short_description"
+                                  rows="3"
+                                  placeholder="상품의 간단한 설명을 입력하세요"
+                                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200 resize-none"></textarea>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">상품 목록에 표시될 짧은 설명</p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">상세 설명</label>
+                        <textarea name="description" 
+                                  x-model="formData.description"
+                                  rows="3"
+                                  placeholder="상품의 상세한 설명을 입력하세요"
+                                  class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200 resize-none"></textarea>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">상품 상세 페이지에 표시될 설명</p>
+                    </div>
+                </div>
+
+                <!-- 상태와 추천 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">상품 상태</label>
+                        <select name="status" 
+                                x-model="formData.status"
+                                class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200">
+                            <option value="ACTIVE">판매중</option>
+                            <option value="INACTIVE">판매중지</option>
+                            <option value="SOLDOUT">품절</option>
+                            <option value="DISCONTINUED">단종</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">추가 옵션</label>
+                        <div class="flex items-center space-x-6">
+                            <label class="flex items-center">
+                                <input type="checkbox" 
+                                       name="is_featured" 
+                                       x-model="formData.is_featured"
+                                       class="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500">
+                                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">추천 상품</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: 가격 정보 -->
+        <div x-show="currentStep === 2" x-transition class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-xl">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                    <i class="fas fa-won-sign text-emerald-600 dark:text-emerald-400 mr-3"></i>
+                    가격 정보
+                </h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">상품의 가격과 수익률을 설정하세요</p>
+            </div>
+            
+            <div class="p-6 space-y-6">
+                <!-- 가격 입력 -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            원가 <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <input type="number" 
+                                   name="cost_price" 
+                                   x-model="formData.cost_price"
+                                   @input="calculateMargin()"
+                                   placeholder="0"
+                                   min="0"
+                                   step="100"
+                                   class="w-full px-4 py-3 pr-8 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200"
+                                   required>
+                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">원</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            판매가 <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <input type="number" 
+                                   name="selling_price" 
+                                   x-model="formData.selling_price"
+                                   @input="calculateMargin()"
+                                   placeholder="0"
+                                   min="0"
+                                   step="100"
+                                   class="w-full px-4 py-3 pr-8 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200"
+                                   required>
+                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">원</span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">할인가</label>
+                        <div class="relative">
+                            <input type="number" 
+                                   name="discount_price" 
+                                   x-model="formData.discount_price"
+                                   @input="calculateMargin()"
+                                   placeholder="0"
+                                   min="0"
+                                   step="100"
+                                   class="w-full px-4 py-3 pr-8 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200">
+                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">원</span>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">비워두면 판매가로 설정됩니다</p>
+                    </div>
+                </div>
+
+                <!-- 수익률 표시 -->
+                <div class="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="text-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">예상 수익률</p>
+                            <p class="text-2xl font-bold" 
+                               :class="marginRate >= 30 ? 'text-green-600 dark:text-green-400' : 
+                                       marginRate >= 20 ? 'text-yellow-600 dark:text-yellow-400' : 
+                                       'text-red-600 dark:text-red-400'"
+                               x-text="marginRate + '%'"></p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">예상 수익</p>
+                            <p class="text-2xl font-bold text-gray-900 dark:text-white" x-text="formatPrice(marginAmount)"></p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-sm text-gray-600 dark:text-gray-400">최종 판매가</p>
+                            <p class="text-2xl font-bold text-blue-600 dark:text-blue-400" x-text="formatPrice(finalPrice)"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 가격 추천 -->
+                <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                    <h4 class="text-sm font-medium text-blue-900 dark:text-blue-300 mb-2 flex items-center">
+                        <i class="fas fa-lightbulb mr-2"></i>
+                        가격 설정 팁
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-700 dark:text-blue-300">
+                        <div>
+                            <p>• 일반적인 수익률: 20-30%</p>
+                            <p>• 프리미엄 상품: 30-50%</p>
+                        </div>
+                        <div>
+                            <p>• 경쟁력 있는 가격 설정 권장</p>
+                            <p>• 정기적인 가격 검토 필요</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: 재고 및 물리 정보 -->
+        <div x-show="currentStep === 3" x-transition class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-xl">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                    <i class="fas fa-warehouse text-emerald-600 dark:text-emerald-400 mr-3"></i>
+                    재고 및 물리 정보
+                </h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">재고 관리와 배송을 위한 정보를 입력하세요</p>
+            </div>
+            
+            <div class="p-6 space-y-6">
+                <!-- 재고 정보 -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            초기 재고 수량 <span class="text-red-500">*</span>
+                        </label>
+                        <input type="number" 
+                               name="stock_quantity" 
+                               x-model="formData.stock_quantity"
+                               placeholder="0"
+                               min="0"
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200"
+                               required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">최소 재고</label>
+                        <input type="number" 
+                               name="min_stock_level" 
+                               x-model="formData.min_stock_level"
+                               placeholder="10"
+                               min="0"
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">이 수량 이하시 알림</p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">최대 재고</label>
+                        <input type="number" 
+                               name="max_stock_level" 
+                               x-model="formData.max_stock_level"
+                               placeholder="1000"
+                               min="1"
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200">
+                    </div>
+                </div>
+
+                <!-- 물리 정보 -->
+                <div>
+                    <h4 class="text-md font-medium text-gray-900 dark:text-white mb-4">물리적 정보 (배송비 계산용)</h4>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">무게 (g)</label>
+                            <input type="number" 
+                                   name="weight" 
+                                   x-model="formData.weight"
+                                   placeholder="0"
+                                   min="0"
+                                   step="0.1"
+                                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">길이 (cm)</label>
+                            <input type="number" 
+                                   name="dimensions_length" 
+                                   x-model="formData.dimensions_length"
+                                   placeholder="0"
+                                   min="0"
+                                   step="0.1"
+                                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">너비 (cm)</label>
+                            <input type="number" 
+                                   name="dimensions_width" 
+                                   x-model="formData.dimensions_width"
+                                   placeholder="0"
+                                   min="0"
+                                   step="0.1"
+                                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">높이 (cm)</label>
+                            <input type="number" 
+                                   name="dimensions_height" 
+                                   x-model="formData.dimensions_height"
+                                   placeholder="0"
+                                   min="0"
+                                   step="0.1"
+                                   class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 바코드 및 태그 -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">바코드</label>
+                        <input type="text" 
+                               name="barcode" 
+                               x-model="formData.barcode"
+                               placeholder="바코드를 입력하세요"
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">태그</label>
+                        <input type="text" 
+                               name="tags" 
+                               x-model="formData.tags"
+                               placeholder="태그1, 태그2, 태그3"
+                               class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200">
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">쉼표로 구분하여 입력</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: 이미지 업로드 -->
+        <div x-show="currentStep === 4" x-transition class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-xl">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                    <i class="fas fa-images text-emerald-600 dark:text-emerald-400 mr-3"></i>
+                    상품 이미지
+                </h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">상품 이미지를 업로드하세요 (첫 번째 이미지가 대표 이미지가 됩니다)</p>
+            </div>
+            
+            <div class="p-6">
+                <!-- 이미지 업로드 영역 -->
+                <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center transition-colors duration-200"
+                     :class="isDragging ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20' : ''"
+                     @dragover.prevent="isDragging = true"
+                     @dragleave.prevent="isDragging = false"
+                     @drop.prevent="handleDrop($event)">
+                    <div class="space-y-4">
+                        <div class="w-16 h-16 mx-auto bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                            <i class="fas fa-cloud-upload-alt text-2xl text-gray-400 dark:text-gray-500"></i>
+                        </div>
+                        <div>
+                            <p class="text-lg font-medium text-gray-900 dark:text-white">이미지를 드래그하여 업로드</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">또는 클릭하여 파일을 선택하세요</p>
+                        </div>
+                        <div>
+                            <input type="file" 
+                                   multiple 
+                                   accept="image/*"
+                                   @change="handleFileSelect($event)"
+                                   class="hidden"
+                                   x-ref="fileInput">
+                            <button type="button" 
+                                    @click="$refs.fileInput.click()"
+                                    class="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition-colors duration-200">
+                                <i class="fas fa-upload mr-2"></i>
+                                파일 선택
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">
+                            지원 형식: JPG, PNG, GIF | 최대 크기: 5MB | 권장 크기: 800x800px
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 업로드된 이미지 미리보기 -->
+                <div x-show="uploadedImages.length > 0" class="mt-6">
+                    <h4 class="text-md font-medium text-gray-900 dark:text-white mb-4">업로드된 이미지</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                        <template x-for="(image, index) in uploadedImages" :key="index">
+                            <div class="relative group">
+                                <div class="aspect-square bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden">
+                                    <img :src="image.url" 
+                                         :alt="`상품 이미지 ${index + 1}`"
+                                         class="w-full h-full object-cover">
+                                </div>
+                                <div class="absolute top-2 left-2">
+                                    <span x-show="index === 0" 
+                                          class="inline-flex items-center px-2 py-1 bg-emerald-600 text-white text-xs rounded-full">
+                                        <i class="fas fa-star mr-1"></i>
+                                        대표
+                                    </span>
+                                    <span x-show="index !== 0" 
+                                          class="inline-flex items-center px-2 py-1 bg-gray-600 text-white text-xs rounded-full"
+                                          x-text="index + 1">
+                                    </span>
+                                </div>
+                                <div class="absolute top-2 right-2">
+                                    <button type="button" 
+                                            @click="removeImage(index)"
+                                            class="w-6 h-6 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                        <i class="fas fa-times text-xs"></i>
+                                    </button>
+                                </div>
+                                <div class="absolute inset-x-0 bottom-0 bg-black bg-opacity-50 text-white text-xs p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                    <div class="flex justify-between items-center">
+                                        <span x-text="image.name"></span>
+                                        <div class="flex space-x-1">
+                                            <button type="button" 
+                                                    x-show="index !== 0"
+                                                    @click="moveImage(index, 'up')"
+                                                    class="w-5 h-5 bg-white bg-opacity-20 hover:bg-opacity-30 rounded flex items-center justify-center">
+                                                <i class="fas fa-chevron-up text-xs"></i>
+                                            </button>
+                                            <button type="button" 
+                                                    x-show="index !== uploadedImages.length - 1"
+                                                    @click="moveImage(index, 'down')"
+                                                    class="w-5 h-5 bg-white bg-opacity-20 hover:bg-opacity-30 rounded flex items-center justify-center">
+                                                <i class="fas fa-chevron-down text-xs"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 shadow-lg">
+            <div class="flex justify-between items-center">
+                <button type="button" 
+                        @click="previousStep()"
+                        :disabled="currentStep === 1"
+                        :class="currentStep === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'"
+                        class="inline-flex items-center px-6 py-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-all duration-200 hover:bg-gray-200 dark:hover:bg-gray-600">
+                    <i class="fas fa-chevron-left mr-2"></i>
+                    이전
+                </button>
+
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-500 dark:text-gray-400" x-text="`${currentStep}/4 단계`"></span>
+                    <div class="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                        <div class="bg-emerald-600 h-2 rounded-full transition-all duration-300" 
+                             :style="`width: ${(currentStep / 4) * 100}%`"></div>
+                    </div>
+                </div>
+
+                <div class="flex space-x-3">
+                    <button type="button" 
+                            x-show="currentStep < 4"
+                            @click="nextStep()"
+                            class="inline-flex items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg">
+                        다음
+                        <i class="fas fa-chevron-right ml-2"></i>
+                    </button>
+
+                    <button type="submit" 
+                            x-show="currentStep === 4"
+                            :disabled="isSubmitting"
+                            :class="isSubmitting ? 'opacity-50 cursor-not-allowed' : 'hover:scale-105'"
+                            class="inline-flex items-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium transition-all duration-200 hover:shadow-lg">
+                        <span x-show="!isSubmitting">
+                            <i class="fas fa-check mr-2"></i>
+                            상품 등록
+                        </span>
+                        <span x-show="isSubmitting" class="flex items-center">
+                            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            등록 중...
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- 새 브랜드 추가 모달 -->
+<div x-show="showNewBrandModal" x-cloak 
+     class="fixed inset-0 z-50 overflow-y-auto"
+     x-transition:enter="ease-out duration-300"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     x-transition:leave="ease-in duration-200"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-500 dark:bg-gray-900 bg-opacity-75 dark:bg-opacity-75 transition-opacity backdrop-blur-sm" 
+             @click="showNewBrandModal = false"></div>
+
+        <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-2xl px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+             x-transition:enter="ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+             x-transition:leave="ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+            
+            <div class="sm:flex sm:items-start">
+                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-emerald-100 dark:bg-emerald-900/30 sm:mx-0 sm:h-10 sm:w-10">
+                    <i class="fas fa-plus text-emerald-600 dark:text-emerald-400"></i>
+                </div>
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+                        새 브랜드 추가
+                    </h3>
+                    <div class="mt-4 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">브랜드명</label>
+                            <input type="text" 
+                                   x-model="newBrand.name"
+                                   placeholder="브랜드명을 입력하세요"
+                                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white transition-colors duration-200">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">브랜드 코드</label>
+                            <input type="text" 
+                                   x-model="newBrand.code"
+                                   placeholder="예: BRAND01"
+                                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white transition-colors duration-200">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">설명</label>
+                            <textarea x-model="newBrand.description"
+                                      rows="3"
+                                      placeholder="브랜드 설명을 입력하세요"
+                                      class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white transition-colors duration-200 resize-none"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                <button type="button" 
+                        @click="createBrand()"
+                        :disabled="isCreatingBrand || !newBrand.name || !newBrand.code"
+                        :class="(isCreatingBrand || !newBrand.name || !newBrand.code) ? 'opacity-50 cursor-not-allowed' : ''"
+                        class="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 sm:ml-3 sm:w-auto sm:text-sm transition-all duration-200 hover:scale-105">
+                    <span x-show="!isCreatingBrand">추가</span>
+                    <span x-show="isCreatingBrand" class="flex items-center">
+                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        추가 중...
+                    </span>
+                </button>
+                <button type="button" 
+                        @click="showNewBrandModal = false"
+                        :disabled="isCreatingBrand"
+                        class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 sm:mt-0 sm:w-auto sm:text-sm transition-all duration-200">
+                    취소
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script defer>
+function productCreate() {
+    return {
+        currentStep: 1,
+        isSubmitting: false,
+        isDragging: false,
+        showNewBrandModal: false,
+        isCreatingBrand: false,
+        
+        steps: [
+            { title: '기본 정보', completed: false },
+            { title: '가격 정보', completed: false },
+            { title: '재고 정보', completed: false },
+            { title: '이미지', completed: false }
+        ],
+        
+        formData: {
+            sku: '',
+            name: '',
+            category: '',
+            brand: '',
+            short_description: '',
+            description: '',
+            status: 'ACTIVE',
+            is_featured: false,
+            cost_price: 0,
+            selling_price: 0,
+            discount_price: '',
+            stock_quantity: 0,
+            min_stock_level: 10,
+            max_stock_level: 1000,
+            weight: '',
+            dimensions_length: '',
+            dimensions_width: '',
+            dimensions_height: '',
+            barcode: '',
+            tags: ''
+        },
+        
+        newBrand: {
+            name: '',
+            code: '',
+            description: ''
+        },
+        
+        uploadedImages: [],
+        
+        get marginRate() {
+            const cost = parseFloat(this.formData.cost_price) || 0;
+            const selling = parseFloat(this.formData.selling_price) || 0;
+            if (cost === 0 || selling === 0) return 0;
+            return Math.round(((selling - cost) / selling) * 100);
+        },
+        
+        get marginAmount() {
+            const cost = parseFloat(this.formData.cost_price) || 0;
+            const selling = parseFloat(this.formData.selling_price) || 0;
+            return Math.max(0, selling - cost);
+        },
+        
+        get finalPrice() {
+            const discount = parseFloat(this.formData.discount_price) || 0;
+            const selling = parseFloat(this.formData.selling_price) || 0;
+            return discount > 0 ? discount : selling;
+        },
+
+        init() {
+            this.loadDraft();
+            this.autoSaveDraft();
+        },
+
+        nextStep() {
+            if (this.validateCurrentStep()) {
+                if (this.currentStep < 4) {
+                    this.currentStep++;
+                    this.steps[this.currentStep - 2].completed = true;
+                    this.saveDraft();
+                }
+            }
+        },
+
+        previousStep() {
+            if (this.currentStep > 1) {
+                this.currentStep--;
+            }
+        },
+
+        validateCurrentStep() {
+            switch (this.currentStep) {
+                case 1:
+                    if (!this.formData.sku || !this.formData.name || !this.formData.category) {
+                        showError('필수 항목을 모두 입력해주세요.');
+                        return false;
+                    }
+                    break;
+                case 2:
+                    if (!this.formData.cost_price || !this.formData.selling_price) {
+                        showError('원가와 판매가를 입력해주세요.');
+                        return false;
+                    }
+                    if (parseFloat(this.formData.selling_price) <= parseFloat(this.formData.cost_price)) {
+                        showError('판매가는 원가보다 높아야 합니다.');
+                        return false;
+                    }
+                    break;
+                case 3:
+                    if (this.formData.stock_quantity === '' || this.formData.stock_quantity < 0) {
+                        showError('유효한 재고 수량을 입력해주세요.');
+                        return false;
+                    }
+                    break;
+            }
+            return true;
+        },
+
+        generateSKU() {
+            const prefix = 'PROD';
+            const timestamp = Date.now().toString().slice(-6);
+            const random = Math.floor(Math.random() * 100).toString().padStart(2, '0');
+            this.formData.sku = `${prefix}-${timestamp}${random}`;
+        },
+
+        calculateMargin() {
+            // 수익률 계산은 computed property에서 자동으로 처리됨
+        },
+
+        formatPrice(amount) {
+            return new Intl.NumberFormat('ko-KR', {
+                style: 'currency',
+                currency: 'KRW'
+            }).format(amount);
+        },
+
+        handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            this.processFiles(files);
+        },
+
+        handleDrop(event) {
+            this.isDragging = false;
+            const files = Array.from(event.dataTransfer.files);
+            this.processFiles(files);
+        },
+
+        processFiles(files) {
+            files.forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    if (file.size > 5 * 1024 * 1024) { // 5MB 제한
+                        showError(`${file.name}의 크기가 너무 큽니다. (최대 5MB)`);
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        this.uploadedImages.push({
+                            file: file,
+                            url: e.target.result,
+                            name: file.name
+                        });
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    showError(`${file.name}은 지원하지 않는 파일 형식입니다.`);
+                }
+            });
+        },
+
+        removeImage(index) {
+            this.uploadedImages.splice(index, 1);
+        },
+
+        moveImage(index, direction) {
+            const newIndex = direction === 'up' ? index - 1 : index + 1;
+            if (newIndex >= 0 && newIndex < this.uploadedImages.length) {
+                const item = this.uploadedImages.splice(index, 1)[0];
+                this.uploadedImages.splice(newIndex, 0, item);
+            }
+        },
+
+        async createBrand() {
+            if (!this.newBrand.name || !this.newBrand.code) {
+                showError('브랜드명과 코드를 입력해주세요.');
+                return;
+            }
+
+            this.isCreatingBrand = true;
+
+            try {
+                const formData = new FormData();
+                formData.append('name', this.newBrand.name);
+                formData.append('code', this.newBrand.code);
+                formData.append('description', this.newBrand.description);
+                formData.append('csrfmiddlewaretoken', getCsrfToken());
+
+                const response = await fetch('{% url "products:brand_create" %}', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // 브랜드 선택 옵션에 추가
+                    const brandSelect = document.querySelector('select[name="brand"]');
+                    const option = new Option(result.brand.name, result.brand.id, true, true);
+                    brandSelect.add(option);
+                    
+                    this.formData.brand = result.brand.id.toString();
+                    this.showNewBrandModal = false;
+                    this.newBrand = { name: '', code: '', description: '' };
+                    
+                    showSuccess('새 브랜드가 추가되었습니다.');
+                } else {
+                    showError(result.error || '브랜드 추가에 실패했습니다.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('네트워크 오류가 발생했습니다.');
+            } finally {
+                this.isCreatingBrand = false;
+            }
+        },
+
+        async submitForm() {
+            if (!this.validateCurrentStep()) {
+                return;
+            }
+
+            this.isSubmitting = true;
+
+            try {
+                const formData = new FormData();
+                
+                // 기본 데이터 추가
+                Object.keys(this.formData).forEach(key => {
+                    if (this.formData[key] !== '' && this.formData[key] !== null) {
+                        formData.append(key, this.formData[key]);
+                    }
+                });
+
+                // 이미지 파일 추가
+                this.uploadedImages.forEach((image, index) => {
+                    formData.append('images', image.file);
+                    formData.append(`image_${index}_alt`, image.name);
+                    formData.append(`image_${index}_sort`, index);
+                    if (index === 0) {
+                        formData.append(`image_${index}_primary`, 'true');
+                    }
+                });
+
+                formData.append('csrfmiddlewaretoken', getCsrfToken());
+
+                const response = await fetch('{% url "products:create" %}', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showSuccess('상품이 성공적으로 등록되었습니다.');
+                    this.clearDraft();
+                    
+                    // 상품 상세 페이지로 이동
+                    setTimeout(() => {
+                        window.location.href = result.redirect_url || '{% url "products:list" %}';
+                    }, 1500);
+                } else {
+                    showError(result.error || '상품 등록에 실패했습니다.');
+                    
+                    // 특정 단계로 이동 (오류가 있는 단계)
+                    if (result.step) {
+                        this.currentStep = result.step;
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('네트워크 오류가 발생했습니다.');
+            } finally {
+                this.isSubmitting = false;
+            }
+        },
+
+        saveDraft() {
+            const draftData = {
+                formData: this.formData,
+                currentStep: this.currentStep,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('product_draft', JSON.stringify(draftData));
+            showInfo('임시저장되었습니다.');
+        },
+
+        loadDraft() {
+            const draft = localStorage.getItem('product_draft');
+            if (draft) {
+                try {
+                    const draftData = JSON.parse(draft);
+                    // 24시간 이내 데이터만 복원
+                    if (Date.now() - draftData.timestamp < 24 * 60 * 60 * 1000) {
+                        this.formData = { ...this.formData, ...draftData.formData };
+                        this.currentStep = draftData.currentStep || 1;
+                        
+                        setTimeout(() => {
+                            showInfo('이전에 작성하던 내용을 복원했습니다.');
+                        }, 1000);
+                    }
+                } catch (e) {
+                    console.error('Draft loading error:', e);
+                }
+            }
+        },
+
+        clearDraft() {
+            localStorage.removeItem('product_draft');
+        },
+
+        autoSaveDraft() {
+            // 5분마다 자동 저장
+            setInterval(() => {
+                if (this.formData.sku || this.formData.name) {
+                    this.saveDraft();
+                }
+            }, 5 * 60 * 1000);
+        }
+    }
+}
+
+// 페이지 로드 시 초기화
+document.addEventListener('DOMContentLoaded', function() {
+    // 페이드인 애니메이션
+    const elements = document.querySelectorAll('.bg-white, .rounded-xl');
+    elements.forEach((el, index) => {
+        el.style.animationDelay = `${index * 0.1}s`;
+        el.classList.add('animate-fade-in');
+    });
+
+    // 폼 입력 검증
+    const inputs = document.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+            validateInput(this);
+        });
+    });
+
+    // 브라우저 나가기 경고
+    window.addEventListener('beforeunload', function(e) {
+        const draft = localStorage.getItem('product_draft');
+        if (draft) {
+            e.preventDefault();
+            e.returnValue = '작성 중인 내용이 있습니다. 정말 나가시겠습니까?';
+            return e.returnValue;
+        }
+    });
+
+    // 키보드 단축키
+    document.addEventListener('keydown', function(e) {
+        // Ctrl/Cmd + S: 임시저장
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            const productCreate = document.querySelector('[x-data*="productCreate"]');
+            if (productCreate && productCreate.__x) {
+                productCreate.__x.$data.saveDraft();
+            }
+        }
+        
+        // Ctrl/Cmd + Enter: 다음 단계 또는 제출
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            e.preventDefault();
+            const productCreate = document.querySelector('[x-data*="productCreate"]');
+            if (productCreate && productCreate.__x) {
+                const data = productCreate.__x.$data;
+                if (data.currentStep < 4) {
+                    data.nextStep();
+                } else {
+                    data.submitForm();
+                }
+            }
+        }
+    });
+});
+
+// 입력 검증 함수
+function validateInput(input) {
+    const value = input.value.trim();
+    const isRequired = input.hasAttribute('required');
+    
+    // 기본 검증
+    if (isRequired && !value) {
+        input.classList.add('border-red-500');
+        return false;
+    } else {
+        input.classList.remove('border-red-500');
+    }
+    
+    // 타입별 검증
+    switch (input.type) {
+        case 'number':
+            if (value && (isNaN(value) || parseFloat(value) < 0)) {
+                input.classList.add('border-red-500');
+                return false;
+            }
+            break;
+        case 'email':
+            if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                input.classList.add('border-red-500');
+                return false;
+            }
+            break;
+    }
+    
+    // SKU 중복 검사 (실시간)
+    if (input.name === 'sku' && value) {
+        debounce(checkSKUDuplicate, 500)(value);
+    }
+    
+    return true;
+}
+
+// SKU 중복 검사
+async function checkSKUDuplicate(sku) {
+    try {
+        const response = await fetch(`{% url "products:check_sku" %}?sku=${encodeURIComponent(sku)}`);
+        const result = await response.json();
+        
+        const skuInput = document.querySelector('input[name="sku"]');
+        if (result.exists) {
+            skuInput.classList.add('border-red-500');
+            showError('이미 사용 중인 SKU입니다.');
+        } else {
+            skuInput.classList.remove('border-red-500');
+        }
+    } catch (error) {
+        console.error('SKU check error:', error);
+    }
+}
+
+// 디바운스 함수
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// 가격 포맷팅
+function formatCurrency(input) {
+    let value = input.value.replace(/[^\d]/g, '');
+    if (value) {
+        value = parseInt(value).toLocaleString('ko-KR');
+        input.value = value;
+    }
+}
+
+// 파일 크기 체크
+function checkFileSize(file, maxSize = 5 * 1024 * 1024) {
+    return file.size <= maxSize;
+}
+
+// 이미지 리사이즈 (필요시)
+function resizeImage(file, maxWidth = 800, maxHeight = 800, quality = 0.8) {
+    return new Promise((resolve) => {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        
+        img.onload = () => {
+            const ratio = Math.min(maxWidth / img.width, maxHeight / img.height);
+            canvas.width = img.width * ratio;
+            canvas.height = img.height * ratio;
+            
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            
+            canvas.toBlob(resolve, 'image/jpeg', quality);
+        };
+        
+        img.src = URL.createObjectURL(file);
+    });
+}
+</script>
+
+<!-- 커스텀 CSS -->
+<style>
+/* 단계 진행 애니메이션 */
+@keyframes progressPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.step-current {
+    animation: progressPulse 2s ease-in-out infinite;
+}
+
+/* 드래그 앤 드롭 스타일 */
+.drag-over {
+    border-color: #10b981 !important;
+    background-color: rgba(16, 185, 129, 0.05);
+}
+
+/* 이미지 업로드 미리보기 */
+.image-preview {
+    transition: all 0.3s ease;
+}
+
+.image-preview:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* 입력 필드 포커스 효과 */
+.form-input:focus {
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    border-color: #10b981;
+}
+
+/* 가격 계산기 스타일 */
+.price-calculator {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1px solid #0891b2;
+}
+
+.dark .price-calculator {
+    background: linear-gradient(135deg, #164e63 0%, #155e75 100%);
+    border: 1px solid #0891b2;
+}
+
+/* 반응형 개선 */
+@media (max-width: 768px) {
+    .grid-cols-1.lg\\:grid-cols-2 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .grid-cols-1.lg\\:grid-cols-3 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .text-2xl.lg\\:text-3xl {
+        font-size: 1.5rem;
+    }
+}
+
+/* 로딩 스피너 */
+.loading-spinner {
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #10b981;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 상태별 아이콘 색상 */
+.status-icon-active { color: #10b981; }
+.status-icon-inactive { color: #6b7280; }
+.status-icon-soldout { color: #ef4444; }
+.status-icon-discontinued { color: #f59e0b; }
+
+/* 툴팁 스타일 */
+.tooltip {
+    position: relative;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1f2937;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.tooltip:hover::after {
+    opacity: 1;
+}
+</style>
+{% endblock %}

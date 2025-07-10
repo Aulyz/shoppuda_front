@@ -1,0 +1,295 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+
+{% block title %}재고 부족 목록 - Shopuda ERP{% endblock %}
+
+{% block extra_css %}
+<style>
+    .product-row:hover {
+        background-color: rgba(251, 146, 60, 0.05);
+    }
+    .dark .product-row:hover {
+        background-color: rgba(251, 146, 60, 0.1);
+    }
+</style>
+{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home text-gray-400"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'inventory:overview' %}" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">재고 관리</a>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span class="text-gray-900 dark:text-white font-medium">재고 부족 목록</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div x-data="stockAdjustmentApp()" x-init="init()">
+    <!-- 헤더 섹션 -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden mb-6">
+        <div class="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 px-6 py-8">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <i class="fas fa-exclamation-triangle text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl lg:text-3xl font-bold text-white">재고 부족 목록</h1>
+                        <p class="text-orange-100 font-medium">재고가 최소 수량 이하인 상품 목록입니다.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="bg-white/20 backdrop-blur-sm rounded-lg p-4 text-center">
+                        <p class="text-sm font-medium text-white">부족 상품 수</p>
+                        <p class="text-2xl font-bold text-white mt-1">{{ products.paginator.count|intcomma }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 상품 목록 테이블 -->
+    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-900">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">상품 정보</th>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">현재 재고</th>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">최소 재고</th>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">부족 수량</th>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">조정</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    {% for product in products %}
+                    <tr class="product-row">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 h-10 w-10">
+                                    {% if product.images.exists %}
+                                        <img class="h-10 w-10 rounded-lg object-cover" src="{{ product.images.first.image.url }}" alt="{{ product.name }}">
+                                    {% else %}
+                                        <div class="h-10 w-10 rounded-lg bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                                            <i class="fas fa-box text-gray-400 dark:text-gray-500"></i>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-gray-900 dark:text-white">{{ product.name }}</div>
+                                    <div class="text-sm text-gray-500 dark:text-gray-400">SKU: {{ product.sku }}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                            <span class="text-lg font-semibold text-red-600 dark:text-red-400" id="stock-{{ product.id }}">{{ product.stock_quantity|intcomma }}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm text-gray-500 dark:text-gray-400">{{ product.min_stock_level|intcomma }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-bold text-red-600 dark:text-red-400">{{ product.min_stock_level|sub:product.stock_quantity|intcomma }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                            <button type="button" 
+                                    @click="openAdjustmentModal('{{ product.id }}', '{{ product.name|escapejs }}', {{ product.stock_quantity }})"
+                                    class="inline-flex items-center px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105">
+                                <i class="fas fa-edit mr-1.5"></i>
+                                조정
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="px-6 py-12 text-center">
+                            <div class="flex flex-col items-center">
+                                <i class="fas fa-check-circle text-green-500 text-5xl mb-4"></i>
+                                <p class="text-gray-500 dark:text-gray-400">재고 부족 상품이 없습니다.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 페이지네이션 -->
+        {% if products.has_other_pages %}
+        <div class="bg-gray-50 dark:bg-gray-900/50 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+                <div class="text-sm text-gray-700 dark:text-gray-300">
+                    전체 <span class="font-semibold">{{ products.paginator.count }}</span>개 중 
+                    <span class="font-semibold">{{ products.start_index }}-{{ products.end_index }}</span>
+                </div>
+                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                    {% if products.has_previous %}
+                        <a href="?page={{ products.previous_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    {% endif %}
+                    <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {{ products.number }} / {{ products.paginator.num_pages }}
+                    </span>
+                    {% if products.has_next %}
+                        <a href="?page={{ products.next_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- 개별 조정 모달 (stock_adjustment.html과 동일한 구조 사용) -->
+    <div x-show="showModal" x-cloak 
+         class="fixed inset-0 z-50 overflow-y-auto"
+         x-transition:enter="ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0">
+        <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 dark:bg-gray-900 bg-opacity-75 dark:bg-opacity-75 transition-opacity" @click="closeModal()"></div>
+            <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-2xl px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+                <div class="sm:flex sm:items-start">
+                    <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-emerald-100 dark:bg-emerald-900/30 sm:mx-0 sm:h-10 sm:w-10">
+                        <i class="fas fa-sliders-h text-emerald-600 dark:text-emerald-400"></i>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">재고 조정</h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-500 dark:text-gray-400" x-text="currentProductName"></p>
+                        </div>
+                        <div class="mt-4 space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">조정 방식</label>
+                                <select x-model="adjustmentType" @change="updatePreview()" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white transition-colors duration-200">
+                                    <option value="set">설정</option>
+                                    <option value="add">추가</option>
+                                    <option value="subtract">차감</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <span x-show="adjustmentType === 'set'">새로운 재고</span>
+                                    <span x-show="adjustmentType === 'add'">추가할 수량</span>
+                                    <span x-show="adjustmentType === 'subtract'">차감할 수량</span>
+                                </label>
+                                <input type="number" x-model="adjustmentValue" @input="updatePreview()" min="0" placeholder="수량 입력" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white transition-colors duration-200">
+                            </div>
+                            <div x-show="adjustmentType !== 'set'" class="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                                <p class="text-sm text-blue-700 dark:text-blue-300">
+                                    <span class="font-medium">현재 재고:</span> <span x-text="currentStock"></span>개 | 
+                                    <span class="font-medium">조정 후:</span> <span x-text="previewStock" class="font-bold"></span>개
+                                </p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">조정 사유 <span class="text-red-500">*</span></label>
+                                <input type="text" x-model="adjustmentReason" placeholder="예: 재고 실사, 파손 등" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 dark:bg-gray-700 dark:text-white transition-colors duration-200">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                    <button type="button" @click="applyAdjustment()" :disabled="!canApplyAdjustment()" class="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-emerald-600 text-base font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+                        <i class="fas fa-check mr-2"></i>적용
+                    </button>
+                    <button type="button" @click="closeModal()" class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 sm:mt-0 sm:w-auto sm:text-sm transition-all duration-200">
+                        취소
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+function stockAdjustmentApp() {
+    return {
+        showModal: false,
+        currentProductId: null,
+        currentProductName: '',
+        currentStock: 0,
+        adjustmentType: 'set',
+        adjustmentValue: 0,
+        adjustmentReason: '',
+        previewStock: 0,
+        csrfToken: document.querySelector('[name=csrfmiddlewaretoken]')?.value || '{{ csrf_token }}',
+
+        init() {},
+
+        openAdjustmentModal(productId, productName, stock) {
+            this.currentProductId = productId;
+            this.currentProductName = productName;
+            this.currentStock = stock;
+            this.adjustmentType = 'add'; // 부족 재고이므로 '추가'를 기본값으로
+            this.adjustmentValue = '';
+            this.adjustmentReason = '재고 부족분 보충'; // 기본 사유
+            this.updatePreview();
+            this.showModal = true;
+        },
+
+        closeModal() {
+            this.showModal = false;
+        },
+
+        updatePreview() {
+            const value = parseInt(this.adjustmentValue) || 0;
+            if (this.adjustmentType === 'set') {
+                this.previewStock = value;
+            } else if (this.adjustmentType === 'add') {
+                this.previewStock = this.currentStock + value;
+            } else if (this.adjustmentType === 'subtract') {
+                this.previewStock = this.currentStock - value;
+            }
+        },
+
+        canApplyAdjustment() {
+            return this.adjustmentReason.trim() !== '' && this.adjustmentValue !== '' && this.previewStock >= 0;
+        },
+
+        async applyAdjustment() {
+            if (!this.canApplyAdjustment()) return;
+
+            const data = {
+                product_id: this.currentProductId,
+                adjustment_type: this.adjustmentType,
+                reason: this.adjustmentReason.trim(),
+            };
+
+            if (this.adjustmentType === 'set') {
+                data.new_quantity = parseInt(this.adjustmentValue);
+            } else {
+                data.adjustment_value = parseInt(this.adjustmentValue);
+            }
+
+            try {
+                const response = await fetch('{% url "inventory:apply_stock_adjustment" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': this.csrfToken
+                    },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    Swal.fire('성공', result.message, 'success');
+                    document.getElementById(`stock-${this.currentProductId}`).textContent = result.new_quantity;
+                    this.closeModal();
+                    // Optionally, remove the row from the list or refresh the page
+                    // location.reload(); 
+                } else {
+                    Swal.fire('오류', result.error || '재고 조정에 실패했습니다.', 'error');
+                }
+            } catch (error) {
+                Swal.fire('네트워크 오류', '서버와 통신할 수 없습니다.', 'error');
+            }
+        }
+    };
+}
+</script>
+{% endblock %}

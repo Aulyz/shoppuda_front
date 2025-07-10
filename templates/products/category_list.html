@@ -1,0 +1,1153 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% comment %} templates/products/category_list.html - 완전히 새로운 고급 카테고리 관리 {% endcomment %}
+
+{% block title %}카테고리 관리 - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'products:list' %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">상품 관리</a>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>카테고리 관리</span>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<meta name="csrf-token" content="{{ csrf_token }}">
+<style>
+    /* Alpine.js x-cloak 숨김 */
+    [x-cloak] { 
+        display: none !important; 
+    }
+    
+    /* 모달 스타일 개선 */
+    .modal-overlay {
+        backdrop-filter: blur(4px);
+    }
+    
+    /* 포커스 스타일 개선 */
+    .focus-visible:focus {
+        outline: 2px solid #10b981;
+        outline-offset: 2px;
+    }
+    
+    /* 카테고리 카드 호버 효과 */
+    .category-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .category-card:hover {
+        transform: translateY(-2px);
+    }
+    
+    /* 입력 필드 스타일 개선 */
+    input:focus, select:focus, textarea:focus {
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1) !important;
+        border-color: #10b981 !important;
+    }
+    
+    /* 다크모드에서 입력 필드 */
+    .dark input, .dark select, .dark textarea {
+        background-color: #374151 !important;
+        border-color: #4b5563 !important;
+        color: #f9fafb !important;
+    }
+    
+    .dark input::placeholder, .dark textarea::placeholder {
+        color: #9ca3af !important;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-6" x-data="categoryManager()" x-init="init()">
+    <!-- 페이지 헤더 -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-700 px-6 py-8">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <i class="fas fa-layer-group text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl lg:text-3xl font-bold text-white">카테고리 관리</h1>
+                        <p class="text-emerald-100 font-medium">상품 카테고리를 체계적으로 관리해보세요</p>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button @click="openCreateModal()" 
+                            class="inline-flex items-center justify-center px-6 py-3 bg-white/20 backdrop-blur-sm text-white font-medium rounded-xl hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200 shadow-lg hover:shadow-xl">
+                        <i class="fas fa-plus mr-2"></i>
+                        <span>새 카테고리</span>
+                    </button>
+                    <button @click="toggleBulkMode()" 
+                            :class="bulkMode ? 'bg-amber-500/20 border-amber-300' : 'bg-white/10 border-white/20'"
+                            class="inline-flex items-center justify-center px-6 py-3 backdrop-blur-sm text-white font-medium rounded-xl hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200 border">
+                        <i class="fas fa-tasks mr-2"></i>
+                        <span x-text="bulkMode ? '일괄 작업 취소' : '일괄 작업'"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 통계 카드 -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">전체 카테고리</p>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white" x-text="categories.length"></p>
+                </div>
+                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-layer-group text-blue-600 dark:text-blue-400"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">활성 카테고리</p>
+                    <p class="text-2xl font-bold text-green-600 dark:text-green-400" x-text="activeCategories"></p>
+                </div>
+                <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-check-circle text-green-600 dark:text-green-400"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">총 상품 수</p>
+                    <p class="text-2xl font-bold text-purple-600 dark:text-purple-400" x-text="totalProducts"></p>
+                </div>
+                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-box text-purple-600 dark:text-purple-400"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 검색 및 필터 -->
+    <div class="bg-white dark:bg-gray-800 shadow-sm rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <!-- 검색 -->
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-gray-400 dark:text-gray-500"></i>
+                </div>
+                <input type="text" 
+                       x-model="searchQuery"
+                       @input="debounceSearch()"
+                       placeholder="카테고리 검색..."
+                       class="w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200">
+            </div>
+
+            <!-- 상태 필터 -->
+            <div>
+                <select x-model="statusFilter" 
+                        @change="filterCategories()"
+                        class="w-full py-3 px-4 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200">
+                    <option value="">전체 상태</option>
+                    <option value="active">활성</option>
+                    <option value="inactive">비활성</option>
+                </select>
+            </div>
+
+            <!-- 정렬 -->
+            <div>
+                <select x-model="sortBy" 
+                        @change="sortCategories()"
+                        class="w-full py-3 px-4 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-200">
+                    <option value="name">이름순</option>
+                    <option value="created_at">생성일순</option>
+                    <option value="product_count">상품수순</option>
+                </select>
+            </div>
+
+            <!-- 보기 방식 -->
+            <div class="flex items-center space-x-2">
+                <button @click="viewMode = 'grid'" 
+                        :class="viewMode === 'grid' ? 'bg-emerald-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'"
+                        class="flex-1 py-3 px-4 rounded-lg font-medium transition-all duration-200 hover:shadow-md">
+                    <i class="fas fa-th-large"></i>
+                </button>
+                <button @click="viewMode = 'list'" 
+                        :class="viewMode === 'list' ? 'bg-emerald-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'"
+                        class="flex-1 py-3 px-4 rounded-lg font-medium transition-all duration-200 hover:shadow-md">
+                    <i class="fas fa-list"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 일괄 작업 패널 -->
+    <div x-show="bulkMode && selectedCategories.length > 0" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 transform -translate-y-2"
+         x-transition:enter-end="opacity-100 transform translate-y-0"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 transform translate-y-0"
+         x-transition:leave-end="opacity-0 transform -translate-y-2"
+         class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="flex items-center">
+                    <input type="checkbox" 
+                           x-model="selectAll"
+                           @change="toggleSelectAll()"
+                           class="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded">
+                    <label class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                        전체 선택 (<span x-text="selectedCategories.length"></span>개 선택됨)
+                    </label>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <button @click="bulkActivate()" 
+                        :disabled="selectedCategories.length === 0"
+                        class="px-4 py-2 bg-emerald-500 text-white rounded-lg font-medium hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+                    <i class="fas fa-check mr-1"></i>
+                    활성화
+                </button>
+                <button @click="bulkDeactivate()" 
+                        :disabled="selectedCategories.length === 0"
+                        class="px-4 py-2 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+                    <i class="fas fa-times mr-1"></i>
+                    비활성화
+                </button>
+                <button @click="bulkDelete()" 
+                        :disabled="selectedCategories.length === 0"
+                        class="px-4 py-2 bg-gray-500 text-white rounded-lg font-medium hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200">
+                    <i class="fas fa-trash mr-1"></i>
+                    삭제
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 카테고리 목록 (그리드 뷰) -->
+    <div x-show="viewMode === 'grid'">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="category-grid">
+            <template x-for="category in paginatedCategories" :key="category.id">
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-105"
+                     :class="{'ring-2 ring-emerald-500': selectedCategories.includes(category.id)}"
+                     @click="!bulkMode && viewCategory(category)">
+                    
+                    <!-- 카테고리 헤더 -->
+                    <div class="relative h-32 bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center">
+                        <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110">
+                            <i :class="category.icon || 'fas fa-folder'" class="text-white text-2xl"></i>
+                        </div>
+                        
+                        <!-- 선택 체크박스 -->
+                        <div x-show="bulkMode" class="absolute top-3 right-3">
+                            <input type="checkbox" 
+                                   :checked="selectedCategories.includes(category.id)"
+                                   @click.stop="toggleCategorySelection(category.id)"
+                                   class="h-5 w-5 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded bg-white/80 backdrop-blur-sm">
+                        </div>
+                        
+                        <!-- 상태 배지 -->
+                        <div class="absolute top-3 left-3">
+                            <span class="px-2 py-1 text-xs font-semibold text-white rounded-full animate-pulse"
+                                  :class="category.is_active ? 'bg-green-500' : 'bg-red-500'">
+                                <span x-text="category.is_active ? '활성' : '비활성'"></span>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- 카테고리 정보 -->
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white truncate" x-text="category.name"></h3>
+                            <div class="flex items-center space-x-2" x-show="!bulkMode">
+                                <button @click.stop="editCategory(category)" 
+                                        class="p-2 text-gray-400 hover:text-emerald-600 transition-colors duration-200 rounded-lg hover:bg-emerald-50 dark:hover:bg-emerald-900/20">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button @click.stop="deleteCategory(category)" 
+                                        class="p-2 text-gray-400 hover:text-red-600 transition-colors duration-200 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2" x-text="category.description || '설명이 없습니다.'"></p>
+                        
+                        <div class="flex items-center justify-between text-sm">
+                            <div class="flex items-center space-x-4">
+                                <span class="flex items-center text-gray-500 dark:text-gray-400">
+                                    <i class="fas fa-box mr-1"></i>
+                                    <span x-text="category.product_count || 0"></span>개 상품
+                                </span>
+                            </div>
+                            <span class="text-gray-400 dark:text-gray-500" x-text="formatDate(category.created_at)"></span>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <!-- 리스트 뷰 -->
+    <div x-show="viewMode === 'list'">
+        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-700">
+                        <tr>
+                            <th x-show="bulkMode" scope="col" class="w-8 px-6 py-3">
+                                <input type="checkbox" 
+                                       x-model="selectAll"
+                                       @change="toggleSelectAll()"
+                                       class="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded">
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                카테고리
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                설명
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                상품 수
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                상태
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                생성일
+                            </th>
+                            <th scope="col" class="relative px-6 py-3">
+                                <span class="sr-only">작업</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        <template x-for="category in paginatedCategories" :key="category.id">
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                                :class="{'bg-emerald-50 dark:bg-emerald-900/20': selectedCategories.includes(category.id)}">
+                                <td x-show="bulkMode" class="px-6 py-4 whitespace-nowrap">
+                                    <input type="checkbox" 
+                                           :checked="selectedCategories.includes(category.id)"
+                                           @change="toggleCategorySelection(category.id)"
+                                           class="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded">
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="w-10 h-10 bg-gradient-to-br from-emerald-400 to-teal-600 rounded-lg flex items-center justify-center mr-3">
+                                            <i :class="category.icon || 'fas fa-folder'" class="text-white text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-medium text-gray-900 dark:text-white cursor-pointer hover:text-emerald-600" 
+                                                 @click="viewCategory(category)" 
+                                                 x-text="category.name"></div>
+                                            <div class="text-sm text-gray-500 dark:text-gray-400" x-text="'ID: ' + category.id"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm text-gray-900 dark:text-gray-100 max-w-xs truncate" x-text="category.description || '설명이 없습니다.'"></div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900 dark:text-gray-100 font-medium" x-text="category.product_count || 0"></div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
+                                          :class="category.is_active ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400' : 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'">
+                                        <span x-text="category.is_active ? '활성' : '비활성'"></span>
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400" x-text="formatDate(category.created_at)"></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <div class="flex items-center space-x-2">
+                                        <button @click="editCategory(category)" 
+                                                class="text-emerald-600 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors duration-200 p-1 rounded hover:bg-emerald-50 dark:hover:bg-emerald-900/20">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button @click="deleteCategory(category)" 
+                                                class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors duration-200 p-1 rounded hover:bg-red-50 dark:hover:bg-red-900/20">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- 빈 상태 -->
+    <div x-show="filteredCategories.length === 0" class="text-center py-12">
+        <div class="mx-auto h-24 w-24 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
+            <i class="fas fa-layer-group text-gray-400 dark:text-gray-500 text-3xl"></i>
+        </div>
+        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">카테고리가 없습니다</h3>
+        <p class="text-gray-500 dark:text-gray-400 mb-6">새로운 카테고리를 추가해보세요.</p>
+        <button @click="openCreateModal()" 
+                class="inline-flex items-center px-6 py-3 bg-emerald-600 text-white font-medium rounded-lg hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all duration-200">
+            <i class="fas fa-plus mr-2"></i>
+            첫 카테고리 만들기
+        </button>
+    </div>
+
+    <!-- 페이지네이션 -->
+    <div x-show="totalPages > 1" class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-3 sm:px-6 rounded-lg">
+        <div class="flex flex-1 justify-between sm:hidden">
+            <button @click="previousPage()" 
+                    :disabled="currentPage === 1"
+                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                이전
+            </button>
+            <button @click="nextPage()" 
+                    :disabled="currentPage === totalPages"
+                    class="relative ml-3 inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                다음
+            </button>
+        </div>
+        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+            <div>
+                <p class="text-sm text-gray-700 dark:text-gray-300">
+                    <span class="font-medium" x-text="((currentPage - 1) * perPage + 1)"></span>
+                    -
+                    <span class="font-medium" x-text="Math.min(currentPage * perPage, totalCategories)"></span>
+                    중
+                    <span class="font-medium" x-text="totalCategories"></span>
+                    개 결과
+                </p>
+            </div>
+            <div>
+                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                    <button @click="previousPage()" 
+                            :disabled="currentPage === 1"
+                            class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <i class="fas fa-chevron-left h-5 w-5"></i>
+                    </button>
+                    <template x-for="page in visiblePages" :key="page">
+                        <button @click="goToPage(page)" 
+                                :class="page === currentPage ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 text-emerald-600 dark:text-emerald-400' : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                                class="relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                            <span x-text="page"></span>
+                        </button>
+                    </template>
+                    <button @click="nextPage()" 
+                            :disabled="currentPage === totalPages"
+                            class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <i class="fas fa-chevron-right h-5 w-5"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- 카테고리 생성/수정 모달 -->
+    <div x-show="showModal" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-50 overflow-y-auto" 
+         x-cloak>
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <!-- 배경 오버레이 -->
+            <div class="fixed transition-opacity" @click="closeModal()">
+                <div class="absolute inset-0 bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+            </div>
+
+            <!-- 가운데 정렬을 위한 더미 요소 -->
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+            <!-- 모달 컨텐츠 -->
+            <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                 @click.stop
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                
+                <form @submit.prevent="saveCategory()">
+                    <div class="bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-emerald-100 dark:bg-emerald-900/20 sm:mx-0 sm:h-10 sm:w-10">
+                                <i class="fas fa-layer-group text-emerald-600 dark:text-emerald-400"></i>
+                            </div>
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white" x-text="editingCategory ? '카테고리 수정' : '새 카테고리 추가'"></h3>
+                                <div class="mt-4 space-y-4">
+                                    <!-- 카테고리 이름 -->
+                                    <div>
+                                        <label for="modal-category-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">카테고리 이름 *</label>
+                                        <input type="text" 
+                                               id="modal-category-name"
+                                               x-model="categoryForm.name"
+                                               required
+                                               autocomplete="off"
+                                               class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
+                                               placeholder="카테고리 이름을 입력하세요"
+                                               @click.stop>
+                                    </div>
+
+                                    <!-- 카테고리 설명 -->
+                                    <div>
+                                        <label for="modal-category-description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">설명</label>
+                                        <textarea id="modal-category-description"
+                                                  x-model="categoryForm.description"
+                                                  rows="3"
+                                                  autocomplete="off"
+                                                  class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
+                                                  placeholder="카테고리에 대한 설명을 입력하세요"
+                                                  @click.stop></textarea>
+                                    </div>
+
+                                    <!-- 아이콘 선택 -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">아이콘</label>
+                                        <div class="grid grid-cols-6 gap-2">
+                                            <template x-for="icon in availableIcons" :key="icon">
+                                                <button type="button"
+                                                        @click.stop="categoryForm.icon = icon"
+                                                        :class="categoryForm.icon === icon ? 'bg-emerald-100 dark:bg-emerald-900/30 border-emerald-500 ring-2 ring-emerald-500' : 'bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600'"
+                                                        class="p-3 border rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                                    <i :class="icon" class="text-lg" :class="categoryForm.icon === icon ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-600 dark:text-gray-400'"></i>
+                                                </button>
+                                            </template>
+                                        </div>
+                                    </div>
+
+                                    <!-- 상위 카테고리 -->
+                                    <div>
+                                        <label for="modal-category-parent" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">상위 카테고리</label>
+                                        <select id="modal-category-parent"
+                                                x-model="categoryForm.parent"
+                                                class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
+                                                @click.stop>
+                                            <option value="">최상위 카테고리</option>
+                                            <template x-for="cat in availableParents" :key="cat.id">
+                                                <option :value="cat.id" x-text="cat.name"></option>
+                                            </template>
+                                        </select>
+                                    </div>
+
+                                    <!-- 정렬 순서 -->
+                                    <div>
+                                        <label for="modal-category-sort" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">정렬 순서</label>
+                                        <input type="number" 
+                                               id="modal-category-sort"
+                                               x-model.number="categoryForm.sort_order"
+                                               min="0"
+                                               autocomplete="off"
+                                               class="block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
+                                               placeholder="0"
+                                               @click.stop>
+                                    </div>
+
+                                    <!-- 상태 -->
+                                    <div class="flex items-center">
+                                        <input type="checkbox" 
+                                               id="modal-category-active"
+                                               x-model="categoryForm.is_active"
+                                               class="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 dark:border-gray-600 rounded"
+                                               @click.stop>
+                                        <label for="modal-category-active" class="ml-2 block text-sm text-gray-900 dark:text-gray-100">
+                                            활성 상태
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 모달 푸터 -->
+                    <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button type="submit" 
+                                :disabled="!categoryForm.name.trim() || saving"
+                                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-emerald-600 text-base font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 sm:ml-3 sm:w-auto sm:text-sm disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                                @click.stop>
+                            <span x-show="!saving" x-text="editingCategory ? '수정' : '추가'"></span>
+                            <span x-show="saving" class="flex items-center">
+                                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                저장 중...
+                            </span>
+                        </button>
+                        <button type="button" 
+                                @click.stop="closeModal()"
+                                :disabled="saving"
+                                class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-800 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                            취소
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function categoryManager() {
+    return {
+        // 데이터
+        categories: {{ categories_json|safe }},
+        filteredCategories: [],
+        
+        // 검색 및 필터
+        searchQuery: '',
+        statusFilter: '',
+        sortBy: 'name',
+        viewMode: 'grid',
+        searchTimeout: null,
+        
+        // 페이지네이션
+        currentPage: 1,
+        perPage: 9,
+        totalCategories: 0,
+        totalPages: 0,
+        
+        // 일괄 작업
+        bulkMode: false,
+        selectedCategories: [],
+        selectAll: false,
+        
+        // 모달
+        showModal: false,
+        editingCategory: null,
+        saving: false,
+        categoryForm: {
+            name: '',
+            description: '',
+            icon: 'fas fa-folder',
+            parent: '',
+            sort_order: 0,
+            is_active: true
+        },
+        
+        // 아이콘 목록
+        availableIcons: [
+            'fas fa-folder',
+            'fas fa-mobile-alt',
+            'fas fa-tshirt',
+            'fas fa-home',
+            'fas fa-football-ball',
+            'fas fa-book',
+            'fas fa-car',
+            'fas fa-utensils',
+            'fas fa-heart',
+            'fas fa-music',
+            'fas fa-camera',
+            'fas fa-gamepad'
+        ],
+
+        // 초기화
+        init() {
+            this.filteredCategories = [...this.categories];
+            this.updatePagination();
+            this.filterCategories();
+        },
+
+        // 계산된 속성들
+        get paginatedCategories() {
+            const start = (this.currentPage - 1) * this.perPage;
+            const end = start + this.perPage;
+            return this.filteredCategories.slice(start, end);
+        },
+
+        get activeCategories() {
+            return this.categories.filter(cat => cat.is_active).length;
+        },
+
+        get totalProducts() {
+            return this.categories.reduce((sum, cat) => sum + (cat.product_count || 0), 0);
+        },
+
+        get availableParents() {
+            return this.categories.filter(cat => 
+                cat.is_active && 
+                (!this.editingCategory || cat.id !== this.editingCategory.id)
+            );
+        },
+
+        get visiblePages() {
+            const pages = [];
+            const start = Math.max(1, this.currentPage - 2);
+            const end = Math.min(this.totalPages, this.currentPage + 2);
+            
+            for (let i = start; i <= end; i++) {
+                pages.push(i);
+            }
+            
+            return pages;
+        },
+
+        // 검색 및 필터링
+        debounceSearch() {
+            clearTimeout(this.searchTimeout);
+            this.searchTimeout = setTimeout(() => {
+                this.currentPage = 1;
+                this.filterCategories();
+            }, 300);
+        },
+
+        filterCategories() {
+            let filtered = [...this.categories];
+
+            // 검색어 필터
+            if (this.searchQuery.trim()) {
+                const query = this.searchQuery.toLowerCase();
+                filtered = filtered.filter(category => 
+                    category.name.toLowerCase().includes(query) ||
+                    (category.description && category.description.toLowerCase().includes(query))
+                );
+            }
+
+            // 상태 필터
+            if (this.statusFilter) {
+                filtered = filtered.filter(category => {
+                    if (this.statusFilter === 'active') return category.is_active;
+                    if (this.statusFilter === 'inactive') return !category.is_active;
+                    return true;
+                });
+            }
+
+            this.sortCategories(filtered);
+        },
+
+        sortCategories(categoresToSort = null) {
+            const categories = categoresToSort || [...this.filteredCategories];
+            
+            categories.sort((a, b) => {
+                switch (this.sortBy) {
+                    case 'name':
+                        return a.name.localeCompare(b.name);
+                    case 'created_at':
+                        return new Date(b.created_at) - new Date(a.created_at);
+                    case 'product_count':
+                        return (b.product_count || 0) - (a.product_count || 0);
+                    default:
+                        return 0;
+                }
+            });
+
+            this.filteredCategories = categories;
+            this.updatePagination();
+        },
+
+        // 페이지네이션
+        updatePagination() {
+            this.totalCategories = this.filteredCategories.length;
+            this.totalPages = Math.ceil(this.totalCategories / this.perPage);
+            
+            if (this.currentPage > this.totalPages && this.totalPages > 0) {
+                this.currentPage = this.totalPages;
+            }
+        },
+
+        goToPage(page) {
+            if (page >= 1 && page <= this.totalPages) {
+                this.currentPage = page;
+            }
+        },
+
+        previousPage() {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+            }
+        },
+
+        nextPage() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+            }
+        },
+
+        // 일괄 작업
+        toggleBulkMode() {
+            this.bulkMode = !this.bulkMode;
+            if (!this.bulkMode) {
+                this.selectedCategories = [];
+                this.selectAll = false;
+            }
+        },
+
+        toggleCategorySelection(categoryId) {
+            const index = this.selectedCategories.indexOf(categoryId);
+            if (index > -1) {
+                this.selectedCategories.splice(index, 1);
+            } else {
+                this.selectedCategories.push(categoryId);
+            }
+            this.updateSelectAll();
+        },
+
+        toggleSelectAll() {
+            if (this.selectAll) {
+                this.selectedCategories = this.paginatedCategories.map(c => c.id);
+            } else {
+                this.selectedCategories = [];
+            }
+        },
+
+        updateSelectAll() {
+            this.selectAll = this.selectedCategories.length === this.paginatedCategories.length && this.paginatedCategories.length > 0;
+        },
+
+        // CSRF 토큰 가져오기
+        getCSRFToken() {
+            const metaToken = document.querySelector('meta[name="csrf-token"]');
+            if (metaToken) {
+                return metaToken.getAttribute('content');
+            }
+            
+            const cookieValue = this.getCookie('csrftoken');
+            return cookieValue;
+        },
+
+        getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        },
+
+        // URL 생성
+        getAPIURL(action, categoryId = null) {
+            const baseUrl = "{% url 'products:category_ajax_create' %}".replace('/create/', '/');
+            
+            switch (action) {
+                case 'create':
+                    return baseUrl + 'create/';
+                case 'update':
+                    return baseUrl + categoryId + '/update/';
+                case 'delete':
+                    return baseUrl + categoryId + '/delete/';
+                case 'bulk':
+                    return baseUrl + 'bulk-action/';
+                default:
+                    return baseUrl;
+            }
+        },
+
+        // 모달 관리
+        openCreateModal() {
+            this.editingCategory = null;
+            this.categoryForm = {
+                name: '',
+                description: '',
+                icon: 'fas fa-folder',
+                parent: '',
+                sort_order: 0,
+                is_active: true
+            };
+            this.showModal = true;
+        },
+
+        editCategory(category) {
+            this.editingCategory = category;
+            this.categoryForm = {
+                name: category.name,
+                description: category.description || '',
+                icon: category.icon,
+                parent: category.parent_id || '',
+                sort_order: category.sort_order || 0,
+                is_active: category.is_active
+            };
+            this.showModal = true;
+        },
+
+        closeModal() {
+            this.showModal = false;
+            this.editingCategory = null;
+            this.saving = false;
+        },
+
+        viewCategory(category) {
+            // 카테고리 상세 페이지로 이동
+            window.location.href = `{% url 'products:category_detail' pk=999 %}`.replace('999', category.id);
+        },
+
+        // 카테고리 저장
+        async saveCategory() {
+            if (!this.categoryForm.name.trim() || this.saving) return;
+
+            this.saving = true;
+
+            try {
+                const formData = new FormData();
+                formData.append('csrfmiddlewaretoken', this.getCSRFToken());
+                formData.append('name', this.categoryForm.name);
+                formData.append('description', this.categoryForm.description || '');
+                formData.append('icon', this.categoryForm.icon);
+                formData.append('sort_order', this.categoryForm.sort_order || 0);
+                formData.append('is_active', this.categoryForm.is_active);
+                if (this.categoryForm.parent) {
+                    formData.append('parent', this.categoryForm.parent);
+                }
+
+                const url = this.editingCategory 
+                    ? this.getAPIURL('update', this.editingCategory.id)
+                    : this.getAPIURL('create');
+
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                const result = await response.json();
+                console.log(result)
+                if (result.success) {
+                    if (this.editingCategory) {
+                        // 수정
+                        const index = this.categories.findIndex(c => c.id === this.editingCategory.id);
+                        if (index > -1) {
+                            this.categories[index] = { ...result.category };
+                        }
+                        
+                        Swal.fire({
+                            title: '성공!',
+                            text: '카테고리가 수정되었습니다.',
+                            icon: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        // 추가
+                        this.categories.push(result.category);
+                        
+                        Swal.fire({
+                            title: '성공!',
+                            text: '새 카테고리가 추가되었습니다.',
+                            icon: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    }
+                    
+                    this.filterCategories();
+                    this.closeModal();
+                } else {
+                    throw new Error(result.message || '카테고리 저장 중 오류가 발생했습니다.');
+                }
+            } catch (error) {
+                console.error('Save category error:', error);
+                Swal.fire({
+                    title: '오류!',
+                    text: error.message || '카테고리 저장 중 오류가 발생했습니다.',
+                    icon: 'error'
+                });
+            } finally {
+                this.saving = false;
+            }
+        },
+
+        // 카테고리 삭제
+        async deleteCategory(category) {
+            const result = await Swal.fire({
+                title: '카테고리 삭제',
+                text: `"${category.name}" 카테고리를 삭제하시겠습니까?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#EF4444',
+                cancelButtonColor: '#6B7280',
+                confirmButtonText: '삭제',
+                cancelButtonText: '취소'
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    const formData = new FormData();
+                    formData.append('csrfmiddlewaretoken', this.getCSRFToken());
+
+                    const response = await fetch(this.getAPIURL('delete', category.id), {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        this.categories = this.categories.filter(c => c.id !== category.id);
+                        this.filterCategories();
+                        
+                        Swal.fire({
+                            title: '삭제 완료!',
+                            text: '카테고리가 삭제되었습니다.',
+                            icon: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        throw new Error(result.message || '카테고리 삭제에 실패했습니다.');
+                    }
+                } catch (error) {
+                    console.error('Delete category error:', error);
+                    Swal.fire({
+                        title: '오류!',
+                        text: error.message || '카테고리 삭제 중 오류가 발생했습니다.',
+                        icon: 'error'
+                    });
+                }
+            }
+        },
+
+        // 일괄 작업들
+        async bulkActivate() {
+            if (this.selectedCategories.length === 0) return;
+            
+            const result = await Swal.fire({
+                title: '카테고리 활성화',
+                text: `선택한 ${this.selectedCategories.length}개 카테고리를 활성화하시겠습니까?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#10B981',
+                cancelButtonColor: '#6B7280',
+                confirmButtonText: '활성화',
+                cancelButtonText: '취소'
+            });
+
+            if (result.isConfirmed) {
+                await this.performBulkAction('activate');
+            }
+        },
+
+        async bulkDeactivate() {
+            if (this.selectedCategories.length === 0) return;
+            
+            const result = await Swal.fire({
+                title: '카테고리 비활성화',
+                text: `선택한 ${this.selectedCategories.length}개 카테고리를 비활성화하시겠습니까?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#EF4444',
+                cancelButtonColor: '#6B7280',
+                confirmButtonText: '비활성화',
+                cancelButtonText: '취소'
+            });
+
+            if (result.isConfirmed) {
+                await this.performBulkAction('deactivate');
+            }
+        },
+
+        async bulkDelete() {
+            if (this.selectedCategories.length === 0) return;
+            
+            const result = await Swal.fire({
+                title: '카테고리 삭제',
+                text: `선택한 ${this.selectedCategories.length}개 카테고리를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.`,
+                icon: 'error',
+                showCancelButton: true,
+                confirmButtonColor: '#EF4444',
+                cancelButtonColor: '#6B7280',
+                confirmButtonText: '삭제',
+                cancelButtonText: '취소'
+            });
+
+            if (result.isConfirmed) {
+                await this.performBulkAction('delete');
+            }
+        },
+
+        async performBulkAction(action) {
+            try {
+                const response = await fetch(this.getAPIURL('bulk'), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': this.getCSRFToken(),
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    body: JSON.stringify({
+                        action: action,
+                        category_ids: this.selectedCategories
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    // 로컬 데이터 업데이트
+                    if (action === 'activate') {
+                        this.selectedCategories.forEach(id => {
+                            const category = this.categories.find(c => c.id === id);
+                            if (category) category.is_active = true;
+                        });
+                    } else if (action === 'deactivate') {
+                        this.selectedCategories.forEach(id => {
+                            const category = this.categories.find(c => c.id === id);
+                            if (category) category.is_active = false;
+                        });
+                    } else if (action === 'delete') {
+                        this.categories = this.categories.filter(c => !this.selectedCategories.includes(c.id));
+                    }
+                    
+                    this.filterCategories();
+                    this.selectedCategories = [];
+                    this.selectAll = false;
+                    
+                    let message = result.message;
+                    let icon = 'success';
+                    
+                    if (result.warnings && result.warnings.length > 0) {
+                        message += '\n\n경고:\n' + result.warnings.join('\n');
+                        icon = 'warning';
+                    }
+                    
+                    Swal.fire({
+                        title: '완료!',
+                        text: message,
+                        icon: icon,
+                        timer: icon === 'success' ? 2000 : undefined,
+                        showConfirmButton: icon !== 'success'
+                    });
+                } else {
+                    throw new Error(result.message || '작업 중 오류가 발생했습니다.');
+                }
+            } catch (error) {
+                console.error('Bulk action error:', error);
+                Swal.fire({
+                    title: '오류!',
+                    text: error.message || '작업 중 오류가 발생했습니다.',
+                    icon: 'error'
+                });
+            }
+        },
+
+        // 유틸리티
+        formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+        }
+    }
+}
+</script>
+{% endblock %}

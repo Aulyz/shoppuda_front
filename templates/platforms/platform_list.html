@@ -1,0 +1,775 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% comment %} templates/platforms/platform_list.html - 플랫폼 목록 페이지 {% endcomment %}
+
+{% block title %}플랫폼 관리 - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>플랫폼 관리</span>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+/* 플랫폼 카드 호버 효과 */
+.platform-card {
+    transition: all 0.3s ease;
+}
+
+.platform-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* 동기화 상태 애니메이션 */
+.sync-running {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: .5;
+    }
+}
+
+/* 플랫폼 타입 배지 */
+.platform-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.platform-smartstore { background-color: #22c55e; color: white; }
+.platform-coupang { background-color: #ef4444; color: white; }
+.platform-gmarket { background-color: #f59e0b; color: white; }
+.platform-auction { background-color: #8b5cf6; color: white; }
+.platform-11st { background-color: #06b6d4; color: white; }
+.platform-other { background-color: #6b7280; color: white; }
+
+/* 로딩 오버레이 */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.loading-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-6" x-data="platformList()">
+    <!-- 페이지 헤더 -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700">
+        <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-700 px-6 py-8 rounded-t-2xl">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <i class="fas fa-globe text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl lg:text-3xl font-bold text-white">플랫폼 관리</h1>
+                        <p class="text-blue-100 font-medium">외부 쇼핑몰 플랫폼을 관리하고 동기화하세요</p>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button @click="syncAllPlatforms()" 
+                            class="px-6 py-3 bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white/30 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center">
+                        <i class="fas fa-sync-alt mr-2" :class="{ 'fa-spin': syncing }"></i>
+                        전체 동기화
+                    </button>
+                    <a href="{% url 'platforms:create' %}" 
+                       class="px-6 py-3 bg-white text-indigo-600 hover:bg-gray-50 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center font-medium">
+                        <i class="fas fa-plus mr-2"></i>
+                        플랫폼 추가
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 통계 카드 -->
+        <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-blue-600 dark:text-blue-400">전체 플랫폼</p>
+                            <p class="text-3xl font-bold text-blue-900 dark:text-blue-100">{{ total_platforms|floatformat:0 }}</p>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-globe text-white text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl p-6 border border-green-200 dark:border-green-800">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-green-600 dark:text-green-400">활성 플랫폼</p>
+                            <p class="text-3xl font-bold text-green-900 dark:text-green-100">{{ active_platforms|floatformat:0 }}</p>
+                        </div>
+                        <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-check-circle text-white text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-red-50 to-rose-50 dark:from-red-900/20 dark:to-rose-900/20 rounded-xl p-6 border border-red-200 dark:border-red-800">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-red-600 dark:text-red-400">동기화 오류</p>
+                            <p class="text-3xl font-bold text-red-900 dark:text-red-100">{{ sync_errors|floatformat:0 }}</p>
+                        </div>
+                        <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-exclamation-triangle text-white text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 검색 및 필터 -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+        <form method="get" class="flex flex-col lg:flex-row gap-4">
+            <div class="flex-1">
+                <div class="relative">
+                    <input type="text" 
+                           name="search" 
+                           value="{{ request.GET.search }}"
+                           placeholder="플랫폼명으로 검색..."
+                           class="w-full pl-11 pr-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400 dark:text-gray-500"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button type="submit" 
+                        class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center">
+                    <i class="fas fa-search mr-2"></i>
+                    검색
+                </button>
+                {% if request.GET.search %}
+                <a href="{% url 'platforms:list' %}" 
+                   class="px-6 py-3 bg-gray-500 hover:bg-gray-600 text-white font-medium rounded-lg transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center">
+                    <i class="fas fa-times mr-2"></i>
+                    초기화
+                </a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+
+    <!-- 플랫폼 목록 -->
+    <div class="space-y-4">
+        {% if platforms %}
+            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                {% for platform in platforms %}
+                <div class="platform-card bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+                    <!-- 카드 헤더 -->
+                    <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                                    {% if platform.platform_type == 'SMARTSTORE' %}
+                                        <i class="fas fa-store text-white text-lg"></i>
+                                    {% elif platform.platform_type == 'COUPANG' %}
+                                        <i class="fas fa-shipping-fast text-white text-lg"></i>
+                                    {% elif platform.platform_type == 'GMARKET' %}
+                                        <i class="fas fa-shopping-cart text-white text-lg"></i>
+                                    {% elif platform.platform_type == 'AUCTION' %}
+                                        <i class="fas fa-gavel text-white text-lg"></i>
+                                    {% else %}
+                                        <i class="fas fa-globe text-white text-lg"></i>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ platform.name }}</h3>
+                                    <span class="platform-badge platform-{{ platform.platform_type|lower }}">
+                                        {{ platform.get_platform_type_display }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                {% if platform.is_active %}
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                        <i class="fas fa-circle text-green-400 text-xs mr-1"></i>
+                                        활성
+                                    </span>
+                                {% else %}
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
+                                        <i class="fas fa-circle text-gray-400 text-xs mr-1"></i>
+                                        비활성
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 카드 내용 -->
+                    <div class="p-6">
+                        <!-- 통계 정보 -->
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">{{ platform.product_count|default:0 }}</div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400">상품</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-600 dark:text-green-400">{{ platform.order_count|default:0 }}</div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400">주문</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-purple-600 dark:text-purple-400">
+                                    {% if platform.total_sales %}
+                                        {{ platform.total_sales|floatformat:0|intcomma }}원
+                                    {% else %}
+                                        0원
+                                    {% endif %}
+                                </div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400">매출</div>
+                            </div>
+                        </div>
+
+                        <!-- 마지막 동기화 정보 -->
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">마지막 동기화</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                        {% if platform.last_sync_at %}
+                                            {{ platform.last_sync_at|naturaltime }}
+                                        {% else %}
+                                            동기화 안됨
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    {% if platform.last_sync_status == 'success' %}
+                                        <span class="text-green-500"><i class="fas fa-check-circle"></i></span>
+                                    {% elif platform.last_sync_status == 'error' %}
+                                        <span class="text-red-500"><i class="fas fa-exclamation-circle"></i></span>
+                                    {% elif platform.last_sync_status == 'running' %}
+                                        <span class="text-blue-500 sync-running"><i class="fas fa-sync-alt"></i></span>
+                                    {% else %}
+                                        <span class="text-gray-400"><i class="fas fa-minus-circle"></i></span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 액션 버튼 -->
+                        <div class="flex flex-col space-y-3">
+                            <div class="flex space-x-2">
+                                <button @click="syncPlatform({{ platform.id }})" 
+                                        :disabled="syncing"
+                                        class="flex-1 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center">
+                                    <i class="fas fa-sync-alt mr-2" :class="{ 'fa-spin': syncing }"></i>
+                                    동기화
+                                </button>
+                                <a href="{% url 'platforms:detail' platform.id %}" 
+                                   class="flex-1 px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center">
+                                    <i class="fas fa-eye mr-2"></i>
+                                    상세보기
+                                </a>
+                            </div>
+                            <div class="flex space-x-2">
+                                <a href="{% url 'platforms:edit' platform.id %}" 
+                                   class="flex-1 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center">
+                                    <i class="fas fa-edit mr-2"></i>
+                                    수정
+                                </a>
+                                <button @click="deletePlatform({{ platform.id }}, '{{ platform.name }}')" 
+                                        class="flex-1 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm font-medium rounded-lg transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center">
+                                    <i class="fas fa-trash mr-2"></i>
+                                    삭제
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- 페이지네이션 -->
+            {% if is_paginated %}
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="text-sm text-gray-700 dark:text-gray-300">
+                        총 <span class="font-medium text-indigo-600 dark:text-indigo-400">{{ paginator.count }}</span>개 중 
+                        <span class="font-medium">{{ page_obj.start_index }}</span> - 
+                        <span class="font-medium">{{ page_obj.end_index }}</span>개 표시
+                    </div>
+                    
+                    <nav class="flex space-x-1">
+                        {% if page_obj.has_previous %}
+                            <a href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page=1" 
+                               class="px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200">
+                                <i class="fas fa-angle-double-left"></i>
+                            </a>
+                            <a href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ page_obj.previous_page_number }}" 
+                               class="px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200">
+                                <i class="fas fa-angle-left"></i>
+                            </a>
+                        {% endif %}
+                        
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <span class="px-3 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md">{{ num }}</span>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <a href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ num }}" 
+                                   class="px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-md transition-colors duration-200">{{ num }}</a>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if page_obj.has_next %}
+                            <a href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ page_obj.next_page_number }}" 
+                               class="px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200">
+                                <i class="fas fa-angle-right"></i>
+                            </a>
+                            <a href="?{% if request.GET.search %}search={{ request.GET.search }}&{% endif %}page={{ paginator.num_pages }}" 
+                               class="px-3 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors duration-200">
+                                <i class="fas fa-angle-double-right"></i>
+                            </a>
+                        {% endif %}
+                    </nav>
+                </div>
+            </div>
+            {% endif %}
+        {% else %}
+            <!-- 빈 상태 -->
+            <div class="text-center py-12">
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 p-12">
+                    <div class="w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-globe text-gray-400 dark:text-gray-500 text-3xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">플랫폼이 없습니다</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mb-6">
+                        {% if request.GET.search %}
+                            "{{ request.GET.search }}" 검색 결과가 없습니다.
+                        {% else %}
+                            외부 쇼핑몰 플랫폼을 추가하여 시작하세요.
+                        {% endif %}
+                    </p>
+                    {% if request.GET.search %}
+                        <a href="{% url 'platforms:list' %}" 
+                           class="btn-secondary mr-3">
+                            <i class="fas fa-times mr-2"></i>
+                            검색 초기화
+                        </a>
+                    {% endif %}
+                    <a href="{% url 'platforms:create' %}" 
+                       class="btn-primary">
+                        <i class="fas fa-plus mr-2"></i>
+                        첫 번째 플랫폼 추가
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- 로딩 오버레이 -->
+    <div class="loading-overlay" :class="{ 'show': loading }">
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-8 text-center shadow-2xl">
+            <div class="w-16 h-16 border-4 border-indigo-200 dark:border-indigo-800 border-t-indigo-600 dark:border-t-indigo-400 rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-lg font-medium text-gray-900 dark:text-white">처리 중입니다...</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">잠시만 기다려주세요</p>
+        </div>
+    </div>
+</div>
+
+<script>
+function platformList() {
+    return {
+        loading: false,
+        syncing: false,
+        
+        async syncPlatform(platformId) {
+            if (this.syncing) return;
+            
+            this.syncing = true;
+            this.loading = true;
+            
+            try {
+                const response = await fetch(`/platforms/${platformId}/sync/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrf-token]').content,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '동기화 완료',
+                        text: data.message,
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                    // 페이지 새로고침으로 최신 데이터 표시
+                    setTimeout(() => window.location.reload(), 1500);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '동기화 실패',
+                        text: data.message || '동기화 중 오류가 발생했습니다.'
+                    });
+                }
+            } catch (error) {
+                console.error('Sync error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: '오류',
+                    text: '네트워크 오류가 발생했습니다.'
+                });
+            } finally {
+                this.syncing = false;
+                this.loading = false;
+            }
+        },
+        
+        async syncAllPlatforms() {
+            if (this.syncing) return;
+            
+            const result = await Swal.fire({
+                icon: 'question',
+                title: '전체 동기화',
+                text: '모든 활성 플랫폼을 동기화하시겠습니까?',
+                showCancelButton: true,
+                confirmButtonText: '동기화',
+                cancelButtonText: '취소',
+                confirmButtonColor: '#4f46e5'
+            });
+            
+            if (!result.isConfirmed) return;
+            
+            this.syncing = true;
+            this.loading = true;
+            
+            try {
+                const response = await fetch('/platforms/sync-all/', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrf-token]').content,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '전체 동기화 완료',
+                        html: `
+                            <div class="text-left">
+                                <p>총 ${data.total_platforms}개 플랫폼</p>
+                                <p class="text-green-600">성공: ${data.success_count}개</p>
+                                <p class="text-red-600">실패: ${data.error_count}개</p>
+                            </div>
+                        `,
+                        timer: 5000,
+                        showConfirmButton: true
+                    });
+                    // 페이지 새로고침으로 최신 데이터 표시
+                    setTimeout(() => window.location.reload(), 2000);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '동기화 실패',
+                        text: data.message || '전체 동기화 중 오류가 발생했습니다.'
+                    });
+                }
+            } catch (error) {
+                console.error('Sync all error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: '오류',
+                    text: '네트워크 오류가 발생했습니다.'
+                });
+            } finally {
+                this.syncing = false;
+                this.loading = false;
+            }
+        },
+        
+        async deletePlatform(platformId, platformName) {
+            const result = await Swal.fire({
+                icon: 'warning',
+                title: '플랫폼 삭제',
+                html: `<p><strong>${platformName}</strong> 플랫폼을 삭제하시겠습니까?</p>
+                       <p class="text-sm text-red-600 mt-2">이 작업은 되돌릴 수 없습니다.</p>`,
+                showCancelButton: true,
+                confirmButtonText: '삭제',
+                cancelButtonText: '취소',
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280'
+            });
+            
+            if (!result.isConfirmed) return;
+            
+            this.loading = true;
+            
+            try {
+                const response = await fetch(`/platforms/${platformId}/delete/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrf-token]').content,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '삭제 완료',
+                        text: data.message,
+                        timer: 3000,
+                        showConfirmButton: false
+                    });
+                    // 페이지 새로고침으로 목록 업데이트
+                    setTimeout(() => window.location.reload(), 1500);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '삭제 실패',
+                        text: data.error || '플랫폼 삭제 중 오류가 발생했습니다.'
+                    });
+                }
+            } catch (error) {
+                console.error('Delete error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: '오류',
+                    text: '네트워크 오류가 발생했습니다.'
+                });
+            } finally {
+                this.loading = false;
+            }
+        },
+        
+        // 페이지 로드 시 초기화
+        init() {
+            // 검색 필드에 포커스
+            const searchInput = document.querySelector('input[name="search"]');
+            if (searchInput && !searchInput.value) {
+                searchInput.focus();
+            }
+            
+            // 동기화 상태 실시간 업데이트 (5초마다)
+            setInterval(() => {
+                this.updateSyncStatus();
+            }, 5000);
+        },
+        
+        async updateSyncStatus() {
+            try {
+                const response = await fetch('/platforms/sync-status/', {
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrf-token]').content
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    // 동기화 상태 업데이트 로직 (필요시 DOM 조작)
+                    console.log('Sync status updated:', data);
+                }
+            } catch (error) {
+                console.log('Sync status update failed:', error);
+            }
+        }
+    }
+}
+
+// 전역 알림 함수
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `fixed top-4 right-4 z-50 max-w-sm w-full bg-white dark:bg-gray-800 shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden transform transition-all duration-300 translate-x-full`;
+    
+    const bgColor = {
+        'success': 'bg-green-50 dark:bg-green-900',
+        'error': 'bg-red-50 dark:bg-red-900',
+        'warning': 'bg-yellow-50 dark:bg-yellow-900',
+        'info': 'bg-blue-50 dark:bg-blue-900'
+    }[type] || 'bg-blue-50 dark:bg-blue-900';
+    
+    const iconColor = {
+        'success': 'text-green-400',
+        'error': 'text-red-400',
+        'warning': 'text-yellow-400',
+        'info': 'text-blue-400'
+    }[type] || 'text-blue-400';
+    
+    const icon = {
+        'success': 'fas fa-check-circle',
+        'error': 'fas fa-exclamation-circle',
+        'warning': 'fas fa-exclamation-triangle',
+        'info': 'fas fa-info-circle'
+    }[type] || 'fas fa-info-circle';
+    
+    notification.innerHTML = `
+        <div class="p-4">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <i class="${icon} ${iconColor} text-xl"></i>
+                </div>
+                <div class="ml-3 w-0 flex-1 pt-0.5">
+                    <p class="text-sm font-medium text-gray-900 dark:text-gray-100">${message}</p>
+                </div>
+                <div class="ml-4 flex-shrink-0 flex">
+                    <button onclick="this.parentElement.parentElement.parentElement.parentElement.remove()" 
+                            class="bg-white dark:bg-gray-800 rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none">
+                        <i class="fas fa-times text-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // 애니메이션으로 나타나기
+    setTimeout(() => {
+        notification.classList.remove('translate-x-full');
+    }, 100);
+    
+    // 5초 후 자동 제거
+    setTimeout(() => {
+        notification.classList.add('translate-x-full');
+        setTimeout(() => notification.remove(), 300);
+    }, 5000);
+}
+
+// 페이지 로드 완료 후 초기화
+document.addEventListener('DOMContentLoaded', function() {
+    // 다크모드 토글 이벤트
+    const darkModeToggle = document.querySelector('[x-on\\:click="darkMode = !darkMode"]');
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', function() {
+            setTimeout(() => {
+                const isDark = document.documentElement.classList.contains('dark');
+                localStorage.setItem('darkMode', isDark);
+            }, 100);
+        });
+    }
+    
+    // 검색 폼 향상
+    const searchForm = document.querySelector('form[method="get"]');
+    if (searchForm) {
+        const searchInput = searchForm.querySelector('input[name="search"]');
+        if (searchInput) {
+            // 엔터키로 검색
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchForm.submit();
+                }
+            });
+            
+            // 실시간 검색 (선택사항)
+            let searchTimeout;
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                const query = this.value.trim();
+                
+                if (query.length > 2) {
+                    searchTimeout = setTimeout(() => {
+                        // 실시간 검색 구현 (AJAX)
+                        console.log('Real-time search:', query);
+                    }, 500);
+                }
+            });
+        }
+    }
+    
+    // 툴팁 초기화
+    const tooltipElements = document.querySelectorAll('[data-tooltip]');
+    tooltipElements.forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            // 툴팁 표시 로직
+        });
+    });
+    
+    // 키보드 단축키
+    document.addEventListener('keydown', function(e) {
+        // Ctrl+K: 검색 포커스
+        if (e.ctrlKey && e.key === 'k') {
+            e.preventDefault();
+            const searchInput = document.querySelector('input[name="search"]');
+            if (searchInput) {
+                searchInput.focus();
+                searchInput.select();
+            }
+        }
+        
+        // Ctrl+N: 새 플랫폼 추가
+        if (e.ctrlKey && e.key === 'n') {
+            e.preventDefault();
+            const addButton = document.querySelector('a[href*="create"]');
+            if (addButton) {
+                window.location.href = addButton.href;
+            }
+        }
+    });
+});
+
+// 유틸리티 함수들
+function formatCurrency(amount) {
+    return new Intl.NumberFormat('ko-KR', {
+        style: 'currency',
+        currency: 'KRW'
+    }).format(amount);
+}
+
+function formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        showNotification('클립보드에 복사되었습니다.', 'success');
+    }).catch(() => {
+        showNotification('복사에 실패했습니다.', 'error');
+    });
+}
+</script>
+{% endblock %}

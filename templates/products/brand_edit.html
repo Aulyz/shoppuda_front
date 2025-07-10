@@ -1,0 +1,618 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% comment %} templates/products/brand_edit_cbv.html - Tailwind 4.1 브랜드 수정 {% endcomment %}
+
+{% block title %}브랜드 수정 - {{ brand.name }} - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span>상품 관리</span>
+    <i class="fas fa-chevron-right w-3 h-3 text-gray-400"></i>
+    <a href="{% url 'products:brand_list' %}" class="text-blue-600 dark:text-blue-400 hover:underline">브랜드 관리</a>
+    <i class="fas fa-chevron-right w-3 h-3 text-gray-400"></i>
+    <span>{{ brand.name }} 수정</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300" x-data="brandEditData()">
+    <div class="max-w-4xl mx-auto space-y-6">
+        <!-- Page Header -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    {% if brand.logo %}
+                        <img src="{{ brand.logo.url }}" 
+                             alt="{{ brand.name }}" 
+                             class="w-12 h-12 rounded-lg object-cover border border-gray-200 dark:border-gray-600">
+                    {% else %}
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                            <span class="text-white text-xl font-bold">{{ brand.name|first|upper }}</span>
+                        </div>
+                    {% endif %}
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ brand.name }} 수정</h1>
+                        <p class="text-gray-600 dark:text-gray-400 mt-1">
+                            브랜드 정보를 수정할 수 있습니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <a href="{% url 'products:brand_list' %}" 
+                       class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-200 rounded-lg hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600 transition-all duration-200">
+                        <i class="fas fa-arrow-left w-4 h-4 mr-2"></i>
+                        목록으로
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Brand Statistics -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-box text-white text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">연결된 상품</p>
+                        <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ brand.products.count }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-calendar text-white text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">생성일</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ brand.created_at|date:"Y.m.d" }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-edit text-white text-xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">최근 수정</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ brand.updated_at|date:"Y.m.d" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Brand Form -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="p-6 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">브랜드 정보 수정</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                    * 표시된 항목은 필수 입력 항목입니다.
+                </p>
+            </div>
+            
+            <form method="post" enctype="multipart/form-data" class="p-6 space-y-6" x-ref="brandForm">
+                {% csrf_token %}
+                
+                <!-- Basic Information -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Brand Name -->
+                    <div class="lg:col-span-1">
+                        <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            브랜드명 *
+                        </label>
+                        <div class="relative">
+                            <input type="text" 
+                                   name="{{ form.name.name }}" 
+                                   id="{{ form.name.id_for_label }}"
+                                   value="{{ form.name.value|default:'' }}"
+                                   x-model="brandData.name"
+                                   @input="generateCode"
+                                   class="block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 transition-colors duration-200"
+                                   placeholder="브랜드명을 입력하세요"
+                                   required>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <i class="fas fa-tags text-gray-400"></i>
+                            </div>
+                        </div>
+                        {% if form.name.errors %}
+                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Brand Code -->
+                    <div class="lg:col-span-1">
+                        <label for="{{ form.code.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            브랜드 코드 *
+                            <span class="text-xs text-gray-500 dark:text-gray-400 ml-1">(영문, 숫자, 언더스코어만 가능)</span>
+                        </label>
+                        <div class="relative">
+                            <input type="text" 
+                                   name="{{ form.code.name }}" 
+                                   id="{{ form.code.id_for_label }}"
+                                   value="{{ form.code.value|default:'' }}"
+                                   x-model="brandData.code"
+                                   class="block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 transition-colors duration-200 font-mono"
+                                   placeholder="BRAND_CODE"
+                                   pattern="[A-Z0-9_]+"
+                                   required>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <button type="button" 
+                                        @click="generateCode"
+                                        class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+                                        title="자동 생성">
+                                    <i class="fas fa-sync-alt w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        {% if form.code.errors %}
+                            <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.code.errors.0 }}</p>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                            브랜드명을 입력하면 자동으로 생성됩니다. 직접 수정도 가능합니다.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        브랜드 설명
+                    </label>
+                    <textarea name="{{ form.description.name }}" 
+                              id="{{ form.description.id_for_label }}"
+                              x-model="brandData.description"
+                              rows="4"
+                              class="block w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 transition-colors duration-200 resize-none"
+                              placeholder="브랜드에 대한 설명을 입력하세요...">{{ form.description.value|default:'' }}</textarea>
+                    {% if form.description.errors %}
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.description.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Website -->
+                <div>
+                    <label for="{{ form.website.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        웹사이트 URL
+                    </label>
+                    <div class="relative">
+                        <input type="url" 
+                               name="{{ form.website.name }}" 
+                               id="{{ form.website.id_for_label }}"
+                               value="{{ form.website.value|default:'' }}"
+                               x-model="brandData.website"
+                               class="block w-full px-4 py-3 pl-12 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400 transition-colors duration-200"
+                               placeholder="https://www.example.com">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                            <i class="fas fa-globe text-gray-400"></i>
+                        </div>
+                    </div>
+                    {% if form.website.errors %}
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.website.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Logo Upload -->
+                <div>
+                    <label for="{{ form.logo.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        브랜드 로고
+                    </label>
+                    <div class="flex items-start space-x-6">
+                        <!-- Current Logo -->
+                        <div class="flex-shrink-0">
+                            <div class="w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 flex items-center justify-center">
+                                {% if brand.logo %}
+                                    <img src="{{ brand.logo.url }}" 
+                                         alt="{{ brand.name }}" 
+                                         class="w-full h-full object-contain rounded-lg"
+                                         x-show="!logoPreview">
+                                {% else %}
+                                    <div x-show="!logoPreview" class="text-center">
+                                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-1">
+                                            <span class="text-white text-xl font-bold">{{ brand.name|first|upper }}</span>
+                                        </div>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">현재 로고</p>
+                                    </div>
+                                {% endif %}
+                                <img x-show="logoPreview" 
+                                     :src="logoPreview" 
+                                     alt="새 로고 미리보기"
+                                     class="w-full h-full object-contain rounded-lg">
+                            </div>
+                            {% if brand.logo %}
+                                <div class="mt-2 text-center">
+                                    <button type="button" 
+                                            @click="removeCurrentLogo"
+                                            class="text-xs text-red-600 dark:text-red-400 hover:underline">
+                                        현재 로고 제거
+                                    </button>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Upload Area -->
+                        <div class="flex-1">
+                            <div class="relative">
+                                <input type="file" 
+                                       name="{{ form.logo.name }}" 
+                                       id="{{ form.logo.id_for_label }}"
+                                       accept="image/*"
+                                       @change="handleLogoChange"
+                                       class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                                <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center hover:border-blue-400 dark:hover:border-blue-500 transition-colors duration-200">
+                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 dark:text-gray-500 mb-3"></i>
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white mb-1">
+                                        클릭하여 새 로고 업로드
+                                    </p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                                        PNG, JPG, JPEG 파일 (최대 5MB)
+                                    </p>
+                                </div>
+                            </div>
+                            {% if form.logo.errors %}
+                                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.logo.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Status -->
+                <div class="flex items-center">
+                    <div class="flex items-center h-5">
+                        <input type="checkbox" 
+                               name="{{ form.is_active.name }}" 
+                               id="{{ form.is_active.id_for_label }}"
+                               {% if form.is_active.value %}checked{% endif %}
+                               x-model="brandData.is_active"
+                               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    </div>
+                    <div class="ml-3">
+                        <label for="{{ form.is_active.id_for_label }}" class="text-sm font-medium text-gray-700 dark:text-gray-300">
+                            활성 상태
+                        </label>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">
+                            체크하면 브랜드가 활성화되어 상품에서 선택할 수 있습니다.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Delete Warning (if brand has products) -->
+                {% if brand.products.count > 0 %}
+                <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-exclamation-triangle text-amber-400"></i>
+                        </div>
+                        <div class="ml-3">
+                            <h3 class="text-sm font-medium text-amber-800 dark:text-amber-200">
+                                주의사항
+                            </h3>
+                            <div class="mt-2 text-sm text-amber-700 dark:text-amber-300">
+                                <p>이 브랜드는 {{ brand.products.count }}개의 상품과 연결되어 있습니다. 브랜드를 비활성화하거나 삭제하기 전에 연결된 상품들을 확인해주세요.</p>
+                            </div>
+                            <div class="mt-3">
+                                <a href="{% url 'products:list' %}?brand={{ brand.pk }}" 
+                                   class="text-sm font-medium text-amber-800 dark:text-amber-200 hover:text-amber-900 dark:hover:text-amber-100 underline">
+                                    연결된 상품 보기 →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Form Actions -->
+                <div class="flex items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <div class="flex items-center space-x-4">
+                        <a href="{% url 'products:brand_list' %}" 
+                           class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-200 rounded-lg hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600 transition-all duration-200">
+                            <i class="fas fa-times w-4 h-4 mr-2"></i>
+                            취소
+                        </a>
+                        <button type="button" 
+                                @click="resetForm"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700 transition-all duration-200">
+                            <i class="fas fa-undo w-4 h-4 mr-2"></i>
+                            초기화
+                        </button>
+                        {% if brand.products.count == 0 %}
+                        <button type="button" 
+                                @click="deleteBrand"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-700 bg-red-100 border border-red-200 rounded-lg hover:bg-red-200 dark:bg-red-900 dark:text-red-200 dark:border-red-700 dark:hover:bg-red-800 transition-all duration-200">
+                            <i class="fas fa-trash w-4 h-4 mr-2"></i>
+                            브랜드 삭제
+                        </button>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <button type="button" 
+                                @click="previewBrand"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700 transition-all duration-200">
+                            <i class="fas fa-eye w-4 h-4 mr-2"></i>
+                            미리보기
+                        </button>
+                        <button type="submit" 
+                                :disabled="!isFormValid"
+                                :class="isFormValid ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700' : 'bg-gray-400 cursor-not-allowed'"
+                                class="btn-primary inline-flex items-center px-6 py-2 text-white font-medium rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 transition-all duration-200 shadow-lg">
+                            <i class="fas fa-save w-4 h-4 mr-2"></i>
+                            변경사항 저장
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Preview Modal -->
+        <div x-show="showPreview" 
+             x-cloak
+             class="fixed inset-0 z-50 overflow-y-auto"
+             @keydown.escape.window="showPreview = false">
+            <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75 dark:bg-gray-900 dark:bg-opacity-75" 
+                     @click="showPreview = false"></div>
+                
+                <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-white dark:bg-gray-800 px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">브랜드 미리보기</h3>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 px-6 py-4">
+                        <div class="space-y-4">
+                            <!-- Logo -->
+                            <div class="text-center">
+                                <div class="w-20 h-20 mx-auto bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                    <img x-show="logoPreview" 
+                                         :src="logoPreview" 
+                                         alt="로고"
+                                         class="w-full h-full object-contain rounded-lg">
+                                    {% if brand.logo %}
+                                    <img x-show="!logoPreview" 
+                                         src="{{ brand.logo.url }}" 
+                                         alt="{{ brand.name }}"
+                                         class="w-full h-full object-contain rounded-lg">
+                                    {% else %}
+                                    <div x-show="!logoPreview" class="text-center">
+                                        <span class="text-2xl font-bold text-purple-600" x-text="brandData.name.charAt(0).toUpperCase()"></span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <!-- Brand Info -->
+                            <div class="text-center">
+                                <h4 class="text-xl font-bold text-gray-900 dark:text-white" x-text="brandData.name || '브랜드명'"></h4>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 font-mono" x-text="brandData.code || 'BRAND_CODE'"></p>
+                            </div>
+                            
+                            <div x-show="brandData.description" class="text-center">
+                                <p class="text-gray-600 dark:text-gray-400" x-text="brandData.description"></p>
+                            </div>
+                            
+                            <div x-show="brandData.website" class="text-center">
+                                <a :href="brandData.website" 
+                                   target="_blank"
+                                   class="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+                                    <i class="fas fa-external-link-alt w-3 h-3 mr-1"></i>
+                                    웹사이트 방문
+                                </a>
+                            </div>
+                            
+                            <div class="text-center">
+                                <span class="inline-flex items-center px-3 py-1 text-sm font-medium rounded-full"
+                                      :class="brandData.is_active ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'">
+                                    <i class="fas fa-circle w-2 h-2 mr-1"></i>
+                                    <span x-text="brandData.is_active ? '활성' : '비활성'"></span>
+                                </span>
+                            </div>
+                            
+                            <div class="text-center pt-4 border-t border-gray-200 dark:border-gray-600">
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                    연결된 상품: {{ brand.products.count }}개
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3 flex justify-end">
+                        <button type="button" 
+                                @click="showPreview = false"
+                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700 transition-all duration-200">
+                            닫기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function brandEditData() {
+    return {
+        brandData: {
+            name: '{{ form.name.value|default:brand.name }}',
+            code: '{{ form.code.value|default:brand.code }}',
+            description: '{{ form.description.value|default:brand.description }}',
+            website: '{{ form.website.value|default:brand.website }}',
+            is_active: {{ form.is_active.value|default:brand.is_active|yesno:"true,false" }}
+        },
+        logoPreview: null,
+        showPreview: false,
+        logoRemoved: false,
+        
+        get isFormValid() {
+            return this.brandData.name.trim() !== '' && 
+                   this.brandData.code.trim() !== '' && 
+                   /^[A-Z0-9_]+$/.test(this.brandData.code);
+        },
+        
+        generateCode() {
+            if (this.brandData.name.trim()) {
+                // 브랜드명을 기반으로 코드 생성
+                let code = this.brandData.name
+                    .toUpperCase()
+                    .replace(/[^A-Z0-9\s]/g, '') // 특수문자 제거
+                    .replace(/\s+/g, '_') // 공백을 언더스코어로
+                    .substring(0, 15); // 최대 15자
+                
+                // 중복 언더스코어 제거
+                code = code.replace(/_+/g, '_');
+                
+                // 시작/끝 언더스코어 제거
+                code = code.replace(/^_|_$/g, '');
+                
+                this.brandData.code = code;
+            }
+        },
+        
+        handleLogoChange(event) {
+            const file = event.target.files[0];
+            if (file) {
+                // 파일 크기 체크 (5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    Swal.fire({
+                        title: '파일 크기 초과',
+                        text: '파일 크기는 5MB 이하여야 합니다.',
+                        icon: 'warning'
+                    });
+                    event.target.value = '';
+                    return;
+                }
+                
+                // 파일 타입 체크
+                if (!file.type.startsWith('image/')) {
+                    Swal.fire({
+                        title: '잘못된 파일 형식',
+                        text: '이미지 파일만 업로드 가능합니다.',
+                        icon: 'warning'
+                    });
+                    event.target.value = '';
+                    return;
+                }
+                
+                // 미리보기 생성
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.logoPreview = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                this.logoPreview = null;
+            }
+        },
+        
+        removeCurrentLogo() {
+            this.logoRemoved = true;
+            this.logoPreview = null;
+            const fileInput = document.querySelector('input[type="file"]');
+            if (fileInput) {
+                fileInput.value = '';
+            }
+            
+            // 현재 로고 제거를 위한 숨겨진 필드 추가
+            const form = this.$refs.brandForm;
+            let removeLogoInput = form.querySelector('input[name="remove_logo"]');
+            if (!removeLogoInput) {
+                removeLogoInput = document.createElement('input');
+                removeLogoInput.type = 'hidden';
+                removeLogoInput.name = 'remove_logo';
+                form.appendChild(removeLogoInput);
+            }
+            removeLogoInput.value = 'true';
+        },
+        
+        resetForm() {
+            this.brandData = {
+                name: '{{ brand.name }}',
+                code: '{{ brand.code }}',
+                description: '{{ brand.description }}',
+                website: '{{ brand.website }}',
+                is_active: {{ brand.is_active|yesno:"true,false" }}
+            };
+            this.logoPreview = null;
+            this.logoRemoved = false;
+            
+            // 파일 입력 초기화
+            const fileInput = document.querySelector('input[type="file"]');
+            if (fileInput) {
+                fileInput.value = '';
+            }
+            
+            // 숨겨진 필드 제거
+            const form = this.$refs.brandForm;
+            const removeLogoInput = form.querySelector('input[name="remove_logo"]');
+            if (removeLogoInput) {
+                removeLogoInput.remove();
+            }
+        },
+        
+        previewBrand() {
+            if (!this.isFormValid) {
+                Swal.fire({
+                    title: '입력 확인',
+                    text: '브랜드명과 코드를 입력해주세요.',
+                    icon: 'warning'
+                });
+                return;
+            }
+            this.showPreview = true;
+        },
+        
+        async deleteBrand() {
+            const result = await Swal.fire({
+                title: '브랜드 삭제',
+                text: '이 브랜드를 정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '삭제',
+                cancelButtonText: '취소',
+                reverseButtons: true
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    const response = await fetch('{% url "products:brand_delete" brand.pk %}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                    if (response.ok) {
+                        await Swal.fire({
+                            title: '삭제 완료',
+                            text: '브랜드가 삭제되었습니다.',
+                            icon: 'success',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+                        
+                        // 브랜드 목록으로 이동
+                        window.location.href = '{% url "products:brand_list" %}';
+                    } else {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || '삭제 중 오류가 발생했습니다.');
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        title: '삭제 실패',
+                        text: error.message,
+                        icon: 'error'
+                    });
+                }
+            }
+        }
+    }
+}
+</script>
+
+{% endblock %}

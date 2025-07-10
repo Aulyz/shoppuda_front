@@ -1,0 +1,668 @@
+<!-- templates/products/product_detail.html -->
+{% extends 'base.html' %}
+{% load static %}
+{% load product_tags %}
+{% load humanize %}
+
+{% block title %}{{ product.name }} - 상품 상세 - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'products:list' %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">상품 관리</a>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>{{ product.name }}</span>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+.image-gallery {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 1rem;
+}
+
+.thumbnail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.thumbnail.active {
+    border-color: #3B82F6;
+    transform: scale(1.05);
+}
+
+.main-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+    .image-gallery {
+        grid-template-columns: 1fr;
+    }
+    
+    .thumbnail-list {
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 0.5rem 0;
+    }
+    
+    .main-image {
+        height: 300px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-6" x-data="productDetail()">
+    <!-- 페이지 헤더 -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700">
+        <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-700 px-6 py-8 rounded-t-2xl">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <i class="fas fa-box text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl lg:text-3xl font-bold text-white">{{ product.name }}</h1>
+                        <p class="text-blue-100 font-medium">SKU: {{ product.sku }}</p>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="{% url 'products:edit' product.id %}" 
+                       class="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg text-white font-medium hover:bg-white/30 transition-all duration-200 hover:scale-105">
+                        <i class="fas fa-edit mr-2"></i>편집
+                    </a>
+                    <a href="{% url 'products:clone' product.id %}" 
+                       class="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg text-white font-medium hover:bg-white/30 transition-all duration-200 hover:scale-105">
+                        <i class="fas fa-copy mr-2"></i>복제
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- 메인 콘텐츠 -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- 상품 이미지 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">상품 이미지</h3>
+                
+                {% if images %}
+                <div class="image-gallery">
+                    <div class="thumbnail-list">
+                        {% for image in images %}
+                        <img src="{{ image.image.url }}" alt="{{ image.alt_text }}"
+                             class="thumbnail {% if forloop.first %}active{% endif %}"
+                             @click="setMainImage('{{ image.image.url }}', {{ forloop.counter0 }})">
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <img src="{{ images.0.image.url }}" alt="{{ product.name }}"
+                             class="main-image" x-ref="mainImage">
+                    </div>
+                </div>
+                {% else %}
+                <div class="flex items-center justify-center h-64 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                    <div class="text-center">
+                        <i class="fas fa-image text-4xl text-gray-400 mb-4"></i>
+                        <p class="text-gray-500 dark:text-gray-400">등록된 이미지가 없습니다</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- 상품 정보 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">상품 정보</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">상품명</label>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ product.name }}</p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">SKU</label>
+                        <p class="text-lg font-mono text-gray-900 dark:text-white">{{ product.sku }}</p>
+                    </div>
+                    
+                    {% if product.brand %}
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">브랜드</label>
+                        <p class="text-lg text-gray-900 dark:text-white">{{ product.brand.name }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if product.category %}
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">카테고리</label>
+                        <p class="text-lg text-gray-900 dark:text-white">{{ product.category.name }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if product.barcode %}
+                    <div>
+                        <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">바코드</label>
+                        <p class="text-lg font-mono text-gray-900 dark:text-white">{{ product.barcode }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                {% if product.short_description %}
+                <div class="mt-6">
+                    <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">간단 설명</label>
+                    <p class="text-gray-700 dark:text-gray-300">{{ product.short_description }}</p>
+                </div>
+                {% endif %}
+                
+                {% if product.description %}
+                <div class="mt-6">
+                    <label class="block text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">상세 설명</label>
+                    <div class="prose dark:prose-invert max-w-none">
+                        {{ product.description|linebreaks }}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- 가격 정보 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">가격 정보</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4">
+                        <label class="block text-sm font-medium text-blue-600 dark:text-blue-400 mb-1">원가</label>
+                        <p class="text-2xl font-bold text-blue-700 dark:text-blue-300">₩{{ product.cost_price|floatformat:0|intcomma }}</p>
+                    </div>
+                    
+                    <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-4">
+                        <label class="block text-sm font-medium text-green-600 dark:text-green-400 mb-1">판매가</label>
+                        <p class="text-2xl font-bold text-green-700 dark:text-green-300">₩{{ product.selling_price|floatformat:0|intcomma }}</p>
+                    </div>
+                    
+                    {% if product.discount_price %}
+                    <div class="bg-red-50 dark:bg-red-900/20 rounded-lg p-4">
+                        <label class="block text-sm font-medium text-red-600 dark:text-red-400 mb-1">할인가</label>
+                        <p class="text-2xl font-bold text-red-700 dark:text-red-300">₩{{ product.discount_price|floatformat:0|intcomma }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                {% if profit_margin %}
+                <div class="mt-4 p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                    <div class="flex items-center">
+                        <i class="fas fa-chart-line text-yellow-600 dark:text-yellow-400 mr-2"></i>
+                        <span class="text-sm font-medium text-yellow-700 dark:text-yellow-300">
+                            예상 수익률: {{ profit_margin }}%
+                        </span>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- 물리적 정보 -->
+            {% if product.weight or product.dimensions_length or product.dimensions_width or product.dimensions_height %}
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">물리적 정보</h3>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {% if product.weight %}
+                    <div class="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <i class="fas fa-weight text-gray-600 dark:text-gray-400 mb-2"></i>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">무게</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ product.weight }}kg</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if product.dimensions_length %}
+                    <div class="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <i class="fas fa-ruler text-gray-600 dark:text-gray-400 mb-2"></i>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">길이</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ product.dimensions_length }}cm</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if product.dimensions_width %}
+                    <div class="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <i class="fas fa-ruler-horizontal text-gray-600 dark:text-gray-400 mb-2"></i>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">너비</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ product.dimensions_width }}cm</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if product.dimensions_height %}
+                    <div class="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <i class="fas fa-ruler-vertical text-gray-600 dark:text-gray-400 mb-2"></i>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">높이</p>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ product.dimensions_height }}cm</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- 사이드바 -->
+        <div class="space-y-6">
+            <!-- 재고 정보 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">재고 정보</h3>
+                
+                <div class="space-y-4">
+                    <div class="text-center p-4 rounded-lg {% if stock_status == 'out_of_stock' %}bg-red-50 dark:bg-red-900/20{% elif stock_status == 'low_stock' %}bg-yellow-50 dark:bg-yellow-900/20{% else %}bg-green-50 dark:bg-green-900/20{% endif %}">
+                        <p class="text-sm {% if stock_status == 'out_of_stock' %}text-red-600 dark:text-red-400{% elif stock_status == 'low_stock' %}text-yellow-600 dark:text-yellow-400{% else %}text-green-600 dark:text-green-400{% endif %} mb-1">현재 재고</p>
+                        <p class="text-3xl font-bold {% if stock_status == 'out_of_stock' %}text-red-700 dark:text-red-300{% elif stock_status == 'low_stock' %}text-yellow-700 dark:text-yellow-300{% else %}text-green-700 dark:text-green-300{% endif %}">{{ product.stock_quantity }}</p>
+                        {% if stock_status == 'out_of_stock' %}
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 mt-2">품절</span>
+                        {% elif stock_status == 'low_stock' %}
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 mt-2">재고 부족</span>
+                        {% else %}
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-2">재고 충분</span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <p class="text-xs text-gray-500 dark:text-gray-400">최소 재고</p>
+                            <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ product.min_stock_level }}</p>
+                        </div>
+                        <div class="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                            <p class="text-xs text-gray-500 dark:text-gray-400">최대 재고</p>
+                            <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ product.max_stock_level }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <button @click="showStockAdjustment = true"
+                                class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                            <i class="fas fa-sliders-h mr-2"></i>재고 조정
+                        </button>
+                        <a href="{% url 'products:stock_history' product.id %}"
+                           class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center">
+                            <i class="fas fa-history mr-2"></i>재고 이력
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 상품 상태 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">상품 상태</h3>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">판매 상태</span>
+                        {% if product.status == 'ACTIVE' %}
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                            <i class="fas fa-check-circle mr-1"></i>활성
+                        </span>
+                        {% else %}
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                            <i class="fas fa-pause-circle mr-1"></i>비활성
+                        </span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">추천 상품</span>
+                        {% if product.is_featured %}
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                            <i class="fas fa-star mr-1"></i>추천
+                        </span>
+                        {% else %}
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                            <i class="fas fa-star-o mr-1"></i>일반
+                        </span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+                        <div class="grid grid-cols-2 gap-2">
+                            {% if product.status == 'ACTIVE' %}
+                            <button @click="changeStatus('INACTIVE')"
+                                    class="px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
+                                비활성화
+                            </button>
+                            {% else %}
+                            <button @click="changeStatus('ACTIVE')"
+                                    class="px-3 py-2 text-sm bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors duration-200">
+                                활성화
+                            </button>
+                            {% endif %}
+                            
+                            {% if product.is_featured %}
+                            <button @click="changeFeatured(false)"
+                                    class="px-3 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
+                                추천 해제
+                            </button>
+                            {% else %}
+                            <button @click="changeFeatured(true)"
+                                    class="px-3 py-2 text-sm bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors duration-200">
+                                추천 설정
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 태그 -->
+            {% if product.tags %}
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">태그</h3>
+                
+                <div class="flex flex-wrap gap-2">
+                    {% with product.tags|split:"," as tag_list %}
+                        {% for tag in tag_list %}
+                            {% if tag.strip %}
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                <i class="fas fa-tag mr-1 text-xs"></i>{{ tag.strip }}
+                            </span>
+                            {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- 메타 정보 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">메타 정보</h3>
+                
+                <div class="space-y-3 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 dark:text-gray-400">등록일</span>
+                        <span class="text-gray-900 dark:text-white">{{ product.created_at|date:"Y-m-d H:i" }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 dark:text-gray-400">수정일</span>
+                        <span class="text-gray-900 dark:text-white">{{ product.updated_at|date:"Y-m-d H:i" }}</span>
+                    </div>
+                    {% if product.created_by %}
+                    <div class="flex justify-between">
+                        <span class="text-gray-500 dark:text-gray-400">등록자</span>
+                        <span class="text-gray-900 dark:text-white">{{ product.created_by.username }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- 빠른 작업 -->
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">빠른 작업</h3>
+                
+                <div class="space-y-2">
+                    <a href="{% url 'products:edit' product.id %}"
+                       class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors duration-200 flex items-center justify-center">
+                        <i class="fas fa-edit mr-2"></i>상품 편집
+                    </a>
+                    <a href="{% url 'products:clone' product.id %}"
+                       class="w-full px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center justify-center">
+                        <i class="fas fa-copy mr-2"></i>상품 복제
+                    </a>
+                    <a href="{% url 'products:product_images' product.id %}"
+                       class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center justify-center">
+                        <i class="fas fa-images mr-2"></i>이미지 관리
+                    </a>
+                    <button @click="deleteProduct()"
+                            class="w-full px-4 py-2 border border-red-300 text-red-700 rounded-lg hover:bg-red-50 transition-colors duration-200 flex items-center justify-center">
+                        <i class="fas fa-trash mr-2"></i>상품 삭제
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 재고 조정 모달 -->
+    <div x-show="showStockAdjustment" x-cloak
+         class="fixed inset-0 z-50 overflow-y-auto"
+         @click.away="showStockAdjustment = false">
+        <div class="flex items-center justify-center min-h-screen px-4">
+            <div class="fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity"></div>
+            
+            <div class="relative bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">재고 조정</h3>
+                    <button @click="showStockAdjustment = false" 
+                            class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <form @submit.prevent="adjustStock()">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">조정 유형</label>
+                            <select x-model="stockAdjustment.type" 
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+                                <option value="set">설정 (현재 재고를 지정된 수량으로 변경)</option>
+                                <option value="add">추가 (현재 재고에 수량 추가)</option>
+                                <option value="subtract">차감 (현재 재고에서 수량 차감)</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">수량</label>
+                            <input type="number" x-model="stockAdjustment.quantity" min="0" required
+                                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">조정 사유</label>
+                            <textarea x-model="stockAdjustment.reason" rows="3"
+                                      class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                                      placeholder="재고 조정 사유를 입력하세요"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-3 mt-6">
+                        <button type="button" @click="showStockAdjustment = false"
+                                class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
+                            취소
+                        </button>
+                        <button type="submit"
+                                class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                            조정하기
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Alpine.js Data -->
+<script>
+function productDetail() {
+    return {
+        showStockAdjustment: false,
+        stockAdjustment: {
+            type: 'set',
+            quantity: {{ product.stock_quantity }},
+            reason: ''
+        },
+        
+        // 메인 이미지 변경
+        setMainImage(imageUrl, index) {
+            this.$refs.mainImage.src = imageUrl;
+            
+            // 썸네일 활성 상태 업데이트
+            document.querySelectorAll('.thumbnail').forEach(thumb => thumb.classList.remove('active'));
+            document.querySelectorAll('.thumbnail')[index].classList.add('active');
+        },
+        
+        // 재고 조정
+        async adjustStock() {
+            try {
+                const response = await fetch(`{% url 'products:adjust_stock' product.id %}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: JSON.stringify(this.stockAdjustment)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    Swal.fire({
+                        icon: 'success',
+                        title: '재고 조정 완료',
+                        text: `${result.message}`,
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    throw new Error('재고 조정에 실패했습니다.');
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '오류',
+                    text: error.message
+                });
+            }
+        },
+        
+        // 상품 상태 변경
+        async changeStatus(status) {
+            try {
+                const response = await fetch(`{% if product.status == 'ACTIVE' %}{% url 'products:deactivate' product.id %}{% else %}{% url 'products:activate' product.id %}{% endif %}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: JSON.stringify({ status: status })
+                });
+                
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '상태 변경 완료',
+                        text: '상품 상태가 변경되었습니다.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    throw new Error('상태 변경에 실패했습니다.');
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '오류',
+                    text: error.message
+                });
+            }
+        },
+        
+        // 추천 상품 설정 변경
+        async changeFeatured(featured) {
+            try {
+                const response = await fetch(`{% if product.is_featured %}{% url 'products:unfeature' product.id %}{% else %}{% url 'products:feature' product.id %}{% endif %}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: JSON.stringify({ is_featured: featured })
+                });
+                
+                if (response.ok) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '설정 변경 완료',
+                        text: '추천 상품 설정이 변경되었습니다.',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    throw new Error('설정 변경에 실패했습니다.');
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '오류',
+                    text: error.message
+                });
+            }
+        },
+        
+        // 상품 삭제
+        async deleteProduct() {
+            const result = await Swal.fire({
+                title: '상품 삭제',
+                text: '정말로 이 상품을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '삭제',
+                cancelButtonText: '취소',
+                reverseButtons: true
+            });
+            
+            if (result.isConfirmed) {
+                try {
+                    const response = await fetch(`{% url 'products:delete' product.id %}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '삭제 완료',
+                            text: '상품이 성공적으로 삭제되었습니다.',
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.href = '{% url "products:list" %}';
+                        });
+                    } else {
+                        throw new Error('상품 삭제에 실패했습니다.');
+                    }
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '오류',
+                        text: error.message
+                    });
+                }
+            }
+        }
+    }
+}
+</script>
+
+<!-- CSRF Token for AJAX requests -->
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+{% endblock %}

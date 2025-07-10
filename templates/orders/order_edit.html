@@ -1,0 +1,767 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% comment %} templates/orders/order_edit.html - Shopuda ERP 주문 수정 페이지 {% endcomment %}
+
+{% block title %}주문 수정 - {{ object.order_number }} - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'orders:list' %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">주문 관리</a>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'orders:detail' object.pk %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">{{ object.order_number }}</a>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>수정</span>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<meta name="csrf-token" content="{{ csrf_token }}">
+<style>
+/* 모바일 최적화 스타일 */
+@media (max-width: 768px) {
+    .grid.lg\\:grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+    
+    .grid.lg\\:grid-cols-3 {
+        grid-template-columns: 1fr;
+    }
+    
+    /* 터치 친화적 버튼 크기 */
+    button, input[type="submit"] {
+        min-height: 44px;
+        padding: 12px 16px;
+    }
+    
+    /* 입력 필드 크기 조정 */
+    input, select, textarea {
+        min-height: 44px;
+        font-size: 16px; /* iOS zoom 방지 */
+    }
+    
+    /* 모바일에서 더 나은 여백 */
+    .px-6 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+/* 실시간 검증 애니메이션 */
+.field-error {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 포커스 스타일 */
+.form-input:focus {
+    outline: none;
+    ring: 2px;
+    ring-color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+/* 로딩 상태 스타일 */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3b82f6;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Alpine.js x-cloak */
+[x-cloak] { 
+    display: none !important; 
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-6" x-data="orderEditData()">
+    <!-- 로딩 오버레이 -->
+    <div x-show="loading" x-cloak class="loading-overlay">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-xl">
+            <div class="flex items-center space-x-4">
+                <div class="loading-spinner"></div>
+                <div class="text-gray-700 dark:text-gray-300 font-medium">처리 중...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 페이지 헤더 -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 px-6 py-8">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <i class="fas fa-edit text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl lg:text-3xl font-bold text-white">주문 수정</h1>
+                        <p class="text-blue-100 font-medium">{{ object.order_number }}</p>
+                        <div class="flex items-center space-x-3 mt-2">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold 
+                                {% if object.status == 'PENDING' %}bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300{% elif object.status == 'PROCESSING' %}bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300{% elif object.status == 'SHIPPED' %}bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300{% elif object.status == 'DELIVERED' %}bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300{% elif object.status == 'CANCELLED' %}bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300{% endif %}">
+                                {{ object.get_status_display }}
+                            </span>
+                            <span class="text-blue-100 text-sm">
+                                <i class="fas fa-calendar mr-1"></i>
+                                {{ object.created_at|date:"Y-m-d H:i" }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="{% url 'orders:detail' object.pk %}" 
+                       class="inline-flex items-center px-6 py-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30 rounded-lg text-white font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg">
+                        <i class="fas fa-eye mr-2"></i>
+                        상세보기
+                    </a>
+                    <a href="{% url 'orders:list' %}" 
+                       class="inline-flex items-center px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-lg text-white font-medium transition-all duration-200">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        목록으로
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 수정 폼 -->
+    <form method="post" @submit="handleSubmit" class="space-y-6">
+        {% csrf_token %}
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- 좌측: 고객 정보 -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- 고객 정보 섹션 -->
+                <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                    <div class="px-6 py-5 border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-user text-white"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">고객 정보</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- 고객명 -->
+                            <div>
+                                <label for="{{ form.customer_name.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    고객명 <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" 
+                                       name="{{ form.customer_name.name }}" 
+                                       id="{{ form.customer_name.id_for_label }}"
+                                       value="{{ form.customer_name.value|default:'' }}"
+                                       class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                       required>
+                                {% if form.customer_name.errors %}
+                                    <div class="field-error mt-2 text-sm text-red-600 dark:text-red-400">
+                                        {% for error in form.customer_name.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- 이메일 -->
+                            <div>
+                                <label for="{{ form.customer_email.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    이메일
+                                </label>
+                                <input type="email" 
+                                       name="{{ form.customer_email.name }}" 
+                                       id="{{ form.customer_email.id_for_label }}"
+                                       value="{{ form.customer_email.value|default:'' }}"
+                                       class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                                {% if form.customer_email.errors %}
+                                    <div class="field-error mt-2 text-sm text-red-600 dark:text-red-400">
+                                        {% for error in form.customer_email.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- 전화번호 -->
+                        <div>
+                            <label for="{{ form.customer_phone.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                전화번호
+                            </label>
+                            <input type="tel" 
+                                   name="{{ form.customer_phone.name }}" 
+                                   id="{{ form.customer_phone.id_for_label }}"
+                                   value="{{ form.customer_phone.value|default:'' }}"
+                                   class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                   placeholder="010-1234-5678">
+                            {% if form.customer_phone.errors %}
+                                <div class="field-error mt-2 text-sm text-red-600 dark:text-red-400">
+                                    {% for error in form.customer_phone.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 배송 정보 섹션 -->
+                <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                    <div class="px-6 py-5 border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-truck text-white"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">배송 정보</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- 우편번호 -->
+                            <div>
+                                <label for="{{ form.shipping_zipcode.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    우편번호
+                                </label>
+                                <div class="flex space-x-2">
+                                    <input type="text" 
+                                           name="{{ form.shipping_zipcode.name }}" 
+                                           id="{{ form.shipping_zipcode.id_for_label }}"
+                                           value="{{ form.shipping_zipcode.value|default:'' }}"
+                                           class="form-input flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                           placeholder="12345">
+                                    <button type="button" 
+                                            @click="searchAddress" 
+                                            class="px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200 whitespace-nowrap">
+                                        <i class="fas fa-search mr-1"></i>
+                                        검색
+                                    </button>
+                                </div>
+                                {% if form.shipping_zipcode.errors %}
+                                    <div class="field-error mt-2 text-sm text-red-600 dark:text-red-400">
+                                        {% for error in form.shipping_zipcode.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- 배송 방법 -->
+                            <div class="md:col-span-2">
+                                <label for="{{ form.shipping_method.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    배송 방법
+                                </label>
+                                <select name="{{ form.shipping_method.name }}" 
+                                        id="{{ form.shipping_method.id_for_label }}"
+                                        class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                                    <option value="">배송 방법 선택</option>
+                                    <option value="standard" {% if form.shipping_method.value == 'standard' %}selected{% endif %}>일반 배송</option>
+                                    <option value="express" {% if form.shipping_method.value == 'express' %}selected{% endif %}>특급 배송</option>
+                                    <option value="pickup" {% if form.shipping_method.value == 'pickup' %}selected{% endif %}>매장 픽업</option>
+                                </select>
+                                {% if form.shipping_method.errors %}
+                                    <div class="field-error mt-2 text-sm text-red-600 dark:text-red-400">
+                                        {% for error in form.shipping_method.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- 배송 주소 -->
+                        <div>
+                            <label for="{{ form.shipping_address.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                배송 주소
+                            </label>
+                            <textarea name="{{ form.shipping_address.name }}" 
+                                      id="{{ form.shipping_address.id_for_label }}"
+                                      rows="3"
+                                      class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 resize-none"
+                                      placeholder="상세 주소를 입력해주세요">{{ form.shipping_address.value|default:'' }}</textarea>
+                            {% if form.shipping_address.errors %}
+                                <div class="field-error mt-2 text-sm text-red-600 dark:text-red-400">
+                                    {% for error in form.shipping_address.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- 운송장 번호 -->
+                        <div>
+                            <label for="{{ form.tracking_number.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                운송장 번호
+                            </label>
+                            <input type="text" 
+                                   name="{{ form.tracking_number.name }}" 
+                                   id="{{ form.tracking_number.id_for_label }}"
+                                   value="{{ form.tracking_number.value|default:'' }}"
+                                   class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+                                   placeholder="운송장 번호를 입력해주세요">
+                            {% if form.tracking_number.errors %}
+                                <div class="field-error mt-2 text-sm text-red-600 dark:text-red-400">
+                                    {% for error in form.tracking_number.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 추가 정보 섹션 -->
+                <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                    <div class="px-6 py-5 border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-sticky-note text-white"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">추가 정보</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <!-- 메모 -->
+                        <div>
+                            <label for="{{ form.notes.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                주문 메모
+                            </label>
+                            <textarea name="{{ form.notes.name }}" 
+                                      id="{{ form.notes.id_for_label }}"
+                                      rows="4"
+                                      class="form-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 resize-none"
+                                      placeholder="주문과 관련된 특별한 사항이나 요청사항을 입력해주세요">{{ form.notes.value|default:'' }}</textarea>
+                            {% if form.notes.errors %}
+                                <div class="field-error mt-2 text-sm text-red-600 dark:text-red-400">
+                                    {% for error in form.notes.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 우측: 주문 요약 및 액션 -->
+            <div class="space-y-6">
+                <!-- 주문 요약 -->
+                <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden sticky top-6">
+                    <div class="px-6 py-5 border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-receipt text-white"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">주문 요약</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 space-y-4">
+                        <!-- 주문 번호 -->
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">주문 번호</span>
+                            <span class="text-sm font-bold text-gray-900 dark:text-white">{{ object.order_number }}</span>
+                        </div>
+                        
+                        <!-- 주문 일시 -->
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">주문 일시</span>
+                            <span class="text-sm text-gray-900 dark:text-white">{{ object.created_at|date:"m/d H:i" }}</span>
+                        </div>
+                        
+                        <!-- 주문 상태 -->
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">주문 상태</span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold 
+                                {% if object.status == 'PENDING' %}bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300{% elif object.status == 'PROCESSING' %}bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300{% elif object.status == 'SHIPPED' %}bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300{% elif object.status == 'DELIVERED' %}bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300{% elif object.status == 'CANCELLED' %}bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300{% endif %}">
+                                {{ object.get_status_display }}
+                            </span>
+                        </div>
+                        
+                        <!-- 총 금액 -->
+                        {% if object.total_amount %}
+                        <div class="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700">
+                            <span class="text-base font-semibold text-gray-900 dark:text-white">총 금액</span>
+                            <span class="text-lg font-bold text-blue-600 dark:text-blue-400">₩{{ object.total_amount|floatformat:0 }}</span>
+                        </div>
+                        {% endif %}
+                        
+                        <!-- 플랫폼 정보 -->
+                        {% if object.platform %}
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">플랫폼</span>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                                <i class="fas fa-store mr-1"></i>
+                                {{ object.platform.name }}
+                            </span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- 액션 버튼들 -->
+                    <div class="px-6 py-4 bg-gray-50 dark:bg-gray-900/50 border-t border-gray-200 dark:border-gray-700 space-y-3">
+                        <button type="submit" 
+                                :disabled="loading"
+                                class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 hover:shadow-lg disabled:hover:scale-100 disabled:hover:shadow-none flex items-center justify-center">
+                            <span x-show="!loading" class="flex items-center">
+                                <i class="fas fa-save mr-2"></i>
+                                수정 완료
+                            </span>
+                            <span x-show="loading" x-cloak class="flex items-center">
+                                <i class="fas fa-spinner fa-spin mr-2"></i>
+                                처리 중...
+                            </span>
+                        </button>
+                        
+                        <button type="button" 
+                                @click="resetForm"
+                                class="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200">
+                            <i class="fas fa-undo mr-2"></i>
+                            초기화
+                        </button>
+                        
+                        <a href="{% url 'orders:detail' object.pk %}" 
+                           class="w-full bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-medium py-3 px-4 rounded-lg transition-colors duration-200 text-center block">
+                            <i class="fas fa-times mr-2"></i>
+                            취소
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 주문 상품 목록 (읽기 전용) -->
+                {% if object.items.exists %}
+                <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                    <div class="px-6 py-5 border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-full flex items-center justify-center mr-3">
+                                <i class="fas fa-box text-white"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">주문 상품</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            {% for item in object.items.all %}
+                            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-900/50 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    {% if item.product.image %}
+                                        <img src="{{ item.product.image.url }}" 
+                                             alt="{{ item.product.name }}" 
+                                             class="w-12 h-12 object-cover rounded-lg">
+                                    {% else %}
+                                        <div class="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-image text-gray-400"></i>
+                                        </div>
+                                    {% endif %}
+                                    <div>
+                                        <p class="font-medium text-gray-900 dark:text-white">{{ item.product.name }}</p>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ item.product.sku }}</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-semibold text-gray-900 dark:text-white">{{ item.quantity }}개</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">₩{{ item.price|floatformat:0 }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- 도움말 카드 -->
+                <div class="bg-gradient-to-br from-amber-50 to-orange-100 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-6">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                            <i class="fas fa-lightbulb text-white text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-amber-800 dark:text-amber-200 mb-2">수정 안내</h4>
+                            <ul class="text-sm text-amber-700 dark:text-amber-300 space-y-1">
+                                <li>• 고객 정보는 신중히 수정해주세요</li>
+                                <li>• 배송 주소 변경 시 고객에게 알려주세요</li>
+                                <li>• 운송장 번호는 배송 시작 후 입력하세요</li>
+                                <li>• 변경사항은 즉시 저장됩니다</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+function orderEditData() {
+    return {
+        loading: false,
+        
+        init() {
+            // 폼 초기화 시 실행할 코드
+            console.log('주문 수정 페이지 초기화');
+        },
+        
+        handleSubmit(event) {
+            event.preventDefault();
+            
+            // 유효성 검사
+            if (!this.validateForm()) {
+                return;
+            }
+            
+            this.loading = true;
+            
+            // SweetAlert2로 확인 대화상자
+            Swal.fire({
+                title: '주문 정보를 수정하시겠습니까?',
+                text: '변경된 내용이 저장됩니다.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3b82f6',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '수정',
+                cancelButtonText: '취소',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submitForm(event.target);
+                } else {
+                    this.loading = false;
+                }
+            });
+        },
+        
+        validateForm() {
+            const customerName = document.querySelector('input[name="customer_name"]').value.trim();
+            
+            if (!customerName) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '입력 오류',
+                    text: '고객명을 입력해주세요.',
+                    confirmButtonColor: '#dc2626'
+                });
+                return false;
+            }
+            
+            // 이메일 유효성 검사 (입력된 경우에만)
+            const email = document.querySelector('input[name="customer_email"]').value.trim();
+            if (email && !this.isValidEmail(email)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '입력 오류',
+                    text: '올바른 이메일 주소를 입력해주세요.',
+                    confirmButtonColor: '#dc2626'
+                });
+                return false;
+            }
+            
+            // 전화번호 유효성 검사 (입력된 경우에만)
+            const phone = document.querySelector('input[name="customer_phone"]').value.trim();
+            if (phone && !this.isValidPhone(phone)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '입력 오류',
+                    text: '올바른 전화번호를 입력해주세요. (예: 010-1234-5678)',
+                    confirmButtonColor: '#dc2626'
+                });
+                return false;
+            }
+            
+            return true;
+        },
+        
+        isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        },
+        
+        isValidPhone(phone) {
+            const phoneRegex = /^[0-9-+\s()]+$/;
+            return phoneRegex.test(phone) && phone.length >= 10;
+        },
+        
+        submitForm(form) {
+            const formData = new FormData(form);
+            
+            fetch(form.action || window.location.href, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': this.getCsrfToken(),
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                }
+                throw new Error('서버 오류가 발생했습니다.');
+            })
+            .then(data => {
+                // 성공 시 페이지 이동 또는 새로고침
+                Swal.fire({
+                    icon: 'success',
+                    title: '수정 완료',
+                    text: '주문 정보가 성공적으로 수정되었습니다.',
+                    confirmButtonColor: '#059669',
+                    timer: 2000,
+                    timerProgressBar: true
+                }).then(() => {
+                    // 상세 페이지로 이동
+                    window.location.href = form.action.replace('/edit/', '/');
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: '수정 실패',
+                    text: '주문 정보 수정 중 오류가 발생했습니다. 다시 시도해주세요.',
+                    confirmButtonColor: '#dc2626'
+                });
+            })
+            .finally(() => {
+                this.loading = false;
+            });
+        },
+        
+        resetForm() {
+            Swal.fire({
+                title: '폼을 초기화하시겠습니까?',
+                text: '입력한 모든 내용이 원래 값으로 되돌아갑니다.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d97706',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '초기화',
+                cancelButtonText: '취소',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // 페이지 새로고침으로 원래 값으로 되돌리기
+                    window.location.reload();
+                }
+            });
+        },
+        
+        searchAddress() {
+            Swal.fire({
+                icon: 'info',
+                title: '주소 검색',
+                text: '주소 검색 기능은 추후 구현 예정입니다.',
+                confirmButtonColor: '#3b82f6'
+            });
+        },
+        
+        getCsrfToken() {
+            const token = document.querySelector('[name=csrfmiddlewaretoken]');
+            if (token) {
+                return token.value;
+            }
+            
+            // 쿠키에서 CSRF 토큰 가져오기
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                const [name, value] = cookie.trim().split('=');
+                if (name === 'csrftoken') {
+                    return decodeURIComponent(value);
+                }
+            }
+            
+            // meta 태그에서 CSRF 토큰 가져오기
+            const metaToken = document.querySelector('meta[name="csrf-token"]');
+            if (metaToken) {
+                return metaToken.getAttribute('content');
+            }
+            
+            return '';
+        }
+    }
+}
+
+// 페이지 로드 시 실행
+document.addEventListener('DOMContentLoaded', function() {
+    // 입력 필드 실시간 유효성 검사
+    const emailInput = document.querySelector('input[name="customer_email"]');
+    const phoneInput = document.querySelector('input[name="customer_phone"]');
+    
+    if (emailInput) {
+        emailInput.addEventListener('blur', function() {
+            if (this.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) {
+                this.classList.add('border-red-500', 'ring-red-500');
+                this.classList.remove('border-gray-300', 'border-blue-500');
+            } else {
+                this.classList.remove('border-red-500', 'ring-red-500');
+                this.classList.add('border-gray-300');
+            }
+        });
+    }
+    
+    if (phoneInput) {
+        phoneInput.addEventListener('blur', function() {
+            if (this.value.trim() && (!/^[0-9-+\s()]+$/.test(this.value) || this.value.length < 10)) {
+                this.classList.add('border-red-500', 'ring-red-500');
+                this.classList.remove('border-gray-300', 'border-blue-500');
+            } else {
+                this.classList.remove('border-red-500', 'ring-red-500');
+                this.classList.add('border-gray-300');
+            }
+        });
+    }
+    
+    // 자동 저장 기능 (선택사항)
+    let autoSaveTimer;
+    const formInputs = document.querySelectorAll('input, select, textarea');
+    
+    formInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            clearTimeout(autoSaveTimer);
+            autoSaveTimer = setTimeout(() => {
+                // 자동 저장 로직 (필요시 구현)
+                console.log('자동 저장 체크...');
+            }, 3000);
+        });
+    });
+});
+</script>
+{% endblock %}

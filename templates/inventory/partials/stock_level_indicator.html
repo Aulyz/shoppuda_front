@@ -1,0 +1,17 @@
+{% comment %} templates/inventory/partials/stock_level_indicator.html {% endcomment %}
+<div class="flex items-center space-x-2">
+    <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+        <div class="h-2 rounded-full transition-all duration-300
+            {% if status == 'critical' %}bg-red-500
+            {% elif status == 'warning' %}bg-yellow-500
+            {% else %}bg-green-500{% endif %}"
+             style="width: {{ stock_percentage|floatformat:0 }}%">
+        </div>
+    </div>
+    <span class="text-xs font-medium
+        {% if status == 'critical' %}text-red-600 dark:text-red-400
+        {% elif status == 'warning' %}text-yellow-600 dark:text-yellow-400
+        {% else %}text-green-600 dark:text-green-400{% endif %}">
+        {{ product.stock_quantity }}
+    </span>
+</div>

@@ -1,0 +1,291 @@
+<!-- templates/notifications/notification_list.html -->
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}알림 관리 - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>알림 관리</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-6" x-data="notificationList()">
+    <!-- 헤더 -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700">
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">
+                    <i class="fas fa-bell mr-2"></i>
+                    알림 관리
+                </h2>
+                <button @click="markAllAsRead()" 
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                    <i class="fas fa-check-double mr-2"></i>
+                    모두 읽음 처리
+                </button>
+            </div>
+        </div>
+        
+        <!-- 필터 -->
+        <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700/50">
+            <div class="flex flex-wrap gap-4">
+                <div class="flex items-center space-x-2">
+                    <label class="text-sm font-medium text-gray-700 dark:text-gray-300">타입:</label>
+                    <select name="type" class="form-select text-sm" onchange="filterNotifications()">
+                        <option value="">전체</option>
+                        <option value="order" {% if request.GET.type == 'order' %}selected{% endif %}>주문</option>
+                        <option value="stock" {% if request.GET.type == 'stock' %}selected{% endif %}>재고</option>
+                        <option value="payment" {% if request.GET.type == 'payment' %}selected{% endif %}>결제</option>
+                        <option value="system" {% if request.GET.type == 'system' %}selected{% endif %}>시스템</option>
+                        <option value="warning" {% if request.GET.type == 'warning' %}selected{% endif %}>경고</option>
+                    </select>
+                </div>
+                
+                <div class="flex items-center space-x-2">
+                    <label class="text-sm font-medium text-gray-700 dark:text-gray-300">상태:</label>
+                    <select name="read" class="form-select text-sm" onchange="filterNotifications()">
+                        <option value="">전체</option>
+                        <option value="unread" {% if request.GET.read == 'unread' %}selected{% endif %}>읽지 않음</option>
+                        <option value="read" {% if request.GET.read == 'read' %}selected{% endif %}>읽음</option>
+                    </select>
+                </div>
+                
+                <div class="flex-1 max-w-md">
+                    <div class="relative">
+                        <input type="text" 
+                               name="search" 
+                               value="{{ request.GET.search }}"
+                               placeholder="알림 검색..."
+                               class="form-input text-sm pl-10"
+                               onkeyup="if(event.key === 'Enter') filterNotifications()">
+                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 알림 목록 -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700">
+        <div class="divide-y divide-gray-200 dark:divide-gray-700">
+            {% for notification in notifications %}
+            <div class="notification-item p-6 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-200 {% if not notification.is_read %}bg-blue-50 dark:bg-blue-900/20{% endif %}"
+                 data-notification-id="{{ notification.id }}">
+                <div class="flex items-start space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-600 flex items-center justify-center">
+                            <i class="{{ notification.get_icon }} {{ notification.get_color }}"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">
+                                {{ notification.title }}
+                            </h3>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm text-gray-500 dark:text-gray-400">
+                                    {{ notification.created_at|naturaltime }}
+                                </span>
+                                {% if not notification.is_read %}
+                                <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">
+                            {{ notification.message }}
+                        </p>
+                        
+                        <div class="mt-3 flex items-center space-x-3">
+                            {% if notification.url %}
+                            <a href="{{ notification.url }}" 
+                               class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 text-sm font-medium">
+                                자세히 보기 <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                            {% endif %}
+                            
+                            {% if not notification.is_read %}
+                            <button @click="markAsRead({{ notification.id }})"
+                                    class="text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300 text-sm font-medium">
+                                <i class="fas fa-check mr-1"></i>읽음 처리
+                            </button>
+                            {% endif %}
+                            
+                            <button @click="deleteNotification({{ notification.id }})"
+                                    class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 text-sm font-medium">
+                                <i class="fas fa-trash mr-1"></i>삭제
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="p-12 text-center">
+                <i class="fas fa-bell-slash text-4xl text-gray-400 dark:text-gray-500 mb-4"></i>
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">알림이 없습니다</h3>
+                <p class="text-gray-500 dark:text-gray-400">새로운 알림이 도착하면 여기에 표시됩니다.</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- 페이지네이션 -->
+        {% if is_paginated %}
+        <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between">
+                <div class="text-sm text-gray-500 dark:text-gray-400">
+                    {{ page_obj.start_index }}-{{ page_obj.end_index }} / {{ paginator.count }}개
+                </div>
+                
+                <div class="flex space-x-1">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}{% if request.GET.read %}&read={{ request.GET.read }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+                       class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700">
+                        이전
+                    </a>
+                    {% endif %}
+                    
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                        <span class="px-3 py-2 text-sm font-medium text-white bg-blue-600 border border-blue-600 rounded-md">
+                            {{ num }}
+                        </span>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a href="?page={{ num }}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}{% if request.GET.read %}&read={{ request.GET.read }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+                           class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700">
+                            {{ num }}
+                        </a>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}{% if request.GET.type %}&type={{ request.GET.type }}{% endif %}{% if request.GET.read %}&read={{ request.GET.read }}{% endif %}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+                       class="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700">
+                        다음
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function notificationList() {
+    return {
+        async markAsRead(notificationId) {
+            try {
+                const response = await fetch(`/notifications/mark-read/${notificationId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                });
+                
+                if (response.ok) {
+                    const item = document.querySelector(`[data-notification-id="${notificationId}"]`);
+                    item.classList.remove('bg-blue-50', 'dark:bg-blue-900/20');
+                    item.querySelector('.w-2.h-2.bg-blue-500').remove();
+                    
+                    Swal.fire({
+                        title: '완료',
+                        text: '알림을 읽음 처리했습니다.',
+                        icon: 'success',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        },
+        
+        async markAllAsRead() {
+            try {
+                const result = await Swal.fire({
+                    title: '모든 알림 읽음 처리',
+                    text: '모든 읽지 않은 알림을 읽음 처리하시겠습니까?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '처리',
+                    cancelButtonText: '취소'
+                });
+                
+                if (result.isConfirmed) {
+                    const response = await fetch('/notifications/mark-all-read/', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        location.reload();
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        },
+        
+        async deleteNotification(notificationId) {
+            try {
+                const result = await Swal.fire({
+                    title: '알림 삭제',
+                    text: '이 알림을 삭제하시겠습니까?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: '삭제',
+                    cancelButtonText: '취소'
+                });
+                
+                if (result.isConfirmed) {
+                    const response = await fetch(`/notifications/delete/${notificationId}/`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        document.querySelector(`[data-notification-id="${notificationId}"]`).remove();
+                        
+                        Swal.fire({
+                            title: '삭제 완료',
+                            text: '알림이 삭제되었습니다.',
+                            icon: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+    }
+}
+
+function filterNotifications() {
+    const type = document.querySelector('select[name="type"]').value;
+    const read = document.querySelector('select[name="read"]').value;
+    const search = document.querySelector('input[name="search"]').value;
+    
+    const params = new URLSearchParams();
+    if (type) params.append('type', type);
+    if (read) params.append('read', read);
+    if (search) params.append('search', search);
+    
+    window.location.href = '?' + params.toString();
+}
+</script>
+{% endblock %}

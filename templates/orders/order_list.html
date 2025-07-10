@@ -1,0 +1,960 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% comment %} templates/orders/order_list.html - 리디자인된 주문 관리 {% endcomment %}
+
+{% block title %}주문 관리 - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>주문 관리</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300" x-data="orderManagement()">
+    <!-- CSRF Token -->
+    <script>
+        window.csrfToken = '{{ csrf_token }}';
+    </script>
+
+    <!-- Page Header -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300 mb-6">
+        <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 px-6 py-8">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <i class="fas fa-shopping-cart text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl lg:text-3xl font-bold text-white">주문 관리</h1>
+                        <p class="text-blue-100 font-medium">모든 플랫폼의 주문을 통합 관리하세요</p>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button type="button" 
+                            @click="exportCSV()"
+                            class="inline-flex items-center px-4 py-2 backdrop-blur-sm border border-white/30 rounded-lg text-white font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg hover:bg-white/10">
+                        <i class="fas fa-download mr-2"></i>
+                        CSV 내보내기
+                    </button>
+                    <button type="button" 
+                            @click="refreshOrders()"
+                            class="inline-flex items-center px-4 py-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm border border-white/30 rounded-lg text-white font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg">
+                        <i class="fas fa-sync-alt mr-2"></i>
+                        새로고침
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-6">
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 lg:p-6 hover:shadow-lg transition-all duration-300 group">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">총 주문 수</p>
+                    <p class="text-2xl font-bold text-gray-900 dark:text-white mt-1">{{ total_orders|default:0|intcomma }}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">전체 주문</p>
+                </div>
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-shopping-cart text-white"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 lg:p-6 hover:shadow-lg transition-all duration-300 group">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">대기중</p>
+                    <p class="text-2xl font-bold text-yellow-600 dark:text-yellow-400 mt-1">{{ pending_orders|default:0|intcomma }}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">처리 필요</p>
+                </div>
+                <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 animate-pulse">
+                    <i class="fas fa-clock text-white"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 lg:p-6 hover:shadow-lg transition-all duration-300 group">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">배송중</p>
+                    <p class="text-2xl font-bold text-purple-600 dark:text-purple-400 mt-1">{{ shipped_orders|default:0|intcomma }}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">배송 진행중</p>
+                </div>
+                <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-truck text-white"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 lg:p-6 hover:shadow-lg transition-all duration-300 group">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">총 매출</p>
+                    <p class="text-2xl font-bold text-green-600 dark:text-green-400 mt-1">{{ total_amount|floatformat:0|default:0|intcomma }}원</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">전체 매출</p>
+                </div>
+                <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-chart-line text-white"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search and Filter Section -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-6 shadow-lg">
+        <form method="GET" class="space-y-6">
+            <!-- 메인 검색 바 -->
+            <div class="relative">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-gray-400 dark:text-gray-500"></i>
+                </div>
+                <input type="text" 
+                       name="search" 
+                       value="{{ current_filters.search }}"
+                       placeholder="주문번호, 고객명, 이메일로 검색..."
+                       class="block w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200 text-lg">
+            </div>
+
+            <!-- 필터 옵션 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">플랫폼</label>
+                    <select name="platform"
+                            class="w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                        <option value="">전체 플랫폼</option>
+                        {% for platform in platforms %}
+                            <option value="{{ platform.id }}" 
+                                    {% if current_filters.platform == platform.id|stringformat:"s" %}selected{% endif %}>
+                                {{ platform.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">상태</label>
+                    <select name="status"
+                            class="w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                        <option value="">전체 상태</option>
+                        {% for status_choice in status_choices %}
+                            <option value="{{ status_choice.0 }}" 
+                                    {% if current_filters.status == status_choice.0 %}selected{% endif %}>
+                                {{ status_choice.1 }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">시작일</label>
+                    <input type="date" 
+                           name="date_from" 
+                           value="{{ current_filters.date_from }}"
+                           class="w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">종료일</label>
+                    <input type="date" 
+                           name="date_to" 
+                           value="{{ current_filters.date_to }}"
+                           class="w-full px-3 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200">
+                </div>
+            </div>
+
+            <!-- 검색 버튼과 빠른 필터 -->
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+                <div class="flex flex-wrap gap-3">
+                    <button type="submit" 
+                            class="inline-flex items-center px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <i class="fas fa-search w-4 h-4 mr-2"></i>
+                        검색
+                    </button>
+                    <a href="{% url 'orders:list' %}" 
+                       class="inline-flex items-center px-6 py-2.5 bg-gray-100 dark:bg-gray-600 hover:bg-gray-200 dark:hover:bg-gray-500 text-gray-700 dark:text-gray-200 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-500">
+                        <i class="fas fa-times w-4 h-4 mr-2"></i>
+                        초기화
+                    </a>
+                </div>
+                
+                <!-- 빠른 필터 버튼들 -->
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" 
+                            @click="quickFilter('today')"
+                            class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-all duration-200 hover:scale-105">
+                        <i class="fas fa-calendar-day w-3 h-3 mr-1"></i>
+                        오늘 주문
+                    </button>
+                    <button type="button" 
+                            @click="quickFilter('pending')"
+                            class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 hover:bg-yellow-200 dark:hover:bg-yellow-900/50 transition-all duration-200 hover:scale-105">
+                        <i class="fas fa-clock w-3 h-3 mr-1"></i>
+                        대기중
+                    </button>
+                    <button type="button" 
+                            @click="quickFilter('shipped')"
+                            class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 hover:bg-purple-200 dark:hover:bg-purple-900/50 transition-all duration-200 hover:scale-105">
+                        <i class="fas fa-truck w-3 h-3 mr-1"></i>
+                        배송중
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bulk Actions -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-4 mb-6 shadow-lg border-l-4 border-l-blue-500" 
+         x-show="selectedOrders.length > 0" 
+         x-cloak
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 transform scale-95"
+         x-transition:enter-end="opacity-100 transform scale-100">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                    <i class="fas fa-check text-blue-600 dark:text-blue-400"></i>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-gray-900 dark:text-white">
+                        <span x-text="selectedOrders.length"></span>개 주문이 선택되었습니다
+                    </p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">일괄 작업을 수행할 수 있습니다</p>
+                </div>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <button type="button" 
+                        @click="bulkAction('confirm')"
+                        class="inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105">
+                    <i class="fas fa-check w-3 h-3 mr-2"></i>
+                    일괄 확인
+                </button>
+                <button type="button" 
+                        @click="bulkAction('process')"
+                        class="inline-flex items-center px-3 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105">
+                    <i class="fas fa-cogs w-3 h-3 mr-2"></i>
+                    일괄 처리
+                </button>
+                <button type="button" 
+                        @click="bulkAction('ship')"
+                        class="inline-flex items-center px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105">
+                    <i class="fas fa-truck w-3 h-3 mr-2"></i>
+                    일괄 배송
+                </button>
+                <button type="button" 
+                        @click="clearSelection()"
+                        class="inline-flex items-center px-3 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105">
+                    <i class="fas fa-times w-3 h-3 mr-2"></i>
+                    선택 해제
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Orders Table -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-xl">
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                    <i class="fas fa-list-alt text-blue-600 dark:text-blue-400 mr-3"></i>
+                    주문 목록
+                    {% if current_filters.search %}
+                        <span class="ml-2 text-sm text-gray-500 dark:text-gray-400">
+                            "{{ current_filters.search }}" 검색 결과
+                        </span>
+                    {% endif %}
+                </h3>
+                <div class="flex items-center space-x-3">
+                    <label class="flex items-center">
+                        <input type="checkbox" 
+                               @change="toggleAllOrders($event.target.checked)"
+                               class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">전체 선택</span>
+                    </label>
+                    <div x-show="selectedOrders.length > 0" x-cloak class="text-sm text-blue-600 dark:text-blue-400">
+                        <span x-text="selectedOrders.length"></span>개 선택됨
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-900/50">
+                    <tr>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            선택
+                        </th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            주문정보
+                        </th>
+                        <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            고객정보
+                        </th>
+                        <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            플랫폼
+                        </th>
+                        <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            상태
+                        </th>
+                        <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            금액
+                        </th>
+                        <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            주문일시
+                        </th>
+                        <th class="px-6 py-4 text-center text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                            작업
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    {% for order in orders %}
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-200 group"
+                        :class="selectedOrders.includes('{{ order.id }}') ? 'bg-blue-50 dark:bg-blue-900/20' : ''">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <input type="checkbox" 
+                                   value="{{ order.id }}"
+                                   @change="toggleOrder('{{ order.id }}', $event.target.checked)"
+                                   :checked="selectedOrders.includes('{{ order.id }}')"
+                                   class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex flex-col">
+                                <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                    <a href="{% url 'orders:detail' order.pk %}" 
+                                       class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 flex items-center">
+                                        <i class="fas fa-receipt mr-2 text-gray-400"></i>
+                                        {{ order.order_number }}
+                                    </a>
+                                </div>
+                                {% if order.platform_order_id %}
+                                    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                        <i class="fas fa-external-link-alt mr-1"></i>
+                                        {{ order.platform_order_id }}
+                                    </div>
+                                {% endif %}
+                                {% if order.tracking_number %}
+                                    <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                        <i class="fas fa-truck mr-1"></i>
+                                        {{ order.tracking_number }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-600 dark:to-gray-700 rounded-full flex items-center justify-center mr-3">
+                                    <i class="fas fa-user text-gray-500 dark:text-gray-400"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-medium text-gray-900 dark:text-white">{{ order.customer_name }}</div>
+                                    {% if order.customer_email %}
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">{{ order.customer_email }}</div>
+                                    {% endif %}
+                                    {% if order.customer_phone %}
+                                        <div class="text-xs text-gray-500 dark:text-gray-400">{{ order.customer_phone }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                            {% if order.platform %}
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">
+                                    <i class="fas fa-store mr-1"></i>
+                                    {{ order.platform.name }}
+                                </span>
+                            {% else %}
+                                <span class="text-sm text-gray-500 dark:text-gray-400">-</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
+                                {% if order.status == 'PENDING' %}bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300
+                                {% elif order.status == 'CONFIRMED' %}bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300
+                                {% elif order.status == 'PROCESSING' %}bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300
+                                {% elif order.status == 'SHIPPED' %}bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300
+                                {% elif order.status == 'DELIVERED' %}bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300
+                                {% elif order.status == 'CANCELLED' %}bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300
+                                {% elif order.status == 'REFUNDED' %}bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-300
+                                {% else %}bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-300{% endif %}">
+                                <i class="fas fa-
+                                    {% if order.status == 'PENDING' %}clock
+                                    {% elif order.status == 'CONFIRMED' %}check
+                                    {% elif order.status == 'PROCESSING' %}cogs
+                                    {% elif order.status == 'SHIPPED' %}truck
+                                    {% elif order.status == 'DELIVERED' %}check-circle
+                                    {% elif order.status == 'CANCELLED' %}times
+                                    {% elif order.status == 'REFUNDED' %}undo
+                                    {% else %}question{% endif %} w-3 h-3 mr-1"></i>
+                                {{ order.get_status_display }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                            <div class="text-sm font-bold text-gray-900 dark:text-white">
+                                {{ order.total_amount|floatformat:0|intcomma }}원
+                            </div>
+                            {% if order.items.count > 0 %}
+                                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    {{ order.items.count }}개 상품
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm">
+                            <div class="text-gray-900 dark:text-white font-medium">{{ order.order_date|date:'m/d H:i' }}</div>
+                            {% if order.shipped_date %}
+                                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    배송: {{ order.shipped_date|date:'m/d H:i' }}
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                            <div class="flex items-center justify-center space-x-2">
+                                <button type="button" 
+                                        @click="quickStatusUpdate('{{ order.id }}', '{{ order.status }}')"
+                                        class="inline-flex items-center px-2 py-1 bg-blue-100 dark:bg-blue-900/30 hover:bg-blue-200 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-300 rounded-lg text-xs font-medium transition-all duration-200 hover:scale-105"
+                                        title="상태 변경">
+                                    <i class="fas fa-edit w-3 h-3"></i>
+                                </button>
+                                <a href="{% url 'orders:detail' order.pk %}" 
+                                   class="inline-flex items-center px-2 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg text-xs font-medium transition-all duration-200 hover:scale-105"
+                                   title="상세 보기">
+                                    <i class="fas fa-eye w-3 h-3"></i>
+                                </a>
+                                <a href="{% url 'orders:edit' order.pk %}" 
+                                   class="inline-flex items-center px-2 py-1 bg-green-100 dark:bg-green-900/30 hover:bg-green-200 dark:hover:bg-green-900/50 text-green-700 dark:text-green-300 rounded-lg text-xs font-medium transition-all duration-200 hover:scale-105"
+                                   title="수정">
+                                    <i class="fas fa-pencil-alt w-3 h-3"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="px-6 py-12 text-center">
+                            <div class="flex flex-col items-center space-y-4">
+                                <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-shopping-cart text-gray-400 dark:text-gray-500 text-2xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-lg font-medium text-gray-900 dark:text-white">주문이 없습니다</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                                        {% if current_filters.search %}
+                                            "{{ current_filters.search }}"에 대한 검색 결과가 없습니다.
+                                        {% else %}
+                                            검색 조건을 변경하거나 새로고침해보세요.
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                {% if current_filters.search %}
+                                <a href="{% url 'orders:list' %}" 
+                                   class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium">
+                                    전체 목록 보기
+                                </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+        <div class="bg-white dark:bg-gray-800 px-4 py-3 border-t border-gray-200 dark:border-gray-700 sm:px-6">
+            <div class="flex items-center justify-between">
+                <div class="flex-1 flex justify-between sm:hidden">
+                    {% if page_obj.has_previous %}
+                        <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}" 
+                           class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            이전
+                        </a>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                        <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}" 
+                           class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            다음
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm text-gray-700 dark:text-gray-300">
+                            <span class="font-medium">{{ page_obj.start_index }}</span>
+                            -
+                            <span class="font-medium">{{ page_obj.end_index }}</span>
+                            /
+                            <span class="font-medium">{{ page_obj.paginator.count }}</span>
+                            개 주문
+                        </p>
+                    </div>
+                    <div>
+                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                            {% if page_obj.has_previous %}
+                                <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}" 
+                                   class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <i class="fas fa-chevron-left h-4 w-4"></i>
+                                </a>
+                            {% endif %}
+                            
+                            <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                            </span>
+                            
+                            {% if page_obj.has_next %}
+                                <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}" 
+                                   class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <i class="fas fa-chevron-right h-4 w-4"></i>
+                                </a>
+                            {% endif %}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Quick Status Update Modal -->
+<div x-show="showStatusModal" x-cloak 
+     class="fixed inset-0 z-50 overflow-y-auto"
+     x-transition:enter="ease-out duration-300"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     x-transition:leave="ease-in duration-200"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0">
+    <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-500 dark:bg-gray-900 bg-opacity-75 dark:bg-opacity-75 transition-opacity backdrop-blur-sm" 
+             @click="showStatusModal = false"></div>
+
+        <div class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-2xl px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+             x-transition:enter="ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+             x-transition:leave="ease-in duration-200"
+             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+            
+            <div class="sm:flex sm:items-start">
+                <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900/30 sm:mx-0 sm:h-10 sm:w-10">
+                    <i class="fas fa-edit text-blue-600 dark:text-blue-400"></i>
+                </div>
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+                        주문 상태 변경
+                    </h3>
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">
+                            주문 <span class="font-medium text-blue-600 dark:text-blue-400" x-text="statusUpdateData.orderId"></span>의 상태를 변경합니다.
+                        </p>
+                    </div>
+                    <div class="mt-4 space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">새 상태</label>
+                            <select x-model="statusUpdateData.newStatus"
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-colors duration-200">
+                                {% for status_choice in status_choices %}
+                                    <option value="{{ status_choice.0 }}">{{ status_choice.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div x-show="statusUpdateData.newStatus === 'SHIPPED'" class="space-y-2">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">송장번호</label>
+                            <input type="text" 
+                                   x-model="statusUpdateData.trackingNumber"
+                                   placeholder="송장번호를 입력하세요"
+                                   class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-colors duration-200">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
+                <button type="button" 
+                        @click="updateOrderStatus()"
+                        :disabled="isUpdating"
+                        :class="isUpdating ? 'opacity-50 cursor-not-allowed' : ''"
+                        class="w-full inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-blue-600 hover:bg-blue-700 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm transition-all duration-200 hover:scale-105">
+                    <span x-show="!isUpdating">변경</span>
+                    <span x-show="isUpdating" class="flex items-center">
+                        <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        처리중...
+                    </span>
+                </button>
+                <button type="button" 
+                        @click="showStatusModal = false"
+                        :disabled="isUpdating"
+                        class="mt-3 w-full inline-flex justify-center rounded-lg border border-gray-300 dark:border-gray-600 shadow-sm px-4 py-2 bg-white dark:bg-gray-700 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:w-auto sm:text-sm transition-all duration-200">
+                    취소
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function orderManagement() {
+    return {
+        selectedOrders: [],
+        showStatusModal: false,
+        isUpdating: false,
+        statusUpdateData: {
+            orderId: null,
+            currentStatus: '',
+            newStatus: '',
+            trackingNumber: ''
+        },
+
+        init() {
+            this.updateOrderStats();
+        },
+
+        updateOrderStats() {
+            // 페이지의 주문들을 기반으로 통계 계산
+            const rows = document.querySelectorAll('tbody tr');
+            let pending = 0, shipped = 0, delivered = 0;
+
+            rows.forEach(row => {
+                const statusElement = row.querySelector('.inline-flex.items-center.px-3');
+                if (statusElement) {
+                    const statusText = statusElement.textContent.trim();
+                    if (statusText.includes('대기중')) pending++;
+                    else if (statusText.includes('배송중')) shipped++;
+                    else if (statusText.includes('배송완료')) delivered++;
+                }
+            });
+        },
+
+        toggleOrder(orderId, checked) {
+            if (checked) {
+                if (!this.selectedOrders.includes(orderId)) {
+                    this.selectedOrders.push(orderId);
+                }
+            } else {
+                this.selectedOrders = this.selectedOrders.filter(id => id !== orderId);
+            }
+        },
+
+        toggleAllOrders(checked) {
+            const checkboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+            if (checked) {
+                this.selectedOrders = Array.from(checkboxes).map(cb => cb.value);
+            } else {
+                this.selectedOrders = [];
+            }
+            
+            checkboxes.forEach(cb => cb.checked = checked);
+        },
+
+        clearSelection() {
+            this.selectedOrders = [];
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(cb => cb.checked = false);
+        },
+
+        quickFilter(type) {
+            const url = new URL(window.location.href);
+            
+            // 기존 파라미터 유지하고 새로운 필터 적용
+            if (type === 'today') {
+                const today = new Date().toISOString().split('T')[0];
+                url.searchParams.set('date_from', today);
+                url.searchParams.set('date_to', today);
+            } else if (type === 'pending') {
+                url.searchParams.set('status', 'PENDING');
+            } else if (type === 'shipped') {
+                url.searchParams.set('status', 'SHIPPED');
+            }
+            
+            window.location.href = url.toString();
+        },
+
+        quickStatusUpdate(orderId, currentStatus) {
+            this.statusUpdateData = {
+                orderId: orderId,
+                currentStatus: currentStatus,
+                newStatus: currentStatus,
+                trackingNumber: ''
+            };
+            this.showStatusModal = true;
+        },
+
+        async updateOrderStatus() {
+            if (this.isUpdating) return;
+            
+            this.isUpdating = true;
+            
+            try {
+                const formData = new FormData();
+                formData.append('csrfmiddlewaretoken', window.csrfToken);
+                formData.append('status', this.statusUpdateData.newStatus);
+                
+                if (this.statusUpdateData.trackingNumber) {
+                    formData.append('tracking_number', this.statusUpdateData.trackingNumber);
+                }
+
+                const response = await fetch(`/orders/${this.statusUpdateData.orderId}/status/`, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        showSuccess('주문 상태가 성공적으로 변경되었습니다.');
+                        this.showStatusModal = false;
+                        setTimeout(() => window.location.reload(), 1000);
+                    } else {
+                        showError(result.message || '상태 변경에 실패했습니다.');
+                    }
+                } else {
+                    const errorText = await response.text();
+                    console.error('Server error:', errorText);
+                    showError('서버 오류가 발생했습니다.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('네트워크 오류가 발생했습니다.');
+            } finally {
+                this.isUpdating = false;
+            }
+        },
+
+        async bulkAction(action) {
+            if (this.selectedOrders.length === 0) {
+                showError('선택된 주문이 없습니다.');
+                return;
+            }
+
+            const actionNames = {
+                'confirm': '확인',
+                'process': '처리',
+                'ship': '배송'
+            };
+
+            const result = await Swal.fire({
+                title: `${actionNames[action]} 확인`,
+                text: `선택된 ${this.selectedOrders.length}개 주문을 ${actionNames[action]} 상태로 변경하시겠습니까?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: '변경',
+                cancelButtonText: '취소',
+                confirmButtonColor: '#3b82f6',
+                cancelButtonColor: '#6b7280'
+            });
+
+            if (result.isConfirmed) {
+                try {
+                    showLoading('처리 중입니다...');
+
+                    const formData = new FormData();
+                    formData.append('action', action);
+                    this.selectedOrders.forEach(id => {
+                        formData.append('selected_orders', id);
+                    });
+
+                    const response = await fetch("{% url 'orders:bulk_action' %}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': window.csrfToken
+                        },
+                        body: formData
+                    });
+
+                    hideLoading();
+
+                    if (response.ok) {
+                        showSuccess('일괄 작업이 완료되었습니다.');
+                        setTimeout(() => window.location.reload(), 1000);
+                    } else {
+                        showError('일괄 작업에 실패했습니다.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    hideLoading();
+                    showError('오류가 발생했습니다.');
+                }
+            }
+        },
+
+        exportCSV() {
+            const params = new URLSearchParams(window.location.search);
+            const exportUrl = `/orders/export-csv/?${params.toString()}`;
+            
+            // 새 창에서 다운로드
+            const link = document.createElement('a');
+            link.href = exportUrl;
+            link.download = `orders_${new Date().toISOString().split('T')[0]}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showInfo('CSV 파일 다운로드를 시작합니다.');
+        },
+
+        refreshOrders() {
+            showLoading('새로고침 중...');
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
+        }
+    }
+}
+
+// 페이지 로드 시 실행될 초기화 코드
+document.addEventListener('DOMContentLoaded', function() {
+    // 페이드인 애니메이션 적용
+    const statCards = document.querySelectorAll('.grid > div');
+    statCards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add('animate-fade-in');
+    });
+    
+    // 테이블 행들에 애니메이션 적용
+    const tableRows = document.querySelectorAll('tbody tr');
+    tableRows.forEach((row, index) => {
+        row.style.animationDelay = `${0.3 + index * 0.05}s`;
+        row.classList.add('animate-fade-in');
+    });
+
+    // 테이블 행 클릭 시 상세 페이지로 이동 (체크박스와 액션 버튼 제외)
+    document.querySelectorAll('tbody tr').forEach(row => {
+        row.addEventListener('click', function(e) {
+            // 체크박스, 버튼, 링크 클릭은 제외
+            if (e.target.type === 'checkbox' || 
+                e.target.closest('button') || 
+                e.target.closest('a') ||
+                e.target.closest('.action-buttons')) {
+                return;
+            }
+            
+            const detailLink = row.querySelector('a[href*="/orders/"]');
+            if (detailLink) {
+                window.location.href = detailLink.href;
+            }
+        });
+    });
+
+    // 키보드 단축키
+    document.addEventListener('keydown', function(e) {
+        // Ctrl/Cmd + A: 전체 선택
+        if ((e.ctrlKey || e.metaKey) && e.key === 'a' && !e.target.matches('input, textarea')) {
+            e.preventDefault();
+            const selectAllCheckbox = document.querySelector('thead input[type="checkbox"]');
+            if (selectAllCheckbox) {
+                selectAllCheckbox.click();
+            }
+        }
+        
+        // Escape: 모달 닫기
+        if (e.key === 'Escape') {
+            const modal = document.querySelector('[x-show="showStatusModal"]');
+            if (modal && modal.__x) {
+                modal.__x.$data.showStatusModal = false;
+            }
+        }
+        
+        // F5 또는 Ctrl/Cmd + R: 새로고침
+        if (e.key === 'F5' || ((e.ctrlKey || e.metaKey) && e.key === 'r')) {
+            // 기본 새로고침 대신 커스텀 새로고침 사용
+            e.preventDefault();
+            const orderMgmt = document.querySelector('[x-data*="orderManagement"]');
+            if (orderMgmt && orderMgmt.__x) {
+                orderMgmt.__x.$data.refreshOrders();
+            }
+        }
+    });
+    
+    // 실시간 시간 업데이트 (선택사항)
+    setInterval(() => {
+        const timeElements = document.querySelectorAll('[data-time]');
+        timeElements.forEach(el => {
+            const timestamp = el.dataset.time;
+            if (timestamp) {
+                el.textContent = formatRelativeTime(timestamp);
+            }
+        });
+    }, 60000); // 1분마다 업데이트
+});
+</script>
+
+<!-- 커스텀 CSS 추가 -->
+<style>
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* 상태별 맞춤 애니메이션 */
+.status-pending {
+    animation: pulse 2s infinite;
+}
+
+.status-shipped {
+    position: relative;
+    overflow: hidden;
+}
+
+.status-shipped::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shine 2s infinite;
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* 호버 효과 개선 */
+.group:hover .group-hover\:scale-110 {
+    transform: scale(1.1);
+}
+
+/* 다크모드 개선 */
+@media (prefers-color-scheme: dark) {
+    .dashboard-card {
+        background-color: #1f2937;
+        border-color: #374151;
+    }
+}
+
+/* 반응형 개선 */
+@media (max-width: 768px) {
+    .grid-cols-2 {
+        gap: 1rem;
+    }
+    
+    .lg\:grid-cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .text-2xl {
+        font-size: 1.5rem;
+    }
+}
+</style>
+{% endblock %}

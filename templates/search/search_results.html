@@ -1,0 +1,291 @@
+<!-- templates/search/search_results.html -->
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block title %}검색 결과 - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>검색 결과</span>
+    {% if query %}
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>"{{ query }}"</span>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-6" x-data="searchResults()">
+    <!-- 검색 헤더 -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700">
+        <div class="px-6 py-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
+                    <i class="fas fa-search mr-2"></i>
+                    검색 결과
+                </h2>
+                {% if query %}
+                <span class="text-sm text-gray-500 dark:text-gray-400">
+                    "{{ query }}"에 대한 검색 결과
+                </span>
+                {% endif %}
+            </div>
+            
+            <!-- 고급 검색 폼 -->
+            <form method="GET" class="space-y-4">
+                <div class="flex flex-wrap gap-4">
+                    <div class="flex-1 min-w-80">
+                        <div class="relative">
+                            <input type="text" 
+                                   name="q" 
+                                   value="{{ query }}"
+                                   placeholder="검색어를 입력하세요..."
+                                   class="form-input pl-12 pr-4 py-3 text-lg"
+                                   autofocus>
+                            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <select name="type" class="form-select">
+                            <option value="all" {% if search_type == 'all' %}selected{% endif %}>전체</option>
+                            <option value="products" {% if search_type == 'products' %}selected{% endif %}>상품</option>
+                            <option value="orders" {% if search_type == 'orders' %}selected{% endif %}>주문</option>
+                            <option value="categories" {% if search_type == 'categories' %}selected{% endif %}>카테고리</option>
+                        </select>
+                        
+                        <button type="submit" 
+                                class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                            <i class="fas fa-search mr-2"></i>검색
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    {% if query %}
+    <!-- 검색 결과 탭 -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700">
+        <div class="border-b border-gray-200 dark:border-gray-700">
+            <nav class="flex space-x-8 px-6" aria-label="Tabs">
+                <button @click="activeTab = 'all'" 
+                        :class="activeTab === 'all' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'"
+                        class="py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap transition-colors duration-200">
+                    전체 결과
+                    <span class="ml-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-300 py-0.5 px-2.5 rounded-full text-xs">
+                        {{ products_count|add:orders_count|add:categories_count }}
+                    </span>
+                </button>
+                
+                {% if products %}
+                <button @click="activeTab = 'products'" 
+                        :class="activeTab === 'products' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'"
+                        class="py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap transition-colors duration-200">
+                    상품
+                    <span class="ml-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-300 py-0.5 px-2.5 rounded-full text-xs">
+                        {{ products_count }}
+                    </span>
+                </button>
+                {% endif %}
+                
+                {% if orders %}
+                <button @click="activeTab = 'orders'" 
+                        :class="activeTab === 'orders' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'"
+                        class="py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap transition-colors duration-200">
+                    주문
+                    <span class="ml-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-300 py-0.5 px-2.5 rounded-full text-xs">
+                        {{ orders_count }}
+                    </span>
+                </button>
+                {% endif %}
+                
+                {% if categories %}
+                <button @click="activeTab = 'categories'" 
+                        :class="activeTab === 'categories' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'"
+                        class="py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap transition-colors duration-200">
+                    카테고리
+                    <span class="ml-2 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-300 py-0.5 px-2.5 rounded-full text-xs">
+                        {{ categories_count }}
+                    </span>
+                </button>
+                {% endif %}
+            </nav>
+        </div>
+        
+        <div class="p-6">
+            <!-- 전체 결과 -->
+            <div x-show="activeTab === 'all'" class="space-y-6">
+                {% if products %}
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                        <i class="fas fa-box mr-2 text-blue-500"></i>상품
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {% for product in products %}
+                        <a href="/products/{{ product.id }}/" 
+                           class="block bg-gray-50 dark:bg-gray-700 rounded-lg p-4 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-box text-blue-600 dark:text-blue-400"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-medium text-gray-900 dark:text-white truncate">{{ product.name }}</h4>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">SKU: {{ product.sku }}</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ product.price|floatformat:0 }}원</p>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                {% if orders %}
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                        <i class="fas fa-shopping-cart mr-2 text-green-500"></i>주문
+                    </h3>
+                    <div class="space-y-3">
+                        {% for order in orders %}
+                        <a href="/orders/{{ order.id }}/" 
+                           class="block bg-gray-50 dark:bg-gray-700 rounded-lg p-4 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-shopping-cart text-green-600 dark:text-green-400"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-medium text-gray-900 dark:text-white">주문 #{{ order.order_number }}</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ order.customer_name }}</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-medium text-gray-900 dark:text-white">{{ order.total_amount|floatformat:0 }}원</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ order.created_at|date:"Y-m-d" }}</p>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                {% if categories %}
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                        <i class="fas fa-tags mr-2 text-purple-500"></i>카테고리
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {% for category in categories %}
+                        <a href="/products/categories/{{ category.id }}/" 
+                           class="block bg-gray-50 dark:bg-gray-700 rounded-lg p-4 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors duration-200">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-tags text-purple-600 dark:text-purple-400"></i>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-medium text-gray-900 dark:text-white truncate">{{ category.name }}</h4>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ category.description|truncatechars:50 }}</p>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            
+            <!-- 상품 탭 -->
+            {% if products %}
+            <div x-show="activeTab === 'products'" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {% for product in products %}
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-xl overflow-hidden hover:shadow-lg transition-shadow duration-200">
+                    <div class="p-6">
+                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-box text-2xl text-blue-600 dark:text-blue-400"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ product.name }}</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">SKU: {{ product.sku }}</p>
+                        <p class="text-lg font-bold text-blue-600 dark:text-blue-400 mb-4">{{ product.price|floatformat:0 }}원</p>
+                        <a href="/products/{{ product.id }}/" 
+                           class="block w-full text-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                            자세히 보기
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <!-- 주문 탭 -->
+            {% if orders %}
+            <div x-show="activeTab === 'orders'" class="space-y-4">
+                {% for order in orders %}
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 hover:shadow-lg transition-shadow duration-200">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-shopping-cart text-green-600 dark:text-green-400"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">주문 #{{ order.order_number }}</h3>
+                                <p class="text-gray-500 dark:text-gray-400">고객: {{ order.customer_name }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ order.created_at|date:"Y-m-d H:i" }}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xl font-bold text-gray-900 dark:text-white">{{ order.total_amount|floatformat:0 }}원</p>
+                            <a href="/orders/{{ order.id }}/" 
+                               class="inline-block mt-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200">
+                                주문 보기
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <!-- 카테고리 탭 -->
+            {% if categories %}
+            <div x-show="activeTab === 'categories'" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for category in categories %}
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 hover:shadow-lg transition-shadow duration-200">
+                    <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-tags text-2xl text-purple-600 dark:text-purple-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ category.name }}</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mb-4">{{ category.description|truncatechars:100 }}</p>
+                    <a href="/products/categories/{{ category.id }}/" 
+                       class="block w-full text-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200">
+                        카테고리 보기
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            
+            <!-- 검색 결과 없음 -->
+            {% if not products and not orders and not categories %}
+            <div class="text-center py-12">
+                <i class="fas fa-search text-4xl text-gray-400 dark:text-gray-500 mb-4"></i>
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">검색 결과가 없습니다</h3>
+                <p class="text-gray-500 dark:text-gray-400">다른 검색어를 시도해보세요.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function searchResults() {
+    return {
+        activeTab: 'all'
+    }
+}
+</script>
+{% endblock %}

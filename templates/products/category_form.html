@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% comment %} templates/products/category_form.html - 카테고리 생성/수정 폼 {% endcomment %}
+
+{% block title %}{{ title }} - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'products:category_list' %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">카테고리 관리</a>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>{% if category %}수정{% else %}추가{% endif %}</span>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <!-- 페이지 헤더 -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden mb-8">
+        <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-700 px-6 py-8">
+            <div class="flex items-center space-x-4">
+                <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <i class="fas fa-{% if category %}edit{% else %}plus{% endif %} text-white text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl lg:text-3xl font-bold text-white">{{ title }}</h1>
+                    <p class="text-emerald-100 font-medium">
+                        {% if category %}
+                            카테고리 정보를 수정하세요
+                        {% else %}
+                            새로운 카테고리를 추가하세요
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 폼 카드 -->
+    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <form method="post" class="space-y-6 p-6">
+            {% csrf_token %}
+            
+            <!-- 기본 정보 섹션 -->
+            <div class="border-b border-gray-200 dark:border-gray-700 pb-6">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">기본 정보</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- 카테고리 이름 -->
+                    <div>
+                        <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            카테고리 이름 <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- 아이콘 -->
+                    <div>
+                        <label for="{{ form.icon.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            아이콘
+                        </label>
+                        {{ form.icon }}
+                        {% if form.icon.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.icon.errors.0 }}</p>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">FontAwesome 클래스명을 입력하세요 (예: fas fa-folder)</p>
+                    </div>
+                </div>
+
+                <!-- 설명 -->
+                <div class="mt-6">
+                    <label for="{{ form.description.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        설명
+                    </label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <p class="mt-1 text-sm text-red-600">{{ form.description.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- 분류 및 정렬 섹션 -->
+            <div class="border-b border-gray-200 dark:border-gray-700 pb-6">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">분류 및 정렬</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- 상위 카테고리 -->
+                    <div>
+                        <label for="{{ form.parent.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            상위 카테고리
+                        </label>
+                        {{ form.parent }}
+                        {% if form.parent.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.parent.errors.0 }}</p>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">비워두면 최상위 카테고리가 됩니다</p>
+                    </div>
+
+                    <!-- 정렬 순서 -->
+                    <div>
+                        <label for="{{ form.sort_order.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            정렬 순서
+                        </label>
+                        {{ form.sort_order }}
+                        {% if form.sort_order.errors %}
+                            <p class="mt-1 text-sm text-red-600">{{ form.sort_order.errors.0 }}</p>
+                        {% endif %}
+                        <p class="mt-1 text-xs text-gray-500">작은 숫자일수록 먼저 표시됩니다</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 상태 섹션 -->
+            <div>
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">상태</h3>
+                
+                <div class="flex items-center">
+                    {{ form.is_active }}
+                    <label for="{{ form.is_active.id_for_label }}" class="ml-2 block text-sm text-gray-900 dark:text-gray-100">
+                        활성 상태
+                    </label>
+                    {% if form.is_active.errors %}
+                        <p class="ml-2 text-sm text-red-600">{{ form.is_active.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <p class="mt-1 text-xs text-gray-500">비활성화하면 카테고리가 목록에서 숨겨집니다</p>
+            </div>
+
+            <!-- 전역 폼 에러 -->
+            {% if form.non_field_errors %}
+                <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                    {% for error in form.non_field_errors %}
+                        <p class="text-sm text-red-600 dark:text-red-400">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- 버튼 영역 -->
+            <div class="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200 dark:border-gray-700">
+                <a href="{% url 'products:category_list' %}" 
+                   class="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200">
+                    <i class="fas fa-times mr-2"></i>
+                    취소
+                </a>
+                
+                <button type="submit" 
+                        class="inline-flex items-center px-6 py-3 border border-transparent rounded-lg text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 shadow-lg hover:shadow-xl">
+                    <i class="fas fa-save mr-2"></i>
+                    {% if category %}수정{% else %}추가{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- 미리보기 카드 (수정 시에만 표시) -->
+    {% if category %}
+    <div class="mt-8 bg-white dark:bg-gray-800 shadow-lg rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white">현재 정보</h3>
+        </div>
+        <div class="p-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">생성일</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ category.created_at|date:"Y-m-d H:i" }}</dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">수정일</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ category.updated_at|date:"Y-m-d H:i" }}</dd>
+                </div>
+                <div>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">상품 수</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ category.product_count }}개</dd>
+                </div>
+            </div>
+            
+            {% if category.full_path %}
+            <div class="mt-4">
+                <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">전체 경로</dt>
+                <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ category.full_path }}</dd>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+// 폼 제출 시 로딩 상태 표시
+document.querySelector('form').addEventListener('submit', function(e) {
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const icon = submitBtn.querySelector('i');
+    const text = submitBtn.querySelector('span') || submitBtn;
+    
+    submitBtn.disabled = true;
+    icon.className = 'fas fa-spinner fa-spin mr-2';
+    
+    if (text.textContent) {
+        text.textContent = '처리 중...';
+    }
+});
+
+// 아이콘 미리보기
+document.getElementById('{{ form.icon.id_for_label }}').addEventListener('input', function(e) {
+    const iconClass = e.target.value;
+    const preview = document.getElementById('icon-preview');
+    
+    if (!preview) {
+        const previewEl = document.createElement('i');
+        previewEl.id = 'icon-preview';
+        previewEl.className = 'ml-2 text-gray-600 dark:text-gray-400';
+        e.target.parentNode.appendChild(previewEl);
+    }
+    
+    if (iconClass && iconClass.includes('fa')) {
+        document.getElementById('icon-preview').className = iconClass + ' ml-2 text-gray-600 dark:text-gray-400';
+    } else {
+        document.getElementById('icon-preview').className = 'ml-2 text-gray-600 dark:text-gray-400';
+    }
+});
+</script>
+{% endblock %}

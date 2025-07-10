@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% comment %} templates/products/category_delete.html - 카테고리 삭제 확인 {% endcomment %}
+
+{% block title %}카테고리 삭제 - {{ category.name }} - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'products:category_list' %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">카테고리 관리</a>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'products:category_detail' pk=category.pk %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">{{ category.name }}</a>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>삭제</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <!-- 경고 헤더 -->
+    <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl overflow-hidden mb-8">
+        <div class="bg-gradient-to-r from-red-600 to-red-700 px-6 py-8">
+            <div class="flex items-center space-x-4">
+                <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <i class="fas fa-exclamation-triangle text-white text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl lg:text-3xl font-bold text-white">카테고리 삭제</h1>
+                    <p class="text-red-100 font-medium">정말로 이 카테고리를 삭제하시겠습니까?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 카테고리 정보 카드 -->
+    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden mb-6">
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-medium text-gray-900 dark:text-white flex items-center">
+                <i class="{{ category.icon }} text-gray-500 dark:text-gray-400 mr-3"></i>
+                {{ category.name }}
+            </h3>
+        </div>
+        
+        <div class="p-6">
+            <dl class="grid grid-cols-1 gap-4">
+                {% if category.description %}
+                <div>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">설명</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ category.description }}</dd>
+                </div>
+                {% endif %}
+                
+                {% if category.parent %}
+                <div>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">상위 카테고리</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ category.parent.name }}</dd>
+                </div>
+                {% endif %}
+                
+                <div>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">전체 경로</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ category.full_path }}</dd>
+                </div>
+                
+                <div>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">상품 수</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ category.product_count }}개</dd>
+                </div>
+                
+                <div>
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">생성일</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-gray-100">{{ category.created_at|date:"Y년 m월 d일 H:i" }}</dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+
+    <!-- 삭제 불가능한 경우 경고 -->
+    {% if not can_delete %}
+    <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-6">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+            </div>
+            <div class="ml-3">
+                <h3 class="text-sm font-medium text-yellow-800 dark:text-yellow-200">삭제할 수 없습니다</h3>
+                <div class="mt-2 text-sm text-yellow-700 dark:text-yellow-300">
+                    <p>{{ reason }}</p>
+                    <ul class="mt-2 list-disc list-inside">
+                        <li>하위 카테고리가 있는 경우: 먼저 하위 카테고리를 삭제하거나 이동시켜야 합니다.</li>
+                        <li>상품이 있는 경우: 상품을 다른 카테고리로 이동하거나 삭제해야 합니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- 하위 카테고리 경고 -->
+    {% if category.children.exists %}
+    <div class="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-6">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <i class="fas fa-info-circle text-orange-400"></i>
+            </div>
+            <div class="ml-3">
+                <h3 class="text-sm font-medium text-orange-800 dark:text-orange-200">하위 카테고리 영향</h3>
+                <div class="mt-2 text-sm text-orange-700 dark:text-orange-300">
+                    <p>다음 하위 카테고리들이 영향을 받습니다:</p>
+                    <ul class="mt-1 list-disc list-inside">
+                        {% for child in category.children.all %}
+                        <li>{{ child.name }} (상품 {{ child.product_count }}개)</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- 상품 영향 경고 -->
+    {% if category.product_count > 0 %}
+    <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-6">
+        <div class="flex">
+            <div class="flex-shrink-0">
+                <i class="fas fa-exclamation-circle text-red-400"></i>
+            </div>
+            <div class="ml-3">
+                <h3 class="text-sm font-medium text-red-800 dark:text-red-200">상품 영향</h3>
+                <div class="mt-2 text-sm text-red-700 dark:text-red-300">
+                    <p>이 카테고리에는 <strong>{{ category.product_count }}개의 상품</strong>이 있습니다.</p>
+                    <p>카테고리를 삭제하면 이 상품들의 카테고리가 제거됩니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- 액션 버튼 -->
+    <div class="flex items-center justify-end space-x-4">
+        <a href="{% url 'products:category_detail' pk=category.pk %}" 
+           class="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-200">
+            <i class="fas fa-arrow-left mr-2"></i>
+            돌아가기
+        </a>
+        
+        {% if can_delete %}
+        <form method="post" class="inline">
+            {% csrf_token %}
+            <button type="submit" 
+                    onclick="return confirm('정말로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')"
+                    class="inline-flex items-center px-6 py-3 border border-transparent rounded-lg text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 shadow-lg hover:shadow-xl">
+                <i class="fas fa-trash mr-2"></i>
+                삭제하기
+            </button>
+        </form>
+        {% else %}
+        <a href="{% url 'products:category_edit' pk=category.pk %}" 
+           class="inline-flex items-center px-6 py-3 border border-transparent rounded-lg text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 shadow-lg hover:shadow-xl">
+            <i class="fas fa-edit mr-2"></i>
+            수정하기
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

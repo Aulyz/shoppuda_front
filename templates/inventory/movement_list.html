@@ -1,0 +1,1007 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% comment %} templates/inventory/stockmovement_list.html - 재고 이동 이력 목록 {% endcomment %}
+
+{% block title %}재고 이동 이력 - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'inventory:overview' %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">재고 관리</a>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>재고 이동 이력</span>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+/* 애니메이션 효과 */
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 타입별 배지 색상 */
+.badge-in {
+    @apply bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300;
+}
+
+.badge-out {
+    @apply bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300;
+}
+
+.badge-adjust {
+    @apply bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300;
+}
+
+.badge-transfer {
+    @apply bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300;
+}
+
+.badge-return {
+    @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300;
+}
+
+.badge-damage {
+    @apply bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300;
+}
+
+.badge-sale {
+    @apply bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300;
+}
+
+.badge-purchase {
+    @apply bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300;
+}
+
+.badge-cancel {
+    @apply bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300;
+}
+
+.badge-correction {
+    @apply bg-pink-100 text-pink-800 dark:bg-pink-900/30 dark:text-pink-300;
+}
+
+/* 로딩 스피너 */
+.loading-spinner {
+    border: 3px solid #f3f4f6;
+    border-top: 3px solid #3b82f6;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 호버 효과 */
+.hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dark .hover-lift:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* 필터 애니메이션 */
+.filter-slide {
+    transition: all 0.3s ease;
+}
+
+/* 상태 표시 도트 */
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.dot-in { background-color: #10b981; }
+.dot-out { background-color: #ef4444; }
+.dot-adjust { background-color: #3b82f6; }
+.dot-transfer { background-color: #8b5cf6; }
+.dot-return { background-color: #f59e0b; }
+.dot-damage { background-color: #f97316; }
+.dot-sale { background-color: #6366f1; }
+.dot-purchase { background-color: #059669; }
+.dot-cancel { background-color: #6b7280; }
+.dot-correction { background-color: #ec4899; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-6" x-data="stockMovementList()">
+    <!-- 페이지 헤더 -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 fade-in">
+        <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 px-6 py-8 rounded-t-2xl">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <i class="fas fa-exchange-alt text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl lg:text-3xl font-bold text-white">재고 이동 이력</h1>
+                        <p class="text-blue-100 font-medium">모든 재고 변동 내역을 확인하세요</p>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="{% url 'inventory:export_movement_data' %}" 
+                       class="inline-flex items-center px-4 py-2 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg text-white font-medium hover:bg-white/30 transition-all duration-200">
+                        <i class="fas fa-download w-4 h-4 mr-2"></i>
+                        내보내기
+                    </a>
+                    <a href="{% url 'inventory:adjustment' %}" 
+                       class="inline-flex items-center px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-all duration-200">
+                        <i class="fas fa-plus w-4 h-4 mr-2"></i>
+                        재고 조정
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 빠른 통계 -->
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-green-600 dark:text-green-400">{{ movements|length }}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">총 이동 건수</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-blue-600 dark:text-blue-400" x-text="getTodayMovements()">0</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">오늘 이동</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400" x-text="getInMovements()">0</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">입고 건수</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-red-600 dark:text-red-400" x-text="getOutMovements()">0</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">출고 건수</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 필터 및 검색 -->
+    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl border border-gray-200 dark:border-gray-700 filter-slide">
+        <div class="p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+                <!-- 검색 -->
+                <div class="lg:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        상품 검색
+                    </label>
+                    <div class="relative">
+                        <input type="text" 
+                               x-model="searchTerm"
+                               @input="searchMovements()"
+                               placeholder="상품명, SKU로 검색..."
+                               class="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400 dark:text-gray-500"></i>
+                        </div>
+                        <div x-show="isSearching" class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                            <div class="loading-spinner"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 이동 유형 필터 -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        이동 유형
+                    </label>
+                    <select x-model="selectedType" 
+                            @change="filterMovements()"
+                            class="w-full px-3 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+                        <option value="">전체</option>
+                        <option value="IN">입고</option>
+                        <option value="OUT">출고</option>
+                        <option value="ADJUST">조정</option>
+                        <option value="TRANSFER">이동</option>
+                        <option value="RETURN">반품</option>
+                        <option value="DAMAGE">손상</option>
+                        <option value="SALE">판매</option>
+                        <option value="PURCHASE">구매</option>
+                        <option value="CANCEL">취소</option>
+                        <option value="CORRECTION">수정</option>
+                    </select>
+                </div>
+
+                <!-- 기간 필터 -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        기간
+                    </label>
+                    <select x-model="selectedPeriod" 
+                            @change="filterByPeriod()"
+                            class="w-full px-3 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+                        <option value="">전체</option>
+                        <option value="today">오늘</option>
+                        <option value="week">최근 1주일</option>
+                        <option value="month">최근 1개월</option>
+                        <option value="quarter">최근 3개월</option>
+                    </select>
+                </div>
+
+                <!-- 초기화 버튼 -->
+                <div class="flex items-end">
+                    <button @click="clearFilters()" 
+                            class="w-full px-4 py-2.5 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-200">
+                        <i class="fas fa-times w-4 h-4 mr-2"></i>
+                        초기화
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 이동 이력 목록 -->
+    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl border border-gray-200 dark:border-gray-700">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">
+                    재고 이동 내역
+                    <span class="ml-2 text-sm font-normal text-gray-500 dark:text-gray-400" x-text="`(${filteredMovements.length}건)`"></span>
+                </h2>
+                <div class="flex items-center space-x-2">
+                    <span class="text-sm text-gray-500 dark:text-gray-400">페이지당</span>
+                    <select x-model="itemsPerPage" 
+                            @change="updatePagination()"
+                            class="px-2 py-1 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-gray-100 text-sm">
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 데스크톱 테이블 -->
+            <div class="hidden lg:block overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-700">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                일시
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                상품
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                유형
+                            </th>
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                수량
+                            </th>
+                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                재고 변화
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                사유
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                처리자
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        <template x-for="movement in paginatedMovements" :key="movement.id">
+                            <tr class="hover-lift cursor-pointer" @click="showMovementDetail(movement)">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                    <div class="flex flex-col">
+                                        <span x-text="formatDate(movement.created_at)"></span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400" x-text="formatTime(movement.created_at)"></span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                                                <i class="fas fa-box text-white text-sm"></i>
+                                            </div>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900 dark:text-white" x-text="movement.product.name"></div>
+                                            <div class="text-sm text-gray-500 dark:text-gray-400" x-text="movement.product.sku"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                                          :class="getMovementTypeBadgeClass(movement.movement_type)">
+                                        <span class="status-dot" :class="getMovementTypeDotClass(movement.movement_type)"></span>
+                                        <span x-text="getMovementTypeText(movement.movement_type)"></span>
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                    <span class="font-mono font-medium" 
+                                          :class="movement.movement_type === 'IN' || movement.movement_type === 'PURCHASE' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
+                                          x-text="formatQuantity(movement.quantity, movement.movement_type)"></span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
+                                    <div class="flex flex-col items-end">
+                                        <span class="text-gray-500 dark:text-gray-400 text-xs">
+                                            <span x-text="movement.previous_stock"></span> → <span x-text="movement.current_stock"></span>
+                                        </span>
+                                        <span class="font-mono font-medium" 
+                                              :class="movement.current_stock > movement.previous_stock ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
+                                              x-text="formatStockChange(movement.previous_stock, movement.current_stock)"></span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">
+                                    <div class="max-w-xs truncate" x-text="movement.reason || '-'"></div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-8 w-8">
+                                            <div class="h-8 w-8 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
+                                                <i class="fas fa-user text-gray-600 dark:text-gray-300 text-xs"></i>
+                                            </div>
+                                        </div>
+                                        <div class="ml-2">
+                                            <span x-text="movement.created_by ? movement.created_by.username : '시스템'"></span>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 모바일 카드 뷰 -->
+            <div class="lg:hidden space-y-4">
+                <template x-for="movement in paginatedMovements" :key="movement.id">
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 hover-lift cursor-pointer"
+                         @click="showMovementDetail(movement)">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="flex-shrink-0 h-10 w-10">
+                                    <div class="h-10 w-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                                        <i class="fas fa-box text-white text-sm"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-medium text-gray-900 dark:text-white" x-text="movement.product.name"></div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400" x-text="movement.product.sku"></div>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
+                                  :class="getMovementTypeBadgeClass(movement.movement_type)">
+                                <span class="status-dot" :class="getMovementTypeDotClass(movement.movement_type)"></span>
+                                <span x-text="getMovementTypeText(movement.movement_type)"></span>
+                            </span>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span class="text-gray-500 dark:text-gray-400">수량:</span>
+                                <span class="font-mono font-medium ml-1" 
+                                      :class="movement.movement_type === 'IN' || movement.movement_type === 'PURCHASE' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
+                                      x-text="formatQuantity(movement.quantity, movement.movement_type)"></span>
+                            </div>
+                            <div>
+                                <span class="text-gray-500 dark:text-gray-400">재고:</span>
+                                <span class="font-mono font-medium ml-1 text-gray-900 dark:text-white">
+                                    <span x-text="movement.previous_stock"></span> → <span x-text="movement.current_stock"></span>
+                                </span>
+                            </div>
+                            <div class="col-span-2">
+                                <span class="text-gray-500 dark:text-gray-400">일시:</span>
+                                <span class="ml-1 text-gray-900 dark:text-white" x-text="formatDateTime(movement.created_at)"></span>
+                            </div>
+                            <div x-show="movement.reason" class="col-span-2">
+                                <span class="text-gray-500 dark:text-gray-400">사유:</span>
+                                <span class="ml-1 text-gray-900 dark:text-white" x-text="movement.reason"></span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+
+            <!-- 빈 상태 -->
+            <div x-show="filteredMovements.length === 0" class="text-center py-12">
+                <div class="mx-auto h-24 w-24 text-gray-400 dark:text-gray-500 mb-4">
+                    <i class="fas fa-exchange-alt text-6xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">이동 이력이 없습니다</h3>
+                <p class="text-gray-500 dark:text-gray-400 mb-6">아직 재고 이동 내역이 없거나 검색 조건에 맞는 결과가 없습니다.</p>
+                <a href="{% url 'inventory:adjustment' %}" 
+                   class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200">
+                    <i class="fas fa-plus w-4 h-4 mr-2"></i>
+                    첫 재고 조정하기
+                </a>
+            </div>
+
+            <!-- 페이지네이션 -->
+            <div x-show="totalPages > 1" class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-4 py-3 sm:px-6 mt-6">
+                <div class="flex justify-between flex-1 sm:hidden">
+                    <button @click="prevPage()" 
+                            :disabled="currentPage === 1"
+                            class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                        이전
+                    </button>
+                    <button @click="nextPage()" 
+                            :disabled="currentPage === totalPages"
+                            class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                        다음
+                    </button>
+                </div>
+                <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-sm text-gray-700 dark:text-gray-300">
+                            총 <span class="font-medium" x-text="filteredMovements.length"></span>건 중 
+                            <span class="font-medium" x-text="(currentPage - 1) * itemsPerPage + 1"></span>-<span class="font-medium" x-text="Math.min(currentPage * itemsPerPage, filteredMovements.length)"></span>번째
+                        </p>
+                    </div>
+                    <div>
+                        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                            <button @click="prevPage()" 
+                                    :disabled="currentPage === 1"
+                                    class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <i class="fas fa-chevron-left h-5 w-5" aria-hidden="true"></i>
+                            </button>
+                            <template x-for="page in getPageNumbers()" :key="page">
+                                <button @click="goToPage(page)" 
+                                        :class="page === currentPage ? 'bg-blue-50 dark:bg-blue-900/50 border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-400' : 'bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                                        class="relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+                                        x-text="page">
+                                </button>
+                            </template>
+                            <button @click="nextPage()" 
+                                    :disabled="currentPage === totalPages"
+                                    class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <i class="fas fa-chevron-right h-5 w-5" aria-hidden="true"></i>
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 상세 정보 모달 -->
+    <div x-show="showModal" 
+         x-cloak
+         class="fixed inset-0 z-50 overflow-y-auto"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-gray-500 bg-opacity-75 dark:bg-gray-900 dark:bg-opacity-75 transition-opacity" 
+                 @click="closeModal()"></div>
+
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+            <div class="relative inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+                
+                <div class="absolute top-0 right-0 pt-4 pr-4">
+                    <button @click="closeModal()" 
+                            class="bg-white dark:bg-gray-800 rounded-md text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <i class="fas fa-times h-6 w-6"></i>
+                    </button>
+                </div>
+
+                <div class="sm:flex sm:items-start">
+                    <div class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900 sm:mx-0 sm:h-10 sm:w-10">
+                        <i class="fas fa-exchange-alt text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+                            재고 이동 상세 정보
+                        </h3>
+                        <div class="mt-4 space-y-4" x-show="selectedMovement">
+                            <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                <dl class="grid grid-cols-1 gap-x-4 gap-y-3 sm:grid-cols-2">
+                                    <div>
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">상품명</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 dark:text-white font-medium" x-text="selectedMovement?.product?.name"></dd>
+                                    </div>
+                                    <div>
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">SKU</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 dark:text-white font-mono" x-text="selectedMovement?.product?.sku"></dd>
+                                    </div>
+                                    <div>
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">이동 유형</dt>
+                                        <dd class="mt-1">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium"
+                                                  :class="getMovementTypeBadgeClass(selectedMovement?.movement_type)">
+                                                <span class="status-dot" :class="getMovementTypeDotClass(selectedMovement?.movement_type)"></span>
+                                                <span x-text="getMovementTypeText(selectedMovement?.movement_type)"></span>
+                                            </span>
+                                        </dd>
+                                    </div>
+                                    <div>
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">수량</dt>
+                                        <dd class="mt-1 text-sm font-mono font-medium" 
+                                            :class="selectedMovement?.movement_type === 'IN' || selectedMovement?.movement_type === 'PURCHASE' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'"
+                                            x-text="formatQuantity(selectedMovement?.quantity, selectedMovement?.movement_type)"></dd>
+                                    </div>
+                                    <div>
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">이전 재고</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 dark:text-white font-mono" x-text="selectedMovement?.previous_stock"></dd>
+                                    </div>
+                                    <div>
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">현재 재고</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 dark:text-white font-mono" x-text="selectedMovement?.current_stock"></dd>
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">참조 번호</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 dark:text-white font-mono" x-text="selectedMovement?.reference_number || '-'"></dd>
+                                    </div>
+                                    <div class="sm:col-span-2">
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">사유</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 dark:text-white" x-text="selectedMovement?.reason || '-'"></dd>
+                                    </div>
+                                    <div class="sm:col-span-2" x-show="selectedMovement?.notes">
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">메모</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 dark:text-white" x-text="selectedMovement?.notes"></dd>
+                                    </div>
+                                    <div>
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">처리자</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 dark:text-white" x-text="selectedMovement?.created_by?.username || '시스템'"></dd>
+                                    </div>
+                                    <div>
+                                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">처리 일시</dt>
+                                        <dd class="mt-1 text-sm text-gray-900 dark:text-white" x-text="formatDateTime(selectedMovement?.created_at)"></dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Django 데이터를 JavaScript로 전달 -->
+<script id="movements-data" type="application/json">
+{% if movements %}
+[
+{% for movement in movements %}
+{
+    "id": {{ movement.id }},
+    "product": {
+        "name": "{{ movement.product.name|escapejs }}",
+        "sku": "{{ movement.product.sku|escapejs }}"
+    },
+    "movement_type": "{{ movement.movement_type }}",
+    "quantity": {{ movement.quantity }},
+    "previous_stock": {{ movement.previous_stock }},
+    "current_stock": {{ movement.current_stock }},
+    "reference_number": "{{ movement.reference_number|escapejs }}",
+    "reason": "{{ movement.reason|escapejs }}",
+    "notes": "{{ movement.notes|escapejs }}",
+    "created_at": "{{ movement.created_at|date:'Y-m-d H:i:s' }}",
+    "created_by": {% if movement.created_by %}{
+        "username": "{{ movement.created_by.username|escapejs }}"
+    }{% else %}null{% endif %}
+}{% if not forloop.last %},{% endif %}
+{% endfor %}
+]
+{% else %}
+[]
+{% endif %}
+</script>
+
+<script>
+// 전역 함수로 정의하여 Alpine.js에서 접근 가능하게 함
+window.stockMovementList = function() {
+    return {
+        // 데이터 
+        movements: [],
+        filteredMovements: [],
+        paginatedMovements: [],
+        selectedMovement: null,
+        showModal: false,
+        
+        // 필터링
+        searchTerm: '',
+        selectedType: '',
+        selectedPeriod: '',
+        isSearching: false,
+        
+        // 페이지네이션
+        currentPage: 1,
+        itemsPerPage: 25,
+        totalPages: 1,
+        
+        
+        init() {
+            // Django에서 전달된 데이터 파싱
+            const movementsData = document.getElementById('movements-data');
+            if (movementsData) {
+                try {
+                    this.movements = JSON.parse(movementsData.textContent);
+                } catch (e) {
+                    console.warn('재고 이동 데이터를 파싱할 수 없습니다:', e);
+                    this.movements = [];
+                }
+            }
+            
+            this.filteredMovements = [...this.movements];
+            this.updatePagination();
+        },
+        
+        // 검색 기능
+        searchMovements() {
+            this.isSearching = true;
+            setTimeout(() => {
+                this.filterMovements();
+                this.isSearching = false;
+            }, 300);
+        },
+        
+        // 필터링 기능
+        filterMovements() {
+            let filtered = [...this.movements];
+            
+            // 검색어 필터
+            if (this.searchTerm) {
+                const term = this.searchTerm.toLowerCase();
+                filtered = filtered.filter(movement => 
+                    movement.product.name.toLowerCase().includes(term) ||
+                    movement.product.sku.toLowerCase().includes(term)
+                );
+            }
+            
+            // 유형 필터
+            if (this.selectedType) {
+                filtered = filtered.filter(movement => movement.movement_type === this.selectedType);
+            }
+            
+            this.filteredMovements = filtered;
+            this.currentPage = 1;
+            this.updatePagination();
+        },
+        
+        // 기간 필터
+        filterByPeriod() {
+            if (!this.selectedPeriod) {
+                this.filterMovements();
+                return;
+            }
+            
+            const now = new Date();
+            let startDate;
+            
+            switch (this.selectedPeriod) {
+                case 'today':
+                    startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    break;
+                case 'week':
+                    startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                    break;
+                case 'month':
+                    startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                    break;
+                case 'quarter':
+                    startDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+                    break;
+                default:
+                    this.filterMovements();
+                    return;
+            }
+            
+            let filtered = [...this.movements];
+            
+            // 검색어 필터
+            if (this.searchTerm) {
+                const term = this.searchTerm.toLowerCase();
+                filtered = filtered.filter(movement => 
+                    movement.product.name.toLowerCase().includes(term) ||
+                    movement.product.sku.toLowerCase().includes(term)
+                );
+            }
+            
+            // 유형 필터
+            if (this.selectedType) {
+                filtered = filtered.filter(movement => movement.movement_type === this.selectedType);
+            }
+            
+            // 기간 필터
+            filtered = filtered.filter(movement => {
+                const movementDate = new Date(movement.created_at);
+                return movementDate >= startDate;
+            });
+            
+            this.filteredMovements = filtered;
+            this.currentPage = 1;
+            this.updatePagination();
+        },
+        
+        // 필터 초기화
+        clearFilters() {
+            this.searchTerm = '';
+            this.selectedType = '';
+            this.selectedPeriod = '';
+            this.filteredMovements = [...this.movements];
+            this.currentPage = 1;
+            this.updatePagination();
+        },
+        
+        // 페이지네이션
+        updatePagination() {
+            this.totalPages = Math.ceil(this.filteredMovements.length / this.itemsPerPage);
+            if (this.currentPage > this.totalPages) {
+                this.currentPage = Math.max(1, this.totalPages);
+            }
+            this.updatePaginatedMovements();
+        },
+        
+        updatePaginatedMovements() {
+            const start = (this.currentPage - 1) * this.itemsPerPage;
+            const end = start + this.itemsPerPage;
+            this.paginatedMovements = this.filteredMovements.slice(start, end);
+        },
+        
+        goToPage(page) {
+            this.currentPage = page;
+            this.updatePaginatedMovements();
+        },
+        
+        prevPage() {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+                this.updatePaginatedMovements();
+            }
+        },
+        
+        nextPage() {
+            if (this.currentPage < this.totalPages) {
+                this.currentPage++;
+                this.updatePaginatedMovements();
+            }
+        },
+        
+        getPageNumbers() {
+            const pages = [];
+            const maxVisible = 5;
+            let start = Math.max(1, this.currentPage - Math.floor(maxVisible / 2));
+            let end = Math.min(this.totalPages, start + maxVisible - 1);
+            
+            if (end - start + 1 < maxVisible) {
+                start = Math.max(1, end - maxVisible + 1);
+            }
+            
+            for (let i = start; i <= end; i++) {
+                pages.push(i);
+            }
+            
+            return pages;
+        },
+        
+        // 통계 함수들
+        getTodayMovements() {
+            const today = new Date();
+            const todayStr = today.toISOString().split('T')[0];
+            return this.movements.filter(movement => 
+                movement.created_at.startsWith(todayStr)
+            ).length;
+        },
+        
+        getInMovements() {
+            return this.movements.filter(movement => 
+                ['IN', 'PURCHASE', 'RETURN'].includes(movement.movement_type)
+            ).length;
+        },
+        
+        getOutMovements() {
+            return this.movements.filter(movement => 
+                ['OUT', 'SALE', 'DAMAGE'].includes(movement.movement_type)
+            ).length;
+        },
+        
+        // 상세 정보 모달
+        showMovementDetail(movement) {
+            this.selectedMovement = movement;
+            this.showModal = true;
+        },
+        
+        closeModal() {
+            this.showModal = false;
+            this.selectedMovement = null;
+        },
+        
+        // 유틸리티 함수들
+        getMovementTypeText(type) {
+            const types = {
+                'IN': '입고',
+                'OUT': '출고',
+                'ADJUST': '조정',
+                'TRANSFER': '이동',
+                'RETURN': '반품',
+                'DAMAGE': '손상',
+                'SALE': '판매',
+                'PURCHASE': '구매',
+                'CANCEL': '취소',
+                'CORRECTION': '수정'
+            };
+            return types[type] || type;
+        },
+        
+        getMovementTypeBadgeClass(type) {
+            const classes = {
+                'IN': 'badge-in',
+                'OUT': 'badge-out',
+                'ADJUST': 'badge-adjust',
+                'TRANSFER': 'badge-transfer',
+                'RETURN': 'badge-return',
+                'DAMAGE': 'badge-damage',
+                'SALE': 'badge-sale',
+                'PURCHASE': 'badge-purchase',
+                'CANCEL': 'badge-cancel',
+                'CORRECTION': 'badge-correction'
+            };
+            return classes[type] || 'badge-adjust';
+        },
+        
+        getMovementTypeDotClass(type) {
+            const classes = {
+                'IN': 'dot-in',
+                'OUT': 'dot-out',
+                'ADJUST': 'dot-adjust',
+                'TRANSFER': 'dot-transfer',
+                'RETURN': 'dot-return',
+                'DAMAGE': 'dot-damage',
+                'SALE': 'dot-sale',
+                'PURCHASE': 'dot-purchase',
+                'CANCEL': 'dot-cancel',
+                'CORRECTION': 'dot-correction'
+            };
+            return classes[type] || 'dot-adjust';
+        },
+        
+        formatQuantity(quantity, type) {
+            const prefix = ['IN', 'PURCHASE', 'RETURN'].includes(type) ? '+' : '-';
+            return `${prefix}${quantity.toLocaleString()}`;
+        },
+        
+        formatStockChange(previous, current) {
+            const change = current - previous;
+            const prefix = change > 0 ? '+' : '';
+            return `${prefix}${change.toLocaleString()}`;
+        },
+        
+        formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+        },
+        
+        formatTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleTimeString('ko-KR', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        },
+        
+        formatDateTime(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+    }
+}
+
+// Alpine.js가 로드된 후 함수 등록
+document.addEventListener('alpine:init', () => {
+    // Alpine.js가 준비되면 전역 함수가 사용 가능합니다.
+    console.log('Alpine.js initialized');
+});
+</script>
+
+<!-- 추가 커스텀 스타일 -->
+<style>
+/* 테이블 행 애니메이션 */
+tbody tr {
+    animation: slideInUp 0.3s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 필터 애니메이션 */
+.filter-slide {
+    animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 모달 백드롭 효과 */
+.modal-backdrop {
+    backdrop-filter: blur(4px);
+}
+
+/* 반응형 개선 */
+@media (max-width: 640px) {
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .lg\\:grid-cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .lg\\:grid-cols-5 {
+        grid-template-columns: 1fr;
+    }
+    
+    .space-y-4 > * + * {
+        margin-top: 0.75rem;
+    }
+}
+
+/* 다크모드 개선 */
+@media (prefers-color-scheme: dark) {
+    .status-dot {
+        filter: brightness(1.2);
+    }
+    
+    .hover-lift:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* 접근성 개선 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,470 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% comment %} templates/reports/dashboard.html - 보고서 대시보드 {% endcomment %}
+
+{% block title %}보고서 대시보드 - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>보고서</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-8" x-data="reportsData()">
+    <!-- 페이지 헤더 -->
+    <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl shadow-xl text-white p-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-3xl font-bold mb-2">📊 보고서 대시보드</h1>
+                <p class="text-blue-100">비즈니스 성과를 한눈에 확인하세요</p>
+            </div>
+            <div class="text-right">
+                <div class="text-sm text-blue-100 mb-1">마지막 업데이트</div>
+                <div class="text-lg font-semibold">{{ current_time|date:"Y-m-d H:i" }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 빠른 통계 카드 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- 총 매출 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">총 매출 (30일)</p>
+                    <p class="text-3xl font-bold text-gray-900 dark:text-white">
+                        ₩{{ total_revenue|floatformat:0|intcomma }}
+                    </p>
+                    <p class="text-sm {% if growth_rate >= 0 %}text-green-600 dark:text-green-400{% else %}text-red-600 dark:text-red-400{% endif %} mt-1">
+                        <i class="fas {% if growth_rate >= 0 %}fa-arrow-up{% else %}fa-arrow-down{% endif %}"></i> 
+                        {% if growth_rate >= 0 %}+{% endif %}{{ growth_rate|floatformat:1 }}%
+                    </p>
+                </div>
+                <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                    <i class="fas fa-won-sign text-green-600 dark:text-green-400 text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 총 주문 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">총 주문 (30일)</p>
+                    <p class="text-3xl font-bold text-gray-900 dark:text-white">
+                        {{ total_orders|intcomma }}
+                    </p>
+                    <p class="text-sm text-blue-600 dark:text-blue-400 mt-1">
+                        <i class="fas fa-shopping-cart"></i> 평균 {{ avg_order_value|floatformat:0|intcomma }}원
+                    </p>
+                </div>
+                <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                    <i class="fas fa-shopping-cart text-blue-600 dark:text-blue-400 text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 재고 현황 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">총 상품</p>
+                    <p class="text-3xl font-bold text-gray-900 dark:text-white">
+                        {{ total_products|intcomma }}
+                    </p>
+                    <p class="text-sm text-orange-600 dark:text-orange-400 mt-1">
+                        <i class="fas fa-exclamation-triangle"></i> {{ low_stock_count }}개 부족
+                    </p>
+                </div>
+                <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
+                    <i class="fas fa-boxes text-orange-600 dark:text-orange-400 text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 플랫폼 연동 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-600 dark:text-gray-400">연동 플랫폼</p>
+                    <p class="text-3xl font-bold text-gray-900 dark:text-white">
+                        {{ connected_platforms|intcomma }}
+                    </p>
+                    <p class="text-sm text-purple-600 dark:text-purple-400 mt-1">
+                        <i class="fas fa-sync"></i> 실시간 동기화
+                    </p>
+                </div>
+                <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
+                    <i class="fas fa-link text-purple-600 dark:text-purple-400 text-xl"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 보고서 빠른 액세스 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- 보고서 링크 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+            <div class="border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                    <i class="fas fa-file-alt text-indigo-500 mr-2"></i>
+                    빠른 보고서 액세스
+                </h3>
+            </div>
+            <div class="p-6">
+                <div class="space-y-3">
+                    <a href="{% url 'reports:inventory' %}" 
+                       class="block p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-warehouse text-green-600 dark:text-green-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">재고 보고서</h3>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">재고 현황 및 변동</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300"></i>
+                        </div>
+                    </a>
+                    
+                    <a href="{% url 'reports:sales' %}" 
+                       class="block p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-chart-line text-blue-600 dark:text-blue-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">매출 분석</h3>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">일/월별 매출 추이</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300"></i>
+                        </div>
+                    </a>
+                    
+                    <a href="{% url 'reports:financial' %}" 
+                       class="block p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-calculator text-yellow-600 dark:text-yellow-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">재무 보고서</h3>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">손익 및 비용 분석</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 오늘의 성과 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+            <div class="border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                    <i class="fas fa-trophy text-yellow-500 mr-2"></i>
+                    오늘의 성과
+                </h3>
+            </div>
+            <div class="p-6">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-3 bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-shopping-bag text-white"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900 dark:text-white">오늘 주문</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">{{ today_orders }}건</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-lg font-bold text-green-600 dark:text-green-400">
+                                ₩{{ today_revenue|floatformat:0|intcomma }}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-exchange-alt text-white"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900 dark:text-white">재고 변동</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">{{ today_stock_movements }}건</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between p-3 bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20 rounded-lg">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-plus text-white"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-900 dark:text-white">신규 상품 (7일)</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">{{ new_products_week }}개</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 차트 섹션 - 수정된 부분 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- 매출 차트 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                    <i class="fas fa-chart-area text-blue-500 mr-2"></i>
+                    최근 7일 매출 추이
+                </h3>
+                <div class="flex space-x-2">
+                    <select class="text-sm border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+                        <option value="7">7일</option>
+                        <option value="14">14일</option>
+                        <option value="30">30일</option>
+                    </select>
+                </div>
+            </div>
+            <!-- 차트 컨테이너에 고정 높이 설정 -->
+            <div class="relative h-64 w-full">
+                <canvas id="salesChart" x-ref="salesChart" class="w-full h-full"></canvas>
+            </div>
+        </div>
+
+        <!-- 상품 카테고리 차트 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                    <i class="fas fa-chart-pie text-purple-500 mr-2"></i>
+                    카테고리별 판매 비율
+                </h3>
+            </div>
+            <!-- 차트 컨테이너에 고정 높이 설정 -->
+            <div class="relative h-64 w-full">
+                <canvas id="categoryChart" x-ref="categoryChart" class="w-full h-full"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- 최근 활동 -->
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+        <div class="border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                <i class="fas fa-clock text-indigo-500 mr-2"></i>
+                최근 보고서 활동
+            </h3>
+        </div>
+        <div class="p-6">
+            <div class="space-y-4">
+                <div class="flex items-center space-x-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                        <i class="fas fa-download text-green-600 dark:text-green-400"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">재고 보고서 다운로드</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">2시간 전</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                        <i class="fas fa-chart-bar text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">월간 매출 보고서 생성</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">1일 전</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                    <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
+                        <i class="fas fa-envelope text-purple-600 dark:text-purple-400"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">주간 보고서 이메일 발송</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">3일 전</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function reportsData() {
+    return {
+        salesChart: null,
+        categoryChart: null,
+        
+        init() {
+            // DOM이 완전히 준비된 후 차트 초기화
+            this.$nextTick(() => {
+                // 좀 더 긴 지연시간으로 안정적인 초기화 보장
+                setTimeout(() => {
+                    this.initCharts();
+                }, 500);
+            });
+        },
+        
+        initCharts() {
+            // 기존 차트 인스턴스가 있다면 제거
+            this.destroyCharts();
+            
+            try {
+                // 매출 차트 초기화
+                const salesCanvas = this.$refs.salesChart;
+                if (salesCanvas && typeof Chart !== 'undefined') {
+                    const salesCtx = salesCanvas.getContext('2d');
+                    
+                    this.salesChart = new Chart(salesCtx, {
+                        type: 'line',
+                        data: {
+                            labels: ['월', '화', '수', '목', '금', '토', '일'],
+                            datasets: [{
+                                label: '매출',
+                                data: [120000, 150000, 180000, 140000, 200000, 250000, 300000],
+                                borderColor: 'rgb(59, 130, 246)',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                tension: 0.4,
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false, // 중요: 컨테이너 크기에 맞춤
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function(value) {
+                                            return '₩' + value.toLocaleString();
+                                        }
+                                    }
+                                }
+                            },
+                            interaction: {
+                                intersect: false,
+                                mode: 'index'
+                            }
+                        }
+                    });
+                }
+
+                // 카테고리 차트 초기화
+                const categoryCanvas = this.$refs.categoryChart;
+                if (categoryCanvas && typeof Chart !== 'undefined') {
+                    const categoryCtx = categoryCanvas.getContext('2d');
+                    
+                    this.categoryChart = new Chart(categoryCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['전자제품', '의류', '생활용품', '스포츠', '도서'],
+                            datasets: [{
+                                data: [30, 25, 20, 15, 10],
+                                backgroundColor: [
+                                    '#3B82F6', '#10B981', '#F59E0B', 
+                                    '#EF4444', '#8B5CF6'
+                                ],
+                                borderWidth: 2,
+                                borderColor: '#ffffff'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false, // 중요: 컨테이너 크기에 맞춤
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        padding: 20,
+                                        usePointStyle: true
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('차트 초기화 오류:', error);
+            }
+        },
+        
+        destroyCharts() {
+            // 기존 차트 인스턴스 정리
+            if (this.salesChart) {
+                this.salesChart.destroy();
+                this.salesChart = null;
+            }
+            if (this.categoryChart) {
+                this.categoryChart.destroy();
+                this.categoryChart = null;
+            }
+        }
+    }
+}
+
+// 페이지가 언로드될 때 차트 정리
+window.addEventListener('beforeunload', function() {
+    if (window.reportsDataInstance) {
+        window.reportsDataInstance.destroyCharts();
+    }
+});
+</script>
+
+<style>
+/* 차트 컨테이너 스타일 최적화 */
+.chart-container {
+    position: relative;
+    height: 16rem; /* h-64와 동일 */
+    width: 100%;
+}
+
+/* 차트 캔버스 스타일 */
+canvas {
+    display: block;
+    box-sizing: border-box;
+}
+
+/* 반응형 차트 스타일 */
+@media (max-width: 768px) {
+    .chart-container {
+        height: 12rem; /* 모바일에서는 좀 더 작게 */
+    }
+}
+
+/* 차트 로딩 상태 스타일 */
+.chart-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 16rem;
+    background-color: #f9fafb;
+    border-radius: 0.5rem;
+    color: #6b7280;
+}
+
+.dark .chart-loading {
+    background-color: #374151;
+    color: #9ca3af;
+}
+</style>
+{% endblock %}

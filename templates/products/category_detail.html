@@ -1,0 +1,660 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load product_tags %}
+
+{% block title %}{{ category.name }} - 카테고리 상세 - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'products:list' %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">상품 관리</a>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'products:category_list' %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">카테고리</a>
+    {% if category.parent %}
+        <span class="text-gray-400 dark:text-gray-500">/</span>
+        <a href="{% url 'products:category_detail' category.parent.pk %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">{{ category.parent.name }}</a>
+    {% endif %}
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>{{ category.name }}</span>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+.category-card {
+    transition: all 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.product-card {
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+}
+
+.product-image-container {
+    position: relative;
+    overflow: hidden;
+    padding-top: 100%;
+}
+
+.product-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .grid-cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-6" x-data="categoryDetail()">
+    <!-- 카테고리 헤더 -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-700 px-6 py-8">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <i class="{{ category.icon|default:'fas fa-folder' }} text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl lg:text-3xl font-bold text-white">{{ category.name }}</h1>
+                        <p class="text-blue-100 font-medium">코드: {{ category.code }}</p>
+                        {% if category.parent %}
+                            <p class="text-blue-100 text-sm mt-1">
+                                <i class="fas fa-folder-tree mr-1"></i>
+                                {{ category.full_path }}
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="{% url 'products:category_edit' category.pk %}" 
+                       class="inline-flex items-center justify-center px-4 py-2 bg-white/20 backdrop-blur-sm text-white rounded-lg hover:bg-white/30 transition-all duration-200 font-medium">
+                        <i class="fas fa-edit mr-2"></i>
+                        카테고리 수정
+                    </a>
+                    <button @click="deleteCategory" 
+                            class="inline-flex items-center justify-center px-4 py-2 bg-red-500/20 backdrop-blur-sm text-white rounded-lg hover:bg-red-500/30 transition-all duration-200 font-medium">
+                        <i class="fas fa-trash mr-2"></i>
+                        카테고리 삭제
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 카테고리 정보 -->
+        <div class="p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- 기본 정보 -->
+                <div class="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4">
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">기본 정보</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600 dark:text-gray-300">상태</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if category.is_active %}bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400{% else %}bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400{% endif %}">
+                                {% if category.is_active %}활성{% else %}비활성{% endif %}
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600 dark:text-gray-300">정렬 순서</span>
+                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ category.sort_order }}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600 dark:text-gray-300">레벨</span>
+                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ category.level }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 통계 정보 -->
+                <div class="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4">
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">통계</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600 dark:text-gray-300">전체 상품 수</span>
+                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ total_products|intcomma }}개</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600 dark:text-gray-300">활성 상품 수</span>
+                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ active_products|intcomma }}개</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600 dark:text-gray-300">하위 카테고리</span>
+                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ children_count|intcomma }}개</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 날짜 정보 -->
+                <div class="bg-gray-50 dark:bg-gray-700/50 rounded-xl p-4">
+                    <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">날짜 정보</h3>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600 dark:text-gray-300">생성일</span>
+                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ category.created_at|date:"Y-m-d" }}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600 dark:text-gray-300">수정일</span>
+                            <span class="text-sm font-medium text-gray-900 dark:text-gray-100">{{ category.updated_at|date:"Y-m-d" }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 설명 -->
+            {% if category.description %}
+                <div class="mt-6">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">설명</h3>
+                    <p class="text-gray-600 dark:text-gray-300">{{ category.description|linebreaks }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 하위 카테고리 섹션 -->
+    {% if subcategories %}
+        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">
+                    <i class="fas fa-folder-tree mr-2 text-indigo-600 dark:text-indigo-400"></i>
+                    하위 카테고리
+                </h2>
+                <a href="{% url 'products:category_create' %}?parent={{ category.pk }}" 
+                   class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium text-sm">
+                    <i class="fas fa-plus mr-2"></i>
+                    하위 카테고리 추가
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {% for subcategory in children %}
+                    <a href="{% url 'products:category_detail' subcategory.pk %}" 
+                       class="category-card bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200 group">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i class="{{ subcategory.icon|default:'fas fa-folder' }} text-white"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">{{ subcategory.name }}</h3>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">
+                                    {{ subcategory.get_product_count }}개 상품
+                                </p>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400 dark:text-gray-500 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors"></i>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- 상품 목록 섹션 -->
+    <div class="bg-white dark:bg-gray-800 shadow-lg rounded-xl border border-gray-200 dark:border-gray-700">
+        <!-- 헤더 -->
+        <div class="border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100">
+                    <i class="fas fa-box mr-2 text-indigo-600 dark:text-indigo-400"></i>
+                    카테고리 상품 ({{ products.paginator.count }}개)
+                </h2>
+                
+                <!-- 필터 및 정렬 -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <!-- 검색 -->
+                    <div class="relative">
+                        <input type="text" 
+                               x-model="searchQuery"
+                               @input.debounce.300ms="search"
+                               placeholder="상품 검색..." 
+                               class="w-full sm:w-64 pl-10 pr-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus-ring">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-search text-gray-400 dark:text-gray-500"></i>
+                        </div>
+                    </div>
+
+                    <!-- 정렬 -->
+                    <select x-model="sortBy" 
+                            @change="changeSort"
+                            class="px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-gray-100 focus-ring">
+                        <option value="-created_at">최신순</option>
+                        <option value="name">이름순</option>
+                        <option value="selling_price">낮은 가격순</option>
+                        <option value="-selling_price">높은 가격순</option>
+                        <option value="stock_quantity">재고 적은순</option>
+                        <option value="-stock_quantity">재고 많은순</option>
+                    </select>
+
+                    <!-- 보기 모드 -->
+                    <div class="flex items-center bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                        <button @click="viewMode = 'grid'" 
+                                :class="viewMode === 'grid' ? 'bg-white dark:bg-gray-600 shadow' : ''"
+                                class="p-2 rounded transition-all duration-200">
+                            <i class="fas fa-th text-gray-600 dark:text-gray-300"></i>
+                        </button>
+                        <button @click="viewMode = 'list'" 
+                                :class="viewMode === 'list' ? 'bg-white dark:bg-gray-600 shadow' : ''"
+                                class="p-2 rounded transition-all duration-200">
+                            <i class="fas fa-list text-gray-600 dark:text-gray-300"></i>
+                        </button>
+                    </div>
+
+                    <a href="{% url 'products:create' %}?category={{ category.pk }}" 
+                       class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium text-sm">
+                        <i class="fas fa-plus mr-2"></i>
+                        상품 추가
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 상품 목록 -->
+        <div class="p-6">
+            {% if products %}
+                <!-- 그리드 뷰 -->
+                <div x-show="viewMode === 'grid'" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                    {% for product in products %}
+                        <a href="{% url 'products:detail' product.pk %}" 
+                           class="product-card bg-white dark:bg-gray-700 rounded-lg shadow hover:shadow-lg transition-all duration-200 overflow-hidden group">
+                            <div class="product-image-container bg-gray-100 dark:bg-gray-600">
+                                {% if product.primary_image %}
+                                    <img src="{{ product.primary_image.image.url }}" 
+                                         alt="{{ product.name }}"
+                                         class="product-image">
+                                {% else %}
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <i class="fas fa-box text-gray-400 dark:text-gray-500 text-3xl"></i>
+                                    </div>
+                                {% endif %}
+                                
+                                <!-- 상태 배지 -->
+                                {% if product.is_featured %}
+                                    <span class="absolute top-2 left-2 inline-flex items-center px-2 py-1 bg-yellow-500 text-white text-xs font-medium rounded">
+                                        <i class="fas fa-star mr-1"></i>인기
+                                    </span>
+                                {% endif %}
+                                
+                                {% if product.stock_quantity == 0 %}
+                                    <span class="absolute top-2 right-2 inline-flex items-center px-2 py-1 bg-red-500 text-white text-xs font-medium rounded">
+                                        품절
+                                    </span>
+                                {% elif product.stock_quantity <= product.min_stock_level %}
+                                    <span class="absolute top-2 right-2 inline-flex items-center px-2 py-1 bg-orange-500 text-white text-xs font-medium rounded">
+                                        재고부족
+                                    </span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="p-4">
+                                <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                                    {{ product.name }}
+                                </h3>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ product.sku }}</p>
+                                
+                                <div class="mt-3 flex items-center justify-between">
+                                    <div>
+                                        {% if product.discount_price %}
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 line-through">₩{{ product.selling_price|intcomma }}</p>
+                                            <p class="text-sm font-bold text-red-600 dark:text-red-400">₩{{ product.discount_price|intcomma }}</p>
+                                        {% else %}
+                                            <p class="text-sm font-bold text-gray-900 dark:text-gray-100">₩{{ product.selling_price|intcomma }}</p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">
+                                        재고: {{ product.stock_quantity }}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+
+                <!-- 리스트 뷰 -->
+                <div x-show="viewMode === 'list'" x-cloak>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        상품
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        SKU
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        가격
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        재고
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                        상태
+                                    </th>
+                                    <th class="relative px-6 py-3">
+                                        <span class="sr-only">작업</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                {% for product in products %}
+                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <div class="flex-shrink-0 h-10 w-10">
+                                                    {% if product.primary_image %}
+                                                        <img src="{{ product.primary_image.image.url }}" 
+                                                             alt="{{ product.name }}"
+                                                             class="h-10 w-10 rounded-lg object-cover">
+                                                    {% else %}
+                                                        <div class="h-10 w-10 rounded-lg bg-gray-100 dark:bg-gray-600 flex items-center justify-center">
+                                                            <i class="fas fa-box text-gray-400 dark:text-gray-500"></i>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="ml-4">
+                                                    <div class="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                        {{ product.name }}
+                                                    </div>
+                                                    {% if product.brand %}
+                                                        <div class="text-xs text-gray-500 dark:text-gray-400">
+                                                            {{ product.brand.name }}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900 dark:text-gray-100">{{ product.sku }}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            {% if product.discount_price %}
+                                                <div class="text-xs text-gray-500 dark:text-gray-400 line-through">₩{{ product.selling_price|intcomma }}</div>
+                                                <div class="text-sm font-medium text-red-600 dark:text-red-400">₩{{ product.discount_price|intcomma }}</div>
+                                            {% else %}
+                                                <div class="text-sm font-medium text-gray-900 dark:text-gray-100">₩{{ product.selling_price|intcomma }}</div>
+                                            {% endif %}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="flex items-center">
+                                                <span class="text-sm text-gray-900 dark:text-gray-100 mr-2">{{ product.stock_quantity }}</span>
+                                                {% if product.stock_quantity == 0 %}
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400">
+                                                        품절
+                                                    </span>
+                                                {% elif product.stock_quantity <= product.min_stock_level %}
+                                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-400">
+                                                        부족
+                                                    </span>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if product.status == 'ACTIVE' %}bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400{% else %}bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400{% endif %}">
+                                                {{ product.get_status_display }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                            <a href="{% url 'products:detail' product.pk %}" 
+                                               class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300">
+                                                상세보기
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 페이지네이션 -->
+                {% if page_obj.has_other_pages %}
+                    <div class="mt-6 flex items-center justify-between">
+                        <div class="flex-1 flex justify-between sm:hidden">
+                            {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}" 
+                                   class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    이전
+                                </a>
+                            {% endif %}
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}" 
+                                   class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    다음
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm text-gray-700 dark:text-gray-300">
+                                    <span class="font-medium">{{ page_obj.start_index }}</span>
+                                    -
+                                    <span class="font-medium">{{ page_obj.end_index }}</span>
+                                    /
+                                    <span class="font-medium">{{ page_obj.paginator.count }}</span>
+                                    개 상품
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                                    {% if page_obj.has_previous %}
+                                        <a href="?page={{ page_obj.previous_page_number }}" 
+                                           class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                            <i class="fas fa-chevron-left h-4 w-4"></i>
+                                        </a>
+                                    {% endif %}
+                                    
+                                    <span class="relative inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                                    </span>
+                                    
+                                    {% if page_obj.has_next %}
+                                        <a href="?page={{ page_obj.next_page_number }}" 
+                                           class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                            <i class="fas fa-chevron-right h-4 w-4"></i>
+                                        </a>
+                                    {% endif %}
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% else %}
+                <!-- 상품이 없을 때 -->
+                <div class="text-center py-12">
+                    <div class="w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-box-open text-gray-400 dark:text-gray-500 text-3xl"></i>
+                    </div>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">상품이 없습니다</h3>
+                    <p class="text-gray-500 dark:text-gray-400 mb-4">이 카테고리에는 아직 등록된 상품이 없습니다.</p>
+                    <a href="{% url 'products:create' %}?category={{ category.pk }}" 
+                       class="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors font-medium">
+                        <i class="fas fa-plus mr-2"></i>
+                        첫 상품 추가하기
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- 삭제 불가 모달 -->
+    <div x-show="showDeleteErrorModal" 
+         x-cloak
+         class="fixed inset-0 z-50 overflow-y-auto">
+        <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
+            <div x-show="showDeleteErrorModal"
+                 x-transition:enter="ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="fixed transition-opacity">
+                <div class="absolute bg-gray-500 dark:bg-gray-900 opacity-75"></div>
+            </div>
+
+            <div x-show="showDeleteErrorModal"
+                 x-transition:enter="ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave="ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 class="inline-block align-bottom bg-white dark:bg-gray-800 rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+                <div>
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 dark:bg-red-900/20">
+                        <i class="fas fa-exclamation-triangle text-red-600 dark:text-red-400"></i>
+                    </div>
+                    <div class="mt-3 text-center sm:mt-5">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
+                            삭제할 수 없습니다
+                        </h3>
+                        <div class="mt-2">
+                            <p class="text-sm text-gray-500 dark:text-gray-400" x-text="deleteErrorMessage"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 sm:mt-6">
+                    <button @click="showDeleteErrorModal = false"
+                            type="button"
+                            class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm">
+                        확인
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function categoryDetail() {
+    return {
+        viewMode: 'grid',
+        searchQuery: '',
+        sortBy: '-created_at',
+        showDeleteErrorModal: false,
+        deleteErrorMessage: '',
+        
+        deleteCategory() {
+            Swal.fire({
+                title: '카테고리를 삭제하시겠습니까?',
+                text: "이 작업은 되돌릴 수 없습니다!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '삭제',
+                cancelButtonText: '취소',
+                customClass: {
+                    popup: 'dark:bg-gray-800 dark:text-gray-100',
+                    title: 'dark:text-gray-100',
+                    content: 'dark:text-gray-300',
+                    confirmButton: 'dark:bg-red-600',
+                    cancelButton: 'dark:bg-gray-600'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // 삭제 가능 여부 확인
+                    fetch("{% url 'products:category_delete_check' category.pk %}", {
+                        method: 'GET',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.can_delete) {
+                            // 실제 삭제 실행
+                            const form = document.createElement('form');
+                            form.method = 'POST';
+                            form.action = "{% url 'products:category_delete' category.pk %}";
+                            
+                            const csrfToken = document.createElement('input');
+                            csrfToken.type = 'hidden';
+                            csrfToken.name = 'csrfmiddlewaretoken';
+                            csrfToken.value = '{{ csrf_token }}';
+                            form.appendChild(csrfToken);
+                            
+                            document.body.appendChild(form);
+                            form.submit();
+                        } else {
+                            this.deleteErrorMessage = data.message;
+                            this.showDeleteErrorModal = true;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: '오류',
+                            text: '삭제 처리 중 오류가 발생했습니다.',
+                            customClass: {
+                                popup: 'dark:bg-gray-800 dark:text-gray-100',
+                                title: 'dark:text-gray-100',
+                                content: 'dark:text-gray-300'
+                            }
+                        });
+                    });
+                }
+            });
+        },
+        
+        search() {
+            const params = new URLSearchParams(window.location.search);
+            params.set('search', this.searchQuery);
+            params.set('page', '1');
+            window.location.search = params.toString();
+        },
+        
+        changeSort() {
+            const params = new URLSearchParams(window.location.search);
+            params.set('ordering', this.sortBy);
+            params.set('page', '1');
+            window.location.search = params.toString();
+        },
+        
+        init() {
+            // URL 파라미터에서 초기값 설정
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('search')) {
+                this.searchQuery = params.get('search');
+            }
+            if (params.has('ordering')) {
+                this.sortBy = params.get('ordering');
+            }
+            if (params.has('view')) {
+                this.viewMode = params.get('view');
+            }
+            
+            // 뷰 모드 변경 시 URL 업데이트
+            this.$watch('viewMode', (value) => {
+                const params = new URLSearchParams(window.location.search);
+                params.set('view', value);
+                window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+            });
+        }
+    }
+}
+</script>
+{% endblock %}

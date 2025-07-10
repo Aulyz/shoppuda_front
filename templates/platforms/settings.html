@@ -1,0 +1,815 @@
+{% extends 'base.html' %}
+{% load static humanize %}
+
+{% comment %} templates/platforms/settings.html - 플랫폼 설정 관리 {% endcomment %}
+
+{% block title %}플랫폼 설정 - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'platforms:list' %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">플랫폼 관리</a>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>설정</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300" x-data="platformSettings()">
+    <!-- Page Header -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300 mb-6">
+        <div class="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-700 px-6 py-8">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <i class="fas fa-cogs text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl lg:text-3xl font-bold text-white">플랫폼 설정</h1>
+                        <p class="text-violet-100 font-medium">각 플랫폼의 API 설정과 동기화 옵션을 관리하세요</p>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button type="button" 
+                            @click="testAllConnections()"
+                            :disabled="isTestingAll"
+                            class="inline-flex items-center px-4 py-2 backdrop-blur-sm border border-white/30 rounded-lg text-white font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                        <i class="fas fa-wifi mr-2"></i>
+                        <span x-text="isTestingAll ? '연결 테스트 중...' : '전체 연결 테스트'"></span>
+                    </button>
+                    <button type="button" 
+                            @click="saveAllSettings()"
+                            :disabled="isSaving"
+                            class="inline-flex items-center px-4 py-2 backdrop-blur-sm bg-white/20 rounded-lg text-white font-medium transition-all duration-200 hover:scale-105 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                        <i class="fas fa-save mr-2"></i>
+                        <span x-text="isSaving ? '저장 중...' : '전체 저장'"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 글로벌 설정 -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden mb-6">
+        <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-globe text-blue-600 dark:text-blue-400"></i>
+                </div>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">글로벌 설정</h2>
+            </div>
+        </div>
+        <div class="p-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            기본 동기화 간격
+                        </label>
+                        <select x-model="globalSettings.defaultSyncInterval" 
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="300">5분</option>
+                            <option value="600">10분</option>
+                            <option value="1800">30분</option>
+                            <option value="3600">1시간</option>
+                            <option value="21600">6시간</option>
+                            <option value="86400">24시간</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" 
+                                   x-model="globalSettings.autoSync"
+                                   class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">자동 동기화 활성화</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" 
+                                   x-model="globalSettings.errorNotification"
+                                   class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">오류 알림 활성화</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            최대 재시도 횟수
+                        </label>
+                        <input type="number" 
+                               x-model="globalSettings.maxRetries"
+                               min="1" max="10"
+                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            타임아웃 (초)
+                        </label>
+                        <input type="number" 
+                               x-model="globalSettings.timeout"
+                               min="10" max="300"
+                               class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 플랫폼별 설정 -->
+    <div class="space-y-6">
+        <template x-for="platform in platforms" :key="platform.id">
+            <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                <!-- 플랫폼 헤더 -->
+                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 cursor-pointer"
+                     @click="platform.expanded = !platform.expanded">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center"
+                                 :class="getPlatformIconBg(platform.platform_type)">
+                                <i :class="getPlatformIcon(platform.platform_type)" class="text-white text-lg"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white" x-text="platform.name"></h3>
+                                <div class="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                                    <span class="flex items-center space-x-1">
+                                        <div class="w-2 h-2 rounded-full"
+                                             :class="platform.is_active ? 'bg-green-500' : 'bg-red-500'"></div>
+                                        <span x-text="platform.is_active ? '활성' : '비활성'"></span>
+                                    </span>
+                                    <span x-text="'마지막 동기화: ' + formatDate(platform.last_sync_at)"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <!-- 연결 상태 -->
+                            <div class="flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-medium"
+                                 :class="getConnectionStatusClass(platform.connection_status)">
+                                <div class="w-2 h-2 rounded-full"
+                                     :class="getConnectionStatusDot(platform.connection_status)"></div>
+                                <span x-text="getConnectionStatusText(platform.connection_status)"></span>
+                            </div>
+                            <!-- 토글 아이콘 -->
+                            <i class="fas fa-chevron-down transition-transform duration-200"
+                               :class="platform.expanded ? 'rotate-180' : ''"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 플랫폼 설정 내용 -->
+                <div x-show="platform.expanded" 
+                     x-collapse
+                     class="p-6 bg-gray-50 dark:bg-gray-900">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- API 설정 -->
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-md font-semibold text-gray-900 dark:text-white">API 설정</h4>
+                                <button type="button"
+                                        @click="testConnection(platform.id)"
+                                        :disabled="platform.testing"
+                                        class="text-sm px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-200 disabled:opacity-50">
+                                    <i class="fas fa-wifi mr-1"></i>
+                                    <span x-text="platform.testing ? '테스트 중...' : '연결 테스트'"></span>
+                                </button>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    API 키
+                                </label>
+                                <div class="relative">
+                                    <input :type="platform.showApiKey ? 'text' : 'password'"
+                                           x-model="platform.api_key"
+                                           class="w-full px-3 py-2 pr-10 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                           placeholder="API 키를 입력하세요">
+                                    <button type="button"
+                                            @click="platform.showApiKey = !platform.showApiKey"
+                                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                                        <i :class="platform.showApiKey ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    API 시크릿
+                                </label>
+                                <div class="relative">
+                                    <input :type="platform.showApiSecret ? 'text' : 'password'"
+                                           x-model="platform.api_secret"
+                                           class="w-full px-3 py-2 pr-10 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                           placeholder="API 시크릿을 입력하세요">
+                                    <button type="button"
+                                            @click="platform.showApiSecret = !platform.showApiSecret"
+                                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                                        <i :class="platform.showApiSecret ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    API 엔드포인트
+                                </label>
+                                <input type="url"
+                                       x-model="platform.api_endpoint"
+                                       class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                       placeholder="https://api.example.com">
+                            </div>
+                        </div>
+
+                        <!-- 동기화 설정 -->
+                        <div class="space-y-4">
+                            <h4 class="text-md font-semibold text-gray-900 dark:text-white">동기화 설정</h4>
+                            
+                            <div>
+                                <label class="flex items-center space-x-3">
+                                    <input type="checkbox" 
+                                           x-model="platform.sync_enabled"
+                                           class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">동기화 활성화</span>
+                                </label>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    동기화 간격
+                                </label>
+                                <select x-model="platform.sync_interval" 
+                                        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="300">5분</option>
+                                    <option value="600">10분</option>
+                                    <option value="1800">30분</option>
+                                    <option value="3600">1시간</option>
+                                    <option value="21600">6시간</option>
+                                    <option value="86400">24시간</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    동기화 옵션
+                                </label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center space-x-3">
+                                        <input type="checkbox" 
+                                               x-model="platform.sync_products"
+                                               class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">상품 동기화</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3">
+                                        <input type="checkbox" 
+                                               x-model="platform.sync_orders"
+                                               class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">주문 동기화</span>
+                                    </label>
+                                    <label class="flex items-center space-x-3">
+                                        <input type="checkbox" 
+                                               x-model="platform.sync_inventory"
+                                               class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">재고 동기화</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    마지막 동기화 상태
+                                </label>
+                                <div class="px-3 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg text-sm"
+                                     :class="getSyncStatusClass(platform.last_sync_status)">
+                                    <div class="flex items-center justify-between">
+                                        <span x-text="getSyncStatusText(platform.last_sync_status)"></span>
+                                        <span x-text="formatDate(platform.last_sync_at)" class="text-gray-500 dark:text-gray-400"></span>
+                                    </div>
+                                    <div x-show="platform.last_sync_message" 
+                                         x-text="platform.last_sync_message" 
+                                         class="mt-1 text-xs text-gray-600 dark:text-gray-400"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 액션 버튼 -->
+                    <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                        <button type="button"
+                                @click="savePlatformSettings(platform.id)"
+                                :disabled="platform.saving"
+                                class="flex-1 sm:flex-none px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-save mr-2"></i>
+                            <span x-text="platform.saving ? '저장 중...' : '설정 저장'"></span>
+                        </button>
+                        <button type="button"
+                                @click="syncPlatform(platform.id)"
+                                :disabled="platform.syncing || !platform.sync_enabled"
+                                class="flex-1 sm:flex-none px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-sync mr-2"></i>
+                            <span x-text="platform.syncing ? '동기화 중...' : '즉시 동기화'"></span>
+                        </button>
+                        <button type="button"
+                                @click="resetPlatformSettings(platform.id)"
+                                class="flex-1 sm:flex-none px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white font-medium rounded-lg transition-colors duration-200">
+                            <i class="fas fa-undo mr-2"></i>
+                            <span>설정 초기화</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- 플랫폼이 없는 경우 -->
+    <div x-show="platforms.length === 0" 
+         class="text-center py-12">
+        <div class="w-24 h-24 mx-auto mb-4 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
+            <i class="fas fa-store text-3xl text-gray-400"></i>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">설정할 플랫폼이 없습니다</h3>
+        <p class="text-gray-500 dark:text-gray-400 mb-4">먼저 플랫폼을 등록한 후 설정을 진행해주세요.</p>
+        <a href="{% url 'platforms:create' %}" 
+           class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200">
+            <i class="fas fa-plus mr-2"></i>
+            플랫폼 등록하기
+        </a>
+    </div>
+
+    <!-- 로딩 모달 -->
+    <div x-show="loading" 
+         x-cloak
+         class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-sm w-full mx-4">
+            <div class="text-center">
+                <div class="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">처리 중입니다</h3>
+                <p class="text-gray-500 dark:text-gray-400" x-text="loadingMessage"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function platformSettings() {
+    return {
+        loading: false,
+        loadingMessage: '',
+        isTestingAll: false,
+        isSaving: false,
+        globalSettings: {
+            defaultSyncInterval: 1800,
+            autoSync: true,
+            errorNotification: true,
+            maxRetries: 3,
+            timeout: 30
+        },
+        platforms: [
+            {
+                id: 1,
+                name: '네이버 스마트스토어',
+                platform_type: 'SMARTSTORE',
+                is_active: true,
+                sync_enabled: true,
+                sync_interval: 1800,
+                sync_products: true,
+                sync_orders: true,
+                sync_inventory: true,
+                api_key: '',
+                api_secret: '',
+                api_endpoint: 'https://api.commerce.naver.com',
+                last_sync_at: '2025-01-15T10:30:00Z',
+                last_sync_status: 'success',
+                last_sync_message: '정상적으로 동기화되었습니다.',
+                connection_status: 'connected',
+                expanded: false,
+                showApiKey: false,
+                showApiSecret: false,
+                testing: false,
+                saving: false,
+                syncing: false
+            },
+            {
+                id: 2,
+                name: '쿠팡',
+                platform_type: 'COUPANG',
+                is_active: true,
+                sync_enabled: false,
+                sync_interval: 3600,
+                sync_products: true,
+                sync_orders: true,
+                sync_inventory: false,
+                api_key: '',
+                api_secret: '',
+                api_endpoint: 'https://api-gateway.coupang.com',
+                last_sync_at: '2025-01-15T09:15:00Z',
+                last_sync_status: 'error',
+                last_sync_message: 'API 인증 오류가 발생했습니다.',
+                connection_status: 'error',
+                expanded: false,
+                showApiKey: false,
+                showApiSecret: false,
+                testing: false,
+                saving: false,
+                syncing: false
+            },
+            {
+                id: 3,
+                name: 'G마켓',
+                platform_type: 'GMARKET',
+                is_active: false,
+                sync_enabled: false,
+                sync_interval: 3600,
+                sync_products: false,
+                sync_orders: false,
+                sync_inventory: false,
+                api_key: '',
+                api_secret: '',
+                api_endpoint: 'https://api.gmarket.co.kr',
+                last_sync_at: null,
+                last_sync_status: 'never',
+                last_sync_message: '',
+                connection_status: 'disconnected',
+                expanded: false,
+                showApiKey: false,
+                showApiSecret: false,
+                testing: false,
+                saving: false,
+                syncing: false
+            }
+        ],
+
+        init() {
+            this.loadSettings();
+        },
+
+        async loadSettings() {
+            // 실제로는 서버에서 설정 데이터를 로드
+            console.log('설정 데이터 로드됨');
+        },
+
+        getPlatformIcon(type) {
+            const icons = {
+                'SMARTSTORE': 'fab fa-naver',
+                'COUPANG': 'fas fa-shopping-cart',
+                'GMARKET': 'fas fa-store',
+                'AUCTION': 'fas fa-gavel',
+                '11ST': 'fas fa-shopping-bag'
+            };
+            return icons[type] || 'fas fa-store';
+        },
+
+        getPlatformIconBg(type) {
+            const colors = {
+                'SMARTSTORE': 'bg-green-500',
+                'COUPANG': 'bg-red-500',
+                'GMARKET': 'bg-blue-500',
+                'AUCTION': 'bg-orange-500',
+                '11ST': 'bg-purple-500'
+            };
+            return colors[type] || 'bg-gray-500';
+        },
+
+        getConnectionStatusClass(status) {
+            const classes = {
+                'connected': 'bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200',
+                'error': 'bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200',
+                'disconnected': 'bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200'
+            };
+            return classes[status] || classes.disconnected;
+        },
+
+        getConnectionStatusDot(status) {
+            const classes = {
+                'connected': 'bg-green-500',
+                'error': 'bg-red-500',
+                'disconnected': 'bg-gray-500'
+            };
+            return classes[status] || classes.disconnected;
+        },
+
+        getConnectionStatusText(status) {
+            const texts = {
+                'connected': '연결됨',
+                'error': '오류',
+                'disconnected': '연결 안됨'
+            };
+            return texts[status] || '알 수 없음';
+        },
+
+        getSyncStatusClass(status) {
+            const classes = {
+                'success': 'border-l-4 border-green-500',
+                'error': 'border-l-4 border-red-500',
+                'running': 'border-l-4 border-blue-500',
+                'never': 'border-l-4 border-gray-500'
+            };
+            return classes[status] || classes.never;
+        },
+
+        getSyncStatusText(status) {
+            const texts = {
+                'success': '성공',
+                'error': '실패',
+                'running': '진행 중',
+                'never': '동기화 없음'
+            };
+            return texts[status] || '알 수 없음';
+        },
+
+        formatDate(dateString) {
+            if (!dateString) return '없음';
+            const date = new Date(dateString);
+            return date.toLocaleString('ko-KR');
+        },
+
+        async testConnection(platformId) {
+            const platform = this.platforms.find(p => p.id === platformId);
+            if (!platform) return;
+
+            platform.testing = true;
+            
+            try {
+                const response = await fetch(`/platforms/${platformId}/test/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: JSON.stringify({
+                        api_key: platform.api_key,
+                        api_secret: platform.api_secret,
+                        api_endpoint: platform.api_endpoint
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    platform.connection_status = 'connected';
+                    this.showNotification('success', `${platform.name} 연결 테스트가 성공했습니다.`);
+                } else {
+                    platform.connection_status = 'error';
+                    this.showNotification('error', `${platform.name} 연결 테스트가 실패했습니다: ${result.message}`);
+                }
+            } catch (error) {
+                platform.connection_status = 'error';
+                this.showNotification('error', `연결 테스트 중 오류가 발생했습니다: ${error.message}`);
+            } finally {
+                platform.testing = false;
+            }
+        },
+
+        async testAllConnections() {
+            this.isTestingAll = true;
+            let successCount = 0;
+            let totalCount = this.platforms.length;
+
+            for (const platform of this.platforms) {
+                if (platform.is_active) {
+                    await this.testConnection(platform.id);
+                    if (platform.connection_status === 'connected') {
+                        successCount++;
+                    }
+                }
+            }
+
+            this.isTestingAll = false;
+            this.showNotification('info', `전체 연결 테스트 완료: ${successCount}/${totalCount} 성공`);
+        },
+
+        async savePlatformSettings(platformId) {
+            const platform = this.platforms.find(p => p.id === platformId);
+            if (!platform) return;
+
+            platform.saving = true;
+
+            try {
+                const response = await fetch(`/platforms/${platformId}/settings/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: JSON.stringify({
+                        api_key: platform.api_key,
+                        api_secret: platform.api_secret,
+                        api_endpoint: platform.api_endpoint,
+                        sync_enabled: platform.sync_enabled,
+                        sync_interval: platform.sync_interval,
+                        sync_products: platform.sync_products,
+                        sync_orders: platform.sync_orders,
+                        sync_inventory: platform.sync_inventory
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    this.showNotification('success', `${platform.name} 설정이 저장되었습니다.`);
+                } else {
+                    this.showNotification('error', `설정 저장 실패: ${result.message}`);
+                }
+            } catch (error) {
+                this.showNotification('error', `설정 저장 중 오류가 발생했습니다: ${error.message}`);
+            } finally {
+                platform.saving = false;
+            }
+        },
+
+        async saveAllSettings() {
+            this.isSaving = true;
+            let successCount = 0;
+
+            for (const platform of this.platforms) {
+                try {
+                    await this.savePlatformSettings(platform.id);
+                    successCount++;
+                } catch (error) {
+                    console.error(`플랫폼 ${platform.name} 설정 저장 실패:`, error);
+                }
+            }
+
+            this.isSaving = false;
+            this.showNotification('info', `전체 설정 저장 완료: ${successCount}/${this.platforms.length} 성공`);
+        },
+
+        async syncPlatform(platformId) {
+            const platform = this.platforms.find(p => p.id === platformId);
+            if (!platform) return;
+
+            platform.syncing = true;
+
+            try {
+                const response = await fetch(`/platforms/${platformId}/sync/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    }
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    platform.last_sync_at = new Date().toISOString();
+                    platform.last_sync_status = 'success';
+                    platform.last_sync_message = result.message;
+                    this.showNotification('success', `${platform.name} 동기화가 완료되었습니다.`);
+                } else {
+                    platform.last_sync_status = 'error';
+                    platform.last_sync_message = result.message;
+                    this.showNotification('error', `동기화 실패: ${result.message}`);
+                }
+            } catch (error) {
+                platform.last_sync_status = 'error';
+                platform.last_sync_message = error.message;
+                this.showNotification('error', `동기화 중 오류가 발생했습니다: ${error.message}`);
+            } finally {
+                platform.syncing = false;
+            }
+        },
+
+        async resetPlatformSettings(platformId) {
+            const result = await Swal.fire({
+                title: '설정 초기화',
+                text: '이 플랫폼의 모든 설정을 초기화하시겠습니까? 이 작업은 되돌릴 수 없습니다.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc2626',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: '초기화',
+                cancelButtonText: '취소'
+            });
+
+            if (result.isConfirmed) {
+                const platform = this.platforms.find(p => p.id === platformId);
+                if (platform) {
+                    platform.api_key = '';
+                    platform.api_secret = '';
+                    platform.api_endpoint = '';
+                    platform.sync_enabled = false;
+                    platform.sync_interval = 3600;
+                    platform.sync_products = false;
+                    platform.sync_orders = false;
+                    platform.sync_inventory = false;
+                    platform.connection_status = 'disconnected';
+
+                    this.showNotification('success', `${platform.name} 설정이 초기화되었습니다.`);
+                }
+            }
+        },
+
+        showNotification(type, message) {
+            const icon = {
+                'success': 'fas fa-check-circle',
+                'error': 'fas fa-exclamation-circle',
+                'warning': 'fas fa-exclamation-triangle',
+                'info': 'fas fa-info-circle'
+            }[type] || 'fas fa-info-circle';
+
+            const bgColor = {
+                'success': 'bg-green-100 dark:bg-green-900 border-green-500 text-green-800 dark:text-green-200',
+                'error': 'bg-red-100 dark:bg-red-900 border-red-500 text-red-800 dark:text-red-200',
+                'warning': 'bg-yellow-100 dark:bg-yellow-900 border-yellow-500 text-yellow-800 dark:text-yellow-200',
+                'info': 'bg-blue-100 dark:bg-blue-900 border-blue-500 text-blue-800 dark:text-blue-200'
+            }[type] || 'bg-blue-100 dark:bg-blue-900 border-blue-500 text-blue-800 dark:text-blue-200';
+
+            const notification = document.createElement('div');
+            notification.className = `flex items-center p-4 mb-4 border-l-4 rounded-lg ${bgColor} transform transition-all duration-300 translate-x-full`;
+            notification.innerHTML = `
+                <i class="${icon} text-lg mr-3"></i>
+                <div class="flex-1">
+                    <p class="font-medium">${message}</p>
+                </div>
+                <button type="button" class="ml-4 hover:opacity-75" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+
+            const container = document.getElementById('global-notifications');
+            container.appendChild(notification);
+
+            // 애니메이션
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+
+            // 자동 제거
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (notification.parentElement) {
+                        notification.remove();
+                    }
+                }, 300);
+            }, 5000);
+        }
+    }
+}
+</script>
+
+<!-- CSRF Token -->
+{% csrf_token %}
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    [x-cloak] { 
+        display: none !important; 
+    }
+    
+    .notification-enter {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    
+    .notification-enter-active {
+        transition: all 0.3s ease-out;
+        transform: translateX(0);
+        opacity: 1;
+    }
+    
+    .notification-exit {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    
+    .notification-exit-active {
+        transition: all 0.3s ease-in;
+        transform: translateX(100%);
+        opacity: 0;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 페이지 로드시 초기화
+    console.log('플랫폼 설정 페이지 로드됨');
+    
+    // 키보드 단축키
+    document.addEventListener('keydown', function(e) {
+        // Ctrl + S: 전체 저장
+        if (e.ctrlKey && e.key === 's') {
+            e.preventDefault();
+            const settingsComponent = Alpine.$data(document.querySelector('[x-data="platformSettings()"]'));
+            if (settingsComponent) {
+                settingsComponent.saveAllSettings();
+            }
+        }
+        
+        // Ctrl + T: 전체 연결 테스트
+        if (e.ctrlKey && e.key === 't') {
+            e.preventDefault();
+            const settingsComponent = Alpine.$data(document.querySelector('[x-data="platformSettings()"]'));
+            if (settingsComponent) {
+                settingsComponent.testAllConnections();
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

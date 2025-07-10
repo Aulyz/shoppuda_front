@@ -1,0 +1,920 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% comment %} templates/dashboard/home.html - 완성된 버전 {% endcomment %}
+
+{% block title %}대시보드 - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span>대시보드</span>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-8" x-data="dashboardData()">
+    <!-- Welcome Section -->
+    <div class="relative overflow-hidden bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 rounded-2xl shadow-2xl">
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 backdrop-blur-sm"></div>
+        </div>
+        <div class="relative px-6 py-8 sm:px-8 lg:px-12 lg:py-12">
+            <div class="max-w-3xl">
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
+                        <i class="fas fa-user text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl lg:text-4xl font-bold text-white">
+                            안녕하세요, {{ user.first_name|default:user.username }}님! 👋
+                        </h1>
+                        <p class="text-blue-100 text-lg mt-2">
+                            오늘도 성공적인 하루 되세요!
+                        </p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-blue-100 text-sm">오늘 주문</p>
+                                <p class="text-white text-2xl font-bold" x-text="stats.todayOrders">{{ today_orders|default:0 }}</p>
+                            </div>
+                            <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-shopping-cart text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-blue-100 text-sm">오늘 매출</p>
+                                <p class="text-white text-2xl font-bold" x-text="formatCurrency(stats.todaySales)">{{ today_sales|default:0|floatformat:0 }}원</p>
+                            </div>
+                            <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-won-sign text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-blue-100 text-sm">부족 재고</p>
+                                <p class="text-white text-2xl font-bold" x-text="stats.lowStock">{{ low_stock_count|default:0 }}</p>
+                            </div>
+                            <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-exclamation-triangle text-white"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <a href="{% url 'products:create' %}" 
+           class="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600">
+            <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <i class="fas fa-plus text-white"></i>
+            </div>
+            <h3 class="font-semibold text-slate-900 dark:text-slate-100 text-sm">상품 등록</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">새 상품 추가</p>
+        </a>
+
+        <a href="{% url 'orders:list' %}" 
+           class="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600">
+            <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <i class="fas fa-shopping-cart text-white"></i>
+            </div>
+            <h3 class="font-semibold text-slate-900 dark:text-slate-100 text-sm">주문 관리</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">주문 처리</p>
+        </a>
+
+        <a href="{% url 'inventory:adjustment' %}" 
+           class="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600">
+            <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <i class="fas fa-warehouse text-white"></i>
+            </div>
+            <h3 class="font-semibold text-slate-900 dark:text-slate-100 text-sm">재고 조정</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">재고 관리</p>
+        </a>
+
+        <a href="{% url 'platforms:list' %}" 
+           class="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600">
+            <div class="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <i class="fas fa-sync text-white"></i>
+            </div>
+            <h3 class="font-semibold text-slate-900 dark:text-slate-100 text-sm">플랫폼 관리</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">플랫폼 관리</p>
+        </a>
+
+        <a href="#" 
+           class="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600">
+            <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-red-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <i class="fas fa-chart-bar text-white"></i>
+            </div>
+            <h3 class="font-semibold text-slate-900 dark:text-slate-100 text-sm">보고서</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">매출 분석</p>
+        </a>
+
+        <a href="#" 
+           class="group bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600">
+            <div class="w-12 h-12 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <i class="fas fa-cog text-white"></i>
+            </div>
+            <h3 class="font-semibold text-slate-900 dark:text-slate-100 text-sm">설정</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">시스템 설정</p>
+        </a>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- 총 주문 수 -->
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 dashboard-card">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400">총 주문 수</p>
+                    <p class="text-2xl font-bold text-slate-900 dark:text-slate-100 mt-2" x-text="stats.totalOrders.toLocaleString()">{{ total_orders|default:0 }}</p>
+                    <div class="flex items-center mt-2">
+                        <span class="text-xs text-green-600 dark:text-green-400 font-medium">+12.5%</span>
+                        <span class="text-xs text-slate-500 dark:text-slate-400 ml-1">지난 주 대비</span>
+                    </div>
+                </div>
+                <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-shopping-cart text-white text-lg"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 총 매출 -->
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 dashboard-card">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400">총 매출</p>
+                    <p class="text-2xl font-bold text-slate-900 dark:text-slate-100 mt-2" x-text="formatCurrency(stats.totalSales)">{{ total_sales|default:0|floatformat:0|intcomma }}원</p>
+                    <div class="flex items-center mt-2">
+                        <span class="text-xs text-green-600 dark:text-green-400 font-medium">+8.2%</span>
+                        <span class="text-xs text-slate-500 dark:text-slate-400 ml-1">지난 월 대비</span>
+                    </div>
+                </div>
+                <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-won-sign text-white text-lg"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 등록된 상품 -->
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 dashboard-card">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400">등록된 상품</p>
+                    <p class="text-2xl font-bold text-slate-900 dark:text-slate-100 mt-2" x-text="stats.totalProducts.toLocaleString()">{{ total_products|default:0 }}</p>
+                    <div class="flex items-center mt-2">
+                        <span class="text-xs text-blue-600 dark:text-blue-400 font-medium">+15개</span>
+                        <span class="text-xs text-slate-500 dark:text-slate-400 ml-1">이번 주</span>
+                    </div>
+                </div>
+                <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-box text-white text-lg"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 연결된 플랫폼 -->
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 dashboard-card">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-slate-600 dark:text-slate-400">연결된 플랫폼</p>
+                    <p class="text-2xl font-bold text-slate-900 dark:text-slate-100 mt-2" x-text="stats.connectedPlatforms">{{ connected_platforms|default:0 }}</p>
+                    <div class="flex items-center mt-2">
+                        <span class="text-xs text-green-600 dark:text-green-400 font-medium">모두 온라인</span>
+                    </div>
+                </div>
+                <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-plug text-white text-lg"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts and Recent Activity -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Sales Chart -->
+        <div class="lg:col-span-2">
+            <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">매출 추이</h3>
+                    <div class="flex space-x-2">
+                        <select 
+                            @change="changePeriod($event.target.value)"
+                            class="text-sm border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        >
+                            <option value="7">7일</option>
+                            <option value="14">14일</option>
+                            <option value="30">30일</option>
+                            <option value="90">90일</option>
+                        </select>
+                        <button 
+                            @click="refreshCharts()"
+                            class="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                            :disabled="isLoading"
+                        >
+                            <i class="fas fa-refresh" :class="{'fa-spin': isLoading}"></i>
+                            새로고침
+                        </button>
+                    </div>
+                </div>
+                <div class="h-80">
+                    <canvas id="salesChart" x-ref="salesChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-slate-100">최근 주문</h3>
+                <a href="{% url 'orders:list' %}" class="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">전체 보기</a>
+            </div>
+            <div class="space-y-4">
+                <template x-for="order in recentOrders" :key="order.id">
+                    <div class="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-shopping-bag text-white text-sm"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium text-slate-900 dark:text-slate-100 truncate" x-text="order.order_number"></p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400" x-text="order.customer_name"></p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm font-medium text-slate-900 dark:text-slate-100" x-text="formatCurrency(order.total_amount)"></p>
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
+                                  :class="getStatusClass(order.status)"
+                                  x-text="order.status_display"></span>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alerts and Notifications -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Low Stock Alert -->
+        <div class="bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-xl border border-orange-200 dark:border-orange-800 p-6">
+            <div class="flex items-start space-x-4">
+                <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/40 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-exclamation-triangle text-orange-600 dark:text-orange-400"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-orange-900 dark:text-orange-100">재고 부족 알림</h3>
+                    <p class="text-orange-700 dark:text-orange-300 mt-1">
+                        <span x-text="stats.lowStock"></span>개 상품의 재고가 부족합니다.
+                    </p>
+                    <a href="{% url 'inventory:low_stock' %}" 
+                       class="inline-flex items-center mt-3 text-sm font-medium text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300">
+                        자세히 보기
+                        <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Platform Status -->
+        <div class="bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-xl border border-green-200 dark:border-green-800 p-6">
+            <div class="flex items-start space-x-4">
+                <div class="w-12 h-12 bg-green-100 dark:bg-green-900/40 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-check-circle text-green-600 dark:text-green-400"></i>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-green-900 dark:text-green-100">플랫폼 상태</h3>
+                    <p class="text-green-700 dark:text-green-300 mt-1">
+                        모든 플랫폼이 정상적으로 연결되어 있습니다.
+                    </p>
+                    <a href="{% url 'platforms:list' %}" 
+                       class="inline-flex items-center mt-3 text-sm font-medium text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300">
+                        플랫폼 관리
+                        <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function dashboardData() {
+    return {
+        salesChart: null,
+        categoryChart: null,
+        currentPeriod: '7',
+        isLoading: false,
+        
+        // 초기 데이터
+        stats: {
+            todayOrders: {{ today_orders|default:0 }},
+            todaySales: {{ today_sales|default:0 }},
+            lowStock: {{ low_stock_count|default:0 }},
+            totalOrders: {{ total_orders|default:0 }},
+            totalSales: {{ total_sales|default:0 }},
+            totalProducts: {{ total_products|default:0 }},
+            connectedPlatforms: {{ connected_platforms|default:0 }}
+        },
+        
+        recentOrders: [
+            // 예시 데이터 - 실제로는 서버에서 받아와야 함
+            {
+                id: 1,
+                order_number: 'ORD-2024-001',
+                customer_name: '김고객',
+                total_amount: 150000,
+                status: 'PROCESSING',
+                status_display: '처리중'
+            },
+            {
+                id: 2,
+                order_number: 'ORD-2024-002',
+                customer_name: '이고객',
+                total_amount: 89000,
+                status: 'SHIPPED',
+                status_display: '배송중'
+            },
+            {
+                id: 3,
+                order_number: 'ORD-2024-003',
+                customer_name: '박고객',
+                total_amount: 235000,
+                status: 'DELIVERED',
+                status_display: '배송완료'
+            }
+        ],
+        
+        init() {
+            // DOM이 완전히 준비된 후 초기화
+            this.$nextTick(() => {
+                setTimeout(() => {
+                    this.initCharts();
+                    this.loadAllCharts();
+                    this.loadRecentOrders();
+                    this.loadStats();
+                }, 500);
+            });
+        },
+        
+        async loadAllCharts() {
+            this.isLoading = true;
+            try {
+                await Promise.all([
+                    this.loadChartData('sales', this.currentPeriod)
+                ]);
+            } catch (error) {
+                console.error('차트 로드 실패:', error);
+                this.showError('차트 데이터를 불러오는데 실패했습니다.');
+            } finally {
+                this.isLoading = false;
+            }
+        },
+        
+        async loadChartData(chartType, period = null) {
+            try {
+                let url = `/dashboard/chart-data/?type=${chartType}`;
+                if (period) {
+                    url += `&period=${period}`;
+                }
+                
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                
+                this.updateChart(chartType, data);
+            } catch (error) {
+                console.error(`${chartType} 차트 데이터 로드 실패:`, error);
+                this.showError(`${chartType} 차트 데이터를 불러오는데 실패했습니다.`);
+            }
+        },
+        
+        async loadRecentOrders() {
+            try {
+                const response = await fetch('/dashboard/recent-orders/');
+                if (response.ok) {
+                    const data = await response.json();
+                    this.recentOrders = data.orders || this.recentOrders;
+                }
+            } catch (error) {
+                console.error('최근 주문 로드 실패:', error);
+            }
+        },
+        
+        async loadStats() {
+            try {
+                const response = await fetch('/dashboard/stats/');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.total) {
+                        this.stats = {
+                            ...this.stats,
+                            ...data.total,
+                            ...data.today
+                        };
+                    }
+                }
+            } catch (error) {
+                console.error('통계 로드 실패:', error);
+            }
+        },
+        
+        updateChart(chartType, data) {
+            if (chartType === 'sales' && this.salesChart) {
+                this.salesChart.data.labels = data.labels;
+                this.salesChart.data.datasets[0].data = data.data;
+                this.salesChart.update('active');
+            }
+        },
+        
+        changePeriod(period) {
+            this.currentPeriod = period;
+            this.loadChartData('sales', period);
+        },
+        
+        initCharts() {
+            this.destroyCharts();
+            
+            try {
+                const salesCanvas = this.$refs.salesChart;
+                if (salesCanvas && typeof Chart !== 'undefined') {
+                    const salesCtx = salesCanvas.getContext('2d');
+                    
+                    this.salesChart = new Chart(salesCtx, {
+                        type: 'line',
+                        data: {
+                            labels: [],
+                            datasets: [{
+                                label: '매출',
+                                data: [],
+                                borderColor: 'rgb(59, 130, 246)',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                tension: 0.4,
+                                fill: true,
+                                pointBackgroundColor: 'rgb(59, 130, 246)',
+                                pointBorderColor: '#fff',
+                                pointBorderWidth: 2,
+                                pointRadius: 5,
+                                pointHoverRadius: 8
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            animation: {
+                                duration: 800,
+                                easing: 'easeInOutQuart'
+                            },
+                            plugins: {
+                                legend: {
+                                    display: false
+                                },
+                                tooltip: {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                    titleColor: '#fff',
+                                    bodyColor: '#fff',
+                                    borderColor: 'rgb(59, 130, 246)',
+                                    borderWidth: 1,
+                                    cornerRadius: 8,
+                                    displayColors: false,
+                                    callbacks: {
+                                        label: function(context) {
+                                            return '매출: ₩' + context.parsed.y.toLocaleString();
+                                        }
+                                    }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        callback: function(value) {
+                                            return '₩' + value.toLocaleString();
+                                        },
+                                        color: '#6B7280'
+                                    },
+                                    grid: {
+                                        color: 'rgba(107, 114, 128, 0.1)'
+                                    }
+                                },
+                                x: {
+                                    ticks: {
+                                        color: '#6B7280'
+                                    },
+                                    grid: {
+                                        color: 'rgba(107, 114, 128, 0.1)'
+                                    }
+                                }
+                            },
+                            interaction: {
+                                intersect: false,
+                                mode: 'index'
+                            }
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('차트 초기화 오류:', error);
+                this.showError('차트 초기화에 실패했습니다.');
+            }
+        },
+        
+        destroyCharts() {
+            if (this.salesChart) {
+                this.salesChart.destroy();
+                this.salesChart = null;
+            }
+            if (this.categoryChart) {
+                this.categoryChart.destroy();
+                this.categoryChart = null;
+            }
+        },
+        
+        refreshCharts() {
+            this.loadAllCharts();
+        },
+        
+        // 유틸리티 함수들
+        formatCurrency(value) {
+            if (!value) return '0원';
+            return new Intl.NumberFormat('ko-KR', {
+                style: 'currency',
+                currency: 'KRW',
+                maximumFractionDigits: 0
+            }).format(value);
+        },
+        
+        getStatusClass(status) {
+            const statusClasses = {
+                'PENDING': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400',
+                'PROCESSING': 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400',
+                'SHIPPED': 'bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400',
+                'DELIVERED': 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400',
+                'CANCELLED': 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400'
+            };
+            return statusClasses[status] || 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400';
+        },
+        
+        showError(message) {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    icon: 'error',
+                    title: '오류',
+                    text: message,
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+            } else {
+                console.error('Error:', message);
+                alert(message);
+            }
+        }
+    }
+}
+
+// 전역 이벤트 리스너
+document.addEventListener('DOMContentLoaded', function() {
+    // 페이지가 언로드될 때 차트 정리
+    window.addEventListener('beforeunload', function() {
+        if (window.dashboardDataInstance) {
+            window.dashboardDataInstance.destroyCharts();
+        }
+    });
+
+    // 윈도우 리사이즈 시 차트 재조정
+    window.addEventListener('resize', function() {
+        if (window.dashboardDataInstance) {
+            setTimeout(() => {
+                if (window.dashboardDataInstance.salesChart) {
+                    window.dashboardDataInstance.salesChart.resize();
+                }
+                if (window.dashboardDataInstance.categoryChart) {
+                    window.dashboardDataInstance.categoryChart.resize();
+                }
+            }, 100);
+        }
+    });
+});
+</script>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* 웰컴 섹션 추가 스타일 */
+    .welcome-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .welcome-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='3'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+        animation: float 20s infinite linear;
+    }
+
+    @keyframes float {
+        0% { transform: translateX(0) translateY(0); }
+        100% { transform: translateX(-60px) translateY(-60px); }
+    }
+
+    /* 대시보드 카드 고급 호버 효과 */
+    .dashboard-card {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .dashboard-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .dashboard-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .dashboard-card:hover::before {
+        left: 100%;
+    }
+
+    /* 차트 반응형 개선 */
+    #salesChart {
+        max-height: 320px;
+    }
+
+    /* 로딩 스피너 */
+    .fa-spin {
+        animation: fa-spin 1s infinite linear;
+    }
+
+    @keyframes fa-spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* 모바일 최적화 */
+    @media (max-width: 640px) {
+        .dashboard-card {
+            padding: 1rem;
+        }
+        
+        .welcome-section {
+            padding: 1.5rem;
+        }
+        
+        .quick-action-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        
+        #salesChart {
+            height: 200px !important;
+        }
+    }
+
+    /* 다크모드 차트 스타일 */
+    .dark #salesChart {
+        filter: brightness(0.9) contrast(1.1);
+    }
+
+    /* 스크롤 애니메이션 */
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-slide-in-up {
+        animation: slideInUp 0.6s ease forwards;
+    }
+
+    /* 프로그레스 바 */
+    .progress-bar {
+        height: 4px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        border-radius: 2px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .progress-bar::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+        animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+
+    /* 상태 배지 애니메이션 */
+    .status-badge {
+        transition: all 0.2s ease;
+    }
+
+    .status-badge:hover {
+        transform: scale(1.05);
+    }
+
+    /* 차트 컨테이너 스타일 */
+    .chart-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* 접근성 개선 */
+    @media (prefers-reduced-motion: reduce) {
+        .dashboard-card,
+        .welcome-section::before,
+        .progress-bar::before,
+        .fa-spin {
+            animation: none;
+        }
+        
+        .dashboard-card {
+            transition: none;
+        }
+    }
+
+    /* 고대비 모드 지원 */
+    @media (prefers-contrast: high) {
+        .dashboard-card {
+            border: 2px solid;
+        }
+        
+        .welcome-section {
+            background: #000;
+            color: #fff;
+        }
+    }
+
+    /* 포커스 스타일 개선 */
+    button:focus-visible,
+    select:focus-visible,
+    a:focus-visible {
+        outline: 2px solid #3b82f6;
+        outline-offset: 2px;
+    }
+
+    /* 툴팁 스타일 */
+    .tooltip {
+        position: relative;
+    }
+
+    .tooltip::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s, visibility 0.2s;
+        z-index: 1000;
+    }
+
+    .tooltip:hover::after {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* 애니메이션 지연 클래스 */
+    .animate-delay-100 {
+        animation-delay: 0.1s;
+    }
+
+    .animate-delay-200 {
+        animation-delay: 0.2s;
+    }
+
+    .animate-delay-300 {
+        animation-delay: 0.3s;
+    }
+
+    .animate-delay-400 {
+        animation-delay: 0.4s;
+    }
+
+    /* 그라디언트 배경 애니메이션 */
+    .gradient-bg {
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    /* 로딩 상태 스타일 */
+    .loading-state {
+        position: relative;
+        pointer-events: none;
+        opacity: 0.6;
+    }
+
+    .loading-state::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 -10px;
+        border: 2px solid #f3f3f3;
+        border-top: 2px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    /* 성능 최적화 */
+    .gpu-accelerate {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        perspective: 1000;
+    }
+
+    /* 터치 디바이스 최적화 */
+    @media (hover: none) and (pointer: coarse) {
+        .dashboard-card:hover {
+            transform: none;
+        }
+        
+        .dashboard-card:active {
+            transform: scale(0.98);
+        }
+    }
+
+    /* 프린트 스타일 */
+    @media print {
+        .dashboard-card {
+            break-inside: avoid;
+            page-break-inside: avoid;
+        }
+        
+        .bg-gradient-to-br {
+            background: #000 !important;
+            color: #fff !important;
+        }
+    }
+</style>
+{% endblock %}
