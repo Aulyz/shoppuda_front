@@ -1,4 +1,4 @@
-# notifications/routing.py
+# notifications/routing.py (WebSocket URL 패턴)
 from django.urls import re_path
 from . import consumers
 

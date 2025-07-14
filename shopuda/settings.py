@@ -301,7 +301,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [('0.0.0.0', 6379)],
         },
     },
 }
@@ -317,4 +317,11 @@ SEARCH_SETTINGS = {
     'RESULTS_PER_PAGE': 20,  # 페이지당 검색 결과 수
     'QUICK_SEARCH_LIMIT': 5,  # 빠른 검색 결과 수
     'MIN_SEARCH_LENGTH': 2,  # 최소 검색어 길이
+}
+
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
 }
