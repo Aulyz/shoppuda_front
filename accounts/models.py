@@ -219,14 +219,19 @@ class User(AbstractUser):
     
     def update_membership_level(self):
         """구매 금액에 따른 회원 등급 자동 업데이트"""
+        from core.models import SystemSettings
+        settings = SystemSettings.get_settings()
+        
         amount = self.total_purchase_amount
-        if amount >= 5000000:  # 500만원 이상
+        
+        # 시스템 설정에서 등급별 기준 금액 가져오기
+        if amount >= settings.membership_diamond_threshold:
             self.membership_level = 'DIAMOND'
-        elif amount >= 3000000:  # 300만원 이상
+        elif amount >= settings.membership_platinum_threshold:
             self.membership_level = 'PLATINUM'
-        elif amount >= 1000000:  # 100만원 이상
+        elif amount >= settings.membership_gold_threshold:
             self.membership_level = 'GOLD'
-        elif amount >= 500000:  # 50만원 이상
+        elif amount >= settings.membership_silver_threshold:
             self.membership_level = 'SILVER'
         else:
             self.membership_level = 'BRONZE'

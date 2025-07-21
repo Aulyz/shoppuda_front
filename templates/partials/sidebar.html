@@ -7,8 +7,8 @@
                 <i class="fas fa-store text-white text-sm"></i>
             </div>
             <div class="flex flex-col">
-                <span class="text-lg font-bold text-gray-900 dark:text-white">Shopuda</span>
-                <span class="text-xs text-gray-500 dark:text-gray-400">ERP System</span>
+                <span class="text-lg font-bold text-gray-900 dark:text-white">{{ system_settings.site_name }}</span>
+                <span class="text-xs text-gray-500 dark:text-gray-400">{{ system_settings.site_tagline }}</span>
             </div>
         </div>
     </div>
@@ -217,10 +217,12 @@
         </div>
 
         <!-- 설정 -->
-        <a href="#" class="nav-item">
+        {% if user.user_type == 'ADMIN' and user.admin_level >= 4 %}
+        <a href="{% url 'core:system_settings' %}" class="nav-item {% if request.resolver_match.namespace == 'core' %}nav-active{% endif %}">
             <i class="fas fa-cog w-5 h-5"></i>
             <span>설정</span>
         </a>
+        {% endif %}
 
         <!-- 도움말 -->
         <a href="#" class="nav-item">

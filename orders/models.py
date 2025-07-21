@@ -16,6 +16,7 @@ class Order(models.Model):
     ]
     
     order_number = models.CharField(max_length=50, unique=True, verbose_name='주문번호')
+    user = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True, blank=True, related_name='orders', verbose_name='회원')
     platform = models.ForeignKey('platforms.Platform', on_delete=models.SET_NULL, null=True, verbose_name='플랫폼')
     platform_order_id = models.CharField(max_length=100, blank=True, verbose_name='플랫폼 주문 ID')
     
@@ -61,6 +62,46 @@ class Order(models.Model):
     
     def __str__(self):
         return f"{self.order_number} - {self.customer_name}"
+    
+    def complete_delivery(self):
+        """배송 완료 처리"""
+        from django.utils import timezone
+        from core.models import SystemSettings
+        from accounts.models import PointHistory
+        
+        if self.status != 'SHIPPED':
+            return False
+            
+        self.status = 'DELIVERED'
+        self.delivered_date = timezone.now()
+        self.save()
+        
+        # 회원 주문인 경우 포인트 적립
+        if self.user:
+            settings = SystemSettings.get_settings()
+            
+            if settings.points_enabled and settings.points_rate > 0:
+                # 포인트 계산 (배송비 제외)
+                points_base_amount = self.total_amount - self.shipping_fee - self.discount_amount
+                points_to_add = int(points_base_amount * (settings.points_rate / 100))
+                
+                if points_to_add > 0:
+                    # 포인트 적립
+                    self.user.add_points(points_to_add)
+                    
+                    # 포인트 내역 기록
+                    PointHistory.objects.create(
+                        user=self.user,
+                        point_type='EARN',
+                        amount=points_to_add,
+                        balance=self.user.points,
+                        description=f'주문 {self.order_number} 구매 적립'
+                    )
+                    
+                    # 회원 등급 업데이트
+                    self.user.update_membership_level()
+        
+        return True
 
 class OrderItem(models.Model):
     """주문 상품"""

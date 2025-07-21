@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ template_type_display }} 템플릿 편집 - Shopuda{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+    <div class="mb-8">
+        <a href="{% url 'core:email_template_list' %}" class="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 mb-4 inline-block">
+            <i class="fas fa-arrow-left mr-2"></i>템플릿 목록으로
+        </a>
+        
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">{{ template_type_display }} 템플릿 편집</h1>
+        <p class="text-gray-600 dark:text-gray-300">이메일 템플릿의 제목과 내용을 편집합니다.</p>
+    </div>
+
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+        
+        <!-- 템플릿 정보 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <div class="mb-4">
+                <label for="{{ form.subject.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    이메일 제목 <span class="text-red-500">*</span>
+                </label>
+                {{ form.subject }}
+            </div>
+            
+            <div class="mb-4">
+                <label for="{{ form.body.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    이메일 내용 <span class="text-red-500">*</span>
+                </label>
+                {{ form.body }}
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                    사용 가능한 변수를 참고하여 템플릿을 작성하세요.
+                </p>
+            </div>
+            
+            <div class="flex items-center">
+                {{ form.is_active }}
+                <label for="{{ form.is_active.id_for_label }}" class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                    템플릿 활성화
+                </label>
+            </div>
+        </div>
+
+        <!-- 사용 가능한 변수 -->
+        <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-3">사용 가능한 변수</h3>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {% for var in available_variables %}
+                <div class="text-sm">
+                    <code class="bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-300 px-2 py-1 rounded cursor-pointer hover:bg-blue-200 dark:hover:bg-blue-700"
+                          onclick="insertVariable('{{ var }}')">
+                        {{ var }}
+                    </code>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- 미리보기 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-3">미리보기</h3>
+            <div class="border border-gray-300 dark:border-gray-600 rounded-lg p-4">
+                <div class="mb-3 pb-3 border-b dark:border-gray-600">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">제목:</p>
+                    <p class="font-medium text-gray-800 dark:text-white" id="preview-subject">{{ template.subject }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">내용:</p>
+                    <div class="text-gray-700 dark:text-gray-300 whitespace-pre-wrap" id="preview-body">{{ template.body }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 버튼 -->
+        <div class="flex justify-end space-x-4">
+            <a href="{% url 'core:email_template_list' %}" 
+               class="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                취소
+            </a>
+            <button type="submit" 
+                    class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition">
+                <i class="fas fa-save mr-2"></i>저장
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+// 변수 삽입 함수
+function insertVariable(variable) {
+    const bodyTextarea = document.getElementById('{{ form.body.id_for_label }}');
+    const cursorPos = bodyTextarea.selectionStart;
+    const textBefore = bodyTextarea.value.substring(0, cursorPos);
+    const textAfter = bodyTextarea.value.substring(cursorPos);
+    
+    bodyTextarea.value = textBefore + variable + textAfter;
+    bodyTextarea.focus();
+    bodyTextarea.setSelectionRange(cursorPos + variable.length, cursorPos + variable.length);
+    
+    updatePreview();
+}
+
+// 미리보기 업데이트
+function updatePreview() {
+    const subject = document.getElementById('{{ form.subject.id_for_label }}').value;
+    const body = document.getElementById('{{ form.body.id_for_label }}').value;
+    
+    document.getElementById('preview-subject').textContent = subject || '(제목 없음)';
+    document.getElementById('preview-body').textContent = body || '(내용 없음)';
+}
+
+// 실시간 미리보기
+document.addEventListener('DOMContentLoaded', function() {
+    const subjectInput = document.getElementById('{{ form.subject.id_for_label }}');
+    const bodyTextarea = document.getElementById('{{ form.body.id_for_label }}');
+    
+    subjectInput.addEventListener('input', updatePreview);
+    bodyTextarea.addEventListener('input', updatePreview);
+    
+    // 초기 미리보기 업데이트
+    updatePreview();
+});
+</script>
+
+{% if messages %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            Swal.fire({
+                icon: 'success',
+                title: '성공',
+                text: '{{ message }}',
+                timer: 3000,
+                showConfirmButton: false
+            }).then(() => {
+                window.location.href = '{% url "core:email_template_list" %}';
+            });
+        {% elif message.tags == 'error' %}
+            Swal.fire({
+                icon: 'error',
+                title: '오류',
+                text: '{{ message }}',
+            });
+        {% endif %}
+    {% endfor %}
+});
+</script>
+{% endif %}
+{% endblock %}

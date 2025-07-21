@@ -24,6 +24,7 @@ urlpatterns = [
     path('platforms/', include('platforms.urls')),
     path('api/', include('api.urls')),
     path('reports/', include('reports.urls')),
+    path('core/', include('core.urls')),
     
     path('notifications/', include('notifications.urls')),
     path('search/', include('search.urls')),

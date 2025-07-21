@@ -90,19 +90,36 @@ class SignUpView(CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         
-        # 회원가입 시 기본 포인트 지급
-        self.object.add_points(1000)
+        # SystemSettings에서 회원가입 포인트 설정 가져오기
+        from core.models import SystemSettings
+        from core.email_utils import EmailService
+        settings = SystemSettings.get_settings()
         
-        # 포인트 내역 기록
-        PointHistory.objects.create(
-            user=self.object,
-            point_type='EARN',
-            amount=1000,
-            balance=self.object.points,
-            description='회원가입 축하 포인트'
-        )
+        # 회원가입 포인트 지급 여부 확인
+        if settings.welcome_points_enabled and settings.welcome_points_amount > 0:
+            # 포인트 지급
+            self.object.add_points(settings.welcome_points_amount)
+            
+            # 포인트 내역 기록
+            PointHistory.objects.create(
+                user=self.object,
+                point_type='EARN',
+                amount=settings.welcome_points_amount,
+                balance=self.object.points,
+                description='회원가입 축하 포인트'
+            )
+            
+            messages.success(self.request, f'회원가입이 완료되었습니다. 축하 포인트 {settings.welcome_points_amount:,}P가 지급되었습니다!')
+        else:
+            messages.success(self.request, '회원가입이 완료되었습니다. 로그인해주세요.')
         
-        messages.success(self.request, '회원가입이 완료되었습니다. 로그인해주세요.')
+        # 환영 이메일 발송
+        try:
+            EmailService.send_welcome_email(self.object)
+        except Exception as e:
+            # 이메일 발송 실패해도 회원가입은 정상 처리
+            pass
+        
         return response
     
     def form_invalid(self, form):

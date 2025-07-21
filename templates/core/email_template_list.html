@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}이메일 템플릿 관리 - Shopuda{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-8 flex justify-between items-center">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">이메일 템플릿 관리</h1>
+            <p class="text-gray-600 dark:text-gray-300">자동 발송 이메일의 템플릿을 관리합니다.</p>
+        </div>
+        <a href="{% url 'core:system_settings' %}?tab=notification" class="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+            <i class="fas fa-arrow-left mr-2"></i>시스템 설정으로
+        </a>
+    </div>
+
+    <!-- 필터 -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
+        <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">검색</label>
+                <input type="text" name="search" value="{{ request.GET.search }}" 
+                       placeholder="제목, 내용 검색..."
+                       class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">템플릿 타입</label>
+                <select name="template_type" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <option value="">전체</option>
+                    {% for type_code, type_name in template_types %}
+                    <option value="{{ type_code }}" {% if request.GET.template_type == type_code %}selected{% endif %}>
+                        {{ type_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">활성 상태</label>
+                <select name="is_active" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white">
+                    <option value="">전체</option>
+                    <option value="true" {% if request.GET.is_active == 'true' %}selected{% endif %}>활성</option>
+                    <option value="false" {% if request.GET.is_active == 'false' %}selected{% endif %}>비활성</option>
+                </select>
+            </div>
+            
+            <div class="flex items-end">
+                <button type="submit" class="w-full bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition">
+                    <i class="fas fa-search mr-2"></i>검색
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- 템플릿 목록 -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-700">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">템플릿</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">제목</th>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">상태</th>
+                        <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">작업</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    {% for template_type, template_name in template_types %}
+                    {% with template=templates|dictsort:"template_type"|selectattr:"template_type":"equalto":template_type|first %}
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                {{ template_name }}
+                            </div>
+                            <div class="text-sm text-gray-500 dark:text-gray-400">
+                                {{ template_type }}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            {% if template %}
+                            <div class="text-sm text-gray-900 dark:text-white">
+                                {{ template.subject|truncatechars:50 }}
+                            </div>
+                            {% else %}
+                            <div class="text-sm text-gray-400 dark:text-gray-500 italic">
+                                템플릿 미설정
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center">
+                            {% if template %}
+                                {% if template.is_active %}
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                    활성
+                                </span>
+                                {% else %}
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
+                                    비활성
+                                </span>
+                                {% endif %}
+                            {% else %}
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                                미생성
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                            <a href="{% url 'core:email_template_edit' template_type %}" 
+                               class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
+                                <i class="fas fa-edit mr-1"></i>편집
+                            </a>
+                        </td>
+                    </tr>
+                    {% endwith %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 템플릿 변수 안내 -->
+    <div class="mt-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-6">
+        <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-200 mb-3">템플릿 변수 사용법</h3>
+        <p class="text-sm text-blue-700 dark:text-blue-300 mb-3">
+            이메일 템플릿에서는 아래와 같은 변수를 사용할 수 있습니다. 변수는 {{변수명}} 형식으로 사용하며, 발송 시 실제 값으로 치환됩니다.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div>
+                <h4 class="font-semibold text-blue-800 dark:text-blue-200 mb-2">공통 변수</h4>
+                <ul class="space-y-1 text-blue-700 dark:text-blue-300">
+                    <li><code class="bg-blue-100 dark:bg-blue-800 px-1 rounded">{{site_name}}</code> - 사이트 이름</li>
+                    <li><code class="bg-blue-100 dark:bg-blue-800 px-1 rounded">{{user_name}}</code> - 사용자 이름</li>
+                    <li><code class="bg-blue-100 dark:bg-blue-800 px-1 rounded">{{user_email}}</code> - 사용자 이메일</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-semibold text-blue-800 dark:text-blue-200 mb-2">조건문 사용</h4>
+                <ul class="space-y-1 text-blue-700 dark:text-blue-300">
+                    <li><code class="bg-blue-100 dark:bg-blue-800 px-1 rounded">{% if 조건 %}...{% endif %}</code></li>
+                    <li><code class="bg-blue-100 dark:bg-blue-800 px-1 rounded">{% for item in items %}...{% endfor %}</code></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     
     # Local apps
     'accounts',  # accounts를 맨 처음에 두어 User 모델이 먼저 등록되도록 함
+    'core',
     'dashboard',
     'products',
     'orders',
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.middleware.MaintenanceModeMiddleware',  # 유지보수 모드 미들웨어
 ]
 
 ROOT_URLCONF = 'shopuda.urls'
@@ -74,6 +76,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'accounts.context_processors.user_permissions',
+                'core.context_processors.system_settings',
             ],
         },
     },
