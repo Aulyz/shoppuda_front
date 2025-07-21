@@ -13767,3 +13767,2166 @@ WARNING 2025-07-22 07:51:09,373 log 9400 23536 Not Found: /ws/notifications/
 WARNING 2025-07-22 07:51:09,373 basehttp 9400 23536 "GET /ws/notifications/ HTTP/1.1" 404 4379
 WARNING 2025-07-22 07:51:12,508 log 9400 30352 Not Found: /ws/notifications/
 WARNING 2025-07-22 07:51:12,509 basehttp 9400 30352 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:52:14,415 autoreload 18440 35984 C:\Users\dnflw\Desktop\ProjectShopuda\project\orders\views.py changed, reloading.
+INFO 2025-07-22 07:52:14,829 autoreload 16460 15232 Watching for file changes with StatReloader
+INFO 2025-07-22 07:52:37,730 autoreload 27480 632 Watching for file changes with StatReloader
+INFO 2025-07-22 07:52:38,188 basehttp 27480 22124 "GET /core/settings/?tab=brand HTTP/1.1" 200 87809
+INFO 2025-07-22 07:52:38,280 basehttp 27480 22124 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:52:38,716 basehttp 27480 22124 "GET /core/settings/?tab=brand HTTP/1.1" 200 87809
+INFO 2025-07-22 07:52:38,760 basehttp 27480 22124 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:52:39,112 basehttp 27480 22124 "GET /core/settings/?tab=brand HTTP/1.1" 200 87809
+INFO 2025-07-22 07:52:39,156 basehttp 27480 22124 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:52:40,637 log 27480 33104 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:52:40,637 basehttp 27480 33104 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:52:40,875 basehttp 27480 22124 "GET /accounts/admin/users/ HTTP/1.1" 200 75352
+INFO 2025-07-22 07:52:40,921 basehttp 27480 22124 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:52:41,814 basehttp 27480 22124 "GET /accounts/admin/permissions/dashboard/ HTTP/1.1" 200 72192
+INFO 2025-07-22 07:52:41,856 basehttp 27480 22124 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:52:42,996 log 27480 23688 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:52:42,996 basehttp 27480 23688 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:52:44,801 log 27480 39232 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:52:44,801 basehttp 27480 39232 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:52:46,400 log 27480 29936 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:52:46,401 basehttp 27480 29936 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:52:46,523 basehttp 27480 22124 "GET /accounts/admin/permissions/dashboard/ HTTP/1.1" 200 72192
+INFO 2025-07-22 07:52:46,559 basehttp 27480 22124 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:52:48,455 log 27480 37892 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:52:48,455 basehttp 27480 37892 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:52:48,580 log 27480 21612 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:52:48,581 basehttp 27480 21612 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:52:49,058 basehttp 27480 22124 "GET /accounts/admin/users/ HTTP/1.1" 200 75352
+INFO 2025-07-22 07:52:49,094 basehttp 27480 22124 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:52:50,075 basehttp 27480 22124 "GET /accounts/admin/users/ HTTP/1.1" 200 75352
+INFO 2025-07-22 07:52:50,107 basehttp 27480 22124 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:52:51,746 log 27480 25328 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:52:51,747 basehttp 27480 25328 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:52:52,014 basehttp 27480 22124 "GET /accounts/admin/permissions/dashboard/ HTTP/1.1" 200 72192
+INFO 2025-07-22 07:52:52,054 basehttp 27480 22124 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:52:52,678 basehttp 27480 22124 "GET /core/settings/ HTTP/1.1" 200 87809
+INFO 2025-07-22 07:52:52,722 basehttp 27480 22124 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:52:54,200 log 27480 21916 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:52:54,200 basehttp 27480 21916 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:52:54,560 log 27480 13916 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:52:54,560 basehttp 27480 13916 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:52:57,126 log 27480 24932 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:52:57,126 basehttp 27480 24932 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:00,185 log 27480 33560 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:00,185 basehttp 27480 33560 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:03,811 log 27480 39408 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:03,812 basehttp 27480 39408 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:05,380 log 27480 34796 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:05,380 basehttp 27480 34796 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:10,590 log 27480 18428 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:10,591 basehttp 27480 18428 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:12,495 log 27480 13132 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:12,495 basehttp 27480 13132 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:16,765 log 27480 4884 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:16,765 basehttp 27480 4884 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:17,193 log 27480 38760 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:17,193 basehttp 27480 38760 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:21,430 log 27480 30028 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:21,431 basehttp 27480 30028 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:26,078 log 27480 16040 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:26,078 basehttp 27480 16040 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:28,867 log 27480 4388 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:28,867 basehttp 27480 4388 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:32,988 log 27480 28776 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:32,989 basehttp 27480 28776 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:36,202 log 27480 40780 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:36,202 basehttp 27480 40780 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:38,216 log 27480 18448 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:38,217 basehttp 27480 18448 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:43,041 log 27480 41616 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:43,041 basehttp 27480 41616 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:46,975 log 27480 18604 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:46,975 basehttp 27480 18604 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:50,604 log 27480 38960 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:50,604 basehttp 27480 38960 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:53,815 log 27480 11740 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:53,816 basehttp 27480 11740 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:53:55,187 log 27480 5560 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:53:55,188 basehttp 27480 5560 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:01,706 log 27480 17848 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:01,706 basehttp 27480 17848 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:03,440 log 27480 38176 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:03,440 basehttp 27480 38176 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:08,665 log 27480 37272 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:08,666 basehttp 27480 37272 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:11,538 log 27480 22856 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:11,538 basehttp 27480 22856 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:13,729 log 27480 18208 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:13,729 basehttp 27480 18208 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:16,209 log 27480 20124 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:16,209 basehttp 27480 20124 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:19,874 log 27480 24320 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:19,875 basehttp 27480 24320 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:21,397 log 27480 37236 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:21,397 basehttp 27480 37236 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:26,254 log 27480 39260 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:26,254 basehttp 27480 39260 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:28,754 log 27480 20404 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:28,755 basehttp 27480 20404 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:32,438 log 27480 12580 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:32,438 basehttp 27480 12580 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:36,756 log 27480 38076 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:36,756 basehttp 27480 38076 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:40,637 log 27480 29668 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:40,638 basehttp 27480 29668 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:44,363 log 27480 27676 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:44,363 basehttp 27480 27676 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:47,990 log 27480 8816 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:47,990 basehttp 27480 8816 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:49,612 log 27480 17344 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:49,612 basehttp 27480 17344 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:56,103 log 27480 24968 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:56,104 basehttp 27480 24968 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:54:56,150 log 27480 5648 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:54:56,150 basehttp 27480 5648 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:02,141 log 27480 26176 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:02,141 basehttp 27480 26176 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:02,973 log 27480 37372 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:02,973 basehttp 27480 37372 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:09,475 log 27480 39828 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:09,475 basehttp 27480 39828 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:09,882 log 27480 16800 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:09,882 basehttp 27480 16800 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:14,740 log 27480 30220 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:14,740 basehttp 27480 30220 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:16,381 log 27480 22400 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:16,382 basehttp 27480 22400 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:21,732 log 27480 31560 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:21,732 basehttp 27480 31560 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:22,499 log 27480 14176 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:22,499 basehttp 27480 14176 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:27,790 log 27480 37252 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:27,790 basehttp 27480 37252 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:28,495 log 27480 16096 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:28,495 basehttp 27480 16096 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:33,298 log 27480 10068 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:33,298 basehttp 27480 10068 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:34,350 log 27480 41948 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:34,350 basehttp 27480 41948 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:39,358 log 27480 13356 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:39,359 basehttp 27480 13356 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:40,850 log 27480 14824 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:40,851 basehttp 27480 14824 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:45,878 log 27480 656 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:45,878 basehttp 27480 656 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:48,874 log 27480 40044 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:48,875 basehttp 27480 40044 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:53,918 log 27480 24984 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:53,919 basehttp 27480 24984 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:56,714 log 27480 3272 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:56,715 basehttp 27480 3272 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:55:59,866 log 27480 12668 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:55:59,866 basehttp 27480 12668 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:02,919 log 27480 23392 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:02,920 basehttp 27480 23392 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:07,183 log 27480 664 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:07,183 basehttp 27480 664 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:10,092 log 27480 28484 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:10,092 basehttp 27480 28484 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:13,935 log 27480 16656 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:13,935 basehttp 27480 16656 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:17,629 log 27480 34048 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:17,629 basehttp 27480 34048 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:18,603 log 27480 40984 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:18,604 basehttp 27480 40984 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:25,104 log 27480 22636 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:25,104 basehttp 27480 22636 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:25,158 log 27480 39516 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:25,158 basehttp 27480 39516 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:31,318 log 27480 35160 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:31,318 basehttp 27480 35160 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:31,504 log 27480 13272 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:31,504 basehttp 27480 13272 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:37,885 log 27480 29056 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:37,886 basehttp 27480 29056 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:39,970 log 27480 30552 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:39,970 basehttp 27480 30552 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:43,323 log 27480 25480 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:43,323 basehttp 27480 25480 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:47,807 log 27480 10744 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:47,808 basehttp 27480 10744 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:51,613 log 27480 38808 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:51,613 basehttp 27480 38808 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:53,117 log 27480 22324 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:53,117 basehttp 27480 22324 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:56:58,655 log 27480 16456 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:56:58,656 basehttp 27480 16456 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:00,609 log 27480 5728 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:00,609 basehttp 27480 5728 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:03,543 log 27480 21704 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:03,543 basehttp 27480 21704 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:06,795 log 27480 18428 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:06,795 basehttp 27480 18428 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:08,459 log 27480 23128 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:08,459 basehttp 27480 23128 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:13,746 log 27480 15304 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:13,746 basehttp 27480 15304 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:14,594 log 27480 37624 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:14,594 basehttp 27480 37624 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:20,217 log 27480 16052 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:20,217 basehttp 27480 16052 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:20,356 log 27480 3124 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:20,356 basehttp 27480 3124 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:25,930 log 27480 23404 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:25,930 basehttp 27480 23404 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:28,446 log 27480 7140 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:28,446 basehttp 27480 7140 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:33,347 log 27480 4440 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:33,347 basehttp 27480 4440 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:36,920 log 27480 27672 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:36,920 basehttp 27480 27672 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:40,031 log 27480 5272 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:40,032 basehttp 27480 5272 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:42,234 log 27480 19820 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:42,234 basehttp 27480 19820 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:46,772 log 27480 33400 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:46,773 basehttp 27480 33400 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:50,712 log 27480 22856 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:50,712 basehttp 27480 22856 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:54,903 log 27480 18324 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:54,903 basehttp 27480 18324 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:57:56,358 log 27480 29468 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:57:56,359 basehttp 27480 29468 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:02,065 log 27480 20124 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:02,066 basehttp 27480 20124 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:02,926 log 27480 4264 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:02,926 basehttp 27480 4264 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:06,652 log 27480 31756 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:06,652 basehttp 27480 31756 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:09,681 log 27480 3344 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:09,682 basehttp 27480 3344 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:14,170 log 27480 26604 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:14,170 basehttp 27480 26604 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:17,160 log 27480 40500 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:17,160 basehttp 27480 40500 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:19,161 log 27480 31696 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:19,161 basehttp 27480 31696 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:23,411 log 27480 37984 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:23,411 basehttp 27480 37984 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:25,299 log 27480 8940 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:25,299 basehttp 27480 8940 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:29,750 log 27480 41016 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:29,750 basehttp 27480 41016 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:30,585 log 27480 8844 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:30,586 basehttp 27480 8844 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:37,827 log 27480 20944 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:37,827 basehttp 27480 20944 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:38,956 log 27480 12892 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:38,956 basehttp 27480 12892 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:45,261 log 27480 3080 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:45,261 basehttp 27480 3080 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:46,552 log 27480 4604 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:46,553 basehttp 27480 4604 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:53,448 log 27480 21176 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:53,448 basehttp 27480 21176 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:54,283 log 27480 13624 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:54,283 basehttp 27480 13624 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:58:59,503 log 27480 3148 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:58:59,503 basehttp 27480 3148 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:02,097 log 27480 31524 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:02,097 basehttp 27480 31524 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:07,625 log 27480 32224 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:07,625 basehttp 27480 32224 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:07,750 log 27480 21400 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:07,750 basehttp 27480 21400 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:13,939 log 27480 38444 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:13,939 basehttp 27480 38444 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:14,629 log 27480 4568 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:14,630 basehttp 27480 4568 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:18,862 log 27480 33048 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:18,863 basehttp 27480 33048 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:19,813 log 27480 24620 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:19,813 basehttp 27480 24620 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:25,773 log 27480 25284 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:25,774 basehttp 27480 25284 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:26,163 log 27480 10960 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:26,163 basehttp 27480 10960 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:33,153 log 27480 37776 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:33,153 basehttp 27480 37776 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:33,248 log 27480 3356 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:33,248 basehttp 27480 3356 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:38,888 log 27480 21332 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:38,888 basehttp 27480 21332 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:39,550 log 27480 30176 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:39,550 basehttp 27480 30176 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:59:41,578 basehttp 27480 23724 "GET /reports/sales/ HTTP/1.1" 302 0
+INFO 2025-07-22 07:59:41,654 basehttp 27480 23724 "GET /accounts/login/?next=/reports/sales/ HTTP/1.1" 200 7420
+WARNING 2025-07-22 07:59:42,300 log 27480 23724 Not Found: /favicon.ico
+WARNING 2025-07-22 07:59:42,300 basehttp 27480 23724 "GET /favicon.ico HTTP/1.1" 404 4361
+WARNING 2025-07-22 07:59:43,452 log 27480 4984 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:43,452 basehttp 27480 4984 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:46,242 log 27480 36788 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:46,243 basehttp 27480 36788 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:50,162 log 27480 41404 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:50,163 basehttp 27480 41404 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:51,252 log 27480 27280 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:51,252 basehttp 27480 27280 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:59:55,279 basehttp 27480 23724 "POST /accounts/login/?next=/reports/sales/ HTTP/1.1" 302 0
+INFO 2025-07-22 07:59:55,514 basehttp 27480 23724 "GET /reports/sales/ HTTP/1.1" 200 75811
+INFO 2025-07-22 07:59:55,650 basehttp 27480 40916 "GET /static/css/inventory-custom.css HTTP/1.1" 200 13537
+WARNING 2025-07-22 07:59:55,809 log 27480 27616 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:55,810 basehttp 27480 27616 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:59:55,847 basehttp 27480 10448 "GET /static/js/tailwind.min.js HTTP/1.1" 200 291793
+INFO 2025-07-22 07:59:56,018 basehttp 27480 10448 "GET /reports/api/chart-data/?type=category&period=30 HTTP/1.1" 200 26
+INFO 2025-07-22 07:59:56,048 basehttp 27480 40916 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:59:56,098 log 27480 36888 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:56,099 basehttp 27480 36888 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:59:56,139 basehttp 27480 36888 - Broken pipe from ('118.235.84.174', 59964)
+WARNING 2025-07-22 07:59:56,197 log 27480 22320 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:56,198 basehttp 27480 22320 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:59:56,238 basehttp 27480 22320 - Broken pipe from ('118.235.84.174', 38678)
+WARNING 2025-07-22 07:59:59,196 log 27480 27512 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:59,197 basehttp 27480 27512 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:59:59,233 basehttp 27480 27512 - Broken pipe from ('118.235.84.174', 38682)
+WARNING 2025-07-22 07:59:59,297 log 27480 25564 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:59,298 basehttp 27480 25564 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:59:59,948 log 27480 39992 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:59:59,948 basehttp 27480 39992 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:59:59,965 basehttp 27480 40916 "GET /core/settings/ HTTP/1.1" 200 88154
+INFO 2025-07-22 08:00:00,147 basehttp 27480 40916 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:00:00,183 log 27480 17276 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:00,183 basehttp 27480 17276 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:00,224 basehttp 27480 17276 - Broken pipe from ('118.235.84.174', 12802)
+WARNING 2025-07-22 08:00:00,297 log 27480 15256 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:00,297 basehttp 27480 15256 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:00,338 basehttp 27480 15256 - Broken pipe from ('118.235.84.174', 7014)
+WARNING 2025-07-22 08:00:02,381 log 27480 25760 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:02,381 basehttp 27480 25760 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:03,276 log 27480 21376 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:03,277 basehttp 27480 21376 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:03,331 basehttp 27480 21376 - Broken pipe from ('118.235.84.174', 38722)
+WARNING 2025-07-22 08:00:03,412 log 27480 14164 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:03,412 basehttp 27480 14164 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:03,450 basehttp 27480 14164 - Broken pipe from ('118.235.84.174', 24606)
+INFO 2025-07-22 08:00:04,229 basehttp 27480 40916 "GET /core/settings/?tab=brand HTTP/1.1" 200 87809
+INFO 2025-07-22 08:00:04,345 basehttp 27480 40916 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:00:04,416 log 27480 29892 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:04,416 basehttp 27480 29892 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:04,468 basehttp 27480 29892 - Broken pipe from ('118.235.84.174', 33286)
+WARNING 2025-07-22 08:00:04,534 log 27480 6644 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:04,534 basehttp 27480 6644 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:04,573 basehttp 27480 6644 - Broken pipe from ('118.235.84.174', 33290)
+WARNING 2025-07-22 08:00:05,542 log 27480 20772 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:05,542 basehttp 27480 20772 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:07,645 log 27480 4264 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:07,645 basehttp 27480 4264 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:07,683 basehttp 27480 4264 - Broken pipe from ('118.235.84.174', 33302)
+WARNING 2025-07-22 08:00:07,891 log 27480 15116 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:07,892 basehttp 27480 15116 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:07,944 basehttp 27480 15116 - Broken pipe from ('118.235.84.174', 42322)
+WARNING 2025-07-22 08:00:09,054 log 27480 5172 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:09,054 basehttp 27480 5172 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:11,315 log 27480 31404 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:11,315 basehttp 27480 31404 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:11,373 basehttp 27480 31404 - Broken pipe from ('118.235.84.174', 33314)
+WARNING 2025-07-22 08:00:11,582 log 27480 41604 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:11,582 basehttp 27480 41604 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:11,619 basehttp 27480 41604 - Broken pipe from ('118.235.84.174', 39446)
+WARNING 2025-07-22 08:00:13,259 log 27480 6112 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:13,260 basehttp 27480 6112 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:14,979 log 27480 12900 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:14,979 basehttp 27480 12900 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:16,847 log 27480 10604 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:16,847 basehttp 27480 10604 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:16,883 basehttp 27480 10604 - Broken pipe from ('118.235.84.174', 52776)
+WARNING 2025-07-22 08:00:18,876 log 27480 35612 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:18,876 basehttp 27480 35612 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:18,914 basehttp 27480 35612 - Broken pipe from ('118.235.84.174', 52788)
+WARNING 2025-07-22 08:00:21,499 log 27480 27276 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:21,500 basehttp 27480 27276 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:21,576 log 27480 34660 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:21,576 basehttp 27480 34660 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:22,016 log 27480 41596 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:22,017 basehttp 27480 41596 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:22,053 basehttp 27480 41596 - Broken pipe from ('118.235.84.174', 52798)
+WARNING 2025-07-22 08:00:23,655 log 27480 21836 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:23,655 basehttp 27480 21836 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:23,692 basehttp 27480 21836 - Broken pipe from ('118.235.84.174', 52814)
+WARNING 2025-07-22 08:00:27,349 log 27480 14044 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:27,349 basehttp 27480 14044 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:27,712 log 27480 26364 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:27,712 basehttp 27480 26364 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:27,976 log 27480 34492 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:27,977 basehttp 27480 34492 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:28,018 basehttp 27480 34492 - Broken pipe from ('118.235.84.174', 59820)
+WARNING 2025-07-22 08:00:30,635 log 27480 12892 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:30,635 basehttp 27480 12892 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:30,673 basehttp 27480 12892 - Broken pipe from ('118.235.84.174', 59830)
+WARNING 2025-07-22 08:00:34,248 log 27480 22436 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:34,248 basehttp 27480 22436 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:34,483 log 27480 29896 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:34,483 basehttp 27480 29896 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:34,845 log 27480 33624 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:34,846 basehttp 27480 33624 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:34,883 basehttp 27480 33624 - Broken pipe from ('118.235.84.174', 24618)
+WARNING 2025-07-22 08:00:36,964 log 27480 22044 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:36,965 basehttp 27480 22044 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:00:37,000 basehttp 27480 22044 - Broken pipe from ('118.235.84.174', 52324)
+INFO 2025-07-22 08:00:38,697 basehttp 27480 40916 - Broken pipe from ('118.235.84.174', 38650)
+INFO 2025-07-22 08:00:38,702 basehttp 27480 23724 - Broken pipe from ('118.235.84.174', 44942)
+INFO 2025-07-22 08:00:38,703 basehttp 27480 10448 - Broken pipe from ('118.235.84.174', 38662)
+WARNING 2025-07-22 08:00:41,791 log 27480 3692 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:41,791 basehttp 27480 3692 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:42,338 log 27480 2912 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:42,339 basehttp 27480 2912 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:47,109 log 27480 26536 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:47,109 basehttp 27480 26536 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:49,162 log 27480 23616 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:49,162 basehttp 27480 23616 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:53,048 log 27480 13984 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:53,049 basehttp 27480 13984 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:56,491 log 27480 21104 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:56,491 basehttp 27480 21104 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:00:59,829 log 27480 23984 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:00:59,829 basehttp 27480 23984 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:03,113 log 27480 25880 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:03,113 basehttp 27480 25880 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:07,354 log 27480 2600 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:07,355 basehttp 27480 2600 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:08,306 log 27480 33272 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:08,306 basehttp 27480 33272 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:13,391 log 27480 31112 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:13,392 basehttp 27480 31112 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:13,962 log 27480 9076 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:13,962 basehttp 27480 9076 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:19,564 log 27480 39996 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:19,564 basehttp 27480 39996 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:21,178 log 27480 26352 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:21,178 basehttp 27480 26352 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:24,997 log 27480 3368 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:24,997 basehttp 27480 3368 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:27,931 log 27480 5596 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:27,931 basehttp 27480 5596 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:30,004 log 27480 38708 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:30,004 basehttp 27480 38708 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:33,080 log 27480 25536 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:33,081 basehttp 27480 25536 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:35,501 log 27480 4024 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:35,501 basehttp 27480 4024 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:40,679 log 27480 23796 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:40,679 basehttp 27480 23796 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:42,712 log 27480 17848 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:42,712 basehttp 27480 17848 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:46,164 log 27480 8788 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:46,165 basehttp 27480 8788 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:47,421 log 27480 10120 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:47,421 basehttp 27480 10120 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:53,054 log 27480 19516 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:53,055 basehttp 27480 19516 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:01:54,431 log 27480 26068 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:01:54,432 basehttp 27480 26068 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:00,721 log 27480 22972 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:00,722 basehttp 27480 22972 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:01,684 log 27480 38384 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:01,684 basehttp 27480 38384 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:06,165 log 27480 11000 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:06,165 basehttp 27480 11000 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:06,276 log 27480 5048 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:06,276 basehttp 27480 5048 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:10,118 log 27480 12912 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:10,118 basehttp 27480 12912 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:10,150 log 27480 17228 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:10,150 basehttp 27480 17228 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:14,114 log 27480 29548 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:14,114 basehttp 27480 29548 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:14,144 log 27480 18508 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:14,144 basehttp 27480 18508 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:18,111 log 27480 32300 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:18,111 basehttp 27480 32300 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:18,143 log 27480 6120 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:18,143 basehttp 27480 6120 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:22,127 log 27480 22852 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:22,127 basehttp 27480 22852 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:22,158 log 27480 30324 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:22,159 basehttp 27480 30324 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:26,128 log 27480 33212 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:26,128 basehttp 27480 33212 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:26,158 log 27480 37984 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:26,159 basehttp 27480 37984 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:30,148 log 27480 27748 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:30,148 basehttp 27480 27748 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:30,180 log 27480 13300 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:30,180 basehttp 27480 13300 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:34,339 log 27480 41644 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:34,339 basehttp 27480 41644 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:34,432 log 27480 22584 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:34,432 basehttp 27480 22584 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:38,850 log 27480 8728 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:38,850 basehttp 27480 8728 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:39,750 log 27480 22368 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:39,750 basehttp 27480 22368 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:42,174 log 27480 10176 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:42,174 basehttp 27480 10176 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:02:42,222 basehttp 27480 10176 - Broken pipe from ('118.235.84.174', 36208)
+WARNING 2025-07-22 08:02:42,307 log 27480 5156 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:42,307 basehttp 27480 5156 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:02:42,353 basehttp 27480 5156 - Broken pipe from ('118.235.84.174', 41538)
+WARNING 2025-07-22 08:02:44,806 log 27480 21612 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:44,806 basehttp 27480 21612 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:45,402 log 27480 34824 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:45,402 basehttp 27480 34824 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:47,641 log 27480 26676 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:47,642 basehttp 27480 26676 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:48,678 log 27480 8676 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:48,679 basehttp 27480 8676 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:02:48,719 basehttp 27480 8676 - Broken pipe from ('118.235.84.174', 53108)
+WARNING 2025-07-22 08:02:49,805 log 27480 8816 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:49,805 basehttp 27480 8816 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:51,875 log 27480 34176 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:51,875 basehttp 27480 34176 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:02:51,915 basehttp 27480 34176 - Broken pipe from ('118.235.84.174', 53110)
+WARNING 2025-07-22 08:02:52,697 log 27480 31520 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:52,698 basehttp 27480 31520 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:56,042 log 27480 14724 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:56,042 basehttp 27480 14724 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:02:56,091 basehttp 27480 14724 - Broken pipe from ('118.235.84.174', 53180)
+WARNING 2025-07-22 08:02:56,471 log 27480 22572 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:56,471 basehttp 27480 22572 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:02:56,510 basehttp 27480 22572 - Broken pipe from ('118.235.84.174', 53192)
+WARNING 2025-07-22 08:02:57,763 log 27480 19664 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:57,763 basehttp 27480 19664 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:02:58,498 log 27480 32836 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:02:58,498 basehttp 27480 32836 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:00,572 log 27480 30508 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:00,572 basehttp 27480 30508 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:00,620 basehttp 27480 30508 - Broken pipe from ('118.235.84.174', 27536)
+WARNING 2025-07-22 08:03:04,381 log 27480 19972 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:04,381 basehttp 27480 19972 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:04,432 log 27480 26584 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:04,433 basehttp 27480 26584 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:04,480 basehttp 27480 26584 - Broken pipe from ('118.235.84.174', 59332)
+WARNING 2025-07-22 08:03:05,643 log 27480 31692 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:05,643 basehttp 27480 31692 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:05,689 basehttp 27480 31692 - Broken pipe from ('118.235.84.174', 36620)
+WARNING 2025-07-22 08:03:07,007 log 27480 15656 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:07,007 basehttp 27480 15656 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:12,179 log 27480 6288 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:12,179 basehttp 27480 6288 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:12,839 log 27480 15608 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:12,840 basehttp 27480 15608 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:18,938 log 27480 11308 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:18,938 basehttp 27480 11308 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:21,101 log 27480 10740 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:21,101 basehttp 27480 10740 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:24,338 basehttp 27480 5176 "GET /core/settings/?tab=membership HTTP/1.1" 302 0
+INFO 2025-07-22 08:03:24,418 basehttp 27480 5176 "GET /accounts/login/?next=/core/settings/%3Ftab%3Dmembership HTTP/1.1" 200 7450
+WARNING 2025-07-22 08:03:24,721 log 27480 17720 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:24,722 basehttp 27480 17720 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:24,954 log 27480 21332 Not Found: /favicon.ico
+WARNING 2025-07-22 08:03:24,954 basehttp 27480 21332 "GET /favicon.ico HTTP/1.1" 404 4361
+WARNING 2025-07-22 08:03:26,993 log 27480 3252 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:26,994 basehttp 27480 3252 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:31,336 log 27480 27936 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:31,337 basehttp 27480 27936 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:32,324 log 27480 24444 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:32,324 basehttp 27480 24444 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:38,085 log 27480 30708 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:38,085 basehttp 27480 30708 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:38,601 basehttp 27480 21332 "POST /accounts/login/?next=/core/settings/?tab=membership HTTP/1.1" 302 0
+INFO 2025-07-22 08:03:38,843 basehttp 27480 21332 "GET /core/settings/?tab=membership HTTP/1.1" 200 88154
+INFO 2025-07-22 08:03:39,231 basehttp 27480 21332 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:03:39,696 log 27480 25100 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:39,696 basehttp 27480 25100 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:39,705 log 27480 41032 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:39,705 basehttp 27480 41032 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:39,733 basehttp 27480 25100 - Broken pipe from ('118.235.84.174', 49496)
+WARNING 2025-07-22 08:03:39,797 log 27480 6356 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:39,798 basehttp 27480 6356 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:42,886 log 27480 33248 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:42,886 basehttp 27480 33248 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:43,186 log 27480 22164 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:43,187 basehttp 27480 22164 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:43,256 basehttp 27480 22164 - Broken pipe from ('118.235.84.174', 49524)
+WARNING 2025-07-22 08:03:44,199 log 27480 14980 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:44,199 basehttp 27480 14980 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:45,139 basehttp 27480 21332 "GET /dashboard/ HTTP/1.1" 200 83512
+INFO 2025-07-22 08:03:45,358 basehttp 27480 21332 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:03:45,411 log 27480 18324 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:45,411 basehttp 27480 18324 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:45,589 basehttp 27480 18324 - Broken pipe from ('118.235.84.174', 39430)
+WARNING 2025-07-22 08:03:45,759 log 27480 13524 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:45,759 basehttp 27480 13524 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:45,914 basehttp 27480 21332 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 08:03:46,198 basehttp 27480 14648 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:03:46,221 basehttp 27480 11076 "GET /dashboard/stats/ HTTP/1.1" 200 370
+WARNING 2025-07-22 08:03:46,957 log 27480 11792 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:46,957 basehttp 27480 11792 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:47,257 basehttp 27480 11076 "GET /dashboard/ HTTP/1.1" 200 83512
+INFO 2025-07-22 08:03:47,461 basehttp 27480 11076 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:03:47,496 log 27480 38420 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:47,497 basehttp 27480 38420 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:47,601 log 27480 5116 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:47,602 basehttp 27480 5116 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:47,995 basehttp 27480 11076 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 08:03:48,019 basehttp 27480 14648 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:03:48,036 basehttp 27480 21332 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:03:48,266 basehttp 27480 21332 "GET /dashboard/ HTTP/1.1" 200 83512
+INFO 2025-07-22 08:03:48,448 basehttp 27480 21332 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:03:48,492 log 27480 38940 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:48,492 basehttp 27480 38940 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:48,598 log 27480 36296 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:48,598 basehttp 27480 36296 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:49,001 basehttp 27480 21332 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 08:03:49,024 basehttp 27480 14648 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:03:49,039 basehttp 27480 11076 "GET /dashboard/stats/ HTTP/1.1" 200 370
+WARNING 2025-07-22 08:03:50,554 log 27480 11444 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:50,554 basehttp 27480 11444 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:51,687 log 27480 29496 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:51,687 basehttp 27480 29496 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:51,725 basehttp 27480 29496 - Broken pipe from ('118.235.84.174', 39500)
+WARNING 2025-07-22 08:03:51,997 log 27480 24284 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:51,998 basehttp 27480 24284 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:54,484 log 27480 6644 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:54,485 basehttp 27480 6644 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:55,238 log 27480 35500 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:55,238 basehttp 27480 35500 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:03:55,276 basehttp 27480 35500 - Broken pipe from ('118.235.84.174', 39936)
+WARNING 2025-07-22 08:03:55,521 log 27480 22732 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:55,522 basehttp 27480 22732 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:03:55,679 log 27480 9144 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:03:55,679 basehttp 27480 9144 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:00,378 log 27480 9132 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:00,378 basehttp 27480 9132 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:04:00,568 basehttp 27480 11076 "GET /core/settings/ HTTP/1.1" 200 87809
+INFO 2025-07-22 08:04:00,957 basehttp 27480 11076 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:04:02,844 log 27480 29992 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:02,844 basehttp 27480 29992 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:02,902 log 27480 16396 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:02,902 basehttp 27480 16396 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:03,372 log 27480 22552 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:03,372 basehttp 27480 22552 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:04:03,416 basehttp 27480 22552 - Broken pipe from ('118.235.84.174', 39960)
+INFO 2025-07-22 08:04:04,813 basehttp 27480 31128 "GET /accounts/admin/users/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:04:04,838 basehttp 27480 2760 "GET /dashboard/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:04:04,860 basehttp 27480 35104 "GET /accounts/login/?next=/dashboard/ HTTP/1.1" 200 7412
+INFO 2025-07-22 08:04:06,784 basehttp 27480 31456 "GET /core/settings/?tab=brand HTTP/1.1" 302 0
+INFO 2025-07-22 08:04:06,807 basehttp 27480 22504 "GET /accounts/login/?next=/core/settings/%3Ftab%3Dbrand HTTP/1.1" 200 7440
+INFO 2025-07-22 08:04:08,853 basehttp 27480 25996 "GET /core/settings/?tab=brand HTTP/1.1" 302 0
+INFO 2025-07-22 08:04:08,877 basehttp 27480 34888 "GET /accounts/login/?next=/core/settings/%3Ftab%3Dbrand HTTP/1.1" 200 7440
+WARNING 2025-07-22 08:04:08,906 log 27480 9452 Not Found: /favicon.ico
+WARNING 2025-07-22 08:04:08,906 basehttp 27480 9452 "GET /favicon.ico HTTP/1.1" 404 4356
+WARNING 2025-07-22 08:04:08,928 log 27480 27224 Not Found: /favicon.ico
+WARNING 2025-07-22 08:04:08,929 basehttp 27480 27224 "GET /favicon.ico HTTP/1.1" 404 4356
+INFO 2025-07-22 08:04:08,936 basehttp 27480 11076 - Broken pipe from ('118.235.84.174', 39438)
+INFO 2025-07-22 08:04:08,939 basehttp 27480 14648 - Broken pipe from ('118.235.84.174', 39454)
+INFO 2025-07-22 08:04:08,939 basehttp 27480 21332 - Broken pipe from ('118.235.84.174', 35974)
+WARNING 2025-07-22 08:04:09,031 log 27480 10188 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:09,031 basehttp 27480 10188 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:10,725 log 27480 40984 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:10,725 basehttp 27480 40984 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:14,132 log 27480 17396 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:14,132 basehttp 27480 17396 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:17,615 log 27480 29428 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:17,616 basehttp 27480 29428 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:22,488 log 27480 6032 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:22,488 basehttp 27480 6032 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:25,476 log 27480 27628 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:25,476 basehttp 27480 27628 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:28,543 log 27480 33260 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:28,543 basehttp 27480 33260 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:32,453 log 27480 33356 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:32,454 basehttp 27480 33356 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:36,855 log 27480 19828 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:36,856 basehttp 27480 19828 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:40,754 log 27480 8728 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:40,754 basehttp 27480 8728 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:43,995 log 27480 36708 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:43,995 basehttp 27480 36708 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:45,927 log 27480 20236 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:45,927 basehttp 27480 20236 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:48,369 log 27480 22044 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:48,369 basehttp 27480 22044 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:51,358 log 27480 24792 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:51,358 basehttp 27480 24792 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:04:54,318 log 27480 34812 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:54,318 basehttp 27480 34812 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:04:56,045 basehttp 27480 24024 "GET /core/settings/?tab=brand HTTP/1.1" 302 0
+INFO 2025-07-22 08:04:56,185 basehttp 27480 22896 "GET /accounts/login/?next=/core/settings/%3Ftab%3Dbrand HTTP/1.1" 200 7440
+WARNING 2025-07-22 08:04:57,495 log 27480 1232 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:04:57,495 basehttp 27480 1232 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:02,214 log 27480 36588 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:02,214 basehttp 27480 36588 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:02,354 log 27480 25516 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:02,354 basehttp 27480 25516 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:05:03,826 basehttp 27480 15304 "POST /accounts/login/?next=/core/settings/?tab=brand HTTP/1.1" 200 7928
+WARNING 2025-07-22 08:05:07,998 log 27480 35612 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:07,998 basehttp 27480 35612 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:10,097 log 27480 27624 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:10,097 basehttp 27480 27624 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:12,416 log 27480 36984 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:12,417 basehttp 27480 36984 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:05:12,937 basehttp 27480 40716 "POST /accounts/login/?next=/core/settings/?tab=brand HTTP/1.1" 302 0
+INFO 2025-07-22 08:05:13,084 basehttp 27480 40716 "GET /core/settings/?tab=brand HTTP/1.1" 302 0
+INFO 2025-07-22 08:05:13,238 basehttp 27480 40716 "GET /dashboard/ HTTP/1.1" 200 80930
+INFO 2025-07-22 08:05:13,806 basehttp 27480 40716 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:05:13,901 log 27480 33000 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:13,901 basehttp 27480 33000 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:13,920 log 27480 17212 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:13,921 basehttp 27480 17212 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:05:14,378 basehttp 27480 40716 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 08:05:14,473 basehttp 27480 20516 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:05:14,484 basehttp 27480 41612 "GET /dashboard/stats/ HTTP/1.1" 200 370
+WARNING 2025-07-22 08:05:17,165 log 27480 34384 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:17,166 basehttp 27480 34384 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:17,178 log 27480 23884 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:17,178 basehttp 27480 23884 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:19,004 log 27480 34024 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:19,004 basehttp 27480 34024 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:20,138 log 27480 21044 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:20,139 basehttp 27480 21044 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:20,439 log 27480 32388 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:20,439 basehttp 27480 32388 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:20,448 log 27480 26848 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:20,449 basehttp 27480 26848 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:24,004 log 27480 19772 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:24,004 basehttp 27480 19772 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:24,058 log 27480 23604 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:24,059 basehttp 27480 23604 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:24,634 log 27480 19440 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:24,634 basehttp 27480 19440 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:25,866 log 27480 38520 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:25,866 basehttp 27480 38520 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:27,331 log 27480 25020 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:27,331 basehttp 27480 25020 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:27,559 log 27480 9356 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:27,560 basehttp 27480 9356 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:30,739 log 27480 26352 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:30,739 basehttp 27480 26352 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:30,789 log 27480 7140 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:30,789 basehttp 27480 7140 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:31,729 log 27480 19872 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:31,729 basehttp 27480 19872 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:33,301 log 27480 31652 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:33,302 basehttp 27480 31652 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:34,022 log 27480 9072 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:34,023 basehttp 27480 9072 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:34,283 log 27480 11252 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:34,283 basehttp 27480 11252 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:37,442 log 27480 13928 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:37,443 basehttp 27480 13928 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:37,525 log 27480 31452 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:37,525 basehttp 27480 31452 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:38,964 log 27480 11512 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:38,964 basehttp 27480 11512 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:39,847 log 27480 3900 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:39,848 basehttp 27480 3900 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:46,325 log 27480 28356 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:46,325 basehttp 27480 28356 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:46,925 log 27480 38172 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:46,925 basehttp 27480 38172 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:51,316 log 27480 34768 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:51,316 basehttp 27480 34768 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:55,059 log 27480 40980 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:55,059 basehttp 27480 40980 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:59,451 log 27480 26620 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:59,451 basehttp 27480 26620 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:05:59,577 log 27480 35628 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:05:59,577 basehttp 27480 35628 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:05,164 log 27480 8668 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:05,164 basehttp 27480 8668 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:05,352 log 27480 20192 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:05,352 basehttp 27480 20192 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:11,369 log 27480 12212 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:11,369 basehttp 27480 12212 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:13,334 log 27480 12964 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:13,334 basehttp 27480 12964 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:18,102 log 27480 2876 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:18,102 basehttp 27480 2876 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:18,996 log 27480 9624 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:18,996 basehttp 27480 9624 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:23,444 log 27480 34192 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:23,444 basehttp 27480 34192 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:25,529 log 27480 4964 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:25,530 basehttp 27480 4964 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:31,640 log 27480 30688 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:31,640 basehttp 27480 30688 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:33,789 log 27480 41580 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:33,789 basehttp 27480 41580 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:37,073 log 27480 41272 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:37,074 basehttp 27480 41272 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:41,449 log 27480 24604 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:41,449 basehttp 27480 24604 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:44,181 log 27480 34044 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:44,182 basehttp 27480 34044 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:47,944 log 27480 2680 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:47,944 basehttp 27480 2680 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:50,746 log 27480 12460 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:50,746 basehttp 27480 12460 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:53,923 log 27480 27284 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:53,923 basehttp 27480 27284 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:06:56,094 log 27480 10996 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:06:56,094 basehttp 27480 10996 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:01,352 log 27480 14192 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:01,352 basehttp 27480 14192 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:03,139 log 27480 6288 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:03,140 basehttp 27480 6288 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:07,650 log 27480 27204 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:07,650 basehttp 27480 27204 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:10,496 log 27480 33308 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:10,497 basehttp 27480 33308 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:14,820 log 27480 38444 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:14,820 basehttp 27480 38444 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:15,526 log 27480 14744 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:15,526 basehttp 27480 14744 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:21,687 log 27480 13432 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:21,688 basehttp 27480 13432 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:23,092 log 27480 20032 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:23,092 basehttp 27480 20032 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:27,396 log 27480 26160 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:27,397 basehttp 27480 26160 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:29,739 log 27480 37432 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:29,740 basehttp 27480 37432 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:32,620 log 27480 10248 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:32,620 basehttp 27480 10248 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:35,362 log 27480 4440 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:35,362 basehttp 27480 4440 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:39,601 log 27480 7376 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:39,601 basehttp 27480 7376 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:43,576 log 27480 25780 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:43,577 basehttp 27480 25780 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:46,432 log 27480 25712 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:46,432 basehttp 27480 25712 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:49,387 log 27480 7344 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:49,388 basehttp 27480 7344 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:53,676 log 27480 9584 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:53,676 basehttp 27480 9584 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:07:54,733 log 27480 11912 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:07:54,733 basehttp 27480 11912 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:00,248 log 27480 21588 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:00,248 basehttp 27480 21588 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:02,174 log 27480 39320 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:02,175 basehttp 27480 39320 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:06,888 log 27480 40640 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:06,889 basehttp 27480 40640 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:09,082 log 27480 14788 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:09,082 basehttp 27480 14788 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:14,462 log 27480 25624 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:14,462 basehttp 27480 25624 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:14,916 log 27480 35636 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:14,917 basehttp 27480 35636 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:19,838 log 27480 33104 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:19,838 basehttp 27480 33104 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:21,240 log 27480 41108 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:21,240 basehttp 27480 41108 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:24,524 log 27480 18508 Not Found: /http:/ossweb-img.qq.com/images/js/eas/eas.js
+WARNING 2025-07-22 08:08:24,524 basehttp 27480 18508 "GET http://ossweb-img.qq.com/images/js/eas/eas.js HTTP/1.1" 404 1937
+INFO 2025-07-22 08:08:24,755 basehttp 27480 18508 - Broken pipe from ('185.216.140.186', 33772)
+WARNING 2025-07-22 08:08:25,665 log 27480 30220 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:25,666 basehttp 27480 30220 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:29,702 log 27480 32332 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:29,703 basehttp 27480 32332 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:33,289 log 27480 20116 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:33,289 basehttp 27480 20116 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:34,320 log 27480 28980 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:34,320 basehttp 27480 28980 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:40,376 log 27480 19784 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:40,376 basehttp 27480 19784 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:41,178 log 27480 40200 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:41,178 basehttp 27480 40200 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:46,463 log 27480 31364 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:46,463 basehttp 27480 31364 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:49,200 log 27480 26904 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:49,201 basehttp 27480 26904 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:54,667 log 27480 20156 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:54,668 basehttp 27480 20156 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:08:54,792 log 27480 19460 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:08:54,792 basehttp 27480 19460 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:00,138 log 27480 5600 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:00,138 basehttp 27480 5600 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:02,073 log 27480 24604 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:02,074 basehttp 27480 24604 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:07,515 log 27480 35464 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:07,515 basehttp 27480 35464 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:08,263 log 27480 15544 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:08,263 basehttp 27480 15544 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:13,214 log 27480 31692 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:13,214 basehttp 27480 31692 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:16,840 log 27480 12404 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:16,840 basehttp 27480 12404 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:21,634 log 27480 10880 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:21,634 basehttp 27480 10880 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:22,984 log 27480 30768 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:22,984 basehttp 27480 30768 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:27,164 log 27480 21844 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:27,165 basehttp 27480 21844 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:29,312 log 27480 38264 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:29,313 basehttp 27480 38264 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:34,392 log 27480 14440 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:34,392 basehttp 27480 14440 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:36,127 log 27480 33384 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:36,127 basehttp 27480 33384 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:42,640 log 27480 20756 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:42,641 basehttp 27480 20756 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:44,658 log 27480 9420 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:44,658 basehttp 27480 9420 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:47,450 log 27480 18080 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:47,450 basehttp 27480 18080 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:52,766 log 27480 22056 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:52,766 basehttp 27480 22056 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:55,674 log 27480 34344 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:55,674 basehttp 27480 34344 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:09:57,468 log 27480 16584 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:09:57,469 basehttp 27480 16584 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:02,947 log 27480 29368 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:02,947 basehttp 27480 29368 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:03,643 log 27480 17240 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:03,643 basehttp 27480 17240 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:07,265 log 27480 22732 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:07,265 basehttp 27480 22732 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:08,701 log 27480 28784 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:08,701 basehttp 27480 28784 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:11,112 log 27480 16940 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:11,112 basehttp 27480 16940 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:12,120 log 27480 15584 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:12,120 basehttp 27480 15584 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:15,110 log 27480 6112 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:15,110 basehttp 27480 6112 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:16,107 log 27480 9624 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:16,107 basehttp 27480 9624 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:19,126 log 27480 35824 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:19,126 basehttp 27480 35824 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:20,131 log 27480 40080 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:20,132 basehttp 27480 40080 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:23,121 log 27480 36916 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:23,121 basehttp 27480 36916 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:24,120 log 27480 5608 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:24,120 basehttp 27480 5608 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:27,150 log 27480 31720 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:27,151 basehttp 27480 31720 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:28,131 log 27480 34420 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:28,131 basehttp 27480 34420 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:31,167 log 27480 15356 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:31,167 basehttp 27480 15356 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:32,173 log 27480 18084 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:32,173 basehttp 27480 18084 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:35,295 log 27480 39260 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:35,295 basehttp 27480 39260 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:36,699 log 27480 40596 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:36,700 basehttp 27480 40596 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:39,920 log 27480 17348 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:39,921 basehttp 27480 17348 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:40,773 log 27480 28516 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:40,773 basehttp 27480 28516 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:45,552 log 27480 2416 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:45,552 basehttp 27480 2416 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:46,986 log 27480 19152 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:46,986 basehttp 27480 19152 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:51,417 log 27480 30688 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:51,417 basehttp 27480 30688 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:52,233 log 27480 40092 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:52,233 basehttp 27480 40092 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:56,375 log 27480 10176 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:56,375 basehttp 27480 10176 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:10:58,439 log 27480 18632 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:10:58,440 basehttp 27480 18632 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:04,268 log 27480 35812 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:04,269 basehttp 27480 35812 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:04,864 log 27480 4840 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:04,865 basehttp 27480 4840 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:10,491 log 27480 2680 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:10,491 basehttp 27480 2680 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:11,200 log 27480 38800 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:11,200 basehttp 27480 38800 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:18,277 log 27480 26536 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:18,277 basehttp 27480 26536 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:19,245 log 27480 21620 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:19,245 basehttp 27480 21620 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:24,166 log 27480 16820 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:24,166 basehttp 27480 16820 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:24,703 log 27480 10324 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:24,703 basehttp 27480 10324 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:31,070 log 27480 22680 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:31,071 basehttp 27480 22680 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:32,253 log 27480 6000 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:32,254 basehttp 27480 6000 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:35,241 log 27480 27612 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:35,241 basehttp 27480 27612 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:39,033 log 27480 21916 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:39,034 basehttp 27480 21916 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:42,081 log 27480 18292 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:42,082 basehttp 27480 18292 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:45,286 log 27480 26824 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:45,286 basehttp 27480 26824 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:47,448 log 27480 31684 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:47,448 basehttp 27480 31684 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:50,187 log 27480 40864 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:50,188 basehttp 27480 40864 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:55,695 log 27480 25728 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:55,696 basehttp 27480 25728 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:11:57,682 log 27480 31236 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:11:57,682 basehttp 27480 31236 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:02,146 log 27480 9848 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:02,146 basehttp 27480 9848 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:03,746 log 27480 22124 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:03,746 basehttp 27480 22124 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:09,474 log 27480 17072 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:09,474 basehttp 27480 17072 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:10,959 log 27480 19832 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:10,960 basehttp 27480 19832 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:13,122 log 27480 35500 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:13,122 basehttp 27480 35500 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:14,124 log 27480 26068 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:14,124 basehttp 27480 26068 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:17,124 log 27480 9196 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:17,124 basehttp 27480 9196 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:18,114 log 27480 21216 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:18,114 basehttp 27480 21216 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:21,119 log 27480 39268 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:21,119 basehttp 27480 39268 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:22,124 log 27480 21684 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:22,125 basehttp 27480 21684 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:25,130 log 27480 9024 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:25,131 basehttp 27480 9024 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:26,136 log 27480 31720 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:26,137 basehttp 27480 31720 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:29,139 log 27480 24140 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:29,139 basehttp 27480 24140 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:30,162 log 27480 18084 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:30,162 basehttp 27480 18084 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:33,170 log 27480 19444 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:33,170 basehttp 27480 19444 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:34,253 log 27480 24260 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:34,254 basehttp 27480 24260 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:37,271 log 27480 5976 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:37,271 basehttp 27480 5976 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:38,554 log 27480 40200 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:38,554 basehttp 27480 40200 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:41,448 log 27480 38708 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:41,448 basehttp 27480 38708 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:44,091 log 27480 2416 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:44,091 basehttp 27480 2416 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:47,791 log 27480 25712 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:47,792 basehttp 27480 25712 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:49,079 log 27480 26904 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:49,079 basehttp 27480 26904 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:54,463 log 27480 29324 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:54,464 basehttp 27480 29324 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:54,494 log 27480 36892 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:54,495 basehttp 27480 36892 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:12:59,449 log 27480 20052 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:12:59,449 basehttp 27480 20052 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:01,990 log 27480 10436 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:01,991 basehttp 27480 10436 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:07,522 log 27480 11136 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:07,522 basehttp 27480 11136 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:08,337 log 27480 31180 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:08,337 basehttp 27480 31180 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:13,259 log 27480 14352 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:13,260 basehttp 27480 14352 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:14,773 log 27480 23744 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:14,773 basehttp 27480 23744 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:19,380 log 27480 20476 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:19,381 basehttp 27480 20476 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:19,634 log 27480 37024 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:19,634 basehttp 27480 37024 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:26,429 log 27480 38596 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:26,429 basehttp 27480 38596 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:27,864 log 27480 16656 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:27,864 basehttp 27480 16656 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:32,208 log 27480 20516 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:32,208 basehttp 27480 20516 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:34,930 log 27480 12248 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:34,930 basehttp 27480 12248 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:39,757 log 27480 32996 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:39,758 basehttp 27480 32996 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:41,530 log 27480 27140 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:41,531 basehttp 27480 27140 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:45,966 log 27480 16216 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:45,967 basehttp 27480 16216 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:47,470 log 27480 13184 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:47,470 basehttp 27480 13184 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:50,573 log 27480 27732 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:50,573 basehttp 27480 27732 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:55,826 log 27480 36020 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:55,826 basehttp 27480 36020 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:13:56,059 log 27480 2472 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:13:56,059 basehttp 27480 2472 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:01,078 log 27480 15096 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:01,078 basehttp 27480 15096 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:03,048 log 27480 10228 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:03,049 basehttp 27480 10228 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:06,724 log 27480 10724 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:06,724 basehttp 27480 10724 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:07,577 log 27480 39668 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:07,577 basehttp 27480 39668 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:11,543 log 27480 22244 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:11,544 basehttp 27480 22244 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:15,556 log 27480 21624 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:15,557 basehttp 27480 21624 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:16,806 log 27480 34112 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:16,806 basehttp 27480 34112 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:21,524 log 27480 27688 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:21,524 basehttp 27480 27688 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:22,493 log 27480 40460 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:22,493 basehttp 27480 40460 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:28,941 log 27480 32012 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:28,941 basehttp 27480 32012 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:29,444 log 27480 10604 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:29,444 basehttp 27480 10604 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:33,413 log 27480 29128 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:33,413 basehttp 27480 29128 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:34,215 log 27480 17032 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:34,215 basehttp 27480 17032 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:40,132 log 27480 26604 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:40,132 basehttp 27480 26604 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:42,330 log 27480 13428 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:42,330 basehttp 27480 13428 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:45,468 log 27480 33980 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:45,468 basehttp 27480 33980 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:50,999 log 27480 12544 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:51,000 basehttp 27480 12544 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:53,400 log 27480 31800 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:53,400 basehttp 27480 31800 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:14:56,332 log 27480 33356 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:14:56,333 basehttp 27480 33356 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:01,273 log 27480 36700 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:01,273 basehttp 27480 36700 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:02,604 log 27480 27220 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:02,604 basehttp 27480 27220 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:06,224 log 27480 40324 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:06,225 basehttp 27480 40324 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:10,542 log 27480 35336 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:10,543 basehttp 27480 35336 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:14,105 log 27480 25688 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:14,106 basehttp 27480 25688 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:15,224 log 27480 33992 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:15,224 basehttp 27480 33992 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:20,006 log 27480 17116 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:20,007 basehttp 27480 17116 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:22,947 log 27480 33392 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:22,947 basehttp 27480 33392 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:24,359 log 27480 7884 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:24,359 basehttp 27480 7884 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:28,431 log 27480 9604 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:28,432 basehttp 27480 9604 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:30,315 log 27480 16516 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:30,315 basehttp 27480 16516 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:35,603 log 27480 27140 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:35,603 basehttp 27480 27140 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:35,743 log 27480 9436 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:35,743 basehttp 27480 9436 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:42,194 log 27480 39596 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:42,194 basehttp 27480 39596 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:43,875 log 27480 24612 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:43,876 basehttp 27480 24612 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:48,573 log 27480 14104 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:48,573 basehttp 27480 14104 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:51,412 log 27480 7008 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:51,412 basehttp 27480 7008 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:56,114 log 27480 27820 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:56,114 basehttp 27480 27820 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:15:56,176 log 27480 14496 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:15:56,176 basehttp 27480 14496 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:03,443 log 27480 11652 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:03,444 basehttp 27480 11652 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:03,585 log 27480 38432 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:03,585 basehttp 27480 38432 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:08,992 log 27480 25448 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:08,992 basehttp 27480 25448 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:10,299 log 27480 30060 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:10,299 basehttp 27480 30060 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:15,674 log 27480 11308 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:15,674 basehttp 27480 11308 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:16,191 log 27480 37700 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:16,191 basehttp 27480 37700 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:21,725 log 27480 21612 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:21,725 basehttp 27480 21612 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:23,515 log 27480 26804 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:23,516 basehttp 27480 26804 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:28,383 log 27480 12360 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:28,383 basehttp 27480 12360 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:29,233 log 27480 10484 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:29,234 basehttp 27480 10484 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:35,481 log 27480 1928 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:35,481 basehttp 27480 1928 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:35,669 log 27480 14016 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:35,669 basehttp 27480 14016 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:40,406 log 27480 23988 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:40,407 basehttp 27480 23988 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:40,926 log 27480 15084 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:40,926 basehttp 27480 15084 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:46,708 log 27480 33112 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:46,708 basehttp 27480 33112 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:48,327 log 27480 4964 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:48,328 basehttp 27480 4964 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:51,895 log 27480 36728 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:51,896 basehttp 27480 36728 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:54,810 log 27480 26904 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:54,810 basehttp 27480 26904 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:58,854 log 27480 36892 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:58,854 basehttp 27480 36892 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:16:59,691 log 27480 39060 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:16:59,692 basehttp 27480 39060 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:06,173 log 27480 16052 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:06,173 basehttp 27480 16052 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:07,340 log 27480 10200 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:07,340 basehttp 27480 10200 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:12,509 log 27480 29636 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:12,509 basehttp 27480 29636 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:14,873 log 27480 15664 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:14,873 basehttp 27480 15664 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:17,692 log 27480 39896 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:17,693 basehttp 27480 39896 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:22,954 log 27480 5128 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:22,954 basehttp 27480 5128 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:26,032 log 27480 25080 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:26,033 basehttp 27480 25080 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:28,226 log 27480 10656 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:28,226 basehttp 27480 10656 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:33,188 log 27480 25136 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:33,188 basehttp 27480 25136 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:34,102 log 27480 28824 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:34,103 basehttp 27480 28824 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:39,681 log 27480 9656 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:39,682 basehttp 27480 9656 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:42,060 log 27480 24956 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:42,060 basehttp 27480 24956 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:47,053 log 27480 41232 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:47,053 basehttp 27480 41232 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:49,697 log 27480 22764 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:49,697 basehttp 27480 22764 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:51,240 log 27480 29944 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:51,241 basehttp 27480 29944 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:54,604 log 27480 11752 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:54,604 basehttp 27480 11752 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:17:59,873 log 27480 30820 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:17:59,874 basehttp 27480 30820 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:00,537 log 27480 23688 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:00,537 basehttp 27480 23688 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:04,948 log 27480 38856 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:04,948 basehttp 27480 38856 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:08,145 log 27480 26176 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:08,145 basehttp 27480 26176 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:10,731 log 27480 15224 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:10,732 basehttp 27480 15224 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:14,465 log 27480 41880 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:14,465 basehttp 27480 41880 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:18,806 log 27480 15144 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:18,806 basehttp 27480 15144 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:20,221 log 27480 11168 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:20,221 basehttp 27480 11168 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:24,288 log 27480 40256 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:24,288 basehttp 27480 40256 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:27,491 log 27480 21992 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:27,491 basehttp 27480 21992 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:29,809 log 27480 26652 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:29,809 basehttp 27480 26652 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:34,771 log 27480 21220 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:34,772 basehttp 27480 21220 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:35,461 log 27480 31696 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:35,462 basehttp 27480 31696 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:42,170 log 27480 27244 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:42,170 basehttp 27480 27244 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:43,772 log 27480 41404 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:43,772 basehttp 27480 41404 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:49,695 log 27480 35720 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:49,696 basehttp 27480 35720 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:50,929 log 27480 31364 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:50,930 basehttp 27480 31364 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:55,487 log 27480 3212 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:55,488 basehttp 27480 3212 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:18:58,003 log 27480 41116 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:18:58,003 basehttp 27480 41116 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:03,035 log 27480 23724 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:03,036 basehttp 27480 23724 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:04,072 log 27480 24932 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:04,073 basehttp 27480 24932 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:10,316 log 27480 18128 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:10,316 basehttp 27480 18128 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:10,821 log 27480 1768 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:10,821 basehttp 27480 1768 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:17,327 log 27480 16316 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:17,327 basehttp 27480 16316 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:17,622 log 27480 4272 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:17,622 basehttp 27480 4272 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:22,646 log 27480 26364 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:22,646 basehttp 27480 26364 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:23,621 log 27480 3408 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:23,621 basehttp 27480 3408 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:28,920 log 27480 21108 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:28,921 basehttp 27480 21108 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:30,723 log 27480 31504 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:30,723 basehttp 27480 31504 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:35,379 log 27480 7796 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:35,379 basehttp 27480 7796 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:36,752 log 27480 6508 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:36,753 basehttp 27480 6508 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:41,978 log 27480 11332 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:41,979 basehttp 27480 11332 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:42,089 log 27480 12248 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:42,089 basehttp 27480 12248 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:46,721 log 27480 11748 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:46,721 basehttp 27480 11748 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:48,756 log 27480 14412 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:48,757 basehttp 27480 14412 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:53,619 log 27480 14200 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:53,619 basehttp 27480 14200 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:54,891 log 27480 20124 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:54,892 basehttp 27480 20124 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:19:58,797 log 27480 18336 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:19:58,798 basehttp 27480 18336 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:02,421 log 27480 22324 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:02,421 basehttp 27480 22324 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:04,817 log 27480 3116 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:04,818 basehttp 27480 3116 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:08,039 log 27480 29628 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:08,040 basehttp 27480 29628 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:12,651 log 27480 40980 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:12,652 basehttp 27480 40980 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:13,983 log 27480 40120 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:13,983 basehttp 27480 40120 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:18,792 log 27480 34556 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:18,792 basehttp 27480 34556 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:21,354 log 27480 37256 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:21,354 basehttp 27480 37256 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:23,999 log 27480 14088 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:24,000 basehttp 27480 14088 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:26,490 log 27480 14804 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:26,491 basehttp 27480 14804 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:31,901 log 27480 17496 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:31,902 basehttp 27480 17496 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:32,564 log 27480 31884 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:32,564 basehttp 27480 31884 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:37,140 log 27480 18888 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:37,141 basehttp 27480 18888 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:40,716 log 27480 24868 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:40,717 basehttp 27480 24868 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:44,763 log 27480 19316 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:44,763 basehttp 27480 19316 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:46,903 log 27480 22008 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:46,903 basehttp 27480 22008 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:51,320 log 27480 36692 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:51,321 basehttp 27480 36692 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:52,852 log 27480 38228 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:52,853 basehttp 27480 38228 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:58,212 log 27480 13440 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:58,212 basehttp 27480 13440 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:20:58,586 log 27480 8996 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:20:58,586 basehttp 27480 8996 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:05,089 log 27480 41456 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:05,089 basehttp 27480 41456 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:05,497 log 27480 10532 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:05,497 basehttp 27480 10532 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:11,414 log 27480 36012 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:11,414 basehttp 27480 36012 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:11,538 log 27480 37952 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:11,539 basehttp 27480 37952 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:17,617 log 27480 25544 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:17,617 basehttp 27480 25544 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:19,611 log 27480 37172 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:19,612 basehttp 27480 37172 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:24,702 log 27480 12116 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:24,702 basehttp 27480 12116 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:25,447 log 27480 8816 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:25,447 basehttp 27480 8816 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:31,220 log 27480 26548 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:31,221 basehttp 27480 26548 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:31,927 log 27480 19672 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:31,927 basehttp 27480 19672 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:37,006 log 27480 12736 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:37,006 basehttp 27480 12736 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:39,961 log 27480 24008 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:39,962 basehttp 27480 24008 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:43,120 log 27480 36120 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:43,120 basehttp 27480 36120 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:47,552 log 27480 11308 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:47,552 basehttp 27480 11308 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:51,203 log 27480 35156 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:51,203 basehttp 27480 35156 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:53,324 log 27480 41872 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:53,325 basehttp 27480 41872 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:21:57,050 log 27480 26600 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:21:57,050 basehttp 27480 26600 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:00,583 log 27480 5560 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:00,583 basehttp 27480 5560 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:04,668 log 27480 22660 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:04,668 basehttp 27480 22660 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:07,012 log 27480 35584 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:07,012 basehttp 27480 35584 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:11,204 log 27480 13096 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:11,204 basehttp 27480 13096 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:13,643 log 27480 20424 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:13,644 basehttp 27480 20424 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:18,616 log 27480 12532 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:18,616 basehttp 27480 12532 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:21,211 log 27480 21196 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:21,211 basehttp 27480 21196 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:22:22,497 basehttp 27480 41484 "GET /core/settings/?tab=brand HTTP/1.1" 200 87809
+INFO 2025-07-22 08:22:22,616 basehttp 27480 41484 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:22:25,105 log 27480 27856 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:25,106 basehttp 27480 27856 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:25,338 log 27480 18344 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:25,338 basehttp 27480 18344 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:29,774 log 27480 9052 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:29,774 basehttp 27480 9052 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:32,796 log 27480 28496 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:32,796 basehttp 27480 28496 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:34,496 log 27480 18828 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:34,497 basehttp 27480 18828 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:22:37,033 basehttp 27480 41484 "POST /core/settings/?tab=brand HTTP/1.1" 302 0
+INFO 2025-07-22 08:22:37,094 basehttp 27480 41484 "GET /core/settings/?tab=brand HTTP/1.1" 200 88186
+INFO 2025-07-22 08:22:37,145 basehttp 27480 41484 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:22:39,555 log 27480 4472 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:39,555 basehttp 27480 4472 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:39,804 log 27480 12544 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:39,804 basehttp 27480 12544 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:45,533 log 27480 3236 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:45,533 basehttp 27480 3236 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:47,318 log 27480 33564 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:47,319 basehttp 27480 33564 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:51,147 log 27480 20584 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:51,147 basehttp 27480 20584 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:53,087 log 27480 36708 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:53,087 basehttp 27480 36708 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:56,291 log 27480 7972 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:56,292 basehttp 27480 7972 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:22:58,601 log 27480 34456 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:22:58,602 basehttp 27480 34456 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:03,390 log 27480 33452 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:03,390 basehttp 27480 33452 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:03,970 log 27480 3372 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:03,971 basehttp 27480 3372 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:11,242 log 27480 15336 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:11,243 basehttp 27480 15336 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:11,616 log 27480 36024 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:11,616 basehttp 27480 36024 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:16,555 log 27480 13460 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:16,555 basehttp 27480 13460 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:19,994 log 27480 3608 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:19,995 basehttp 27480 3608 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:22,140 log 27480 24332 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:22,140 basehttp 27480 24332 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:26,535 log 27480 9908 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:26,535 basehttp 27480 9908 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:23:27,639 basehttp 27480 41484 "GET /dashboard/ HTTP/1.1" 200 83526
+INFO 2025-07-22 08:23:27,719 basehttp 27480 41484 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:23:28,027 log 27480 19616 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:28,027 basehttp 27480 19616 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:23:28,236 basehttp 27480 41484 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 08:23:28,261 basehttp 27480 18128 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:23:28,271 basehttp 27480 15504 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+WARNING 2025-07-22 08:23:29,007 log 27480 1768 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:29,008 basehttp 27480 1768 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:32,519 log 27480 33820 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:32,519 basehttp 27480 33820 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:34,591 log 27480 40640 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:34,591 basehttp 27480 40640 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:40,282 log 27480 32388 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:40,283 basehttp 27480 32388 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:40,704 log 27480 17028 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:40,704 basehttp 27480 17028 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:46,239 log 27480 21400 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:46,240 basehttp 27480 21400 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:48,098 log 27480 36344 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:48,098 basehttp 27480 36344 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:50,430 log 27480 12540 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:50,431 basehttp 27480 12540 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:53,257 log 27480 20216 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:53,258 basehttp 27480 20216 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:56,007 log 27480 12096 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:56,008 basehttp 27480 12096 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:23:59,054 log 27480 36760 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:23:59,054 basehttp 27480 36760 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:24:01,749 log 27480 14796 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:24:01,749 basehttp 27480 14796 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:24:03,253 log 27480 31800 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:24:03,253 basehttp 27480 31800 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:24:06,064 log 27480 38792 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:24:06,064 basehttp 27480 38792 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:24:06,356 autoreload 16460 15232 C:\Users\dnflw\Desktop\ProjectShopuda\project\products\signals.py changed, reloading.
+INFO 2025-07-22 08:24:06,455 autoreload 27480 632 C:\Users\dnflw\Desktop\ProjectShopuda\project\inventory\signals.py changed, reloading.
+INFO 2025-07-22 08:24:06,898 autoreload 18760 17420 Watching for file changes with StatReloader
+INFO 2025-07-22 08:24:06,899 autoreload 24192 32392 Watching for file changes with StatReloader
+ERROR 2025-07-22 08:24:10,224 log 24192 12480 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: auth_user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 79, in <lambda>
+    lambda u: u.is_authenticated,
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\utils\functional.py", line 251, in inner
+    self._setup()
+    ~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\utils\functional.py", line 404, in _setup
+    self._wrapped = self._setupfunc()
+                    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 40, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+                                            ~~~~~~~~^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 20, in get_user
+    request._cached_user = auth.get_user(request)
+                           ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 311, in get_user
+    user = backend.get_user(user_id)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\backends.py", line 232, in get_user
+    user = UserModel._default_manager.get(pk=user_id)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 629, in get
+    num = len(clone)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: auth_user
+ERROR 2025-07-22 08:24:10,228 basehttp 24192 12480 "GET /dashboard/ HTTP/1.1" 500 178180
+ERROR 2025-07-22 08:24:10,967 log 24192 12480 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: auth_user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 79, in <lambda>
+    lambda u: u.is_authenticated,
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\utils\functional.py", line 251, in inner
+    self._setup()
+    ~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\utils\functional.py", line 404, in _setup
+    self._wrapped = self._setupfunc()
+                    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 40, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+                                            ~~~~~~~~^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 20, in get_user
+    request._cached_user = auth.get_user(request)
+                           ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 311, in get_user
+    user = backend.get_user(user_id)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\backends.py", line 232, in get_user
+    user = UserModel._default_manager.get(pk=user_id)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 629, in get
+    num = len(clone)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: auth_user
+ERROR 2025-07-22 08:24:10,969 basehttp 24192 12480 "GET /dashboard/ HTTP/1.1" 500 178180
+ERROR 2025-07-22 08:24:46,696 log 24192 12480 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: auth_user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 79, in <lambda>
+    lambda u: u.is_authenticated,
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\utils\functional.py", line 251, in inner
+    self._setup()
+    ~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\utils\functional.py", line 404, in _setup
+    self._wrapped = self._setupfunc()
+                    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 40, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+                                            ~~~~~~~~^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 20, in get_user
+    request._cached_user = auth.get_user(request)
+                           ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 311, in get_user
+    user = backend.get_user(user_id)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\backends.py", line 232, in get_user
+    user = UserModel._default_manager.get(pk=user_id)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 629, in get
+    num = len(clone)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: auth_user
+ERROR 2025-07-22 08:24:46,698 basehttp 24192 12480 "GET /dashboard/ HTTP/1.1" 500 178180
+ERROR 2025-07-22 08:24:47,095 log 24192 12480 Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: auth_user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 79, in <lambda>
+    lambda u: u.is_authenticated,
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\utils\functional.py", line 251, in inner
+    self._setup()
+    ~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\utils\functional.py", line 404, in _setup
+    self._wrapped = self._setupfunc()
+                    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 40, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+                                            ~~~~~~~~^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 20, in get_user
+    request._cached_user = auth.get_user(request)
+                           ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 311, in get_user
+    user = backend.get_user(user_id)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\backends.py", line 232, in get_user
+    user = UserModel._default_manager.get(pk=user_id)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 629, in get
+    num = len(clone)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: auth_user
+ERROR 2025-07-22 08:24:47,097 basehttp 24192 12480 "GET /dashboard/ HTTP/1.1" 500 178180
+INFO 2025-07-22 08:26:32,476 autoreload 18760 17420 C:\Users\dnflw\Desktop\ProjectShopuda\project\search\views.py changed, reloading.
+INFO 2025-07-22 08:26:32,572 autoreload 24192 32392 C:\Users\dnflw\Desktop\ProjectShopuda\project\search\views.py changed, reloading.
+INFO 2025-07-22 08:26:33,046 autoreload 21340 30828 Watching for file changes with StatReloader
+INFO 2025-07-22 08:26:33,087 autoreload 21376 38536 Watching for file changes with StatReloader
+INFO 2025-07-22 08:26:37,198 basehttp 21376 18736 "GET /dashboard/ HTTP/1.1" 200 83526
+WARNING 2025-07-22 08:26:37,296 log 21376 34132 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:37,296 basehttp 21376 34132 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:26:37,309 basehttp 21376 18736 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:26:37,319 log 21376 10668 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:37,320 basehttp 21376 10668 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:26:37,818 basehttp 21376 15736 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:26:37,838 basehttp 21376 18736 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 08:26:37,853 basehttp 21376 22324 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:26:39,170 basehttp 21376 22324 "GET /reports/ HTTP/1.1" 200 75715
+INFO 2025-07-22 08:26:39,218 basehttp 21376 22324 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:26:39,234 log 21376 28824 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:39,234 basehttp 21376 28824 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:26:39,260 log 21376 8256 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:39,260 basehttp 21376 8256 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:26:39,918 basehttp 21376 22324 "GET /core/settings/ HTTP/1.1" 200 87831
+INFO 2025-07-22 08:26:39,977 basehttp 21376 22324 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:26:39,998 log 21376 41140 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:39,998 basehttp 21376 41140 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:26:40,030 log 21376 15688 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:40,031 basehttp 21376 15688 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:26:43,027 log 21376 30692 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:43,027 basehttp 21376 30692 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:26:43,060 log 21376 37388 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:43,061 basehttp 21376 37388 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:26:46,073 log 21376 37768 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:46,074 basehttp 21376 37768 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:26:46,122 log 21376 18508 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:46,122 basehttp 21376 18508 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:26:49,175 log 21376 11720 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:49,175 basehttp 21376 11720 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:26:49,295 log 21376 8588 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:49,296 basehttp 21376 8588 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:26:53,369 log 21376 11744 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:53,369 basehttp 21376 11744 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:26:53,432 log 21376 9260 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:53,432 basehttp 21376 9260 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:26:58,307 log 21376 35968 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:58,307 basehttp 21376 35968 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:26:58,339 log 21376 3648 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:26:58,339 basehttp 21376 3648 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:04,129 log 21376 40508 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:04,130 basehttp 21376 40508 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:05,466 log 21376 25624 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:05,467 basehttp 21376 25624 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:11,934 log 21376 33236 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:11,934 basehttp 21376 33236 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:12,835 log 21376 2020 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:12,836 basehttp 21376 2020 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:16,236 log 21376 32968 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:16,236 basehttp 21376 32968 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:17,607 log 21376 29972 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:17,607 basehttp 21376 29972 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:22,559 log 21376 40168 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:22,559 basehttp 21376 40168 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:25,259 log 21376 29952 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:25,259 basehttp 21376 29952 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:30,088 log 21376 12208 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:30,089 basehttp 21376 12208 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:30,741 log 21376 3272 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:30,742 basehttp 21376 3272 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:37,581 log 21376 15852 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:37,581 basehttp 21376 15852 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:37,880 log 21376 15344 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:37,880 basehttp 21376 15344 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:42,706 log 21376 16456 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:42,706 basehttp 21376 16456 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:44,522 log 21376 10728 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:44,522 basehttp 21376 10728 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:49,884 log 21376 40872 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:49,885 basehttp 21376 40872 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:50,732 log 21376 17264 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:50,732 basehttp 21376 17264 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:57,355 log 21376 34796 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:57,355 basehttp 21376 34796 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:27:58,473 log 21376 3488 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:27:58,474 basehttp 21376 3488 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:03,911 log 21376 27636 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:03,911 basehttp 21376 27636 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:05,624 log 21376 25060 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:05,625 basehttp 21376 25060 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:10,554 log 21376 21144 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:10,554 basehttp 21376 21144 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:12,905 log 21376 36868 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:12,906 basehttp 21376 36868 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:15,284 log 21376 33880 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:15,285 basehttp 21376 33880 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:20,106 log 21376 38740 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:20,106 basehttp 21376 38740 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:20,231 log 21376 28736 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:20,231 basehttp 21376 28736 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:26,027 log 21376 24420 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:26,027 basehttp 21376 24420 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:27,224 log 21376 4884 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:27,224 basehttp 21376 4884 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:31,526 log 21376 5004 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:31,527 basehttp 21376 5004 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:33,612 log 21376 32408 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:33,612 basehttp 21376 32408 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:37,199 log 21376 32744 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:37,200 basehttp 21376 32744 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:39,602 log 21376 15672 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:39,603 basehttp 21376 15672 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:41,717 log 21376 38620 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:41,718 basehttp 21376 38620 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:45,552 log 21376 22552 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:45,552 basehttp 21376 22552 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:48,479 log 21376 22180 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:48,479 basehttp 21376 22180 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:28:51,640 log 21376 28552 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:51,641 basehttp 21376 28552 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:28:53,577 autoreload 21340 30828 C:\Users\dnflw\Desktop\ProjectShopuda\project\inventory\models.py changed, reloading.
+INFO 2025-07-22 08:28:53,611 autoreload 21376 38536 C:\Users\dnflw\Desktop\ProjectShopuda\project\reports\views.py changed, reloading.
+INFO 2025-07-22 08:28:54,022 autoreload 3900 664 Watching for file changes with StatReloader
+INFO 2025-07-22 08:28:54,058 autoreload 8824 40984 Watching for file changes with StatReloader
+WARNING 2025-07-22 08:28:55,813 log 8824 36892 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:55,814 basehttp 8824 36892 "GET /ws/notifications/ HTTP/1.1" 404 4231
+WARNING 2025-07-22 08:28:58,687 log 8824 21924 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:28:58,688 basehttp 8824 21924 "GET /ws/notifications/ HTTP/1.1" 404 4231
+WARNING 2025-07-22 08:29:03,272 log 8824 37632 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:29:03,272 basehttp 8824 37632 "GET /ws/notifications/ HTTP/1.1" 404 4231
+WARNING 2025-07-22 08:29:06,286 log 8824 32408 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:29:06,286 basehttp 8824 32408 "GET /ws/notifications/ HTTP/1.1" 404 4231
+WARNING 2025-07-22 08:29:09,679 log 8824 2672 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:29:09,680 basehttp 8824 2672 "GET /ws/notifications/ HTTP/1.1" 404 4231
+WARNING 2025-07-22 08:29:11,575 log 8824 31524 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:29:11,575 basehttp 8824 31524 "GET /ws/notifications/ HTTP/1.1" 404 4231
+WARNING 2025-07-22 08:29:16,781 log 8824 29728 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:29:16,781 basehttp 8824 29728 "GET /ws/notifications/ HTTP/1.1" 404 4231
+WARNING 2025-07-22 08:29:18,817 log 8824 23708 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:29:18,817 basehttp 8824 23708 "GET /ws/notifications/ HTTP/1.1" 404 4231
+WARNING 2025-07-22 08:29:23,470 log 8824 8788 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:29:23,470 basehttp 8824 8788 "GET /ws/notifications/ HTTP/1.1" 404 4231
+WARNING 2025-07-22 08:29:25,830 log 8824 27612 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:29:25,830 basehttp 8824 27612 "GET /ws/notifications/ HTTP/1.1" 404 4231
+WARNING 2025-07-22 08:29:29,980 log 8824 31408 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:29:29,981 basehttp 8824 31408 "GET /ws/notifications/ HTTP/1.1" 404 4231
+WARNING 2025-07-22 08:29:31,536 log 8824 23068 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:29:31,536 basehttp 8824 23068 "GET /ws/notifications/ HTTP/1.1" 404 4231
+WARNING 2025-07-22 08:29:34,502 log 8824 8436 Not Found: /core/settings/
+WARNING 2025-07-22 08:29:34,502 basehttp 8824 8436 "GET /core/settings/?tab=inventory HTTP/1.1" 404 4236
+INFO 2025-07-22 08:30:13,318 autoreload 3900 664 C:\Users\dnflw\Desktop\ProjectShopuda\project\inventory\models.py changed, reloading.
+INFO 2025-07-22 08:30:13,411 autoreload 8824 40984 C:\Users\dnflw\Desktop\ProjectShopuda\project\products\migrations\0001_initial.py changed, reloading.
+INFO 2025-07-22 08:30:13,774 autoreload 12464 26364 Watching for file changes with StatReloader
+INFO 2025-07-22 08:30:13,886 autoreload 612 37068 Watching for file changes with StatReloader
+INFO 2025-07-22 08:30:21,225 basehttp 612 29428 "GET /core/settings/?tab=inventory HTTP/1.1" 200 87831
+INFO 2025-07-22 08:30:21,314 basehttp 612 29428 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:30:22,676 log 612 21960 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:30:22,677 basehttp 612 21960 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:30:24,087 log 612 10756 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:30:24,087 basehttp 612 10756 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:30:28,381 log 612 28824 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:30:28,382 basehttp 612 28824 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:30:31,995 log 612 40716 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:30:31,995 basehttp 612 40716 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:30:32,005 autoreload 12464 26364 C:\Users\dnflw\Desktop\ProjectShopuda\project\notifications\signals.py changed, reloading.
+INFO 2025-07-22 08:30:32,136 basehttp 612 29428 "GET /reports/ HTTP/1.1" 200 75715
+INFO 2025-07-22 08:30:32,196 basehttp 612 29428 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:30:32,283 autoreload 612 37068 C:\Users\dnflw\Desktop\ProjectShopuda\project\inventory\models.py changed, reloading.
+INFO 2025-07-22 08:30:32,466 autoreload 15300 9132 Watching for file changes with StatReloader
+INFO 2025-07-22 08:30:32,770 autoreload 27064 28872 Watching for file changes with StatReloader
+ERROR 2025-07-22 08:30:33,578 log 27064 36608 Internal Server Error: /reports/sales/
+Traceback (most recent call last):
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: auth_user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 79, in <lambda>
+    lambda u: u.is_authenticated,
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\utils\functional.py", line 251, in inner
+    self._setup()
+    ~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\utils\functional.py", line 404, in _setup
+    self._wrapped = self._setupfunc()
+                    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 40, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+                                            ~~~~~~~~^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 20, in get_user
+    request._cached_user = auth.get_user(request)
+                           ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 311, in get_user
+    user = backend.get_user(user_id)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\backends.py", line 232, in get_user
+    user = UserModel._default_manager.get(pk=user_id)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 629, in get
+    num = len(clone)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: auth_user
+ERROR 2025-07-22 08:30:33,581 basehttp 27064 36608 "GET /reports/sales/ HTTP/1.1" 500 178073
+WARNING 2025-07-22 08:30:33,694 log 27064 22240 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:30:33,695 basehttp 27064 22240 "GET /ws/notifications/ HTTP/1.1" 404 4231
+WARNING 2025-07-22 08:30:36,637 log 27064 32080 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:30:36,637 basehttp 27064 32080 "GET /ws/notifications/ HTTP/1.1" 404 4231
+ERROR 2025-07-22 08:30:36,815 log 27064 36608 Internal Server Error: /reports/inventory/
+Traceback (most recent call last):
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: auth_user
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 56, in _view_wrapper
+    test_pass = test_func(request.user)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 79, in <lambda>
+    lambda u: u.is_authenticated,
+              ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\utils\functional.py", line 251, in inner
+    self._setup()
+    ~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\utils\functional.py", line 404, in _setup
+    self._wrapped = self._setupfunc()
+                    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 40, in <lambda>
+    request.user = SimpleLazyObject(lambda: get_user(request))
+                                            ~~~~~~~~^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\middleware.py", line 20, in get_user
+    request._cached_user = auth.get_user(request)
+                           ~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\__init__.py", line 311, in get_user
+    user = backend.get_user(user_id)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\contrib\auth\backends.py", line 232, in get_user
+    user = UserModel._default_manager.get(pk=user_id)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 629, in get
+    num = len(clone)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 366, in __len__
+    self._fetch_all()
+    ~~~~~~~~~~~~~~~^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 1949, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+        chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size
+    )
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1623, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 122, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 92, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 100, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\utils.py", line 105, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\dnflw\Desktop\ProjectShopuda\project\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 360, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: auth_user
+ERROR 2025-07-22 08:30:36,817 basehttp 27064 36608 "GET /reports/inventory/ HTTP/1.1" 500 178141
+WARNING 2025-07-22 08:30:38,095 log 27064 29944 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:30:38,095 basehttp 27064 29944 "GET /ws/notifications/ HTTP/1.1" 404 4231
+INFO 2025-07-22 08:30:38,229 autoreload 15300 9132 C:\Users\dnflw\Desktop\ProjectShopuda\project\search\views.py changed, reloading.
+INFO 2025-07-22 08:30:38,496 autoreload 27064 28872 C:\Users\dnflw\Desktop\ProjectShopuda\project\reports\models.py changed, reloading.
+INFO 2025-07-22 08:30:38,710 autoreload 13120 30976 Watching for file changes with StatReloader
+INFO 2025-07-22 08:30:38,966 autoreload 37916 14212 Watching for file changes with StatReloader
+INFO 2025-07-22 08:30:39,819 basehttp 37916 34088 "GET /reports/sales/ HTTP/1.1" 200 75825
+INFO 2025-07-22 08:30:39,875 basehttp 37916 34088 "GET /reports/api/chart-data/?type=category&period=30 HTTP/1.1" 200 26
+INFO 2025-07-22 08:30:39,894 basehttp 37916 35372 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:30:41,230 log 37916 25260 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:30:41,230 basehttp 37916 25260 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:30:43,438 basehttp 37916 35372 "GET /accounts/admin/users/ HTTP/1.1" 200 75366
+INFO 2025-07-22 08:30:43,489 basehttp 37916 35372 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:30:44,275 log 37916 17996 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:30:44,275 basehttp 37916 17996 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:30:44,467 autoreload 13120 30976 C:\Users\dnflw\Desktop\ProjectShopuda\project\notifications\utils.py changed, reloading.
+INFO 2025-07-22 08:30:44,495 basehttp 37916 35372 "GET /accounts/admin/permissions/dashboard/ HTTP/1.1" 200 72206
+INFO 2025-07-22 08:30:44,544 basehttp 37916 35372 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:30:44,789 autoreload 37916 14212 C:\Users\dnflw\Desktop\ProjectShopuda\project\shopuda\settings.py changed, reloading.
+INFO 2025-07-22 08:30:44,959 autoreload 21992 31460 Watching for file changes with StatReloader
+INFO 2025-07-22 08:30:45,216 autoreload 33144 33848 Watching for file changes with StatReloader
+WARNING 2025-07-22 08:30:45,680 log 33144 18448 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:30:45,681 basehttp 33144 18448 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:30:46,058 basehttp 33144 22348 "GET /accounts/admin/users/ HTTP/1.1" 200 75366
+INFO 2025-07-22 08:30:46,103 basehttp 33144 22348 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:30:46,769 log 33144 22588 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:30:46,770 basehttp 33144 22588 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:30:47,083 basehttp 33144 22348 "GET /accounts/admin/users/create/ HTTP/1.1" 200 64532
+INFO 2025-07-22 08:30:47,146 basehttp 33144 22348 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:30:49,167 log 33144 37024 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:30:49,168 basehttp 33144 37024 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:30:49,921 log 33144 21620 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:30:49,922 basehttp 33144 21620 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:30:53,561 log 33144 10884 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:30:53,561 basehttp 33144 10884 "GET /ws/notifications/ HTTP/1.1" 404 4379
