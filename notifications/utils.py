@@ -81,7 +81,8 @@ def send_stock_alert(user, product, current_stock):
 # 테스트용 알림 발송 함수
 def send_test_notifications():
     """테스트 알림들을 발송하는 함수"""
-    from django.contrib.auth.models import User
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
     
     # 첫 번째 관리자 사용자에게 테스트 알림 발송
     admin_user = User.objects.filter(is_staff=True).first()

@@ -3,11 +3,16 @@ import os
 import sys
 import django
 
+# Add project directory to Python path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 # Django 설정
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'shopuda.settings')
 django.setup()
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 def create_demo_user():
     """데모 사용자 생성"""

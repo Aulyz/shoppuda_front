@@ -264,7 +264,7 @@ def sales_reports(request):
         daily_orders = orders.filter(order_date__date=current_date).count()
         
         daily_sales.append({
-            'date': current_date.strftime('%Y-%m-%d'),
+            'date': current_date.strftime('%m/%d'),
             'revenue': float(daily_revenue),
             'orders': daily_orders
         })

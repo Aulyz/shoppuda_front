@@ -1,6 +1,6 @@
 # reports/forms.py
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from django.db.models import Q
@@ -10,6 +10,8 @@ import json
 from .models import ReportTemplate, ReportSchedule, ReportBookmark
 from products.models import Category, Brand
 from platforms.models import Platform
+
+User = get_user_model()
 
 class ReportFilterForm(forms.Form):
     """보고서 필터 폼"""

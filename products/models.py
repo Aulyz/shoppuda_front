@@ -1,7 +1,7 @@
 # products/models.py - 완전한 상품 모델
 import uuid
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 from PIL import Image
@@ -205,7 +205,7 @@ class Product(models.Model):
     # 메타 정보
     created_at = models.DateTimeField('생성일', auto_now_add=True)
     updated_at = models.DateTimeField('수정일', auto_now=True)
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, 
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, 
                                   related_name='created_products', verbose_name='생성자')
 
     class Meta:
@@ -366,7 +366,7 @@ class ProductPriceHistory(models.Model):
     selling_price = models.DecimalField('판매가', max_digits=12, decimal_places=2)
     discount_price = models.DecimalField('할인가', max_digits=12, decimal_places=2, null=True, blank=True)
     reason = models.CharField('변경 사유', max_length=200, blank=True)
-    changed_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='변경자')
+    changed_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='변경자')
     created_at = models.DateTimeField('변경일', auto_now_add=True)
 
     class Meta:

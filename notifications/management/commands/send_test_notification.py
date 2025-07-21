@@ -1,7 +1,9 @@
 # notifications/management/commands/send_test_notification.py
 from django.core.management.base import BaseCommand
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from notifications.utils import send_notification
+
+User = get_user_model()
 
 class Command(BaseCommand):
     help = '테스트 알림을 발송합니다'

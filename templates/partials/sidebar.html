@@ -145,6 +145,37 @@
             </div>
         </div>
 
+        <!-- 사용자 관리 (관리자만 표시) -->
+        {% if user_permissions.users or user.user_type == 'ADMIN' and user.admin_level >= 2 %}
+        <div x-data="{ open: {% if 'accounts' in request.resolver_match.namespace or 'admin/users' in request.path %}true{% else %}false{% endif %} }">
+            <button @click="open = !open" 
+                    class="nav-item w-full justify-between {% if 'accounts' in request.resolver_match.namespace and 'admin' in request.path %}nav-active{% endif %}">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-users w-5 h-5"></i>
+                    <span>사용자 관리</span>
+                </div>
+                <i class="fas fa-chevron-down transition-transform duration-200" 
+                   :class="open ? 'rotate-180' : ''"></i>
+            </button>
+            <div x-show="open" 
+                 x-collapse 
+                 class="ml-8 mt-2 space-y-1">
+                <a href="{% url 'accounts:admin_user_list' %}" 
+                   class="sub-nav-item {% if 'admin_user_list' in request.resolver_match.url_name %}sub-nav-active{% endif %}">
+                    <i class="fas fa-users w-4 h-4"></i>
+                    <span>사용자 목록</span>
+                </a>
+                {% if user.admin_level >= 5 %}
+                <a href="{% url 'accounts:permission_dashboard' %}" 
+                   class="sub-nav-item {% if 'permission_dashboard' in request.resolver_match.url_name %}sub-nav-active{% endif %}">
+                    <i class="fas fa-key w-4 h-4"></i>
+                    <span>권한 대시보드</span>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
         <!-- 구분선 -->
         <div class="my-6 border-t border-gray-200 dark:border-gray-700"></div>
 

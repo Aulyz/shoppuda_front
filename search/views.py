@@ -9,8 +9,10 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from products.models import Product, Category
 from orders.models import Order
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 import json
+
+User = get_user_model()
 
 @method_decorator(login_required, name='dispatch')
 class SearchView(LoginRequiredMixin, TemplateView):

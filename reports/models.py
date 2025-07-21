@@ -1,6 +1,6 @@
 # reports/models.py
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 import uuid
@@ -35,7 +35,7 @@ class ReportTemplate(models.Model):
     configuration = models.JSONField(default=dict, verbose_name='설정')
     
     # 권한 및 접근
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='생성자', blank=True, null=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='생성자', blank=True, null=True)
     is_active = models.BooleanField(default=True, verbose_name='활성 상태', blank=True, null=True)
     is_public = models.BooleanField(default=False, verbose_name='공개 여부', blank=True, null=True)
 
@@ -89,7 +89,7 @@ class GeneratedReport(models.Model):
     summary = models.JSONField(default=dict, verbose_name='요약 정보')
     
     # 생성 관련
-    generated_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='생성자')
+    generated_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='생성자')
     generated_at = models.DateTimeField(auto_now_add=True, verbose_name='생성일')
     expires_at = models.DateTimeField(null=True, blank=True, verbose_name='만료일')
     
@@ -146,7 +146,7 @@ class ReportSchedule(models.Model):
     
     # 상태
     is_active = models.BooleanField(default=True, verbose_name='활성 상태')
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='생성자', blank=True, null=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='생성자', blank=True, null=True)
     
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='생성일', blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, verbose_name='수정일', blank=True, null=True)
@@ -162,7 +162,7 @@ class ReportSchedule(models.Model):
 class ReportAccess(models.Model):
     """보고서 접근 로그"""
     report = models.ForeignKey(GeneratedReport, on_delete=models.CASCADE, verbose_name='보고서')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='사용자')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='사용자')
     
     ACTION_CHOICES = [
         ('VIEW', '조회'),
@@ -187,7 +187,7 @@ class ReportAccess(models.Model):
 
 class ReportBookmark(models.Model):
     """보고서 북마크"""
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='사용자')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='사용자')
     template = models.ForeignKey(ReportTemplate, on_delete=models.CASCADE, verbose_name='템플릿', null=True, blank=True)
     
     name = models.CharField(max_length=100, blank=True, verbose_name='북마크 이름', default='새 북마크')

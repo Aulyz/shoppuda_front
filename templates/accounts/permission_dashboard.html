@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+
+{% block title %}권한 관리 대시보드 - Shopuda{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">권한 관리 대시보드</h1>
+        <p class="text-gray-600 dark:text-gray-300">시스템 권한 및 관리자 레벨 관리</p>
+    </div>
+
+    <!-- 권한 통계 카드 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="bg-blue-100 dark:bg-blue-900 p-3 rounded-lg">
+                    <i class="fas fa-users text-blue-600 dark:text-blue-300 text-2xl"></i>
+                </div>
+                <span class="text-sm text-gray-500 dark:text-gray-400">전체 사용자</span>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">{{ total_users|default:"0" }}</h3>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="bg-green-100 dark:bg-green-900 p-3 rounded-lg">
+                    <i class="fas fa-user-shield text-green-600 dark:text-green-300 text-2xl"></i>
+                </div>
+                <span class="text-sm text-gray-500 dark:text-gray-400">관리자</span>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">{{ total_admins|default:"0" }}</h3>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="bg-purple-100 dark:bg-purple-900 p-3 rounded-lg">
+                    <i class="fas fa-key text-purple-600 dark:text-purple-300 text-2xl"></i>
+                </div>
+                <span class="text-sm text-gray-500 dark:text-gray-400">활성 권한</span>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">{{ active_permissions|default:"0" }}</h3>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="bg-orange-100 dark:bg-orange-900 p-3 rounded-lg">
+                    <i class="fas fa-clock text-orange-600 dark:text-orange-300 text-2xl"></i>
+                </div>
+                <span class="text-sm text-gray-500 dark:text-gray-400">만료 예정</span>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">{{ expiring_permissions|length|default:"0" }}</h3>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- 관리자 레벨별 통계 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">관리자 레벨별 분포</h2>
+            <div class="space-y-3">
+                {% for stat in admin_stats %}
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <span class="w-24 text-sm font-medium text-gray-600 dark:text-gray-300">레벨 {{ stat.level }}</span>
+                        <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">({{ stat.name }})</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2 mr-3">
+                            <div class="bg-gradient-to-r from-blue-400 to-blue-600 h-2 rounded-full" 
+                                 style="width: {% if total_admins %}{% widthratio stat.count total_admins 100 %}%{% else %}0%{% endif %}">
+                            </div>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 w-10 text-right">{{ stat.count }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- 권한별 사용자 수 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">권한별 보유 현황</h2>
+            <div class="overflow-y-auto max-h-64">
+                <div class="space-y-2">
+                    {% for stat in permission_stats|slice:":10" %}
+                    <div class="flex items-center justify-between py-1">
+                        <span class="text-sm text-gray-600 dark:text-gray-300">{{ stat.name }}</span>
+                        <span class="text-sm font-semibold text-gray-700 dark:text-gray-300">{{ stat.count }}명</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 최근 권한 부여 내역 -->
+    <div class="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold text-gray-800 dark:text-white">최근 권한 부여 내역</h2>
+            <a href="{% url 'accounts:admin_user_list' %}" class="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+                <i class="fas fa-users mr-1"></i> 사용자 관리
+            </a>
+        </div>
+        
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-700">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">사용자</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">권한</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">부여자</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">부여일</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">만료일</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    {% for perm in recent_permissions|slice:":10" %}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                {{ perm.user.username }}
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
+                                {{ perm.get_permission_display }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
+                            {{ perm.granted_by.username|default:"시스템" }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
+                            {{ perm.granted_at|date:"Y-m-d H:i" }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">
+                            {% if perm.expires_at %}
+                                {{ perm.expires_at|date:"Y-m-d" }}
+                            {% else %}
+                                <span class="text-green-600 dark:text-green-400">무기한</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- 만료 예정 권한 -->
+    {% if expiring_permissions %}
+    <div class="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">
+            <i class="fas fa-exclamation-triangle text-orange-500 mr-2"></i>
+            7일 이내 만료 예정 권한
+        </h2>
+        
+        <div class="space-y-3">
+            {% for perm in expiring_permissions %}
+            <div class="flex items-center justify-between p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                <div>
+                    <span class="font-medium text-gray-800 dark:text-white">{{ perm.user.username }}</span>
+                    <span class="text-sm text-gray-600 dark:text-gray-300 ml-2">- {{ perm.get_permission_display }}</span>
+                </div>
+                <div class="text-sm text-orange-600 dark:text-orange-400 font-medium">
+                    {{ perm.expires_at|timeuntil }} 후 만료
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+// 차트나 추가 인터랙션을 위한 JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    // 권한 통계 애니메이션
+    const counters = document.querySelectorAll('.text-2xl');
+    counters.forEach(counter => {
+        const target = parseInt(counter.innerText);
+        let count = 0;
+        const increment = target / 50;
+        
+        const updateCount = () => {
+            if (count < target) {
+                count += increment;
+                counter.innerText = Math.ceil(count);
+                setTimeout(updateCount, 20);
+            } else {
+                counter.innerText = target;
+            }
+        };
+        
+        updateCount();
+    });
+});
+</script>
+{% endblock %}

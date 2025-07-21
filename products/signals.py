@@ -1,8 +1,10 @@
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from .models import Product, ProductPriceHistory
 from notifications.utils import send_stock_alert
+
+User = get_user_model()
 
 @receiver(pre_save, sender=Product)
 def create_price_history(sender, instance, **kwargs):
@@ -53,6 +55,7 @@ def stock_low_notification(sender, instance, **kwargs):
             # 재고 관리자들에게 알림 발송
             try:
                 from django.contrib.auth.models import Group
+                User = get_user_model()
                 stock_managers = User.objects.filter(
                     groups__name='Stock Managers'
                 )

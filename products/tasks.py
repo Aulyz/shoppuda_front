@@ -7,8 +7,9 @@ try:
     def process_bulk_import(file_path, user_id):
         """대용량 상품 가져오기 백그라운드 처리"""
         import os
-        from django.contrib.auth.models import User
+        from django.contrib.auth import get_user_model
         from .views import process_import_file
+        User = get_user_model()
         
         try:
             user = User.objects.get(id=user_id)
@@ -57,8 +58,9 @@ try:
     def check_low_stock():
         """재고 부족 상품 체크 및 알림"""
         from products.models import Product
-        from django.contrib.auth.models import User
+        from django.contrib.auth import get_user_model
         from django.db import models
+        User = get_user_model()
         
         low_stock_products = Product.objects.filter(
             stock_quantity__lte=models.F('min_stock_level'),

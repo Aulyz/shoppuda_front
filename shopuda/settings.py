@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'mathfilters',
     
     # Local apps
+    'accounts',  # accounts를 맨 처음에 두어 User 모델이 먼저 등록되도록 함
     'dashboard',
     'products',
     'orders',
@@ -72,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'accounts.context_processors.user_permissions',
             ],
         },
     },
@@ -125,6 +127,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Custom User Model
+AUTH_USER_MODEL = 'accounts.User'
 
 # Crispy Forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"

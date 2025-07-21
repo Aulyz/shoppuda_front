@@ -1,0 +1,541 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+
+{% block title %}매출 보고서 - Shopuda ERP{% endblock %}
+
+{% block breadcrumb %}
+<div class="flex items-center space-x-2">
+    <i class="fas fa-home w-4 h-4"></i>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'dashboard:home' %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">대시보드</a>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <a href="{% url 'reports:dashboard' %}" class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors duration-200">보고서</a>
+    <span class="text-gray-400 dark:text-gray-500">/</span>
+    <span>매출 보고서</span>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+/* 애니메이션 효과 */
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 카드 호버 효과 */
+.stat-card {
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.dark .stat-card:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+/* 스탯 카드 그라디언트 */
+.stat-gradient-1 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.stat-gradient-2 {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.stat-gradient-3 {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.stat-gradient-4 {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+/* 테이블 스트라이프 */
+.table-striped tbody tr:nth-child(even) {
+    background-color: rgba(249, 250, 251, 0.5);
+}
+
+.dark .table-striped tbody tr:nth-child(even) {
+    background-color: rgba(31, 41, 55, 0.5);
+}
+
+.table-striped tbody tr:hover {
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.dark .table-striped tbody tr:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="space-y-6" x-data="salesReport()">
+    <!-- 페이지 헤더 -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-700">
+        <div class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 px-6 py-8 rounded-t-2xl">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl lg:text-3xl font-bold text-white">매출 보고서</h1>
+                        <p class="text-blue-100 font-medium">{{ period_name }} ({{ start_date|date:"m/d" }} - {{ end_date|date:"m/d" }})</p>
+                    </div>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <!-- 기간 선택 -->
+                    <div class="inline-flex bg-white/20 backdrop-blur-sm rounded-lg p-1">
+                        <button onclick="changePeriod('7')" class="px-4 py-2 rounded-md text-white font-medium transition-all duration-200 {% if current_period == '7' %}bg-white/30{% else %}hover:bg-white/10{% endif %}">7일</button>
+                        <button onclick="changePeriod('30')" class="px-4 py-2 rounded-md text-white font-medium transition-all duration-200 {% if current_period == '30' %}bg-white/30{% else %}hover:bg-white/10{% endif %}">30일</button>
+                        <button onclick="changePeriod('90')" class="px-4 py-2 rounded-md text-white font-medium transition-all duration-200 {% if current_period == '90' %}bg-white/30{% else %}hover:bg-white/10{% endif %}">90일</button>
+                        <button onclick="changePeriod('365')" class="px-4 py-2 rounded-md text-white font-medium transition-all duration-200 {% if current_period == '365' %}bg-white/30{% else %}hover:bg-white/10{% endif %}">1년</button>
+                    </div>
+                    
+                    <!-- 내보내기 버튼 -->
+                    <div class="relative" x-data="{ open: false }">
+                        <button @click="open = !open" 
+                                class="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg text-white font-medium hover:bg-white/30 transition-all duration-200">
+                            <i class="fas fa-download mr-2"></i>
+                            내보내기
+                        </button>
+                        <div x-show="open" 
+                             @click.away="open = false"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 transform scale-95"
+                             x-transition:enter-end="opacity-100 transform scale-100"
+                             x-transition:leave="transition ease-in duration-150"
+                             x-transition:leave-start="opacity-100 transform scale-100"
+                             x-transition:leave-end="opacity-0 transform scale-95"
+                             class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-xl z-50 py-2">
+                            <a href="#" onclick="exportReport('excel'); return false;" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <i class="fas fa-file-excel text-green-600 mr-2"></i> Excel
+                            </a>
+                            <a href="#" onclick="exportReport('csv'); return false;" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <i class="fas fa-file-csv text-blue-600 mr-2"></i> CSV
+                            </a>
+                            <a href="#" onclick="exportReport('pdf'); return false;" class="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <i class="fas fa-file-pdf text-red-600 mr-2"></i> PDF
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 통계 카드 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 fade-in">
+        <!-- 총 매출 -->
+        <div class="stat-card bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="stat-gradient-1 p-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white/80 text-sm font-medium">총 매출</p>
+                        <p class="text-3xl font-bold text-white mt-1">₩{{ total_revenue|floatformat:0|intcomma }}</p>
+                    </div>
+                    <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-won-sign text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="flex items-center text-green-600 dark:text-green-400 text-sm">
+                    <i class="fas fa-arrow-up mr-1"></i>
+                    <span class="font-medium">12% 증가</span>
+                    <span class="text-gray-500 dark:text-gray-400 ml-1">전월 대비</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 총 주문 수 -->
+        <div class="stat-card bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="stat-gradient-2 p-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white/80 text-sm font-medium">총 주문 수</p>
+                        <p class="text-3xl font-bold text-white mt-1">{{ total_orders|intcomma }}</p>
+                    </div>
+                    <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-shopping-cart text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="flex items-center text-gray-600 dark:text-gray-400 text-sm">
+                    <i class="fas fa-calendar-day mr-1"></i>
+                    <span>일평균 <span class="font-medium text-gray-900 dark:text-white">{{ total_orders|div:30|floatformat:0 }}</span> 건</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 평균 주문 금액 -->
+        <div class="stat-card bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="stat-gradient-3 p-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white/80 text-sm font-medium">평균 주문 금액</p>
+                        <p class="text-3xl font-bold text-white mt-1">₩{{ avg_order_value|floatformat:0|intcomma }}</p>
+                    </div>
+                    <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-chart-bar text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="flex items-center text-red-600 dark:text-red-400 text-sm">
+                    <i class="fas fa-arrow-down mr-1"></i>
+                    <span class="font-medium">3% 감소</span>
+                    <span class="text-gray-500 dark:text-gray-400 ml-1">전월 대비</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 최고 매출일 -->
+        <div class="stat-card bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="stat-gradient-4 p-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white/80 text-sm font-medium">최고 매출일</p>
+                        <p class="text-2xl font-bold text-white mt-1">12월 25일</p>
+                    </div>
+                    <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-trophy text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4">
+                <div class="flex items-center text-gray-600 dark:text-gray-400 text-sm">
+                    <i class="fas fa-money-bill-wave mr-1"></i>
+                    <span class="font-medium text-gray-900 dark:text-white">₩2,450,000</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 차트 섹션 -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- 일별 매출 차트 -->
+        <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">일별 매출 추이</h3>
+                <div class="flex space-x-2">
+                    <button onclick="updateChart('revenue')" class="px-3 py-1 text-sm font-medium rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300">매출</button>
+                    <button onclick="updateChart('orders')" class="px-3 py-1 text-sm font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">주문수</button>
+                </div>
+            </div>
+            <div style="position: relative; height: 300px;">
+                <canvas id="salesChart"></canvas>
+            </div>
+        </div>
+
+        <!-- 플랫폼별 매출 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">플랫폼별 매출</h3>
+            <div style="position: relative; height: 200px;">
+                <canvas id="platformChart"></canvas>
+            </div>
+            <div class="mt-6 space-y-3">
+                {% for platform in platform_sales %}
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <div class="w-3 h-3 rounded-full mr-3" style="background-color: {% if forloop.counter == 1 %}rgb(99, 102, 241){% elif forloop.counter == 2 %}rgb(34, 197, 94){% elif forloop.counter == 3 %}rgb(251, 191, 36){% elif forloop.counter == 4 %}rgb(239, 68, 68){% else %}rgb(168, 85, 247){% endif %}"></div>
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ platform.platform__name|default:"직접판매" }}</span>
+                    </div>
+                    <span class="text-sm font-semibold text-gray-900 dark:text-white">₩{{ platform.total_revenue|floatformat:0|intcomma }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- 하단 섹션 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- 베스트셀러 상품 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">베스트셀러 TOP 10</h3>
+            </div>
+            <div class="p-6">
+                <div class="space-y-4">
+                    {% for product in top_products %}
+                    <div class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold
+                                {% if forloop.counter <= 3 %}bg-gradient-to-r from-yellow-400 to-orange-500{% else %}bg-gray-400{% endif %}">
+                                {{ forloop.counter }}
+                            </div>
+                            <div class="ml-4">
+                                <p class="font-medium text-gray-900 dark:text-white">{{ product.product__name }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">{{ product.product__sku }}</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-semibold text-gray-900 dark:text-white">₩{{ product.total_revenue|floatformat:0|intcomma }}</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">{{ product.total_quantity }}개 판매</p>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="text-center py-8 text-gray-500 dark:text-gray-400">
+                        <i class="fas fa-inbox text-4xl mb-3"></i>
+                        <p>판매 데이터가 없습니다.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- 카테고리별 매출 분석 -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">카테고리별 매출 분석</h3>
+            </div>
+            <div class="p-6">
+                <div style="position: relative; height: 300px;">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Alpine.js component
+function salesReport() {
+    return {
+        init() {
+            // Charts will be initialized below
+        }
+    }
+}
+
+// Sales data from Django
+const dailySalesData = {{ daily_sales|safe }};
+
+// Chart configurations
+const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        legend: {
+            labels: {
+                color: document.documentElement.classList.contains('dark') ? '#e5e7eb' : '#374151',
+                font: {
+                    family: "'Pretendard', sans-serif"
+                }
+            }
+        },
+        tooltip: {
+            backgroundColor: document.documentElement.classList.contains('dark') ? '#1f2937' : '#ffffff',
+            titleColor: document.documentElement.classList.contains('dark') ? '#e5e7eb' : '#111827',
+            bodyColor: document.documentElement.classList.contains('dark') ? '#e5e7eb' : '#111827',
+            borderColor: document.documentElement.classList.contains('dark') ? '#374151' : '#e5e7eb',
+            borderWidth: 1
+        }
+    },
+    scales: {
+        x: {
+            grid: {
+                color: document.documentElement.classList.contains('dark') ? '#374151' : '#e5e7eb'
+            },
+            ticks: {
+                color: document.documentElement.classList.contains('dark') ? '#9ca3af' : '#6b7280'
+            }
+        },
+        y: {
+            grid: {
+                color: document.documentElement.classList.contains('dark') ? '#374151' : '#e5e7eb'
+            },
+            ticks: {
+                color: document.documentElement.classList.contains('dark') ? '#9ca3af' : '#6b7280'
+            }
+        }
+    }
+};
+
+// Initialize daily sales chart
+const salesCtx = document.getElementById('salesChart').getContext('2d');
+const salesChart = new Chart(salesCtx, {
+    type: 'line',
+    data: {
+        labels: dailySalesData.map(d => d.date),
+        datasets: [{
+            label: '매출',
+            data: dailySalesData.map(d => d.revenue),
+            borderColor: 'rgb(99, 102, 241)',
+            backgroundColor: 'rgba(99, 102, 241, 0.1)',
+            tension: 0.3,
+            fill: true
+        }]
+    },
+    options: {
+        ...chartOptions,
+        scales: {
+            ...chartOptions.scales,
+            y: {
+                ...chartOptions.scales.y,
+                beginAtZero: true,
+                ticks: {
+                    ...chartOptions.scales.y.ticks,
+                    callback: function(value) {
+                        return '₩' + value.toLocaleString();
+                    }
+                }
+            }
+        },
+        plugins: {
+            ...chartOptions.plugins,
+            legend: {
+                display: false
+            },
+            tooltip: {
+                ...chartOptions.plugins.tooltip,
+                callbacks: {
+                    label: function(context) {
+                        return '₩' + context.parsed.y.toLocaleString();
+                    }
+                }
+            }
+        }
+    }
+});
+
+// Platform sales chart
+const platformCtx = document.getElementById('platformChart').getContext('2d');
+const platformChart = new Chart(platformCtx, {
+    type: 'doughnut',
+    data: {
+        labels: [{% for p in platform_sales %}'{{ p.platform__name|default:"직접판매" }}'{% if not forloop.last %},{% endif %}{% endfor %}],
+        datasets: [{
+            data: [{% for p in platform_sales %}{{ p.total_revenue }}{% if not forloop.last %},{% endif %}{% endfor %}],
+            backgroundColor: [
+                'rgb(99, 102, 241)',
+                'rgb(34, 197, 94)',
+                'rgb(251, 191, 36)',
+                'rgb(239, 68, 68)',
+                'rgb(168, 85, 247)'
+            ],
+            borderWidth: 0
+        }]
+    },
+    options: {
+        ...chartOptions,
+        scales: undefined,
+        plugins: {
+            ...chartOptions.plugins,
+            legend: {
+                display: false
+            }
+        }
+    }
+});
+
+// Category chart
+fetch("{% url 'reports:api_chart_data' %}?type=category&period={{ current_period }}")
+    .then(response => response.json())
+    .then(data => {
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        new Chart(categoryCtx, {
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: '매출',
+                    data: data.data,
+                    backgroundColor: 'rgba(99, 102, 241, 0.8)',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                ...chartOptions,
+                plugins: {
+                    ...chartOptions.plugins,
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    ...chartOptions.scales,
+                    y: {
+                        ...chartOptions.scales.y,
+                        beginAtZero: true,
+                        ticks: {
+                            ...chartOptions.scales.y.ticks,
+                            callback: function(value) {
+                                return '₩' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+// Period change function
+function changePeriod(period) {
+    window.location.href = `?period=${period}`;
+}
+
+// Chart update function
+function updateChart(type) {
+    const buttons = event.target.parentElement.querySelectorAll('button');
+    buttons.forEach(btn => {
+        btn.classList.remove('bg-blue-100', 'text-blue-600', 'dark:bg-blue-900', 'dark:text-blue-300');
+        btn.classList.add('text-gray-600', 'dark:text-gray-400', 'hover:bg-gray-100', 'dark:hover:bg-gray-700');
+    });
+    
+    event.target.classList.remove('text-gray-600', 'dark:text-gray-400', 'hover:bg-gray-100', 'dark:hover:bg-gray-700');
+    event.target.classList.add('bg-blue-100', 'text-blue-600', 'dark:bg-blue-900', 'dark:text-blue-300');
+    
+    if (type === 'orders') {
+        salesChart.data.datasets[0].label = '주문수';
+        salesChart.data.datasets[0].data = dailySalesData.map(d => d.orders);
+        salesChart.options.scales.y.ticks.callback = function(value) {
+            return value + '건';
+        };
+        salesChart.options.plugins.tooltip.callbacks.label = function(context) {
+            return context.parsed.y + '건';
+        };
+    } else {
+        salesChart.data.datasets[0].label = '매출';
+        salesChart.data.datasets[0].data = dailySalesData.map(d => d.revenue);
+        salesChart.options.scales.y.ticks.callback = function(value) {
+            return '₩' + value.toLocaleString();
+        };
+        salesChart.options.plugins.tooltip.callbacks.label = function(context) {
+            return '₩' + context.parsed.y.toLocaleString();
+        };
+    }
+    salesChart.update();
+}
+
+// Export functions
+function exportReport(format) {
+    window.location.href = `{% url 'reports:export' 'sales' %}?format=${format}&period={{ current_period }}`;
+}
+
+// Template filters (add to your custom template tags)
+// get_chart_color filter implementation
+const chartColors = [
+    'rgb(99, 102, 241)',
+    'rgb(34, 197, 94)', 
+    'rgb(251, 191, 36)',
+    'rgb(239, 68, 68)',
+    'rgb(168, 85, 247)'
+];
+
+</script>
+{% endblock %}

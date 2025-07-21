@@ -85,9 +85,10 @@ def cleanup_expired_reports():
 def generate_report_async(template_id, user_id, filters=None, format_type='excel'):
     """비동기 보고서 생성"""
     try:
-        from django.contrib.auth.models import User
+        from django.contrib.auth import get_user_model
         from .models import ReportTemplate
         
+        User = get_user_model()
         template = ReportTemplate.objects.get(id=template_id)
         user = User.objects.get(id=user_id)
         filters = filters or {}

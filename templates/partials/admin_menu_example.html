@@ -1,0 +1,145 @@
+<!-- 권한별 메뉴 표시 예제 -->
+<nav class="admin-menu">
+    <!-- 대시보드는 모든 로그인 사용자에게 표시 -->
+    {% if user.is_authenticated %}
+        <a href="{% url 'dashboard:home' %}" class="menu-item">
+            <i class="fas fa-home"></i> 대시보드
+        </a>
+    {% endif %}
+
+    <!-- 사용자 관리 메뉴 -->
+    {% if user_permissions.users %}
+        <div class="menu-section">
+            <h3>사용자 관리</h3>
+            <a href="{% url 'accounts:user_list' %}" class="menu-item">
+                <i class="fas fa-users"></i> 사용자 목록
+            </a>
+            
+            {% if user_permissions.user_create %}
+                <a href="{% url 'accounts:user_create' %}" class="menu-item">
+                    <i class="fas fa-user-plus"></i> 사용자 추가
+                </a>
+            {% endif %}
+            
+            {% if user_permissions.user_permissions %}
+                <a href="{% url 'accounts:permission_dashboard' %}" class="menu-item">
+                    <i class="fas fa-key"></i> 권한 관리
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <!-- 상품 관리 메뉴 -->
+    {% if user_permissions.products %}
+        <div class="menu-section">
+            <h3>상품 관리</h3>
+            <a href="{% url 'products:list' %}" class="menu-item">
+                <i class="fas fa-box"></i> 상품 목록
+            </a>
+            
+            {% if user_permissions.product_create %}
+                <a href="{% url 'products:create' %}" class="menu-item">
+                    <i class="fas fa-plus-circle"></i> 상품 등록
+                </a>
+            {% endif %}
+            
+            {% if user_permissions.product_price %}
+                <a href="{% url 'products:price_management' %}" class="menu-item">
+                    <i class="fas fa-tags"></i> 가격 관리
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <!-- 주문 관리 메뉴 -->
+    {% if user_permissions.orders %}
+        <div class="menu-section">
+            <h3>주문 관리</h3>
+            <a href="{% url 'orders:list' %}" class="menu-item">
+                <i class="fas fa-shopping-cart"></i> 주문 목록
+            </a>
+            
+            {% if user_permissions.order_refund %}
+                <a href="{% url 'orders:refund_list' %}" class="menu-item">
+                    <i class="fas fa-undo"></i> 환불 관리
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <!-- 재고 관리 메뉴 -->
+    {% if user_permissions.inventory %}
+        <div class="menu-section">
+            <h3>재고 관리</h3>
+            <a href="{% url 'inventory:status' %}" class="menu-item">
+                <i class="fas fa-warehouse"></i> 재고 현황
+            </a>
+            
+            {% if user_permissions.inventory_move %}
+                <a href="{% url 'inventory:movement' %}" class="menu-item">
+                    <i class="fas fa-exchange-alt"></i> 재고 이동
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <!-- 보고서 메뉴 -->
+    {% if user_permissions.reports %}
+        <div class="menu-section">
+            <h3>보고서</h3>
+            <a href="{% url 'reports:list' %}" class="menu-item">
+                <i class="fas fa-chart-bar"></i> 보고서 목록
+            </a>
+            
+            {% if user_permissions.report_create %}
+                <a href="{% url 'reports:create' %}" class="menu-item">
+                    <i class="fas fa-plus"></i> 보고서 생성
+                </a>
+            {% endif %}
+            
+            {% if user_permissions.report_schedule %}
+                <a href="{% url 'reports:schedule' %}" class="menu-item">
+                    <i class="fas fa-clock"></i> 스케줄 관리
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <!-- 시스템 설정 - 레벨 4 이상 관리자만 -->
+    {% if user_permissions.system and admin_level >= 4 %}
+        <div class="menu-section">
+            <h3>시스템 설정</h3>
+            <a href="{% url 'system:settings' %}" class="menu-item">
+                <i class="fas fa-cog"></i> 시스템 설정
+            </a>
+            
+            {% if user_permissions.system_config %}
+                <a href="{% url 'system:config' %}" class="menu-item">
+                    <i class="fas fa-sliders-h"></i> 환경 설정
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <!-- 최고 관리자 전용 메뉴 -->
+    {% if user_permissions.is_super_admin %}
+        <div class="menu-section">
+            <h3>최고 관리자</h3>
+            <a href="{% url 'accounts:permission_dashboard' %}" class="menu-item">
+                <i class="fas fa-crown"></i> 권한 대시보드
+            </a>
+            <a href="{% url 'system:backup' %}" class="menu-item">
+                <i class="fas fa-database"></i> 백업 관리
+            </a>
+        </div>
+    {% endif %}
+</nav>
+
+<!-- 관리자 레벨 표시 -->
+{% if user_type == 'ADMIN' %}
+    <div class="admin-level-badge">
+        <span class="badge badge-level-{{ admin_level }}">
+            관리자 레벨 {{ admin_level }}
+        </span>
+    </div>
+{% endif %}

@@ -4,9 +4,11 @@ import json
 import asyncio
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.utils import timezone
 from .models import Notification
+
+User = get_user_model()
 
 class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):

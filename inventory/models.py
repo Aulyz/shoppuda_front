@@ -1,6 +1,6 @@
 # inventory/models.py - 완성된 재고 관리 모델
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.utils import timezone
 
@@ -103,7 +103,7 @@ class StockMovement(models.Model):
         verbose_name='생성일시'
     )
     created_by = models.ForeignKey(
-        User, 
+        settings.AUTH_USER_MODEL, 
         on_delete=models.SET_NULL, 
         null=True, 
         blank=True,
@@ -233,7 +233,7 @@ class StockAlert(models.Model):
         verbose_name='해결일시'
     )
     resolved_by = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
@@ -465,7 +465,7 @@ class InventoryTransaction(models.Model):
     
     # 사용자 정보
     created_by = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,

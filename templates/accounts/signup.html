@@ -1,83 +1,461 @@
-
 {% extends 'base.html' %}
+{% load static %}
 
-{% comment %} templates/accounts/signup.html {% endcomment %}
+{% block title %}회원가입 - Shopuda{% endblock %}
 
-{% block title %}회원가입 - Shopuda ERP{% endblock %}
+{% block extra_head %}
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<style>
+    .step-indicator {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+    }
+    
+    .step {
+        display: flex;
+        align-items: center;
+        margin: 0 1rem;
+    }
+    
+    .step-circle {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+    
+    .step.active .step-circle {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+    
+    .step.completed .step-circle {
+        background: #10b981;
+        color: white;
+    }
+    
+    .step.inactive .step-circle {
+        background: #e5e7eb;
+        color: #9ca3af;
+    }
+    
+    .step-line {
+        width: 4rem;
+        height: 2px;
+        background: #e5e7eb;
+        margin: 0 1rem;
+    }
+    
+    .step.completed + .step-line {
+        background: #10b981;
+    }
+    
+    .form-section {
+        display: none;
+    }
+    
+    .form-section.active {
+        display: block;
+        animation: fadeIn 0.3s ease-out;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
-        <div>
-            <div class="mx-auto h-12 w-12 flex items-center justify-center rounded-full bg-indigo-100">
-                <i class="fas fa-user-plus text-2xl text-indigo-600"></i>
-            </div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                회원가입
-            </h2>
-            <p class="mt-2 text-center text-sm text-gray-600">
-                Shopuda ERP 계정을 만드세요
-            </p>
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
+    <div class="max-w-2xl mx-auto">
+        <!-- Logo -->
+        <div class="text-center mb-8">
+            <a href="{% url 'dashboard:home' %}" class="inline-flex items-center">
+                <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    Shopuda
+                </h1>
+            </a>
+            <p class="mt-2 text-gray-600 dark:text-gray-400">쇼핑몰 회원가입</p>
         </div>
 
-        <form class="mt-8 space-y-6" method="POST">
-            {% csrf_token %}
-            
-            <div class="space-y-4">
-                <div>
-                    <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium text-gray-700">아이디</label>
-                    {{ form.username }}
-                    {% if form.username.errors %}
-                        <p class="mt-1 text-sm text-red-600">{{ form.username.errors.0 }}</p>
-                    {% endif %}
-                </div>
-
-                <div>
-                    <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-medium text-gray-700">이름</label>
-                    {{ form.first_name }}
-                </div>
-
-                <div>
-                    <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700">이메일</label>
-                    {{ form.email }}
-                    {% if form.email.errors %}
-                        <p class="mt-1 text-sm text-red-600">{{ form.email.errors.0 }}</p>
-                    {% endif %}
-                </div>
-
-                <div>
-                    <label for="{{ form.password1.id_for_label }}" class="block text-sm font-medium text-gray-700">비밀번호</label>
-                    {{ form.password1 }}
-                    {% if form.password1.errors %}
-                        <p class="mt-1 text-sm text-red-600">{{ form.password1.errors.0 }}</p>
-                    {% endif %}
-                </div>
-
-                <div>
-                    <label for="{{ form.password2.id_for_label }}" class="block text-sm font-medium text-gray-700">비밀번호 확인</label>
-                    {{ form.password2 }}
-                    {% if form.password2.errors %}
-                        <p class="mt-1 text-sm text-red-600">{{ form.password2.errors.0 }}</p>
-                    {% endif %}
-                </div>
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step active" id="step1-indicator">
+                <div class="step-circle">1</div>
+                <span class="ml-2 text-sm font-medium">기본정보</span>
             </div>
-
-            <div>
-                <button type="submit" 
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    회원가입
-                </button>
+            <div class="step-line"></div>
+            <div class="step inactive" id="step2-indicator">
+                <div class="step-circle">2</div>
+                <span class="ml-2 text-sm font-medium">추가정보</span>
             </div>
-
-            <div class="text-center">
-                <p class="text-sm text-gray-600">
-                    이미 계정이 있으신가요?
-                    <a href="{% url 'accounts:login' %}" class="font-medium text-indigo-600 hover:text-indigo-500">
-                        로그인
-                    </a>
-                </p>
+            <div class="step-line"></div>
+            <div class="step inactive" id="step3-indicator">
+                <div class="step-circle">3</div>
+                <span class="ml-2 text-sm font-medium">약관동의</span>
             </div>
-        </form>
+        </div>
+
+        <!-- Form Card -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+            <form method="post" id="signupForm" novalidate>
+                {% csrf_token %}
+                
+                <!-- Step 1: 기본 정보 -->
+                <div class="form-section active" id="step1">
+                    <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white">기본 정보</h2>
+                    
+                    <!-- 아이디 -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            아이디 <span class="text-red-500">*</span>
+                        </label>
+                        <div class="flex gap-2">
+                            {{ form.username }}
+                            <button type="button" onclick="checkUsername()" 
+                                    class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 whitespace-nowrap">
+                                중복확인
+                            </button>
+                        </div>
+                        <div id="username-message" class="mt-1 text-sm"></div>
+                        {% if form.username.errors %}
+                            <div class="text-red-500 text-sm mt-1">{{ form.username.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- 비밀번호 -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            비밀번호 <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.password1 }}
+                        <div class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                            • 8자 이상 • 영문, 숫자, 특수문자 조합 권장
+                        </div>
+                        {% if form.password1.errors %}
+                            <div class="text-red-500 text-sm mt-1">{{ form.password1.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- 비밀번호 확인 -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            비밀번호 확인 <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}
+                            <div class="text-red-500 text-sm mt-1">{{ form.password2.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- 이름 -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            이름 <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <div class="text-red-500 text-sm mt-1">{{ form.first_name.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- 이메일 -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            이메일 <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-red-500 text-sm mt-1">{{ form.email.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- 전화번호 -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            전화번호 <span class="text-red-500">*</span>
+                        </label>
+                        {{ form.phone_number }}
+                        {% if form.phone_number.errors %}
+                            <div class="text-red-500 text-sm mt-1">{{ form.phone_number.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="flex justify-end">
+                        <button type="button" onclick="nextStep(2)" 
+                                class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:opacity-90">
+                            다음 단계 →
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: 추가 정보 -->
+                <div class="form-section" id="step2">
+                    <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white">추가 정보 (선택)</h2>
+                    
+                    <!-- 생년월일 -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            생년월일
+                        </label>
+                        {{ form.birth_date }}
+                    </div>
+                    
+                    <!-- 성별 -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            성별
+                        </label>
+                        {{ form.gender }}
+                    </div>
+                    
+                    <!-- 주소 -->
+                    <div class="mb-5">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            주소
+                        </label>
+                        <div class="flex gap-2 mb-2">
+                            {{ form.postal_code }}
+                            <button type="button" onclick="findAddress()" 
+                                    class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 whitespace-nowrap">
+                                주소찾기
+                            </button>
+                        </div>
+                        {{ form.address }}
+                        <div class="mt-2">
+                            {{ form.detail_address }}
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-between">
+                        <button type="button" onclick="prevStep(1)" 
+                                class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                            ← 이전 단계
+                        </button>
+                        <button type="button" onclick="nextStep(3)" 
+                                class="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:opacity-90">
+                            다음 단계 →
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: 약관 동의 -->
+                <div class="form-section" id="step3">
+                    <h2 class="text-xl font-semibold mb-6 text-gray-900 dark:text-white">약관 동의</h2>
+                    
+                    <!-- 전체 동의 -->
+                    <div class="mb-5 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="checkbox" id="agree-all" onchange="toggleAllAgreements()"
+                                   class="rounded border-gray-300 text-blue-600 focus:ring-blue-500 mr-3">
+                            <span class="font-medium text-gray-900 dark:text-white">전체 동의</span>
+                        </label>
+                    </div>
+                    
+                    <!-- 이용약관 -->
+                    <div class="mb-4">
+                        <label class="flex items-start cursor-pointer">
+                            {{ form.terms_agreed }}
+                            <div class="ml-3">
+                                <span class="text-gray-700 dark:text-gray-300">
+                                    [필수] 이용약관 동의
+                                </span>
+                                <a href="#" class="text-blue-600 text-sm ml-2" onclick="showTerms(); return false;">내용보기</a>
+                            </div>
+                        </label>
+                        {% if form.terms_agreed.errors %}
+                            <div class="text-red-500 text-sm mt-1 ml-6">{{ form.terms_agreed.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- 개인정보처리방침 -->
+                    <div class="mb-4">
+                        <label class="flex items-start cursor-pointer">
+                            {{ form.privacy_agreed }}
+                            <div class="ml-3">
+                                <span class="text-gray-700 dark:text-gray-300">
+                                    [필수] 개인정보처리방침 동의
+                                </span>
+                                <a href="#" class="text-blue-600 text-sm ml-2" onclick="showPrivacy(); return false;">내용보기</a>
+                            </div>
+                        </label>
+                        {% if form.privacy_agreed.errors %}
+                            <div class="text-red-500 text-sm mt-1 ml-6">{{ form.privacy_agreed.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- 마케팅 수신 동의 -->
+                    <div class="mb-6">
+                        <label class="flex items-start cursor-pointer">
+                            {{ form.marketing_agreed }}
+                            <div class="ml-3">
+                                <span class="text-gray-700 dark:text-gray-300">
+                                    [선택] 마케팅 정보 수신 동의
+                                </span>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                                    이벤트, 쿠폰, 특가 정보 등을 받아보실 수 있습니다.
+                                </p>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    {% if form.non_field_errors %}
+                        <div class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
+                            {{ form.non_field_errors.0 }}
+                        </div>
+                    {% endif %}
+                    
+                    <div class="flex justify-between">
+                        <button type="button" onclick="prevStep(2)" 
+                                class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                            ← 이전 단계
+                        </button>
+                        <button type="submit" 
+                                class="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:opacity-90 font-medium">
+                            회원가입 완료
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Login Link -->
+        <div class="mt-6 text-center">
+            <span class="text-gray-600 dark:text-gray-400">이미 회원이신가요?</span>
+            <a href="{% url 'accounts:login' %}" class="ml-2 text-blue-600 hover:text-blue-700 font-medium">
+                로그인하기
+            </a>
+        </div>
     </div>
 </div>
+
+<script>
+let currentStep = 1;
+const totalSteps = 3;
+
+function showStep(step) {
+    // Hide all sections
+    document.querySelectorAll('.form-section').forEach(section => {
+        section.classList.remove('active');
+    });
+    
+    // Show current section
+    document.getElementById(`step${step}`).classList.add('active');
+    
+    // Update step indicators
+    for (let i = 1; i <= totalSteps; i++) {
+        const indicator = document.getElementById(`step${i}-indicator`);
+        indicator.classList.remove('active', 'completed', 'inactive');
+        
+        if (i < step) {
+            indicator.classList.add('completed');
+        } else if (i === step) {
+            indicator.classList.add('active');
+        } else {
+            indicator.classList.add('inactive');
+        }
+    }
+    
+    currentStep = step;
+}
+
+function nextStep(step) {
+    // Basic validation for current step
+    if (currentStep === 1) {
+        const requiredFields = ['id_username', 'id_password1', 'id_password2', 'id_first_name', 'id_email', 'id_phone_number'];
+        for (const fieldId of requiredFields) {
+            const field = document.getElementById(fieldId);
+            if (!field.value.trim()) {
+                field.focus();
+                alert('필수 항목을 모두 입력해주세요.');
+                return;
+            }
+        }
+        
+        // Password match check
+        const pwd1 = document.getElementById('id_password1').value;
+        const pwd2 = document.getElementById('id_password2').value;
+        if (pwd1 !== pwd2) {
+            alert('비밀번호가 일치하지 않습니다.');
+            document.getElementById('id_password2').focus();
+            return;
+        }
+    }
+    
+    showStep(step);
+}
+
+function prevStep(step) {
+    showStep(step);
+}
+
+function checkUsername() {
+    const username = document.getElementById('id_username').value;
+    const messageDiv = document.getElementById('username-message');
+    
+    if (!username) {
+        messageDiv.textContent = '아이디를 입력해주세요.';
+        messageDiv.className = 'mt-1 text-sm text-red-500';
+        return;
+    }
+    
+    fetch(`/accounts/check-username/?username=${username}`)
+        .then(response => response.json())
+        .then(data => {
+            messageDiv.textContent = data.message;
+            messageDiv.className = `mt-1 text-sm ${data.available ? 'text-green-600' : 'text-red-500'}`;
+        });
+}
+
+function findAddress() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            document.getElementById('id_postal_code').value = data.zonecode;
+            document.getElementById('id_address').value = data.address;
+            document.getElementById('id_detail_address').focus();
+        }
+    }).open();
+}
+
+function toggleAllAgreements() {
+    const allAgree = document.getElementById('agree-all').checked;
+    document.getElementById('id_terms_agreed').checked = allAgree;
+    document.getElementById('id_privacy_agreed').checked = allAgree;
+    document.getElementById('id_marketing_agreed').checked = allAgree;
+}
+
+function showTerms() {
+    // 약관 모달 표시 로직
+    alert('이용약관 내용을 표시합니다.');
+}
+
+function showPrivacy() {
+    // 개인정보처리방침 모달 표시 로직
+    alert('개인정보처리방침 내용을 표시합니다.');
+}
+
+// 전화번호 자동 포맷팅
+document.getElementById('id_phone_number').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/[^0-9]/g, '');
+    let formatted = '';
+    
+    if (value.length <= 3) {
+        formatted = value;
+    } else if (value.length <= 7) {
+        formatted = value.slice(0, 3) + '-' + value.slice(3);
+    } else if (value.length <= 10) {
+        formatted = value.slice(0, 3) + '-' + value.slice(3, 6) + '-' + value.slice(6);
+    } else {
+        formatted = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+    }
+    
+    e.target.value = formatted;
+});
+</script>
 {% endblock %}

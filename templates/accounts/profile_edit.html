@@ -1,0 +1,237 @@
+{% extends 'base.html' %}
+
+{% block title %}프로필 수정 - Shopuda{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+    <div class="mb-8">
+        <a href="{% url 'accounts:profile' %}" class="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 mb-4 inline-block">
+            <i class="fas fa-arrow-left mr-2"></i>프로필로 돌아가기
+        </a>
+        
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">프로필 수정</h1>
+        <p class="text-gray-600 dark:text-gray-300">계정 정보를 수정할 수 있습니다.</p>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        {% csrf_token %}
+        
+        <!-- 오류 메시지 표시 -->
+        {% if form.non_field_errors %}
+        <div class="mb-6 p-4 bg-red-100 dark:bg-red-900/30 border border-red-300 dark:border-red-700 rounded-lg">
+            {% for error in form.non_field_errors %}
+            <p class="text-red-700 dark:text-red-300 text-sm">{{ error }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- 프로필 이미지 -->
+            <div class="md:col-span-2">
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    프로필 이미지
+                </label>
+                <div class="flex items-center space-x-4">
+                    {% if user.profile_image %}
+                    <img src="{{ user.profile_image.url }}" alt="현재 프로필" 
+                         class="w-20 h-20 rounded-full object-cover">
+                    {% else %}
+                    <div class="w-20 h-20 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
+                        <i class="fas fa-user text-2xl text-gray-500 dark:text-gray-400"></i>
+                    </div>
+                    {% endif %}
+                    
+                    <div>
+                        {{ form.profile_image }}
+                        {% if form.profile_image.errors %}
+                        <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.profile_image.errors|first }}</p>
+                        {% endif %}
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                            JPG, PNG 형식 (최대 5MB)
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 이메일 -->
+            <div>
+                <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    {{ form.email.label }}
+                </label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.email.errors|first }}</p>
+                {% endif %}
+            </div>
+
+            <!-- 이름 -->
+            <div>
+                <label for="{{ form.first_name.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    {{ form.first_name.label }}
+                </label>
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.first_name.errors|first }}</p>
+                {% endif %}
+            </div>
+
+            <!-- 성 -->
+            <div>
+                <label for="{{ form.last_name.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    {{ form.last_name.label }}
+                </label>
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.last_name.errors|first }}</p>
+                {% endif %}
+            </div>
+
+            <!-- 전화번호 -->
+            <div>
+                <label for="{{ form.phone_number.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    {{ form.phone_number.label }}
+                </label>
+                {{ form.phone_number }}
+                {% if form.phone_number.errors %}
+                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.phone_number.errors|first }}</p>
+                {% endif %}
+            </div>
+
+            <!-- 생년월일 -->
+            <div>
+                <label for="{{ form.birth_date.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    {{ form.birth_date.label }}
+                </label>
+                {{ form.birth_date }}
+                {% if form.birth_date.errors %}
+                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.birth_date.errors|first }}</p>
+                {% endif %}
+            </div>
+
+            <!-- 성별 -->
+            <div>
+                <label for="{{ form.gender.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    {{ form.gender.label }}
+                </label>
+                {{ form.gender }}
+                {% if form.gender.errors %}
+                <p class="mt-1 text-sm text-red-600 dark:text-red-400">{{ form.gender.errors|first }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 주소 정보 -->
+        <div class="mt-6 pt-6 border-t dark:border-gray-700">
+            <h3 class="text-lg font-medium text-gray-800 dark:text-white mb-4">주소 정보</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- 우편번호 -->
+                <div>
+                    <label for="{{ form.postal_code.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        {{ form.postal_code.label }}
+                    </label>
+                    <div class="flex gap-2">
+                        {{ form.postal_code }}
+                        <button type="button" onclick="execDaumPostcode()" 
+                                class="px-3 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm rounded-lg transition">
+                            검색
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 주소 -->
+                <div class="md:col-span-2">
+                    <label for="{{ form.address.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        {{ form.address.label }}
+                    </label>
+                    {{ form.address }}
+                </div>
+
+                <!-- 상세주소 -->
+                <div class="md:col-span-3">
+                    <label for="{{ form.detail_address.id_for_label }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        {{ form.detail_address.label }}
+                    </label>
+                    {{ form.detail_address }}
+                </div>
+            </div>
+        </div>
+
+        <!-- 마케팅 수신 동의 -->
+        <div class="mt-6 pt-6 border-t dark:border-gray-700">
+            <h3 class="text-lg font-medium text-gray-800 dark:text-white mb-4">마케팅 수신 동의</h3>
+            
+            <div class="flex items-start">
+                {{ form.marketing_agreed }}
+                <label for="{{ form.marketing_agreed.id_for_label }}" class="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                    이메일 및 SMS 마케팅 정보 수신에 동의합니다
+                </label>
+            </div>
+        </div>
+
+        <!-- 계정 정보 -->
+        <div class="mt-6 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+            <h4 class="font-medium text-gray-800 dark:text-white mb-2">계정 정보</h4>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                    <span class="text-gray-500 dark:text-gray-400">아이디:</span>
+                    <span class="ml-2 font-medium text-gray-800 dark:text-white">{{ user.username }}</span>
+                </div>
+                <div>
+                    <span class="text-gray-500 dark:text-gray-400">사용자 타입:</span>
+                    <span class="ml-2 font-medium text-gray-800 dark:text-white">{{ user.get_user_type_display }}</span>
+                </div>
+                {% if user.user_type == 'CUSTOMER' %}
+                <div>
+                    <span class="text-gray-500 dark:text-gray-400">회원 등급:</span>
+                    <span class="ml-2 font-medium text-gray-800 dark:text-white">{{ user.get_membership_level_display }}</span>
+                </div>
+                <div>
+                    <span class="text-gray-500 dark:text-gray-400">포인트:</span>
+                    <span class="ml-2 font-medium text-gray-800 dark:text-white">{{ user.points|default:0 }}P</span>
+                </div>
+                {% endif %}
+                {% if user.user_type == 'ADMIN' %}
+                <div>
+                    <span class="text-gray-500 dark:text-gray-400">관리자 레벨:</span>
+                    <span class="ml-2 font-medium text-gray-800 dark:text-white">레벨 {{ user.admin_level }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 버튼 -->
+        <div class="mt-8 flex justify-between">
+            <a href="{% url 'accounts:password_change' %}" 
+               class="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
+                <i class="fas fa-key mr-2"></i>비밀번호 변경
+            </a>
+            
+            <div class="space-x-4">
+                <a href="{% url 'accounts:profile' %}" 
+                   class="px-6 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                    취소
+                </a>
+                <button type="submit" 
+                        class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition">
+                    <i class="fas fa-save mr-2"></i>저장
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- 다음 우편번호 서비스 -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+function execDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            document.getElementById('id_postal_code').value = data.zonecode;
+            document.getElementById('id_address').value = data.roadAddress;
+            document.getElementById('id_detail_address').focus();
+        }
+    }).open();
+}
+</script>
+{% endblock %}

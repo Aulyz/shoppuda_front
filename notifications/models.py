@@ -1,6 +1,6 @@
 # notifications/models.py
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.utils import timezone
 
 class Notification(models.Model):
@@ -13,7 +13,7 @@ class Notification(models.Model):
         ('info', '정보'),
     ]
     
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notifications')
     title = models.CharField(max_length=200)
     message = models.TextField()
     notification_type = models.CharField(max_length=20, choices=NOTIFICATION_TYPES, default='info')

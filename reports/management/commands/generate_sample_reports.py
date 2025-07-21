@@ -1,11 +1,13 @@
 # reports/management/commands/generate_sample_reports.py
 from django.core.management.base import BaseCommand
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.utils import timezone
 from datetime import timedelta
 import json
 
 from reports.models import ReportTemplate, ReportSchedule
+
+User = get_user_model()
 
 
 class Command(BaseCommand):
