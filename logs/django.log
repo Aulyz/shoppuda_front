@@ -13357,3 +13357,413 @@ INFO 2025-07-22 07:43:35,311 autoreload 28760 3144 C:\Users\dnflw\Desktop\Projec
 INFO 2025-07-22 07:43:35,318 autoreload 11748 24620 C:\Users\dnflw\Desktop\ProjectShopuda\project\core\views.py changed, reloading.
 INFO 2025-07-22 07:43:35,768 autoreload 18440 35984 Watching for file changes with StatReloader
 INFO 2025-07-22 07:43:35,769 autoreload 9400 17188 Watching for file changes with StatReloader
+WARNING 2025-07-22 07:43:37,936 log 9400 31848 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:43:37,937 basehttp 9400 31848 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:43:41,652 log 9400 15096 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:43:41,653 basehttp 9400 15096 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:43:45,589 log 9400 15588 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:43:45,590 basehttp 9400 15588 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:43:47,159 log 9400 38228 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:43:47,159 basehttp 9400 38228 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:43:52,324 log 9400 15352 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:43:52,324 basehttp 9400 15352 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:43:54,208 log 9400 10884 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:43:54,209 basehttp 9400 10884 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:43:58,549 log 9400 38296 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:43:58,550 basehttp 9400 38296 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:43:58,579 log 9400 36888 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:43:58,580 basehttp 9400 36888 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:03,114 log 9400 36012 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:03,114 basehttp 9400 36012 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:04,753 log 9400 24684 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:04,753 basehttp 9400 24684 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:07,474 log 9400 35104 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:07,474 basehttp 9400 35104 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:09,737 log 9400 17228 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:09,737 basehttp 9400 17228 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:13,937 log 9400 30040 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:13,937 basehttp 9400 30040 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:15,922 log 9400 34224 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:15,922 basehttp 9400 34224 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:19,964 log 9400 12328 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:19,964 basehttp 9400 12328 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:20,354 log 9400 13272 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:20,354 basehttp 9400 13272 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:27,012 log 9400 5308 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:27,012 basehttp 9400 5308 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:27,762 log 9400 13172 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:27,762 basehttp 9400 13172 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:31,515 log 9400 12316 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:31,516 basehttp 9400 12316 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:31,923 log 9400 27324 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:31,923 basehttp 9400 27324 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:37,120 log 9400 6916 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:37,120 basehttp 9400 6916 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:39,093 log 9400 34596 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:39,094 basehttp 9400 34596 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:41,331 log 9400 14700 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:41,332 basehttp 9400 14700 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:45,627 log 9400 26144 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:45,627 basehttp 9400 26144 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:47,979 log 9400 19052 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:47,979 basehttp 9400 19052 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:53,081 log 9400 21320 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:53,082 basehttp 9400 21320 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:53,623 log 9400 27220 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:53,624 basehttp 9400 27220 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:44:58,370 log 9400 32476 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:44:58,370 basehttp 9400 32476 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:45:00,925 log 9400 10344 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:00,926 basehttp 9400 10344 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:45:04,356 log 9400 24296 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:04,356 basehttp 9400 24296 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:45:08,522 log 9400 11576 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:08,522 basehttp 9400 11576 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:45:10,029 basehttp 9400 7144 "GET /core/settings/?tab=points HTTP/1.1" 200 75808
+INFO 2025-07-22 07:45:10,132 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:45:11,114 basehttp 9400 7144 "GET /core/settings/?tab=brand HTTP/1.1" 200 77511
+INFO 2025-07-22 07:45:11,169 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:45:11,566 basehttp 9400 7144 "GET /core/settings/?tab=signup HTTP/1.1" 200 75812
+INFO 2025-07-22 07:45:11,616 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:45:12,012 basehttp 9400 7144 "GET /core/settings/?tab=brand HTTP/1.1" 200 77511
+INFO 2025-07-22 07:45:12,061 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:45:15,119 basehttp 9400 7144 "GET /core/settings/?tab=signup HTTP/1.1" 200 75812
+INFO 2025-07-22 07:45:15,167 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:45:15,557 basehttp 9400 7144 "GET /core/settings/?tab=membership HTTP/1.1" 200 77261
+INFO 2025-07-22 07:45:15,603 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:45:16,662 basehttp 9400 7144 "GET /core/settings/?tab=points HTTP/1.1" 200 75808
+INFO 2025-07-22 07:45:16,708 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:45:17,049 basehttp 9400 7144 "GET /core/settings/?tab=order HTTP/1.1" 200 75295
+INFO 2025-07-22 07:45:17,094 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:45:17,693 basehttp 9400 7144 "GET /core/settings/?tab=inventory HTTP/1.1" 200 75108
+INFO 2025-07-22 07:45:17,737 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:45:18,292 basehttp 9400 7144 "GET /core/settings/?tab=product HTTP/1.1" 200 75823
+INFO 2025-07-22 07:45:18,332 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:45:19,253 basehttp 9400 7144 "GET /core/settings/?tab=notification HTTP/1.1" 200 75368
+INFO 2025-07-22 07:45:19,299 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:45:19,901 basehttp 9400 7144 "GET /core/settings/?tab=system HTTP/1.1" 200 74972
+INFO 2025-07-22 07:45:19,945 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:45:22,716 log 9400 3212 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:22,716 basehttp 9400 3212 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:45:24,598 log 9400 7884 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:24,598 basehttp 9400 7884 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:45:26,001 basehttp 9400 7144 "GET /core/settings/ HTTP/1.1" 200 77511
+INFO 2025-07-22 07:45:26,046 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:45:27,438 basehttp 9400 7144 "GET /accounts/admin/users/ HTTP/1.1" 200 71231
+INFO 2025-07-22 07:45:27,480 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:45:28,193 basehttp 9400 7144 "GET /accounts/admin/users/create/ HTTP/1.1" 200 64516
+INFO 2025-07-22 07:45:28,256 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:45:30,587 log 9400 23240 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:30,587 basehttp 9400 23240 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:45:31,185 log 9400 32648 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:31,185 basehttp 9400 32648 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:45:35,864 log 9400 30452 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:35,865 basehttp 9400 30452 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:45:37,083 log 9400 1976 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:37,084 basehttp 9400 1976 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:45:41,565 log 9400 27868 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:41,565 basehttp 9400 27868 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:45:43,194 log 9400 23884 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:43,194 basehttp 9400 23884 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:45:46,667 log 9400 11076 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:46,668 basehttp 9400 11076 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:45:48,733 log 9400 35500 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:48,733 basehttp 9400 35500 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:45:50,902 basehttp 9400 7144 "POST /accounts/admin/users/create/ HTTP/1.1" 200 64806
+INFO 2025-07-22 07:45:50,941 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:45:54,103 log 9400 34056 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:54,104 basehttp 9400 34056 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:45:54,166 log 9400 23600 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:45:54,166 basehttp 9400 23600 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:00,083 log 9400 34660 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:00,083 basehttp 9400 34660 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:01,136 log 9400 22324 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:01,136 basehttp 9400 22324 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:05,128 log 9400 31540 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:05,128 basehttp 9400 31540 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:06,576 log 9400 22720 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:06,577 basehttp 9400 22720 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:10,434 log 9400 18736 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:10,434 basehttp 9400 18736 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:12,324 log 9400 38712 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:12,325 basehttp 9400 38712 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:15,823 log 9400 26036 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:15,823 basehttp 9400 26036 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:16,655 log 9400 40344 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:16,655 basehttp 9400 40344 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:46:17,803 basehttp 9400 7144 "POST /accounts/admin/users/create/ HTTP/1.1" 200 64819
+INFO 2025-07-22 07:46:17,880 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:46:20,602 log 9400 41040 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:20,602 basehttp 9400 41040 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:20,752 log 9400 34184 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:20,752 basehttp 9400 34184 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:26,293 log 9400 41904 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:26,294 basehttp 9400 41904 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:46:26,640 basehttp 9400 7144 "POST /accounts/admin/users/create/ HTTP/1.1" 302 0
+INFO 2025-07-22 07:46:26,698 basehttp 9400 7144 "GET /accounts/admin/users/ HTTP/1.1" 200 75350
+INFO 2025-07-22 07:46:26,742 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:46:29,232 log 9400 17880 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:29,233 basehttp 9400 17880 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:30,932 log 9400 29896 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:30,932 basehttp 9400 29896 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:35,494 log 9400 33480 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:35,494 basehttp 9400 33480 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:46:36,574 basehttp 9400 7144 "GET /core/settings/ HTTP/1.1" 200 77900
+INFO 2025-07-22 07:46:36,630 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:46:37,342 log 9400 15548 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:37,343 basehttp 9400 15548 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:40,009 log 9400 11568 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:40,010 basehttp 9400 11568 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:46:40,787 basehttp 9400 7144 "GET /core/settings/?tab=system HTTP/1.1" 200 74972
+INFO 2025-07-22 07:46:40,838 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:46:41,210 log 9400 7404 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:41,210 basehttp 9400 7404 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:45,010 log 9400 24440 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:45,010 basehttp 9400 24440 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:45,631 log 9400 37516 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:45,632 basehttp 9400 37516 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:46:46,625 basehttp 9400 7144 "POST /core/settings/?tab=system HTTP/1.1" 302 0
+INFO 2025-07-22 07:46:46,694 basehttp 9400 7144 "GET /core/settings/?tab=system HTTP/1.1" 200 75390
+INFO 2025-07-22 07:46:46,734 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:46:47,779 basehttp 9400 7144 "GET /core/settings/?tab=system HTTP/1.1" 200 75035
+INFO 2025-07-22 07:46:47,820 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:46:48,348 basehttp 9400 7144 "GET /core/settings/?tab=system HTTP/1.1" 200 75035
+INFO 2025-07-22 07:46:48,394 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:46:49,088 basehttp 9400 7144 "GET /core/settings/?tab=brand HTTP/1.1" 200 77566
+INFO 2025-07-22 07:46:49,146 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:46:49,917 basehttp 9400 7144 "GET /core/settings/?tab=system HTTP/1.1" 200 75035
+INFO 2025-07-22 07:46:49,962 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:46:51,293 log 9400 21064 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:51,293 basehttp 9400 21064 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:46:51,727 log 9400 32792 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:46:51,727 basehttp 9400 32792 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:46:52,692 basehttp 9400 7144 "GET /accounts/logout/ HTTP/1.1" 302 0
+INFO 2025-07-22 07:46:52,744 basehttp 9400 7144 "GET /accounts/login/ HTTP/1.1" 200 7539
+INFO 2025-07-22 07:47:00,768 basehttp 9400 7144 "POST /accounts/login/ HTTP/1.1" 200 7810
+INFO 2025-07-22 07:47:06,919 basehttp 9400 7144 "POST /accounts/login/ HTTP/1.1" 200 7810
+INFO 2025-07-22 07:47:11,526 basehttp 9400 7144 "POST /accounts/login/ HTTP/1.1" 302 0
+INFO 2025-07-22 07:47:11,593 basehttp 9400 7144 "GET /dashboard/ HTTP/1.1" 200 83510
+INFO 2025-07-22 07:47:11,646 basehttp 9400 7144 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:47:12,173 basehttp 9400 13092 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 07:47:12,191 basehttp 9400 7144 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 07:47:12,205 basehttp 9400 35156 "GET /dashboard/stats/ HTTP/1.1" 200 370
+WARNING 2025-07-22 07:47:13,024 log 9400 33956 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:47:13,025 basehttp 9400 33956 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:47:14,065 basehttp 9400 35156 "GET /accounts/admin/users/ HTTP/1.1" 200 75350
+INFO 2025-07-22 07:47:14,110 basehttp 9400 35156 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:47:14,486 log 9400 25248 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:47:14,487 basehttp 9400 25248 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:47:15,255 basehttp 9400 35156 "GET /accounts/admin/users/4/ HTTP/1.1" 200 59946
+INFO 2025-07-22 07:47:15,296 basehttp 9400 35156 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:47:17,719 log 9400 36168 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:47:17,719 basehttp 9400 36168 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:47:18,852 log 9400 16444 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:47:18,852 basehttp 9400 16444 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:47:19,584 log 9400 31364 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:47:19,584 basehttp 9400 31364 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:47:20,053 basehttp 9400 35156 "GET /accounts/admin/users/4/permissions/ HTTP/1.1" 200 64046
+INFO 2025-07-22 07:47:20,141 basehttp 9400 35156 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:47:21,377 log 9400 33308 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:47:21,377 basehttp 9400 33308 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:47:24,059 basehttp 9400 35156 "GET /accounts/admin/users/4/ HTTP/1.1" 200 59946
+INFO 2025-07-22 07:47:24,100 basehttp 9400 35156 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:47:25,524 log 9400 24420 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:47:25,524 basehttp 9400 24420 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:47:26,460 log 9400 16608 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:47:26,460 basehttp 9400 16608 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:47:31,357 log 9400 25712 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:47:31,357 basehttp 9400 25712 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:47:31,432 basehttp 9400 35156 "GET /accounts/logout/ HTTP/1.1" 302 0
+INFO 2025-07-22 07:47:31,486 basehttp 9400 35156 "GET /accounts/login/ HTTP/1.1" 200 7693
+INFO 2025-07-22 07:47:34,319 basehttp 9400 41708 "GET /ws/notifications/ HTTP/1.1" 200 1958
+INFO 2025-07-22 07:47:36,494 basehttp 9400 35156 "POST /accounts/login/ HTTP/1.1" 302 0
+INFO 2025-07-22 07:47:36,554 basehttp 9400 35156 "GET /dashboard/ HTTP/1.1" 200 1958
+INFO 2025-07-22 07:47:46,332 basehttp 9400 35156 "GET /dashboard/ HTTP/1.1" 200 1958
+INFO 2025-07-22 07:47:49,349 basehttp 9400 32496 "GET /ws/notifications/ HTTP/1.1" 200 1958
+INFO 2025-07-22 07:47:50,629 basehttp 9400 35156 "GET /accounts/logout/ HTTP/1.1" 302 0
+INFO 2025-07-22 07:47:50,675 basehttp 9400 35156 "GET /accounts/login/ HTTP/1.1" 200 7691
+INFO 2025-07-22 07:47:55,908 basehttp 9400 35156 "POST /accounts/login/ HTTP/1.1" 302 0
+INFO 2025-07-22 07:47:55,968 basehttp 9400 35156 "GET /dashboard/ HTTP/1.1" 200 83510
+INFO 2025-07-22 07:47:56,018 basehttp 9400 35156 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:47:56,537 basehttp 9400 7144 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 07:47:56,571 basehttp 9400 35156 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 07:47:56,589 basehttp 9400 13092 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 07:47:57,558 basehttp 9400 13092 "GET /core/settings/ HTTP/1.1" 200 77911
+INFO 2025-07-22 07:47:57,605 basehttp 9400 13092 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:47:59,322 log 9400 11652 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:47:59,322 basehttp 9400 11652 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:00,167 log 9400 40640 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:00,167 basehttp 9400 40640 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:48:00,413 basehttp 9400 13092 "GET /core/settings/?tab=system HTTP/1.1" 200 75035
+INFO 2025-07-22 07:48:00,459 basehttp 9400 13092 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:48:02,260 log 9400 28856 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:02,261 basehttp 9400 28856 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:02,586 log 9400 21276 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:02,587 basehttp 9400 21276 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:48:03,784 basehttp 9400 13092 "GET /core/settings/?tab=brand HTTP/1.1" 200 77566
+INFO 2025-07-22 07:48:03,829 basehttp 9400 13092 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:48:04,988 log 9400 39016 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:04,988 basehttp 9400 39016 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:05,363 log 9400 27204 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:05,363 basehttp 9400 27204 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:48:07,002 basehttp 9400 13092 "GET /core/settings/?tab=system HTTP/1.1" 200 75035
+INFO 2025-07-22 07:48:07,046 basehttp 9400 13092 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:48:07,842 basehttp 9400 13092 "POST /core/settings/?tab=system HTTP/1.1" 302 0
+INFO 2025-07-22 07:48:07,913 basehttp 9400 13092 "GET /core/settings/?tab=system HTTP/1.1" 200 75390
+INFO 2025-07-22 07:48:07,951 basehttp 9400 13092 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:48:10,044 basehttp 9400 13092 "GET /core/settings/?tab=brand HTTP/1.1" 200 77566
+INFO 2025-07-22 07:48:10,087 basehttp 9400 13092 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 07:48:10,692 basehttp 9400 13092 "GET /core/settings/?tab=brand HTTP/1.1" 200 77566
+INFO 2025-07-22 07:48:10,733 basehttp 9400 13092 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:48:12,361 log 9400 27676 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:12,361 basehttp 9400 27676 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:12,803 log 9400 22576 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:12,804 basehttp 9400 22576 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:19,146 log 9400 31528 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:19,147 basehttp 9400 31528 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:20,359 log 9400 11140 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:20,359 basehttp 9400 11140 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:24,337 log 9400 23128 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:24,337 basehttp 9400 23128 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:26,797 log 9400 23692 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:26,797 basehttp 9400 23692 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:29,052 log 9400 15648 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:29,052 basehttp 9400 15648 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:31,238 log 9400 16396 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:31,238 basehttp 9400 16396 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:35,857 log 9400 9052 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:35,857 basehttp 9400 9052 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:36,122 log 9400 10744 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:36,122 basehttp 9400 10744 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:41,946 log 9400 12932 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:41,947 basehttp 9400 12932 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:42,713 log 9400 27748 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:42,713 basehttp 9400 27748 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:48,608 log 9400 38800 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:48,609 basehttp 9400 38800 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:49,387 log 9400 21460 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:49,387 basehttp 9400 21460 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:53,641 log 9400 34852 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:53,642 basehttp 9400 34852 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:48:56,262 log 9400 30340 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:48:56,262 basehttp 9400 30340 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:00,099 log 9400 19664 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:00,099 basehttp 9400 19664 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:03,248 log 9400 40108 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:03,248 basehttp 9400 40108 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:05,658 log 9400 15912 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:05,658 basehttp 9400 15912 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:09,172 log 9400 13108 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:09,172 basehttp 9400 13108 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:12,773 log 9400 41568 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:12,774 basehttp 9400 41568 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:16,547 log 9400 38820 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:16,548 basehttp 9400 38820 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:20,207 log 9400 21612 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:20,208 basehttp 9400 21612 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:23,353 log 9400 9840 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:23,353 basehttp 9400 9840 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:24,475 log 9400 33392 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:24,475 basehttp 9400 33392 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:29,773 log 9400 30564 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:29,773 basehttp 9400 30564 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:30,376 log 9400 28504 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:30,377 basehttp 9400 28504 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:49:32,738 basehttp 9400 13092 "GET /core/settings/?tab=brand HTTP/1.1" 200 87813
+INFO 2025-07-22 07:49:32,834 basehttp 9400 13092 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:49:34,161 log 9400 15688 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:34,162 basehttp 9400 15688 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:35,779 log 9400 14648 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:35,780 basehttp 9400 14648 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:49:39,424 basehttp 9400 13092 "POST /core/settings/?tab=brand HTTP/1.1" 302 0
+INFO 2025-07-22 07:49:39,496 basehttp 9400 13092 "GET /core/settings/?tab=brand HTTP/1.1" 200 88172
+INFO 2025-07-22 07:49:39,541 basehttp 9400 13092 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:49:41,231 log 9400 33632 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:41,232 basehttp 9400 33632 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:42,787 log 9400 28716 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:42,788 basehttp 9400 28716 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:49:46,240 basehttp 9400 13092 "POST /core/settings/?tab=system HTTP/1.1" 302 0
+INFO 2025-07-22 07:49:46,306 basehttp 9400 13092 "GET /core/settings/?tab=brand HTTP/1.1" 200 88164
+INFO 2025-07-22 07:49:46,363 basehttp 9400 13092 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:49:47,718 log 9400 35432 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:47,718 basehttp 9400 35432 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:48,031 log 9400 26600 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:48,031 basehttp 9400 26600 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:49:52,366 basehttp 9400 13092 "POST /core/settings/?tab=brand HTTP/1.1" 302 0
+INFO 2025-07-22 07:49:52,432 basehttp 9400 13092 "GET /core/settings/?tab=brand HTTP/1.1" 200 88173
+INFO 2025-07-22 07:49:52,473 basehttp 9400 13092 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:49:53,835 log 9400 12616 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:53,836 basehttp 9400 12616 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:55,138 log 9400 39348 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:55,138 basehttp 9400 39348 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 07:49:55,317 basehttp 9400 13092 "POST /core/settings/?tab=brand HTTP/1.1" 302 0
+INFO 2025-07-22 07:49:55,378 basehttp 9400 13092 "GET /core/settings/?tab=brand HTTP/1.1" 200 88164
+INFO 2025-07-22 07:49:55,418 basehttp 9400 13092 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 07:49:57,651 log 9400 3128 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:57,651 basehttp 9400 3128 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:49:58,451 log 9400 6068 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:49:58,451 basehttp 9400 6068 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:03,111 log 9400 7984 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:03,111 basehttp 9400 7984 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:05,451 log 9400 14640 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:05,451 basehttp 9400 14640 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:07,923 log 9400 22024 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:07,924 basehttp 9400 22024 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:08,475 log 9400 15608 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:08,475 basehttp 9400 15608 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:10,941 log 9400 26816 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:10,941 basehttp 9400 26816 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:11,496 log 9400 23884 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:11,497 basehttp 9400 23884 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:13,962 log 9400 19608 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:13,962 basehttp 9400 19608 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:14,513 log 9400 9020 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:14,514 basehttp 9400 9020 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:16,981 log 9400 37800 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:16,982 basehttp 9400 37800 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:17,552 log 9400 15656 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:17,552 basehttp 9400 15656 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:20,020 log 9400 37148 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:20,021 basehttp 9400 37148 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:20,591 log 9400 10072 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:20,591 basehttp 9400 10072 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:23,079 log 9400 20388 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:23,080 basehttp 9400 20388 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:23,655 log 9400 15308 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:23,655 basehttp 9400 15308 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:26,233 log 9400 22576 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:26,233 basehttp 9400 22576 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:26,870 log 9400 26820 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:26,870 basehttp 9400 26820 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:29,731 log 9400 37180 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:29,732 basehttp 9400 37180 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:30,950 log 9400 27468 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:30,950 basehttp 9400 27468 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:34,826 log 9400 40144 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:34,826 basehttp 9400 40144 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:35,656 log 9400 13272 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:35,657 basehttp 9400 13272 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:39,809 log 9400 31452 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:39,809 basehttp 9400 31452 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:40,485 log 9400 22824 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:40,486 basehttp 9400 22824 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:45,888 log 9400 32216 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:45,888 basehttp 9400 32216 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:47,390 log 9400 2680 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:47,390 basehttp 9400 2680 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:51,768 log 9400 9052 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:51,768 basehttp 9400 9052 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:54,852 log 9400 13232 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:54,852 basehttp 9400 13232 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:50:57,480 log 9400 20284 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:50:57,481 basehttp 9400 20284 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:51:02,092 log 9400 41568 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:51:02,092 basehttp 9400 41568 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:51:02,948 log 9400 4604 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:51:02,949 basehttp 9400 4604 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:51:06,934 log 9400 33992 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:51:06,934 basehttp 9400 33992 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:51:09,373 log 9400 23536 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:51:09,373 basehttp 9400 23536 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 07:51:12,508 log 9400 30352 Not Found: /ws/notifications/
+WARNING 2025-07-22 07:51:12,509 basehttp 9400 30352 "GET /ws/notifications/ HTTP/1.1" 404 4379

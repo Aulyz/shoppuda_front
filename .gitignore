@@ -3,3 +3,8 @@ __pycache__/
 db.sqlite3
 .claude/
 venv/
+
+# Logs
+logs/
+*.log
+django.log
