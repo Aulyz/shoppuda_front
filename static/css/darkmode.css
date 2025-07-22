@@ -1,0 +1,311 @@
+/* Dark Mode Styles for Shopuda ERP */
+
+/* Base HTML and Body */
+html.dark {
+    color-scheme: dark;
+}
+
+.dark body {
+    background-color: #111827;
+    color: #f3f4f6;
+}
+
+/* Background Colors */
+.dark .bg-white {
+    background-color: #1f2937 !important;
+}
+
+.dark .bg-gray-50 {
+    background-color: #111827 !important;
+}
+
+.dark .bg-gray-100 {
+    background-color: #374151 !important;
+}
+
+.dark .bg-gray-200 {
+    background-color: #4b5563 !important;
+}
+
+/* Text Colors */
+.dark .text-gray-900 {
+    color: #f3f4f6 !important;
+}
+
+.dark .text-gray-800 {
+    color: #e5e7eb !important;
+}
+
+.dark .text-gray-700 {
+    color: #d1d5db !important;
+}
+
+.dark .text-gray-600 {
+    color: #9ca3af !important;
+}
+
+.dark .text-gray-500 {
+    color: #6b7280 !important;
+}
+
+.dark .text-gray-400 {
+    color: #9ca3af !important;
+}
+
+.dark .text-slate-900 {
+    color: #f1f5f9 !important;
+}
+
+.dark .text-slate-700 {
+    color: #cbd5e1 !important;
+}
+
+.dark .text-slate-600 {
+    color: #94a3b8 !important;
+}
+
+.dark .text-slate-500 {
+    color: #64748b !important;
+}
+
+/* Border Colors */
+.dark .border-gray-200 {
+    border-color: #374151 !important;
+}
+
+.dark .border-gray-300 {
+    border-color: #4b5563 !important;
+}
+
+.dark .border-slate-200 {
+    border-color: #334155 !important;
+}
+
+/* Hover States */
+.dark .hover\:bg-gray-100:hover {
+    background-color: #374151 !important;
+}
+
+.dark .hover\:bg-gray-50:hover {
+    background-color: #1f2937 !important;
+}
+
+.dark .hover\:bg-slate-50:hover {
+    background-color: #1e293b !important;
+}
+
+.dark .hover\:text-gray-900:hover {
+    color: #f3f4f6 !important;
+}
+
+.dark .hover\:text-gray-700:hover {
+    color: #d1d5db !important;
+}
+
+/* Cards and Panels */
+.dark .bg-white.rounded-xl,
+.dark .bg-white.rounded-lg,
+.dark .bg-white.rounded-md {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+}
+
+.dark .bg-slate-800 {
+    background-color: #1e293b !important;
+}
+
+/* Inputs and Forms */
+.dark input,
+.dark select,
+.dark textarea {
+    background-color: #374151 !important;
+    border-color: #4b5563 !important;
+    color: #f3f4f6 !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+    color: #9ca3af !important;
+}
+
+.dark input:focus,
+.dark select:focus,
+.dark textarea:focus {
+    border-color: #3b82f6 !important;
+    outline-color: #3b82f6 !important;
+}
+
+/* Dropdown and Modals */
+.dark .search-dropdown {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+}
+
+.dark .search-result-item:hover {
+    background-color: #374151 !important;
+}
+
+/* Sidebar Specific */
+.dark .sidebar-responsive,
+.dark aside {
+    background-color: #1f2937 !important;
+}
+
+.dark .nav-item {
+    color: #d1d5db !important;
+}
+
+.dark .nav-item:hover {
+    background-color: #374151 !important;
+    color: #f3f4f6 !important;
+}
+
+.dark .nav-active {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.2) 0%, rgba(29, 78, 216, 0.2) 100%) !important;
+    color: #93c5fd !important;
+    border-right-color: #3b82f6 !important;
+}
+
+.dark .sub-nav-item {
+    color: #9ca3af !important;
+}
+
+.dark .sub-nav-item:hover {
+    background-color: #374151 !important;
+    color: #d1d5db !important;
+}
+
+.dark .sub-nav-active {
+    background-color: rgba(29, 78, 216, 0.2) !important;
+    color: #93c5fd !important;
+}
+
+/* Top Navigation */
+.dark nav,
+.dark header {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+}
+
+/* Tables */
+.dark table {
+    color: #f3f4f6 !important;
+}
+
+.dark th {
+    background-color: #374151 !important;
+    color: #f3f4f6 !important;
+    border-color: #4b5563 !important;
+}
+
+.dark td {
+    border-color: #4b5563 !important;
+}
+
+.dark tr:hover {
+    background-color: #374151 !important;
+}
+
+/* Buttons */
+.dark .btn-primary {
+    background-color: #3b82f6 !important;
+    color: white !important;
+}
+
+.dark .btn-secondary {
+    background-color: #4b5563 !important;
+    color: #f3f4f6 !important;
+}
+
+/* Badges and Tags */
+.dark .badge {
+    background-color: #374151 !important;
+    color: #f3f4f6 !important;
+}
+
+/* Loading Overlay */
+.dark .loading-overlay {
+    background-color: rgba(17, 24, 39, 0.8) !important;
+}
+
+/* Sweet Alert Dark Mode */
+.dark .swal2-popup {
+    background-color: #1f2937 !important;
+    color: #f3f4f6 !important;
+}
+
+.dark .swal2-title {
+    color: #f3f4f6 !important;
+}
+
+.dark .swal2-content {
+    color: #d1d5db !important;
+}
+
+/* Charts Dark Mode */
+.dark .chart-container {
+    background-color: #1f2937 !important;
+}
+
+/* Scrollbar Dark Mode */
+.dark ::-webkit-scrollbar-track {
+    background: #1e293b !important;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #475569 !important;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #64748b !important;
+}
+
+/* Footer */
+.dark footer {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+}
+
+/* Notification Dropdown */
+.dark .notification-dropdown {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+}
+
+/* User Menu Dropdown */
+.dark .user-menu-dropdown {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+}
+
+/* Important: Force dark mode colors */
+.dark * {
+    border-color: inherit !important;
+}
+
+/* Gradient Overlays in Dark Mode */
+.dark .bg-gradient-to-br {
+    opacity: 0.9;
+}
+
+/* Icon Colors in Dark Mode */
+.dark .fa,
+.dark .fas,
+.dark .far {
+    color: inherit;
+}
+
+/* Link Colors */
+.dark a {
+    color: #60a5fa !important;
+}
+
+.dark a:hover {
+    color: #93bbfc !important;
+}
+
+/* Disabled Elements */
+.dark :disabled {
+    background-color: #374151 !important;
+    opacity: 0.5;
+}

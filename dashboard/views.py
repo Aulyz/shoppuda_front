@@ -68,7 +68,7 @@ def dashboard_chart_data(request):
     
     try:
         days = int(period)
-        if days not in [7, 14, 30, 90]:
+        if days not in [7, 15, 30, 60, 90, 180, 360]:
             days = 7
     except (ValueError, TypeError):
         days = 7
@@ -81,21 +81,68 @@ def dashboard_chart_data(request):
         sales_data = []
         labels = []
         
-        # 날짜별로 매출 조회
-        for i in range(days):
-            date = start_date + timedelta(days=i)
-            daily_sales = Order.objects.filter(
-                order_date__date=date,
-                status__in=['PROCESSING', 'SHIPPED', 'DELIVERED']
-            ).aggregate(total=Sum('total_amount'))['total'] or 0
-            
-            sales_data.append(float(daily_sales))
-            labels.append(date.strftime('%m/%d'))
+        # 기간에 따라 그룹핑 방식 결정
+        if days <= 30:
+            # 30일 이하는 일별로 표시
+            for i in range(days):
+                date = start_date + timedelta(days=i)
+                daily_sales = Order.objects.filter(
+                    order_date__date=date,
+                    status__in=['PROCESSING', 'SHIPPED', 'DELIVERED']
+                ).aggregate(total=Sum('total_amount'))['total'] or 0
+                
+                sales_data.append(float(daily_sales))
+                labels.append(date.strftime('%m/%d'))
+        
+        elif days <= 90:
+            # 60일, 90일은 주별로 표시
+            weeks = days // 7
+            for week in range(weeks):
+                week_start = start_date + timedelta(weeks=week)
+                week_end = week_start + timedelta(days=6)
+                
+                weekly_sales = Order.objects.filter(
+                    order_date__date__range=[week_start, week_end],
+                    status__in=['PROCESSING', 'SHIPPED', 'DELIVERED']
+                ).aggregate(total=Sum('total_amount'))['total'] or 0
+                
+                sales_data.append(float(weekly_sales))
+                labels.append(f"{week_start.strftime('%m/%d')}~{week_end.strftime('%m/%d')}")
+        
+        else:
+            # 180일, 360일은 월별로 표시
+            current_date = start_date
+            while current_date <= today:
+                month_start = current_date.replace(day=1)
+                # 다음 달 첫날 계산
+                if month_start.month == 12:
+                    month_end = month_start.replace(year=month_start.year + 1, month=1, day=1) - timedelta(days=1)
+                else:
+                    month_end = month_start.replace(month=month_start.month + 1, day=1) - timedelta(days=1)
+                
+                # 실제 기간 내에서만 계산
+                actual_start = max(month_start, start_date)
+                actual_end = min(month_end, today)
+                
+                monthly_sales = Order.objects.filter(
+                    order_date__date__range=[actual_start, actual_end],
+                    status__in=['PROCESSING', 'SHIPPED', 'DELIVERED']
+                ).aggregate(total=Sum('total_amount'))['total'] or 0
+                
+                sales_data.append(float(monthly_sales))
+                labels.append(month_start.strftime('%Y-%m'))
+                
+                # 다음 달로 이동
+                if month_start.month == 12:
+                    current_date = month_start.replace(year=month_start.year + 1, month=1)
+                else:
+                    current_date = month_start.replace(month=month_start.month + 1)
         
         return JsonResponse({
             'labels': labels,
             'data': sales_data,
-            'currency': '원'
+            'currency': '원',
+            'period': days
         })
     
     elif chart_type == 'category':

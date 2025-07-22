@@ -212,9 +212,12 @@
                             class="text-sm border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         >
                             <option value="7">7일</option>
-                            <option value="14">14일</option>
+                            <option value="15">15일</option>
                             <option value="30">30일</option>
+                            <option value="60">60일</option>
                             <option value="90">90일</option>
+                            <option value="180">180일</option>
+                            <option value="360">360일</option>
                         </select>
                         <button 
                             @click="refreshCharts()"
@@ -226,8 +229,8 @@
                         </button>
                     </div>
                 </div>
-                <div class="h-80">
-                    <canvas id="salesChart" x-ref="salesChart"></canvas>
+                <div class="relative h-80">
+                    <canvas id="salesChart" x-ref="salesChart" class="w-full h-full"></canvas>
                 </div>
             </div>
         </div>
@@ -352,14 +355,36 @@ function dashboardData() {
         ],
         
         init() {
-            // DOM이 완전히 준비된 후 초기화
-            this.$nextTick(() => {
-                setTimeout(() => {
-                    this.initCharts();
-                    this.loadAllCharts();
-                    this.loadRecentOrders();
-                    this.loadStats();
-                }, 500);
+            // Chart.js가 로드될 때까지 대기
+            const checkChartJS = () => {
+                if (typeof Chart !== 'undefined') {
+                    this.$nextTick(() => {
+                        this.initCharts();
+                        this.loadAllCharts();
+                        this.loadRecentOrders();
+                        this.loadStats();
+                    });
+                } else {
+                    setTimeout(checkChartJS, 100);
+                }
+            };
+            checkChartJS();
+            
+            // 다크모드 변경 감지
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        // 다크모드가 변경되면 차트 재생성
+                        if (this.salesChart) {
+                            this.loadChartData('sales', this.currentPeriod);
+                        }
+                    }
+                });
+            });
+            
+            observer.observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: ['class']
             });
         },
         
@@ -384,12 +409,15 @@ function dashboardData() {
                     url += `&period=${period}`;
                 }
                 
+                console.log('Loading chart data from:', url);
+                
                 const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 
                 const data = await response.json();
+                console.log('Chart data received:', data);
                 
                 if (data.error) {
                     throw new Error(data.error);
@@ -398,7 +426,12 @@ function dashboardData() {
                 this.updateChart(chartType, data);
             } catch (error) {
                 console.error(`${chartType} 차트 데이터 로드 실패:`, error);
-                this.showError(`${chartType} 차트 데이터를 불러오는데 실패했습니다.`);
+                // 에러 시 빈 데이터로 차트 초기화
+                this.updateChart(chartType, {
+                    labels: ['데이터 없음'],
+                    data: [0],
+                    period: period || 7
+                });
             }
         },
         
@@ -433,11 +466,117 @@ function dashboardData() {
         },
         
         updateChart(chartType, data) {
-            if (chartType === 'sales' && this.salesChart) {
-                this.salesChart.data.labels = data.labels;
-                this.salesChart.data.datasets[0].data = data.data;
-                this.salesChart.update('active');
+            if (chartType === 'sales') {
+                try {
+                    // 데이터가 비어있는 경우 처리
+                    if (!data.labels || data.labels.length === 0) {
+                        data.labels = ['데이터 없음'];
+                        data.data = [0];
+                    }
+                    
+                    // 기존 차트 삭제 후 재생성
+                    this.destroyCharts();
+                    
+                    // 새 차트 생성을 위해 잠시 대기
+                    setTimeout(() => {
+                        this.createSalesChart(data);
+                    }, 50);
+                    
+                } catch (error) {
+                    console.error('차트 업데이트 오류:', error);
+                }
             }
+        },
+        
+        createSalesChart(data) {
+            const salesCanvas = this.$refs.salesChart;
+            if (!salesCanvas || typeof Chart === 'undefined') {
+                console.error('Canvas or Chart.js not available');
+                return;
+            }
+            
+            const salesCtx = salesCanvas.getContext('2d');
+            const isDark = document.documentElement.classList.contains('dark');
+            
+            this.salesChart = new Chart(salesCtx, {
+                type: 'line',
+                data: {
+                    labels: data.labels || [],
+                    datasets: [{
+                        label: '매출',
+                        data: data.data || [],
+                        borderColor: 'rgb(59, 130, 246)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: 'rgb(59, 130, 246)',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: data.period && data.period > 90 ? 3 : 5,
+                        pointHoverRadius: data.period && data.period > 90 ? 5 : 8,
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#fff',
+                            bodyColor: '#fff',
+                            borderColor: 'rgb(59, 130, 246)',
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            displayColors: false,
+                            padding: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    let value = context.parsed.y;
+                                    if (value >= 1000000) {
+                                        return '매출: ₩' + (value / 1000000).toFixed(1) + 'M';
+                                    } else if (value >= 1000) {
+                                        return '매출: ₩' + (value / 1000).toFixed(1) + 'K';
+                                    }
+                                    return '매출: ₩' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    if (value >= 1000000) {
+                                        return '₩' + (value / 1000000).toFixed(0) + 'M';
+                                    } else if (value >= 1000) {
+                                        return '₩' + (value / 1000).toFixed(0) + 'K';
+                                    }
+                                    return '₩' + value.toLocaleString();
+                                },
+                                color: isDark ? '#9CA3AF' : '#6B7280'
+                            },
+                            grid: {
+                                color: isDark ? 'rgba(75, 85, 99, 0.3)' : 'rgba(107, 114, 128, 0.1)'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: isDark ? '#9CA3AF' : '#6B7280',
+                                maxRotation: 45,
+                                minRotation: 0
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
         },
         
         changePeriod(period) {
@@ -446,90 +585,13 @@ function dashboardData() {
         },
         
         initCharts() {
-            this.destroyCharts();
-            
-            try {
-                const salesCanvas = this.$refs.salesChart;
-                if (salesCanvas && typeof Chart !== 'undefined') {
-                    const salesCtx = salesCanvas.getContext('2d');
-                    
-                    this.salesChart = new Chart(salesCtx, {
-                        type: 'line',
-                        data: {
-                            labels: [],
-                            datasets: [{
-                                label: '매출',
-                                data: [],
-                                borderColor: 'rgb(59, 130, 246)',
-                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                                tension: 0.4,
-                                fill: true,
-                                pointBackgroundColor: 'rgb(59, 130, 246)',
-                                pointBorderColor: '#fff',
-                                pointBorderWidth: 2,
-                                pointRadius: 5,
-                                pointHoverRadius: 8
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            animation: {
-                                duration: 800,
-                                easing: 'easeInOutQuart'
-                            },
-                            plugins: {
-                                legend: {
-                                    display: false
-                                },
-                                tooltip: {
-                                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                                    titleColor: '#fff',
-                                    bodyColor: '#fff',
-                                    borderColor: 'rgb(59, 130, 246)',
-                                    borderWidth: 1,
-                                    cornerRadius: 8,
-                                    displayColors: false,
-                                    callbacks: {
-                                        label: function(context) {
-                                            return '매출: ₩' + context.parsed.y.toLocaleString();
-                                        }
-                                    }
-                                }
-                            },
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    ticks: {
-                                        callback: function(value) {
-                                            return '₩' + value.toLocaleString();
-                                        },
-                                        color: '#6B7280'
-                                    },
-                                    grid: {
-                                        color: 'rgba(107, 114, 128, 0.1)'
-                                    }
-                                },
-                                x: {
-                                    ticks: {
-                                        color: '#6B7280'
-                                    },
-                                    grid: {
-                                        color: 'rgba(107, 114, 128, 0.1)'
-                                    }
-                                }
-                            },
-                            interaction: {
-                                intersect: false,
-                                mode: 'index'
-                            }
-                        }
-                    });
-                }
-            } catch (error) {
-                console.error('차트 초기화 오류:', error);
-                this.showError('차트 초기화에 실패했습니다.');
-            }
+            console.log('Initializing charts with empty data...');
+            // 빈 데이터로 차트 생성
+            this.createSalesChart({
+                labels: ['데이터 로딩 중...'],
+                data: [0],
+                period: 7
+            });
         },
         
         destroyCharts() {
@@ -612,6 +674,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Chart.js가 로드되었는지 확인
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, Chart.js status:', typeof Chart);
+    if (typeof Chart === 'undefined') {
+        console.error('Chart.js is not loaded!');
+    }
+});
+</script>
 {% endblock %}
 
 {% block extra_css %}

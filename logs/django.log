@@ -16118,3 +16118,1892 @@ WARNING 2025-07-22 08:35:16,503 log 25704 41596 Not Found: /ws/notifications/
 WARNING 2025-07-22 08:35:16,503 basehttp 25704 41596 "GET /ws/notifications/ HTTP/1.1" 404 4379
 WARNING 2025-07-22 08:35:18,564 log 25704 34740 Not Found: /ws/notifications/
 WARNING 2025-07-22 08:35:18,565 basehttp 25704 34740 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:35:53,238 autoreload 8948 18208 C:\Users\dnflw\Desktop\ProjectShopuda\project\inventory\signals.py changed, reloading.
+INFO 2025-07-22 08:35:53,686 autoreload 20992 6696 Watching for file changes with StatReloader
+INFO 2025-07-22 08:37:55,393 autoreload 20992 6696 C:\Users\dnflw\Desktop\ProjectShopuda\project\inventory\migrations\0001_initial.py changed, reloading.
+INFO 2025-07-22 08:37:55,894 autoreload 36364 38104 Watching for file changes with StatReloader
+INFO 2025-07-22 08:39:01,469 autoreload 23808 36868 Watching for file changes with StatReloader
+INFO 2025-07-22 08:39:04,954 basehttp 23808 13224 "GET /core/settings/?tab=brand HTTP/1.1" 200 87831
+INFO 2025-07-22 08:39:05,058 basehttp 23808 13224 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:39:05,080 log 23808 14176 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:05,080 basehttp 23808 14176 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:05,116 log 23808 18244 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:05,116 basehttp 23808 18244 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:08,107 log 23808 40296 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:08,108 basehttp 23808 40296 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:09,113 log 23808 11988 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:09,114 basehttp 23808 11988 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:12,110 log 23808 23832 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:12,110 basehttp 23808 23832 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:13,133 log 23808 3000 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:13,133 basehttp 23808 3000 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:16,131 log 23808 30896 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:16,131 basehttp 23808 30896 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:17,137 log 23808 28956 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:17,137 basehttp 23808 28956 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:20,128 log 23808 29204 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:20,128 basehttp 23808 29204 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:21,168 log 23808 31884 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:21,169 basehttp 23808 31884 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:24,163 log 23808 9828 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:24,164 basehttp 23808 9828 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:25,248 log 23808 29220 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:25,248 basehttp 23808 29220 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:28,440 log 23808 32432 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:28,440 basehttp 23808 32432 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:29,505 log 23808 10960 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:29,505 basehttp 23808 10960 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:32,811 log 23808 14084 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:32,812 basehttp 23808 14084 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:33,937 log 23808 20568 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:33,937 basehttp 23808 20568 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:40,848 log 23808 33576 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:40,849 basehttp 23808 33576 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:41,471 log 23808 9948 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:41,471 basehttp 23808 9948 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:46,212 log 23808 33624 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:46,213 basehttp 23808 33624 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:47,860 log 23808 14552 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:47,860 basehttp 23808 14552 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:52,408 log 23808 22124 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:52,408 basehttp 23808 22124 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:53,154 log 23808 26904 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:53,155 basehttp 23808 26904 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:57,663 log 23808 19024 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:57,664 basehttp 23808 19024 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:39:58,135 log 23808 6112 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:39:58,135 basehttp 23808 6112 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:03,909 log 23808 36984 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:03,909 basehttp 23808 36984 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:05,246 log 23808 23244 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:05,246 basehttp 23808 23244 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:10,634 log 23808 40476 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:10,634 basehttp 23808 40476 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:12,405 log 23808 7968 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:12,406 basehttp 23808 7968 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:16,185 log 23808 38596 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:16,185 basehttp 23808 38596 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:18,444 log 23808 16428 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:18,445 basehttp 23808 16428 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:24,864 log 23808 24984 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:24,865 basehttp 23808 24984 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:27,112 log 23808 26604 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:27,112 basehttp 23808 26604 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:29,879 log 23808 18616 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:29,879 basehttp 23808 18616 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:33,420 log 23808 15900 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:33,420 basehttp 23808 15900 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:37,674 log 23808 3660 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:37,674 basehttp 23808 3660 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:38,854 log 23808 20960 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:38,855 basehttp 23808 20960 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:42,448 log 23808 35020 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:42,448 basehttp 23808 35020 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:46,426 log 23808 28532 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:46,426 basehttp 23808 28532 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:49,194 log 23808 25660 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:49,195 basehttp 23808 25660 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:40:51,462 autoreload 36364 38104 C:\Users\dnflw\Desktop\ProjectShopuda\project\notifications\views.py changed, reloading.
+INFO 2025-07-22 08:40:51,896 autoreload 16040 5716 Watching for file changes with StatReloader
+INFO 2025-07-22 08:40:51,983 autoreload 23808 36868 C:\Users\dnflw\Desktop\ProjectShopuda\project\notifications\views.py changed, reloading.
+INFO 2025-07-22 08:40:52,438 autoreload 28824 24924 Watching for file changes with StatReloader
+WARNING 2025-07-22 08:40:53,873 log 28824 24008 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:53,874 basehttp 28824 24008 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:40:55,191 log 28824 34620 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:40:55,192 basehttp 28824 34620 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:00,849 log 28824 34140 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:00,850 basehttp 28824 34140 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:02,478 log 28824 36344 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:02,479 basehttp 28824 36344 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:41:05,887 autoreload 16040 5716 C:\Users\dnflw\Desktop\ProjectShopuda\project\notifications\urls.py changed, reloading.
+INFO 2025-07-22 08:41:06,305 autoreload 37120 29052 Watching for file changes with StatReloader
+INFO 2025-07-22 08:41:06,420 autoreload 28824 24924 C:\Users\dnflw\Desktop\ProjectShopuda\project\notifications\urls.py changed, reloading.
+INFO 2025-07-22 08:41:06,838 autoreload 1868 27416 Watching for file changes with StatReloader
+WARNING 2025-07-22 08:41:07,923 log 1868 30888 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:07,924 basehttp 1868 30888 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:09,936 log 1868 31180 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:09,936 basehttp 1868 31180 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:15,309 log 1868 23624 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:15,310 basehttp 1868 23624 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:18,124 log 1868 14796 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:18,125 basehttp 1868 14796 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:21,673 log 1868 35812 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:21,673 basehttp 1868 35812 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:26,606 log 1868 15032 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:26,606 basehttp 1868 15032 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:27,443 log 1868 5016 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:27,443 basehttp 1868 5016 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:31,135 log 1868 23244 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:31,136 basehttp 1868 23244 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:33,775 log 1868 33992 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:33,775 basehttp 1868 33992 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:37,162 log 1868 27512 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:37,163 basehttp 1868 27512 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:38,987 log 1868 2400 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:38,987 basehttp 1868 2400 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:43,876 log 1868 17824 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:43,876 basehttp 1868 17824 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:44,002 log 1868 33544 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:44,003 basehttp 1868 33544 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:48,369 log 1868 15444 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:48,370 basehttp 1868 15444 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:48,967 log 1868 38768 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:48,968 basehttp 1868 38768 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:55,772 log 1868 34460 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:55,773 basehttp 1868 34460 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:41:57,018 log 1868 36184 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:41:57,019 basehttp 1868 36184 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:02,873 log 1868 34980 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:02,874 basehttp 1868 34980 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:03,608 log 1868 9376 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:03,608 basehttp 1868 9376 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:09,046 log 1868 14304 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:09,047 basehttp 1868 14304 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:09,201 log 1868 6500 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:09,201 basehttp 1868 6500 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:13,189 log 1868 27220 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:13,189 basehttp 1868 27220 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:15,565 log 1868 16300 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:15,565 basehttp 1868 16300 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:18,757 log 1868 19784 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:18,757 basehttp 1868 19784 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:21,070 log 1868 30732 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:21,071 basehttp 1868 30732 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:24,235 log 1868 7024 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:24,236 basehttp 1868 7024 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:27,200 log 1868 24640 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:27,200 basehttp 1868 24640 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:29,214 log 1868 37416 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:29,215 basehttp 1868 37416 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:34,549 log 1868 39212 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:34,550 basehttp 1868 39212 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:37,559 log 1868 12220 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:37,559 basehttp 1868 12220 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:40,776 log 1868 8956 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:40,777 basehttp 1868 8956 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:44,696 log 1868 10120 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:44,697 basehttp 1868 10120 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:48,403 log 1868 41416 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:48,403 basehttp 1868 41416 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:51,008 log 1868 31216 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:51,009 basehttp 1868 31216 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:54,781 log 1868 40564 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:54,781 basehttp 1868 40564 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:42:55,836 log 1868 7132 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:42:55,836 basehttp 1868 7132 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:00,133 log 1868 35984 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:00,133 basehttp 1868 35984 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:02,877 log 1868 33568 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:02,877 basehttp 1868 33568 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:06,563 log 1868 18112 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:06,564 basehttp 1868 18112 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:10,169 log 1868 38752 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:10,170 basehttp 1868 38752 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:12,678 log 1868 6720 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:12,679 basehttp 1868 6720 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:15,278 log 1868 25360 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:15,279 basehttp 1868 25360 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:17,562 log 1868 38184 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:17,563 basehttp 1868 38184 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:20,723 log 1868 21796 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:20,723 basehttp 1868 21796 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:23,584 log 1868 34452 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:23,584 basehttp 1868 34452 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:26,798 log 1868 15740 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:26,798 basehttp 1868 15740 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:30,984 log 1868 6996 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:30,984 basehttp 1868 6996 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:31,593 log 1868 30324 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:31,593 basehttp 1868 30324 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:37,354 log 1868 40744 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:37,354 basehttp 1868 40744 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:37,650 log 1868 10852 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:37,650 basehttp 1868 10852 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:42,716 log 1868 14132 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:42,716 basehttp 1868 14132 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:44,818 log 1868 34364 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:44,818 basehttp 1868 34364 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:47,842 log 1868 24444 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:47,842 basehttp 1868 24444 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:49,175 log 1868 16904 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:49,175 basehttp 1868 16904 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:52,371 log 1868 39028 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:52,371 basehttp 1868 39028 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:54,788 log 1868 37840 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:54,789 basehttp 1868 37840 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:43:58,778 log 1868 27048 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:43:58,779 basehttp 1868 27048 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:00,474 log 1868 9480 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:00,475 basehttp 1868 9480 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:06,057 log 1868 32136 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:06,058 basehttp 1868 32136 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:07,105 log 1868 34856 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:07,105 basehttp 1868 34856 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:11,466 log 1868 12280 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:11,466 basehttp 1868 12280 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:13,109 log 1868 31364 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:13,110 basehttp 1868 31364 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:16,396 log 1868 24008 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:16,396 basehttp 1868 24008 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:20,519 log 1868 21992 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:20,519 basehttp 1868 21992 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:21,302 log 1868 19024 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:21,302 basehttp 1868 19024 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:25,949 log 1868 34088 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:25,949 basehttp 1868 34088 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:28,454 log 1868 25248 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:28,454 basehttp 1868 25248 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:30,235 log 1868 39996 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:30,235 basehttp 1868 39996 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:33,950 log 1868 17940 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:33,950 basehttp 1868 17940 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:38,863 log 1868 4412 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:38,863 basehttp 1868 4412 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:40,146 log 1868 4440 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:40,147 basehttp 1868 4440 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:45,250 log 1868 18032 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:45,250 basehttp 1868 18032 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:48,278 log 1868 18456 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:48,279 basehttp 1868 18456 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:53,456 log 1868 18116 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:53,456 basehttp 1868 18116 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:56,823 log 1868 5740 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:56,823 basehttp 1868 5740 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:44:59,171 log 1868 2860 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:44:59,172 basehttp 1868 2860 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:02,458 log 1868 3040 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:02,458 basehttp 1868 3040 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:05,411 log 1868 36244 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:05,411 basehttp 1868 36244 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:07,463 log 1868 27696 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:07,464 basehttp 1868 27696 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:10,672 log 1868 41116 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:10,672 basehttp 1868 41116 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:14,285 log 1868 25380 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:14,286 basehttp 1868 25380 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:16,030 log 1868 29916 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:16,031 basehttp 1868 29916 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:21,337 log 1868 21332 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:21,337 basehttp 1868 21332 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:23,054 log 1868 37404 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:23,055 basehttp 1868 37404 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:28,362 log 1868 9248 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:28,362 basehttp 1868 9248 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:29,852 log 1868 5000 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:29,852 basehttp 1868 5000 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:34,314 log 1868 22856 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:34,314 basehttp 1868 22856 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:37,613 log 1868 9840 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:37,614 basehttp 1868 9840 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:39,762 log 1868 13296 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:39,762 basehttp 1868 13296 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:44,397 log 1868 32216 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:44,397 basehttp 1868 32216 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:45,746 log 1868 21044 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:45,746 basehttp 1868 21044 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:50,735 log 1868 7884 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:50,735 basehttp 1868 7884 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:53,310 log 1868 11720 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:53,311 basehttp 1868 11720 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:45:57,737 log 1868 12520 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:45:57,738 basehttp 1868 12520 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:00,304 log 1868 34620 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:00,305 basehttp 1868 34620 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:05,283 log 1868 39232 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:05,283 basehttp 1868 39232 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:07,141 log 1868 39532 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:07,142 basehttp 1868 39532 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:11,270 log 1868 14016 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:11,270 basehttp 1868 14016 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:14,474 log 1868 40564 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:14,474 basehttp 1868 40564 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:18,888 log 1868 7016 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:18,889 basehttp 1868 7016 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:19,855 log 1868 23952 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:19,856 basehttp 1868 23952 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:25,560 log 1868 14412 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:25,560 basehttp 1868 14412 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:27,644 log 1868 22504 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:27,644 basehttp 1868 22504 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:31,287 log 1868 40628 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:31,288 basehttp 1868 40628 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:35,753 log 1868 7132 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:35,754 basehttp 1868 7132 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:38,047 log 1868 12212 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:38,047 basehttp 1868 12212 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:41,632 log 1868 432 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:41,632 basehttp 1868 432 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:45,914 log 1868 34888 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:45,915 basehttp 1868 34888 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:50,116 log 1868 19428 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:50,117 basehttp 1868 19428 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:50,476 log 1868 28524 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:50,476 basehttp 1868 28524 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:56,117 log 1868 31040 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:56,117 basehttp 1868 31040 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:46:58,193 log 1868 22764 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:46:58,193 basehttp 1868 22764 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:01,833 log 1868 15344 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:01,833 basehttp 1868 15344 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:04,502 log 1868 36808 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:04,503 basehttp 1868 36808 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:06,521 log 1868 4964 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:06,521 basehttp 1868 4964 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:10,649 log 1868 16092 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:10,649 basehttp 1868 16092 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:11,635 log 1868 7212 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:11,635 basehttp 1868 7212 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:15,173 log 1868 39008 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:15,174 basehttp 1868 39008 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:18,193 log 1868 17788 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:18,194 basehttp 1868 17788 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:22,240 log 1868 7020 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:22,241 basehttp 1868 7020 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:24,845 log 1868 15760 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:24,846 basehttp 1868 15760 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:30,077 log 1868 11352 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:30,077 basehttp 1868 11352 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:32,570 log 1868 7252 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:32,570 basehttp 1868 7252 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:36,958 log 1868 40200 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:36,959 basehttp 1868 40200 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:38,534 log 1868 29976 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:38,534 basehttp 1868 29976 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:43,176 log 1868 31696 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:43,176 basehttp 1868 31696 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:46,415 log 1868 13444 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:46,416 basehttp 1868 13444 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:48,277 log 1868 33384 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:48,277 basehttp 1868 33384 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:51,040 log 1868 7464 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:51,041 basehttp 1868 7464 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:53,867 log 1868 22700 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:53,867 basehttp 1868 22700 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:58,388 log 1868 36608 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:58,388 basehttp 1868 36608 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:47:58,484 log 1868 3988 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:47:58,484 basehttp 1868 3988 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:02,603 log 1868 16228 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:02,603 basehttp 1868 16228 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:04,530 log 1868 35760 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:04,530 basehttp 1868 35760 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:08,955 log 1868 39212 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:08,955 basehttp 1868 39212 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:10,233 log 1868 4568 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:10,234 basehttp 1868 4568 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:15,148 log 1868 9768 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:15,148 basehttp 1868 9768 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:15,397 log 1868 20740 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:15,398 basehttp 1868 20740 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:20,345 log 1868 17996 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:20,345 basehttp 1868 17996 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:20,674 log 1868 39420 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:20,675 basehttp 1868 39420 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:27,890 log 1868 2680 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:27,890 basehttp 1868 2680 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:28,564 log 1868 22048 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:28,564 basehttp 1868 22048 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:33,196 log 1868 17420 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:33,197 basehttp 1868 17420 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:34,560 log 1868 33060 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:34,560 basehttp 1868 33060 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:48:39,820 basehttp 1868 26200 "GET /core/settings/?tab=brand HTTP/1.1" 302 0
+INFO 2025-07-22 08:48:39,867 basehttp 1868 26200 "GET /accounts/login/?next=/core/settings/%3Ftab%3Dbrand HTTP/1.1" 200 7440
+INFO 2025-07-22 08:48:40,656 basehttp 1868 26200 "GET /accounts/login/?next=/core/settings/%3Ftab%3Dbrand HTTP/1.1" 200 7440
+INFO 2025-07-22 08:48:40,985 basehttp 1868 26200 "GET /accounts/login/?next=/core/settings/%3Ftab%3Dbrand HTTP/1.1" 200 7440
+INFO 2025-07-22 08:48:41,320 basehttp 1868 26200 "GET /accounts/login/?next=/core/settings/%3Ftab%3Dbrand HTTP/1.1" 200 7440
+INFO 2025-07-22 08:48:41,521 basehttp 1868 26200 "GET /accounts/login/?next=/core/settings/%3Ftab%3Dbrand HTTP/1.1" 200 7440
+INFO 2025-07-22 08:48:41,825 basehttp 1868 26200 "GET /accounts/login/?next=/core/settings/%3Ftab%3Dbrand HTTP/1.1" 200 7440
+INFO 2025-07-22 08:48:46,389 basehttp 1868 26200 "POST /accounts/login/?next=/core/settings/?tab=brand HTTP/1.1" 302 0
+INFO 2025-07-22 08:48:46,464 basehttp 1868 26200 "GET /core/settings/?tab=brand HTTP/1.1" 200 88281
+INFO 2025-07-22 08:48:46,496 basehttp 1868 26200 "GET /static/css/responsive.css HTTP/1.1" 200 10846
+INFO 2025-07-22 08:48:46,574 basehttp 1868 26200 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:48:49,042 log 1868 34928 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:49,043 basehttp 1868 34928 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:48:49,214 basehttp 1868 26200 "GET /dashboard/ HTTP/1.1" 200 83631
+INFO 2025-07-22 08:48:49,229 basehttp 1868 26200 "GET /static/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-07-22 08:48:49,316 basehttp 1868 26200 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:48:49,844 basehttp 1868 3212 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:48:49,865 basehttp 1868 14708 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:48:49,879 basehttp 1868 26200 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+WARNING 2025-07-22 08:48:50,791 log 1868 38972 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:50,791 basehttp 1868 38972 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:51,418 log 1868 39676 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:51,419 basehttp 1868 39676 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:51,541 log 1868 20772 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:51,542 basehttp 1868 20772 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:57,090 log 1868 9948 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:57,091 basehttp 1868 9948 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:48:58,399 log 1868 21176 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:48:58,399 basehttp 1868 21176 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:48:58,493 basehttp 1868 26200 "GET /dashboard/ HTTP/1.1" 200 83631
+INFO 2025-07-22 08:48:58,503 basehttp 1868 26200 "GET /static/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-07-22 08:48:58,569 basehttp 1868 26200 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:48:59,099 basehttp 1868 14708 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:48:59,118 basehttp 1868 26200 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 08:48:59,135 basehttp 1868 3212 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:48:59,476 basehttp 1868 3212 "GET /dashboard/ HTTP/1.1" 200 83631
+INFO 2025-07-22 08:48:59,521 basehttp 1868 3212 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:49:00,050 basehttp 1868 26200 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:49:00,067 basehttp 1868 3212 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 08:49:00,085 basehttp 1868 14708 "GET /dashboard/stats/ HTTP/1.1" 200 370
+WARNING 2025-07-22 08:49:01,539 log 1868 7008 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:01,540 basehttp 1868 7008 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:03,135 log 1868 23724 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:03,136 basehttp 1868 23724 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:08,705 log 1868 22928 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:08,705 basehttp 1868 22928 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:09,998 log 1868 31900 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:09,998 basehttp 1868 31900 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:13,600 log 1868 28484 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:13,601 basehttp 1868 28484 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:16,176 log 1868 28760 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:16,176 basehttp 1868 28760 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:19,059 log 1868 21448 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:19,059 basehttp 1868 21448 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:21,422 log 1868 16720 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:21,422 basehttp 1868 16720 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:25,487 log 1868 23020 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:25,487 basehttp 1868 23020 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:26,313 log 1868 19444 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:26,314 basehttp 1868 19444 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:33,284 log 1868 17240 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:33,285 basehttp 1868 17240 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:33,596 log 1868 26176 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:33,596 basehttp 1868 26176 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:39,677 log 1868 9024 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:39,677 basehttp 1868 9024 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:41,538 log 1868 20096 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:41,539 basehttp 1868 20096 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:46,966 log 1868 18996 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:46,967 basehttp 1868 18996 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:47,406 log 1868 29216 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:47,406 basehttp 1868 29216 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:53,306 log 1868 26160 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:53,307 basehttp 1868 26160 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:49:54,245 log 1868 14168 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:49:54,245 basehttp 1868 14168 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:00,240 log 1868 16848 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:00,240 basehttp 1868 16848 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:02,109 log 1868 29892 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:02,110 basehttp 1868 29892 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:06,600 log 1868 10496 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:06,600 basehttp 1868 10496 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:08,140 log 1868 27324 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:08,140 basehttp 1868 27324 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:11,205 log 1868 28824 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:11,205 basehttp 1868 28824 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:16,824 log 1868 37524 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:16,825 basehttp 1868 37524 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:18,082 log 1868 31544 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:18,082 basehttp 1868 31544 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:21,268 log 1868 14244 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:21,268 basehttp 1868 14244 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:24,326 log 1868 24444 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:24,326 basehttp 1868 24444 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:29,064 log 1868 31188 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:29,065 basehttp 1868 31188 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:29,771 log 1868 23300 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:29,771 basehttp 1868 23300 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:34,839 log 1868 3040 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:34,839 basehttp 1868 3040 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:34,949 log 1868 11168 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:34,949 basehttp 1868 11168 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:50:35,955 basehttp 1868 14708 "GET /dashboard/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:50:36,001 basehttp 1868 14708 "GET /accounts/login/?next=/dashboard/ HTTP/1.1" 200 7412
+INFO 2025-07-22 08:50:41,130 basehttp 1868 14708 "POST /accounts/login/?next=/dashboard/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:50:41,201 basehttp 1868 14708 "GET /dashboard/ HTTP/1.1" 200 84082
+INFO 2025-07-22 08:50:41,218 basehttp 1868 14708 "GET /static/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-07-22 08:50:41,314 basehttp 1868 14708 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:50:41,329 log 1868 13756 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:41,330 basehttp 1868 13756 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:41,365 log 1868 31212 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:41,365 basehttp 1868 31212 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:50:41,840 basehttp 1868 3212 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:50:41,873 basehttp 1868 14708 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 08:50:41,890 basehttp 1868 26200 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:50:42,672 basehttp 1868 26200 "GET /dashboard/ HTTP/1.1" 200 84082
+WARNING 2025-07-22 08:50:42,725 log 1868 15588 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:42,725 basehttp 1868 15588 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:50:42,736 basehttp 1868 26200 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:50:42,758 log 1868 39008 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:42,758 basehttp 1868 39008 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:50:43,255 basehttp 1868 14708 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:50:43,276 basehttp 1868 3212 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:50:43,285 basehttp 1868 26200 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+WARNING 2025-07-22 08:50:45,743 log 1868 22024 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:45,743 basehttp 1868 22024 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:45,794 log 1868 18084 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:45,794 basehttp 1868 18084 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:48,779 log 1868 35352 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:48,779 basehttp 1868 35352 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:48,841 log 1868 20236 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:48,842 basehttp 1868 20236 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:52,131 log 1868 17812 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:52,131 basehttp 1868 17812 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:52,163 log 1868 33204 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:52,164 basehttp 1868 33204 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:50:53,824 basehttp 1868 26200 "GET /dashboard/ HTTP/1.1" 200 84082
+INFO 2025-07-22 08:50:53,873 basehttp 1868 26200 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:50:53,933 log 1868 5964 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:53,934 basehttp 1868 5964 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:50:54,024 log 1868 4532 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:54,024 basehttp 1868 4532 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:50:54,318 basehttp 1868 26200 "GET /dashboard/ HTTP/1.1" 200 84082
+INFO 2025-07-22 08:50:54,359 basehttp 1868 26200 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:50:54,450 log 1868 3368 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:54,451 basehttp 1868 3368 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:50:54,641 basehttp 1868 26200 "GET /dashboard/ HTTP/1.1" 200 84082
+INFO 2025-07-22 08:50:54,692 basehttp 1868 26200 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:50:54,829 basehttp 1868 26200 "GET /dashboard/ HTTP/1.1" 200 84082
+INFO 2025-07-22 08:50:54,839 basehttp 1868 26200 "GET /static/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-07-22 08:50:54,970 basehttp 1868 26200 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:50:55,001 basehttp 1868 3212 "GET /dashboard/ HTTP/1.1" 200 84082
+INFO 2025-07-22 08:50:55,044 basehttp 1868 3212 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:50:55,566 basehttp 1868 3212 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 08:50:55,600 basehttp 1868 14708 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:50:55,615 basehttp 1868 16232 "GET /dashboard/stats/ HTTP/1.1" 200 370
+WARNING 2025-07-22 08:50:59,979 log 1868 14788 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:50:59,979 basehttp 1868 14788 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:00,042 log 1868 22168 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:00,043 basehttp 1868 22168 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:51:04,290 basehttp 1868 16232 "GET /dashboard/ HTTP/1.1" 200 84303
+INFO 2025-07-22 08:51:04,301 basehttp 1868 16232 "GET /static/js/responsive-nav.js HTTP/1.1" 200 11710
+INFO 2025-07-22 08:51:04,341 basehttp 1868 16232 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:51:04,739 basehttp 1868 16232 "GET /dashboard/ HTTP/1.1" 200 84303
+INFO 2025-07-22 08:51:04,789 basehttp 1868 16232 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:51:04,879 basehttp 1868 16232 "GET /dashboard/ HTTP/1.1" 200 84303
+INFO 2025-07-22 08:51:04,920 basehttp 1868 16232 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:51:04,997 basehttp 1868 16232 "GET /dashboard/ HTTP/1.1" 200 84303
+INFO 2025-07-22 08:51:05,042 basehttp 1868 16232 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:51:05,150 basehttp 1868 16232 "GET /dashboard/ HTTP/1.1" 200 84303
+INFO 2025-07-22 08:51:05,194 basehttp 1868 16232 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:51:05,296 basehttp 1868 16232 "GET /dashboard/ HTTP/1.1" 200 84303
+INFO 2025-07-22 08:51:05,304 basehttp 1868 16232 "GET /static/js/responsive-nav.js HTTP/1.1" 304 0
+INFO 2025-07-22 08:51:05,341 basehttp 1868 14708 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:51:05,860 basehttp 1868 16232 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:51:05,892 basehttp 1868 14708 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 08:51:05,910 basehttp 1868 3212 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:51:06,259 basehttp 1868 3212 "GET /dashboard/ HTTP/1.1" 200 84303
+INFO 2025-07-22 08:51:06,298 basehttp 1868 3212 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:51:06,829 basehttp 1868 14708 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:51:06,850 basehttp 1868 3212 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 08:51:06,861 basehttp 1868 16232 "GET /dashboard/stats/ HTTP/1.1" 200 370
+WARNING 2025-07-22 08:51:07,848 log 1868 38028 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:07,848 basehttp 1868 38028 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:08,096 log 1868 13824 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:08,097 basehttp 1868 13824 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:15,027 log 1868 37500 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:15,027 basehttp 1868 37500 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:15,263 log 1868 21196 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:15,263 basehttp 1868 21196 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:19,682 log 1868 41076 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:19,683 basehttp 1868 41076 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:23,644 log 1868 20664 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:23,645 basehttp 1868 20664 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:24,210 log 1868 8648 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:24,210 basehttp 1868 8648 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:51:26,866 basehttp 1868 3212 "GET /dashboard/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:51:26,919 basehttp 1868 3212 "GET /accounts/login/?next=/dashboard/ HTTP/1.1" 200 7633
+INFO 2025-07-22 08:51:30,637 basehttp 1868 3212 "POST /accounts/login/?next=/dashboard/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:51:30,707 basehttp 1868 3212 "GET /dashboard/ HTTP/1.1" 200 84303
+INFO 2025-07-22 08:51:30,723 basehttp 1868 3212 "GET /static/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-07-22 08:51:30,723 basehttp 1868 16232 "GET /static/js/responsive-nav.js HTTP/1.1" 304 0
+INFO 2025-07-22 08:51:30,810 basehttp 1868 16232 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:51:31,337 basehttp 1868 3212 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:51:31,357 basehttp 1868 14708 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:51:31,370 basehttp 1868 16232 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+WARNING 2025-07-22 08:51:34,074 log 1868 6112 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:34,075 basehttp 1868 6112 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:35,537 log 1868 36232 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:35,537 basehttp 1868 36232 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:41,740 log 1868 18332 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:41,741 basehttp 1868 18332 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:41,942 log 1868 29788 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:41,942 basehttp 1868 29788 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:49,294 log 1868 11992 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:49,295 basehttp 1868 11992 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:49,409 log 1868 18372 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:49,409 basehttp 1868 18372 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:54,474 log 1868 8380 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:54,475 basehttp 1868 8380 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:55,240 log 1868 432 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:55,240 basehttp 1868 432 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:51:59,352 log 1868 38152 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:51:59,352 basehttp 1868 38152 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:52:01,425 log 1868 25416 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:01,426 basehttp 1868 25416 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:52:04,923 basehttp 1868 16232 "GET /products/create/ HTTP/1.1" 200 118864
+INFO 2025-07-22 08:52:04,939 basehttp 1868 16232 "GET /static/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-07-22 08:52:04,983 basehttp 1868 16232 "GET /static/js/responsive-nav.js HTTP/1.1" 304 0
+INFO 2025-07-22 08:52:05,034 basehttp 1868 14708 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:52:05,541 basehttp 1868 14708 "GET /products/ HTTP/1.1" 200 73291
+INFO 2025-07-22 08:52:05,592 basehttp 1868 14708 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:52:06,607 basehttp 1868 14708 "GET /dashboard/ HTTP/1.1" 200 84303
+INFO 2025-07-22 08:52:06,659 basehttp 1868 14708 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:52:07,180 basehttp 1868 16232 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:52:07,201 basehttp 1868 3212 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:52:07,215 basehttp 1868 14708 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+WARNING 2025-07-22 08:52:09,049 log 1868 10324 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:09,049 basehttp 1868 10324 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:52:09,581 log 1868 20516 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:09,581 basehttp 1868 20516 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:52:14,766 log 1868 22972 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:14,766 basehttp 1868 22972 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:52:17,809 log 1868 20676 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:17,810 basehttp 1868 20676 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:52:19,763 log 1868 31216 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:19,764 basehttp 1868 31216 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:52:24,888 log 1868 41224 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:24,888 basehttp 1868 41224 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:52:24,919 log 1868 16516 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:24,919 basehttp 1868 16516 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:52:30,010 log 1868 3572 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:30,011 basehttp 1868 3572 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:52:32,542 log 1868 41072 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:32,542 basehttp 1868 41072 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:52:37,937 log 1868 26784 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:37,937 basehttp 1868 26784 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:52:39,223 log 1868 8508 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:39,223 basehttp 1868 8508 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:52:42,161 autoreload 37120 29052 C:\Users\dnflw\Desktop\ProjectShopuda\project\notifications\urls.py changed, reloading.
+INFO 2025-07-22 08:52:42,164 autoreload 1868 27416 C:\Users\dnflw\Desktop\ProjectShopuda\project\notifications\urls.py changed, reloading.
+INFO 2025-07-22 08:52:42,684 autoreload 28660 13092 Watching for file changes with StatReloader
+WARNING 2025-07-22 08:52:43,767 log 28660 21380 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:43,768 basehttp 28660 21380 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:52:45,955 log 28660 26652 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:45,955 basehttp 28660 26652 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:52:49,439 autoreload 28660 13092 C:\Users\dnflw\Desktop\ProjectShopuda\project\notifications\views.py changed, reloading.
+INFO 2025-07-22 08:52:49,886 autoreload 34740 24612 Watching for file changes with StatReloader
+WARNING 2025-07-22 08:52:50,850 log 34740 25292 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:50,850 basehttp 34740 25292 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:52:50,876 log 34740 16568 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:50,876 basehttp 34740 16568 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:52:51,516 basehttp 34740 17756 "GET /dashboard/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:52:51,568 basehttp 34740 17756 "GET /accounts/login/?next=/dashboard/ HTTP/1.1" 200 7633
+INFO 2025-07-22 08:52:55,463 basehttp 34740 17756 "POST /accounts/login/?next=/dashboard/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:52:55,544 basehttp 34740 17756 "GET /dashboard/ HTTP/1.1" 200 83526
+INFO 2025-07-22 08:52:55,603 basehttp 34740 17756 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:52:56,145 basehttp 34740 25660 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:52:56,164 basehttp 34740 17756 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 142
+INFO 2025-07-22 08:52:56,184 basehttp 34740 14788 "GET /dashboard/stats/ HTTP/1.1" 200 370
+WARNING 2025-07-22 08:52:59,186 log 34740 21204 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:59,186 basehttp 34740 21204 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:52:59,435 log 34740 11440 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:52:59,436 basehttp 34740 11440 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:05,051 log 34740 40628 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:05,051 basehttp 34740 40628 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:07,112 log 34740 632 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:07,113 basehttp 34740 632 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:13,085 log 34740 8724 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:13,086 basehttp 34740 8724 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:15,764 log 34740 20052 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:15,764 basehttp 34740 20052 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:18,554 log 34740 8828 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:18,554 basehttp 34740 8828 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:20,785 log 34740 37528 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:20,785 basehttp 34740 37528 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:23,734 log 34740 5644 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:23,735 basehttp 34740 5644 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:25,432 log 34740 36244 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:25,432 basehttp 34740 36244 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:31,318 log 34740 32480 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:31,318 basehttp 34740 32480 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:32,774 log 34740 26296 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:32,774 basehttp 34740 26296 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:37,837 log 34740 17964 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:37,838 basehttp 34740 17964 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:39,416 log 34740 12476 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:39,417 basehttp 34740 12476 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:42,179 log 34740 27028 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:42,179 basehttp 34740 27028 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:45,027 log 34740 38708 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:45,027 basehttp 34740 38708 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:47,267 log 34740 21748 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:47,267 basehttp 34740 21748 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:50,763 log 34740 12656 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:50,764 basehttp 34740 12656 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:53,550 log 34740 37268 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:53,550 basehttp 34740 37268 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:53:57,382 log 34740 17348 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:53:57,382 basehttp 34740 17348 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:00,061 log 34740 17032 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:00,062 basehttp 34740 17032 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:02,076 log 34740 3212 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:02,077 basehttp 34740 3212 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:05,523 log 34740 18944 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:05,523 basehttp 34740 18944 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:09,633 log 34740 18064 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:09,633 basehttp 34740 18064 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:11,397 log 34740 39468 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:11,398 basehttp 34740 39468 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:14,303 log 34740 36964 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:14,303 basehttp 34740 36964 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:19,433 log 34740 36340 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:19,433 basehttp 34740 36340 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:22,845 log 34740 40556 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:22,846 basehttp 34740 40556 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:27,817 log 34740 21316 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:27,817 basehttp 34740 21316 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:29,314 log 34740 13928 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:29,314 basehttp 34740 13928 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:32,313 log 34740 14404 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:32,313 basehttp 34740 14404 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:35,182 log 34740 37564 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:35,183 basehttp 34740 37564 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:38,312 log 34740 11668 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:38,312 basehttp 34740 11668 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:42,831 log 34740 8436 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:42,831 basehttp 34740 8436 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:44,042 log 34740 2160 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:44,042 basehttp 34740 2160 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:50,422 log 34740 29980 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:50,422 basehttp 34740 29980 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:51,422 log 34740 1380 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:51,422 basehttp 34740 1380 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:56,635 log 34740 5960 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:56,635 basehttp 34740 5960 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:54:58,238 log 34740 41676 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:54:58,239 basehttp 34740 41676 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:55:03,793 log 34740 9024 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:03,793 basehttp 34740 9024 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:55:04,842 log 34740 28872 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:04,842 basehttp 34740 28872 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:55:10,721 log 34740 10132 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:10,721 basehttp 34740 10132 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:55:11,176 log 34740 32496 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:11,176 basehttp 34740 32496 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:55:17,057 log 34740 36984 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:17,057 basehttp 34740 36984 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:55:18,236 basehttp 34740 30092 "GET /products/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:55:18,289 basehttp 34740 30092 "GET /accounts/login/?next=/products/ HTTP/1.1" 200 7631
+WARNING 2025-07-22 08:55:19,288 log 34740 28356 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:19,288 basehttp 34740 28356 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:55:23,583 basehttp 34740 30092 "POST /accounts/login/?next=/products/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:55:23,652 basehttp 34740 30092 "GET /products/ HTTP/1.1" 200 72965
+INFO 2025-07-22 08:55:23,742 basehttp 34740 30092 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:55:24,639 basehttp 34740 30092 "GET /products/categories/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:55:24,698 basehttp 34740 30092 "GET /accounts/login/?next=/products/categories/ HTTP/1.1" 200 7653
+INFO 2025-07-22 08:55:29,244 basehttp 34740 30092 "POST /accounts/login/?next=/products/categories/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:55:29,300 basehttp 34740 30092 "GET /products/categories/ HTTP/1.1" 200 113006
+INFO 2025-07-22 08:55:29,354 basehttp 34740 30092 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:55:30,685 log 34740 37244 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:30,685 basehttp 34740 37244 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:55:30,844 basehttp 34740 30092 "GET /products/create/ HTTP/1.1" 200 118538
+INFO 2025-07-22 08:55:30,895 basehttp 34740 30092 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:55:31,438 basehttp 34740 30092 "GET /products/ HTTP/1.1" 200 72965
+INFO 2025-07-22 08:55:31,486 basehttp 34740 30092 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:55:31,873 log 34740 24444 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:31,873 basehttp 34740 24444 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:55:32,376 basehttp 34740 30092 "GET /inventory/ HTTP/1.1" 200 75987
+INFO 2025-07-22 08:55:32,426 basehttp 34740 30092 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:55:33,350 basehttp 34740 30092 "GET /inventory/movements/ HTTP/1.1" 200 100538
+INFO 2025-07-22 08:55:33,401 basehttp 34740 30092 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:55:34,466 log 34740 35812 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:34,467 basehttp 34740 35812 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:55:34,664 basehttp 34740 30092 "GET /platforms/ HTTP/1.1" 200 76474
+INFO 2025-07-22 08:55:34,712 basehttp 34740 30092 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:55:35,148 basehttp 34740 30092 "GET /platforms/ HTTP/1.1" 200 76474
+INFO 2025-07-22 08:55:35,192 basehttp 34740 30092 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:55:35,604 basehttp 34740 30092 "GET /platforms/settings/ HTTP/1.1" 200 91783
+INFO 2025-07-22 08:55:35,653 basehttp 34740 30092 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:55:36,085 basehttp 34740 30092 "GET /platforms/sync/ HTTP/1.1" 200 89344
+INFO 2025-07-22 08:55:36,143 basehttp 34740 30092 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:55:36,163 log 34740 36808 Not Found: /api/platforms/sync-status/
+WARNING 2025-07-22 08:55:36,164 basehttp 34740 36808 "GET /api/platforms/sync-status/ HTTP/1.1" 404 37
+WARNING 2025-07-22 08:55:36,179 log 34740 4964 Not Found: /api/platforms/sync-logs/
+WARNING 2025-07-22 08:55:36,179 basehttp 34740 4964 "GET /api/platforms/sync-logs/ HTTP/1.1" 404 37
+WARNING 2025-07-22 08:55:36,232 log 34740 36808 Not Found: /api/platforms/sync-status/
+WARNING 2025-07-22 08:55:36,233 basehttp 34740 36808 "GET /api/platforms/sync-status/ HTTP/1.1" 404 37
+WARNING 2025-07-22 08:55:36,247 log 34740 4964 Not Found: /api/platforms/sync-logs/
+WARNING 2025-07-22 08:55:36,247 basehttp 34740 4964 "GET /api/platforms/sync-logs/ HTTP/1.1" 404 37
+WARNING 2025-07-22 08:55:36,264 log 34740 644 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:36,265 basehttp 34740 644 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:55:36,816 basehttp 34740 4964 "GET /accounts/admin/users/ HTTP/1.1" 200 75366
+INFO 2025-07-22 08:55:36,870 basehttp 34740 4964 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:55:40,272 basehttp 34740 4964 "GET /reports/ HTTP/1.1" 200 75715
+INFO 2025-07-22 08:55:40,320 basehttp 34740 4964 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:55:41,121 basehttp 34740 4964 "GET /reports/inventory-advanced/ HTTP/1.1" 200 101641
+INFO 2025-07-22 08:55:41,200 basehttp 34740 4964 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:55:41,223 basehttp 34740 36808 "GET /reports/inventory-advanced/data/?start_date=2025-06-21&end_date=2025-07-21&page=1&page_size=20&sort_by=name&sort_direction=asc HTTP/1.1" 200 285
+INFO 2025-07-22 08:55:41,297 basehttp 34740 4964 "GET /reports/inventory-advanced/chart-data/?type=category_value HTTP/1.1" 200 232
+INFO 2025-07-22 08:55:41,309 basehttp 34740 30092 "GET /reports/inventory-advanced/chart-data/?type=trend&days=30 HTTP/1.1" 200 667
+INFO 2025-07-22 08:55:41,328 basehttp 34740 36808 "GET /reports/inventory-advanced/chart-data/?type=stock_status HTTP/1.1" 200 194
+INFO 2025-07-22 08:55:41,343 basehttp 34740 13756 "GET /reports/inventory-advanced/alerts/ HTTP/1.1" 200 49
+WARNING 2025-07-22 08:55:42,283 log 34740 26960 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:42,284 basehttp 34740 26960 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:55:43,707 log 34740 37300 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:43,708 basehttp 34740 37300 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:55:47,680 log 34740 9180 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:47,680 basehttp 34740 9180 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:55:48,216 log 34740 34980 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:48,216 basehttp 34740 34980 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:55:49,067 autoreload 34740 24612 C:\Users\dnflw\Desktop\ProjectShopuda\project\dashboard\views.py changed, reloading.
+INFO 2025-07-22 08:55:49,494 autoreload 27476 14176 Watching for file changes with StatReloader
+INFO 2025-07-22 08:55:50,402 basehttp 27476 25428 "GET /reports/ HTTP/1.1" 200 75715
+INFO 2025-07-22 08:55:50,448 basehttp 27476 25428 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:55:51,282 basehttp 27476 25428 "GET /reports/inventory/ HTTP/1.1" 200 101641
+INFO 2025-07-22 08:55:51,339 basehttp 27476 25428 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:55:51,361 basehttp 27476 38596 "GET /reports/inventory-advanced/data/?start_date=2025-06-21&end_date=2025-07-21&page=1&page_size=20&sort_by=name&sort_direction=asc HTTP/1.1" 200 285
+INFO 2025-07-22 08:55:51,435 basehttp 27476 25428 "GET /reports/inventory-advanced/chart-data/?type=category_value HTTP/1.1" 200 232
+INFO 2025-07-22 08:55:51,448 basehttp 27476 21364 "GET /reports/inventory-advanced/chart-data/?type=trend&days=30 HTTP/1.1" 200 667
+INFO 2025-07-22 08:55:51,461 basehttp 27476 38596 "GET /reports/inventory-advanced/chart-data/?type=stock_status HTTP/1.1" 200 194
+INFO 2025-07-22 08:55:51,482 basehttp 27476 18600 "GET /reports/inventory-advanced/alerts/ HTTP/1.1" 200 49
+INFO 2025-07-22 08:55:51,808 basehttp 27476 18600 "GET /reports/sales/ HTTP/1.1" 200 75825
+INFO 2025-07-22 08:55:51,862 basehttp 27476 18600 "GET /reports/api/chart-data/?type=category&period=30 HTTP/1.1" 200 26
+INFO 2025-07-22 08:55:51,875 basehttp 27476 38596 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:55:52,921 log 27476 15300 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:52,921 basehttp 27476 15300 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:55:55,408 log 27476 32548 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:55,408 basehttp 27476 32548 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:55:59,912 log 27476 23796 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:55:59,912 basehttp 27476 23796 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:56:01,548 log 27476 12760 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:56:01,549 basehttp 27476 12760 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:56:06,012 basehttp 27476 38596 "GET /dashboard/ HTTP/1.1" 200 83619
+INFO 2025-07-22 08:56:06,072 basehttp 27476 38596 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:56:06,220 basehttp 27476 38596 "GET /dashboard/ HTTP/1.1" 200 83619
+INFO 2025-07-22 08:56:06,267 basehttp 27476 38596 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:56:06,796 basehttp 27476 18600 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:56:06,816 basehttp 27476 38596 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 08:56:06,830 basehttp 27476 21364 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:56:09,325 basehttp 27476 21364 "GET /dashboard/ HTTP/1.1" 200 83619
+INFO 2025-07-22 08:56:09,372 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:56:09,899 basehttp 27476 38596 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:56:09,932 basehttp 27476 21364 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 08:56:09,950 basehttp 27476 18600 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:56:11,765 basehttp 27476 18600 "GET /dashboard/chart-data/?type=sales&period=30 HTTP/1.1" 200 478
+WARNING 2025-07-22 08:56:12,123 log 27476 3572 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:56:12,123 basehttp 27476 3572 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:56:12,433 basehttp 27476 18600 "GET /dashboard/chart-data/?type=sales&period=30 HTTP/1.1" 200 478
+INFO 2025-07-22 08:56:13,588 basehttp 27476 18600 "GET /dashboard/chart-data/?type=sales&period=90 HTTP/1.1" 200 298
+WARNING 2025-07-22 08:56:13,750 log 27476 29928 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:56:13,751 basehttp 27476 29928 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:56:14,608 basehttp 27476 18600 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+WARNING 2025-07-22 08:56:19,543 log 27476 41200 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:56:19,544 basehttp 27476 41200 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:56:20,293 log 27476 26824 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:56:20,293 basehttp 27476 26824 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:56:22,688 basehttp 27476 18600 "GET /orders/pending/ HTTP/1.1" 200 90992
+INFO 2025-07-22 08:56:22,740 basehttp 27476 18600 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:56:25,229 basehttp 27476 18600 "GET /platforms/sync/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:56:25,279 basehttp 27476 18600 "GET /accounts/login/?next=/platforms/sync/ HTTP/1.1" 200 7643
+INFO 2025-07-22 08:56:28,980 basehttp 27476 18600 "POST /accounts/login/?next=/platforms/sync/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:56:29,054 basehttp 27476 18600 "GET /platforms/sync/ HTTP/1.1" 200 89437
+WARNING 2025-07-22 08:56:29,168 log 27476 38596 Not Found: /api/platforms/sync-logs/
+WARNING 2025-07-22 08:56:29,169 basehttp 27476 38596 "GET /api/platforms/sync-logs/ HTTP/1.1" 404 37
+WARNING 2025-07-22 08:56:29,186 log 27476 21364 Not Found: /api/platforms/sync-status/
+WARNING 2025-07-22 08:56:29,187 basehttp 27476 21364 "GET /api/platforms/sync-status/ HTTP/1.1" 404 37
+INFO 2025-07-22 08:56:29,203 basehttp 27476 18600 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:56:29,238 log 27476 38596 Not Found: /api/platforms/sync-logs/
+WARNING 2025-07-22 08:56:29,238 basehttp 27476 38596 "GET /api/platforms/sync-logs/ HTTP/1.1" 404 37
+WARNING 2025-07-22 08:56:29,253 log 27476 21364 Not Found: /api/platforms/sync-status/
+WARNING 2025-07-22 08:56:29,253 basehttp 27476 21364 "GET /api/platforms/sync-status/ HTTP/1.1" 404 37
+INFO 2025-07-22 08:56:30,764 basehttp 27476 21364 "GET /platforms/settings/ HTTP/1.1" 200 91876
+INFO 2025-07-22 08:56:30,811 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:56:31,587 basehttp 27476 21364 "GET /platforms/ HTTP/1.1" 200 76567
+INFO 2025-07-22 08:56:31,638 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:56:32,480 basehttp 27476 21364 "GET /orders/ HTTP/1.1" 200 91048
+INFO 2025-07-22 08:56:32,538 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:56:33,322 basehttp 27476 21364 "GET /inventory/ HTTP/1.1" 200 76080
+INFO 2025-07-22 08:56:33,372 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:56:34,078 basehttp 27476 21364 "GET /products/categories/ HTTP/1.1" 200 113099
+INFO 2025-07-22 08:56:34,127 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:56:34,422 basehttp 27476 21364 "GET /products/create/ HTTP/1.1" 200 118631
+INFO 2025-07-22 08:56:34,470 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:56:34,714 basehttp 27476 21364 "GET /products/ HTTP/1.1" 200 73058
+INFO 2025-07-22 08:56:34,762 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:56:36,354 log 27476 23184 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:56:36,355 basehttp 27476 23184 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:56:36,410 basehttp 27476 21364 "GET /reports/inventory-advanced/ HTTP/1.1" 200 101734
+INFO 2025-07-22 08:56:36,466 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:56:36,480 basehttp 27476 38596 "GET /reports/inventory-advanced/data/?start_date=2025-06-21&end_date=2025-07-21&page=1&page_size=20&sort_by=name&sort_direction=asc HTTP/1.1" 200 285
+INFO 2025-07-22 08:56:36,551 basehttp 27476 18600 "GET /reports/inventory-advanced/chart-data/?type=trend&days=30 HTTP/1.1" 200 667
+INFO 2025-07-22 08:56:36,584 basehttp 27476 21364 "GET /reports/inventory-advanced/chart-data/?type=category_value HTTP/1.1" 200 232
+INFO 2025-07-22 08:56:36,616 basehttp 27476 38596 "GET /reports/inventory-advanced/chart-data/?type=stock_status HTTP/1.1" 200 194
+INFO 2025-07-22 08:56:36,632 basehttp 27476 25428 "GET /reports/inventory-advanced/alerts/ HTTP/1.1" 200 49
+INFO 2025-07-22 08:56:37,688 basehttp 27476 25428 "GET /core/settings/ HTTP/1.1" 200 88269
+INFO 2025-07-22 08:56:37,739 basehttp 27476 25428 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:56:38,255 log 27476 19252 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:56:38,255 basehttp 27476 19252 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:56:40,372 log 27476 28544 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:56:40,373 basehttp 27476 28544 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:56:42,191 log 27476 13892 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:56:42,191 basehttp 27476 13892 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:56:46,252 log 27476 18048 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:56:46,252 basehttp 27476 18048 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:56:48,930 basehttp 27476 25428 "GET /dashboard/ HTTP/1.1" 200 84546
+INFO 2025-07-22 08:56:48,990 basehttp 27476 25428 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:56:49,134 basehttp 27476 38596 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:56:49,154 basehttp 27476 21364 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:56:49,169 basehttp 27476 25428 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+WARNING 2025-07-22 08:56:49,547 log 27476 15016 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:56:49,547 basehttp 27476 15016 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:56:51,963 log 27476 25236 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:56:51,963 basehttp 27476 25236 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:56:53,919 log 27476 37196 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:56:53,919 basehttp 27476 37196 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:56:55,725 basehttp 27476 25428 "GET /dashboard/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:56:55,781 basehttp 27476 25428 "GET /accounts/login/?next=/dashboard/ HTTP/1.1" 200 7412
+INFO 2025-07-22 08:56:56,422 basehttp 27476 25428 "GET /accounts/login/?next=/dashboard/ HTTP/1.1" 200 7412
+INFO 2025-07-22 08:56:59,020 basehttp 27476 25428 "POST /accounts/login/?next=/dashboard/ HTTP/1.1" 302 0
+INFO 2025-07-22 08:56:59,089 basehttp 27476 25428 "GET /dashboard/ HTTP/1.1" 200 84546
+INFO 2025-07-22 08:56:59,136 basehttp 27476 25428 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:56:59,263 basehttp 27476 21364 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:56:59,287 basehttp 27476 38596 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:56:59,302 basehttp 27476 25428 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+WARNING 2025-07-22 08:57:01,072 log 27476 38960 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:01,072 basehttp 27476 38960 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:57:01,436 log 27476 25360 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:01,437 basehttp 27476 25360 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:57:01,963 basehttp 27476 25428 "GET /dashboard/ HTTP/1.1" 200 84546
+INFO 2025-07-22 08:57:02,003 basehttp 27476 25428 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:57:02,136 basehttp 27476 38596 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:57:02,155 basehttp 27476 25428 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 08:57:02,166 basehttp 27476 21364 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:57:02,344 basehttp 27476 21364 "GET /dashboard/ HTTP/1.1" 200 84546
+INFO 2025-07-22 08:57:02,382 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:57:02,512 basehttp 27476 25428 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:57:02,533 basehttp 27476 38596 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:57:02,546 basehttp 27476 21364 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 08:57:03,046 basehttp 27476 21364 "GET /products/create/ HTTP/1.1" 200 118631
+INFO 2025-07-22 08:57:03,094 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:57:03,991 basehttp 27476 21364 "GET /inventory/ HTTP/1.1" 200 76080
+INFO 2025-07-22 08:57:04,034 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:57:05,634 basehttp 27476 21364 "GET /orders/pending/ HTTP/1.1" 200 90992
+INFO 2025-07-22 08:57:05,683 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:57:06,713 basehttp 27476 21364 "GET /platforms/ HTTP/1.1" 200 76567
+INFO 2025-07-22 08:57:06,757 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:57:07,480 basehttp 27476 21364 "GET /dashboard/ HTTP/1.1" 200 86750
+INFO 2025-07-22 08:57:07,524 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:57:07,654 basehttp 27476 38596 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:57:07,675 basehttp 27476 21364 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 08:57:07,691 basehttp 27476 25428 "GET /dashboard/stats/ HTTP/1.1" 200 370
+WARNING 2025-07-22 08:57:09,776 log 27476 1256 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:09,776 basehttp 27476 1256 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:57:12,200 log 27476 30768 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:12,200 basehttp 27476 30768 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:57:15,617 log 27476 32120 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:15,617 basehttp 27476 32120 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:57:17,032 basehttp 27476 25428 "GET /dashboard/ HTTP/1.1" 200 86750
+INFO 2025-07-22 08:57:17,069 basehttp 27476 25428 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 08:57:17,192 basehttp 27476 25428 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 08:57:17,216 basehttp 27476 38596 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 08:57:17,228 basehttp 27476 21364 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 08:57:19,267 basehttp 27476 21364 "GET /dashboard/chart-data/?type=sales&period=30 HTTP/1.1" 200 478
+INFO 2025-07-22 08:57:19,978 basehttp 27476 21364 "GET /dashboard/chart-data/?type=sales&period=90 HTTP/1.1" 200 298
+WARNING 2025-07-22 08:57:21,627 log 27476 27028 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:21,628 basehttp 27476 27028 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:57:21,723 log 27476 23356 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:21,724 basehttp 27476 23356 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:57:27,409 log 27476 33172 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:27,409 basehttp 27476 33172 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:57:29,154 log 27476 27336 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:29,154 basehttp 27476 27336 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:57:34,150 log 27476 15760 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:34,151 basehttp 27476 15760 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:57:34,638 log 27476 7888 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:34,638 basehttp 27476 7888 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:57:39,659 log 27476 28724 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:39,659 basehttp 27476 28724 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:57:42,103 log 27476 35148 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:42,103 basehttp 27476 35148 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:57:46,760 log 27476 32996 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:46,761 basehttp 27476 32996 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:57:47,571 log 27476 27408 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:47,571 basehttp 27476 27408 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:57:53,463 log 27476 41060 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:53,464 basehttp 27476 41060 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:57:54,914 log 27476 15444 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:57:54,915 basehttp 27476 15444 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:00,211 log 27476 22700 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:00,211 basehttp 27476 22700 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:01,833 log 27476 32756 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:01,833 basehttp 27476 32756 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:05,978 log 27476 8996 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:05,979 basehttp 27476 8996 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:09,316 log 27476 31696 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:09,316 basehttp 27476 31696 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:11,059 log 27476 20676 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:11,060 basehttp 27476 20676 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:58:14,961 basehttp 27476 21364 "GET /dashboard/ HTTP/1.1" 200 87764
+INFO 2025-07-22 08:58:15,087 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:58:16,970 log 27476 14192 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:16,970 basehttp 27476 14192 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 08:58:17,630 basehttp 27476 21364 "GET /dashboard/ HTTP/1.1" 200 87764
+INFO 2025-07-22 08:58:17,710 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 08:58:22,352 log 27476 15900 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:22,353 basehttp 27476 15900 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:22,601 log 27476 15964 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:22,601 basehttp 27476 15964 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:30,557 log 27476 1232 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:30,557 basehttp 27476 1232 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:30,636 log 27476 40616 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:30,636 basehttp 27476 40616 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:36,162 log 27476 39256 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:36,162 basehttp 27476 39256 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:38,977 log 27476 33848 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:38,977 basehttp 27476 33848 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:42,672 log 27476 30996 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:42,672 basehttp 27476 30996 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:45,591 log 27476 15844 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:45,591 basehttp 27476 15844 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:50,351 log 27476 28804 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:50,352 basehttp 27476 28804 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:51,678 log 27476 34536 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:51,678 basehttp 27476 34536 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:57,252 log 27476 8016 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:57,252 basehttp 27476 8016 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:58:59,008 log 27476 33256 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:58:59,008 basehttp 27476 33256 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:05,382 log 27476 6080 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:05,382 basehttp 27476 6080 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:05,695 log 27476 33568 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:05,695 basehttp 27476 33568 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:12,280 log 27476 39388 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:12,280 basehttp 27476 39388 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:13,874 log 27476 13696 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:13,874 basehttp 27476 13696 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:18,256 log 27476 12756 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:18,256 basehttp 27476 12756 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:18,522 log 27476 6440 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:18,523 basehttp 27476 6440 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:26,187 log 27476 25996 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:26,187 basehttp 27476 25996 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:26,690 log 27476 11060 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:26,691 basehttp 27476 11060 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:31,537 log 27476 30308 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:31,537 basehttp 27476 30308 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:33,676 log 27476 7520 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:33,676 basehttp 27476 7520 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:37,646 log 27476 17272 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:37,647 basehttp 27476 17272 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:41,780 log 27476 35352 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:41,780 basehttp 27476 35352 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:45,962 log 27476 8272 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:45,962 basehttp 27476 8272 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:49,916 log 27476 31556 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:49,917 basehttp 27476 31556 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:53,368 log 27476 20896 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:53,368 basehttp 27476 20896 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 08:59:57,471 log 27476 16048 Not Found: /ws/notifications/
+WARNING 2025-07-22 08:59:57,472 basehttp 27476 16048 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:00,327 log 27476 36648 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:00,327 basehttp 27476 36648 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:02,317 log 27476 6652 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:02,317 basehttp 27476 6652 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:05,252 log 27476 41636 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:05,252 basehttp 27476 41636 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:07,689 log 27476 7936 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:07,689 basehttp 27476 7936 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:12,482 log 27476 26752 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:12,483 basehttp 27476 26752 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:15,217 log 27476 33400 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:15,217 basehttp 27476 33400 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:17,897 log 27476 25564 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:17,897 basehttp 27476 25564 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:20,763 log 27476 34112 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:20,763 basehttp 27476 34112 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:24,174 log 27476 9724 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:24,175 basehttp 27476 9724 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:27,999 log 27476 8024 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:28,000 basehttp 27476 8024 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 09:00:31,276 basehttp 27476 21364 "GET /dashboard/ HTTP/1.1" 200 88588
+INFO 2025-07-22 09:00:31,451 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 09:00:32,916 log 27476 26296 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:32,916 basehttp 27476 26296 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:34,388 log 27476 11652 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:34,388 basehttp 27476 11652 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 09:00:37,443 basehttp 27476 21364 "GET /dashboard/ HTTP/1.1" 200 88588
+INFO 2025-07-22 09:00:37,491 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:00:38,051 basehttp 27476 21364 "GET /dashboard/ HTTP/1.1" 200 88588
+INFO 2025-07-22 09:00:38,099 basehttp 27476 21364 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 09:00:39,517 log 27476 19712 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:39,517 basehttp 27476 19712 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:41,578 log 27476 26008 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:41,579 basehttp 27476 26008 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:45,740 log 27476 29168 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:45,740 basehttp 27476 29168 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:52,356 log 27476 10068 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:52,357 basehttp 27476 10068 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:00:58,365 log 27476 31504 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:00:58,366 basehttp 27476 31504 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 09:01:37,401 autoreload 34652 6292 Watching for file changes with StatReloader
+INFO 2025-07-22 09:01:40,043 basehttp 34652 19904 "GET / HTTP/1.1" 302 0
+INFO 2025-07-22 09:01:40,053 basehttp 34652 19904 "GET /dashboard/ HTTP/1.1" 302 0
+INFO 2025-07-22 09:01:40,068 basehttp 34652 19904 "GET /accounts/login/?next=/dashboard/ HTTP/1.1" 200 7412
+WARNING 2025-07-22 09:01:40,319 log 34652 19904 Not Found: /favicon.ico
+WARNING 2025-07-22 09:01:40,320 basehttp 34652 19904 "GET /favicon.ico HTTP/1.1" 404 4357
+INFO 2025-07-22 09:01:48,425 basehttp 34652 19904 "POST /accounts/login/?next=/dashboard/ HTTP/1.1" 302 0
+INFO 2025-07-22 09:01:48,459 basehttp 34652 19904 "GET /dashboard/ HTTP/1.1" 200 88707
+INFO 2025-07-22 09:01:48,507 basehttp 34652 13708 "GET /static/css/inventory-custom.css HTTP/1.1" 200 13537
+INFO 2025-07-22 09:01:48,508 basehttp 34652 19904 "GET /static/js/tailwind.min.js HTTP/1.1" 200 291793
+INFO 2025-07-22 09:01:48,656 basehttp 34652 19904 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:02:13,259 basehttp 34652 19904 "GET /dashboard/ HTTP/1.1" 200 88707
+INFO 2025-07-22 09:02:13,316 basehttp 34652 19904 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:02:56,401 basehttp 34652 19904 "GET / HTTP/1.1" 302 0
+INFO 2025-07-22 09:02:56,415 basehttp 34652 19904 "GET /dashboard/ HTTP/1.1" 200 88707
+WARNING 2025-07-22 09:02:56,442 log 34652 19904 Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-07-22 09:02:56,442 basehttp 34652 19904 "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4468
+INFO 2025-07-22 09:02:56,957 basehttp 34652 19904 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:03:15,415 basehttp 34652 35352 "GET / HTTP/1.1" 302 0
+INFO 2025-07-22 09:03:15,486 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 88707
+INFO 2025-07-22 09:03:15,505 basehttp 34652 35352 "GET /static/js/tailwind.min.js HTTP/1.1" 200 291793
+INFO 2025-07-22 09:03:15,506 basehttp 34652 6948 "GET /static/css/inventory-custom.css HTTP/1.1" 200 13537
+INFO 2025-07-22 09:03:15,717 basehttp 34652 6948 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 09:03:15,741 log 34652 35352 Not Found: /favicon.ico
+WARNING 2025-07-22 09:03:15,741 basehttp 34652 35352 "GET /favicon.ico HTTP/1.1" 404 4361
+INFO 2025-07-22 09:03:17,526 basehttp 34652 6948 "GET /core/settings/ HTTP/1.1" 200 89534
+INFO 2025-07-22 09:03:17,619 basehttp 34652 6948 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:03:19,574 basehttp 34652 6948 "GET /dashboard/ HTTP/1.1" 200 88707
+INFO 2025-07-22 09:03:19,656 basehttp 34652 6948 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:05,501 basehttp 34652 6948 "GET /dashboard/ HTTP/1.1" 200 89254
+INFO 2025-07-22 09:04:05,571 basehttp 34652 6948 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:06,040 basehttp 34652 6948 "GET /dashboard/ HTTP/1.1" 200 89254
+INFO 2025-07-22 09:04:06,120 basehttp 34652 6948 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:06,679 basehttp 34652 6948 "GET /dashboard/ HTTP/1.1" 200 89254
+INFO 2025-07-22 09:04:06,765 basehttp 34652 6948 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:06,996 basehttp 34652 6948 "GET /dashboard/ HTTP/1.1" 200 89254
+INFO 2025-07-22 09:04:07,084 basehttp 34652 6948 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:08,004 basehttp 34652 6948 "GET /dashboard/ HTTP/1.1" 200 89254
+INFO 2025-07-22 09:04:08,067 basehttp 34652 6948 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:09,123 basehttp 34652 6948 "GET /orders/ HTTP/1.1" 200 92313
+INFO 2025-07-22 09:04:09,141 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 89254
+INFO 2025-07-22 09:04:09,188 basehttp 34652 35352 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:09,449 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 89254
+INFO 2025-07-22 09:04:09,499 basehttp 34652 35352 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:09,599 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 89254
+INFO 2025-07-22 09:04:09,649 basehttp 34652 35352 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:09,727 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 89254
+INFO 2025-07-22 09:04:09,768 basehttp 34652 35352 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:09,841 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 89254
+INFO 2025-07-22 09:04:09,884 basehttp 34652 35352 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:09,984 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 89254
+INFO 2025-07-22 09:04:10,037 basehttp 34652 35352 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:36,957 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 89670
+INFO 2025-07-22 09:04:37,066 basehttp 34652 35352 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:37,601 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 89670
+INFO 2025-07-22 09:04:37,646 basehttp 34652 35352 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:40,455 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 89670
+INFO 2025-07-22 09:04:40,533 basehttp 34652 35352 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:04:47,468 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 89670
+INFO 2025-07-22 09:04:47,535 basehttp 34652 35352 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:05:22,327 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:05:22,412 basehttp 34652 35352 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:05:22,461 basehttp 34652 21924 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:05:22,491 basehttp 34652 11448 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:05:22,509 basehttp 34652 32052 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:05:29,407 basehttp 34652 32052 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:05:29,472 basehttp 34652 32052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:05:29,512 basehttp 34652 21924 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:05:29,530 basehttp 34652 11448 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:05:29,546 basehttp 34652 35352 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:12,320 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:12,451 basehttp 34652 35352 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:12,485 basehttp 34652 21924 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:12,506 basehttp 34652 32052 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:12,517 basehttp 34652 11448 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:14,332 basehttp 34652 11448 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:14,414 basehttp 34652 11448 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:14,454 basehttp 34652 21924 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:14,471 basehttp 34652 32052 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:14,488 basehttp 34652 35352 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:15,005 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:15,087 basehttp 34652 35352 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:15,127 basehttp 34652 21924 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:15,146 basehttp 34652 11448 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:15,160 basehttp 34652 32052 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:15,476 basehttp 34652 32052 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:15,557 basehttp 34652 32052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:15,595 basehttp 34652 21924 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:15,612 basehttp 34652 11448 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:15,627 basehttp 34652 35352 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:15,730 basehttp 34652 35352 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:15,813 basehttp 34652 35352 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:15,855 basehttp 34652 21924 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:15,877 basehttp 34652 19100 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:15,891 basehttp 34652 32052 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:15,892 basehttp 34652 32052 - Broken pipe from ('220.92.47.142', 58475)
+INFO 2025-07-22 09:06:15,904 basehttp 34652 11448 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:15,905 basehttp 34652 11448 - Broken pipe from ('220.92.47.142', 58474)
+INFO 2025-07-22 09:06:15,979 basehttp 34652 19100 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:16,066 basehttp 34652 19100 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:16,104 basehttp 34652 38480 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:16,126 basehttp 34652 9492 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:16,137 basehttp 34652 35352 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:16,152 basehttp 34652 28932 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:16,246 basehttp 34652 9492 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:16,323 basehttp 34652 9492 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:16,352 basehttp 34652 19992 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:16,373 basehttp 34652 29996 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:16,384 basehttp 34652 19100 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:16,503 basehttp 34652 29996 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:16,581 basehttp 34652 29996 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:16,620 basehttp 34652 19992 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:16,638 basehttp 34652 9492 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:16,655 basehttp 34652 19100 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:16,776 basehttp 34652 19100 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:16,848 basehttp 34652 19100 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:16,884 basehttp 34652 19992 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:16,914 basehttp 34652 9492 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:16,935 basehttp 34652 19572 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:16,947 basehttp 34652 29996 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:16,947 basehttp 34652 29996 - Broken pipe from ('220.92.47.142', 58541)
+INFO 2025-07-22 09:06:17,034 basehttp 34652 19572 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:17,123 basehttp 34652 19572 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:17,164 basehttp 34652 3692 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:17,177 basehttp 34652 21916 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:17,198 basehttp 34652 19992 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:17,214 basehttp 34652 19100 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:17,214 basehttp 34652 19100 - Broken pipe from ('220.92.47.142', 58536)
+INFO 2025-07-22 09:06:17,326 basehttp 34652 21916 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:17,417 basehttp 34652 21916 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:17,446 basehttp 34652 19572 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:17,467 basehttp 34652 38208 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:17,479 basehttp 34652 34960 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:17,497 basehttp 34652 32392 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:17,593 basehttp 34652 19572 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:17,681 basehttp 34652 19572 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:17,713 basehttp 34652 15648 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:17,756 basehttp 34652 24292 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:17,771 basehttp 34652 6488 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:17,789 basehttp 34652 12200 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:17,851 basehttp 34652 12200 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:17,928 basehttp 34652 12200 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:17,959 basehttp 34652 22016 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:17,981 basehttp 34652 19572 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:17,994 basehttp 34652 12200 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:18,006 basehttp 34652 15648 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:18,007 basehttp 34652 15648 - Broken pipe from ('220.92.47.142', 58549)
+INFO 2025-07-22 09:06:18,128 basehttp 34652 1380 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:18,144 basehttp 34652 16740 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:18,175 basehttp 34652 12200 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:18,194 basehttp 34652 29168 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:18,211 basehttp 34652 33516 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:18,283 basehttp 34652 12200 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:18,352 basehttp 34652 12200 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:18,388 basehttp 34652 1976 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:18,408 basehttp 34652 1380 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:18,427 basehttp 34652 12200 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:18,440 basehttp 34652 9828 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:18,568 basehttp 34652 12200 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:18,647 basehttp 34652 12200 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:18,686 basehttp 34652 35160 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:18,707 basehttp 34652 12660 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:18,722 basehttp 34652 12200 "GET /dashboard/ HTTP/1.1" 200 89652
+INFO 2025-07-22 09:06:18,740 basehttp 34652 26216 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:18,895 basehttp 34652 35160 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:18,935 basehttp 34652 12200 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:18,956 basehttp 34652 3580 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:06:18,969 basehttp 34652 20052 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:22,843 basehttp 34652 3580 "GET /dashboard/ HTTP/1.1" 200 90113
+INFO 2025-07-22 09:06:22,920 basehttp 34652 3580 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:06:22,963 basehttp 34652 12200 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:06:22,985 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:06:22,995 basehttp 34652 35160 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:08:38,157 basehttp 34652 35160 "GET /dashboard/ HTTP/1.1" 200 90262
+INFO 2025-07-22 09:08:38,275 basehttp 34652 35160 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:08:38,309 basehttp 34652 12200 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:08:38,339 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:08:38,358 basehttp 34652 3580 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:02,406 basehttp 34652 3580 "GET /dashboard/ HTTP/1.1" 200 90262
+INFO 2025-07-22 09:09:02,499 basehttp 34652 3580 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:02,562 basehttp 34652 12200 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:02,578 basehttp 34652 35160 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:02,589 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:03,825 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=60 HTTP/1.1" 200 218
+INFO 2025-07-22 09:09:04,763 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=360 HTTP/1.1" 200 267
+INFO 2025-07-22 09:09:19,815 basehttp 34652 20052 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:19,892 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:19,931 basehttp 34652 12200 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:19,951 basehttp 34652 35160 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:19,967 basehttp 34652 3580 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:20,854 basehttp 34652 3580 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:20,925 basehttp 34652 3580 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:20,963 basehttp 34652 12200 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:20,982 basehttp 34652 20052 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:20,996 basehttp 34652 35160 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:21,945 basehttp 34652 35160 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:22,012 basehttp 34652 35160 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:22,042 basehttp 34652 12200 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:22,059 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:22,077 basehttp 34652 3580 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:22,559 basehttp 34652 3580 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:22,634 basehttp 34652 3580 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:22,670 basehttp 34652 12200 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:22,693 basehttp 34652 35160 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:22,720 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:23,088 basehttp 34652 20052 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:23,155 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:23,189 basehttp 34652 12200 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:23,220 basehttp 34652 35160 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:23,239 basehttp 34652 3580 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:23,470 basehttp 34652 3580 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:23,537 basehttp 34652 3580 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:23,574 basehttp 34652 35160 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:23,607 basehttp 34652 12200 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:23,624 basehttp 34652 20052 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:23,669 basehttp 34652 12200 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:23,735 basehttp 34652 12200 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:23,764 basehttp 34652 35160 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:23,781 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:23,796 basehttp 34652 3580 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:23,942 basehttp 34652 3580 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:24,010 basehttp 34652 3580 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:24,042 basehttp 34652 35160 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:24,063 basehttp 34652 12200 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:24,075 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:24,535 basehttp 34652 20052 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:24,603 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:24,637 basehttp 34652 35160 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:24,656 basehttp 34652 12200 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:24,673 basehttp 34652 3580 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:24,727 basehttp 34652 12200 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:24,812 basehttp 34652 12200 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:24,857 basehttp 34652 35160 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:24,889 basehttp 34652 3580 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:24,906 basehttp 34652 20052 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:25,078 basehttp 34652 20052 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:25,147 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:25,183 basehttp 34652 35160 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:25,201 basehttp 34652 3580 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:25,219 basehttp 34652 12200 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:25,444 basehttp 34652 12200 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:25,510 basehttp 34652 12200 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:25,546 basehttp 34652 35160 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:25,565 basehttp 34652 3580 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:25,580 basehttp 34652 20052 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:25,802 basehttp 34652 20052 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:25,865 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:25,902 basehttp 34652 35160 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:25,919 basehttp 34652 3580 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:25,937 basehttp 34652 12200 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:26,171 basehttp 34652 12200 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:26,235 basehttp 34652 12200 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:26,281 basehttp 34652 35160 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:26,300 basehttp 34652 20052 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:26,313 basehttp 34652 3580 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:26,528 basehttp 34652 12200 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:26,601 basehttp 34652 12200 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:26,638 basehttp 34652 20052 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:26,656 basehttp 34652 35160 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:26,669 basehttp 34652 3580 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:26,867 basehttp 34652 3580 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:26,937 basehttp 34652 3580 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:26,969 basehttp 34652 20052 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:26,983 basehttp 34652 35160 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:27,001 basehttp 34652 12200 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:27,202 basehttp 34652 12200 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:27,269 basehttp 34652 12200 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:27,313 basehttp 34652 20052 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:27,330 basehttp 34652 3580 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:27,345 basehttp 34652 35160 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:27,405 basehttp 34652 3580 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:27,499 basehttp 34652 3580 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:27,530 basehttp 34652 20052 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:27,551 basehttp 34652 12200 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:27,561 basehttp 34652 35160 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:27,605 basehttp 34652 20052 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:27,763 basehttp 34652 20052 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:27,781 basehttp 34652 12200 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:27,781 basehttp 34652 12200 - Broken pipe from ('220.92.47.142', 58552)
+INFO 2025-07-22 09:09:27,840 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:27,867 basehttp 34652 3580 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:27,893 basehttp 34652 32944 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:09:27,903 basehttp 34652 27816 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:28,113 basehttp 34652 27816 "GET /dashboard/ HTTP/1.1" 200 90200
+INFO 2025-07-22 09:09:28,180 basehttp 34652 27816 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:09:28,216 basehttp 34652 32944 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:09:28,234 basehttp 34652 3580 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:09:28,253 basehttp 34652 20052 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:14:10,761 basehttp 34652 20052 "GET /dashboard/ HTTP/1.1" 200 89433
+INFO 2025-07-22 09:14:11,205 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:14:11,241 basehttp 34652 32944 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:14:11,273 basehttp 34652 3580 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:14:11,293 basehttp 34652 27816 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:14:19,074 basehttp 34652 27816 "GET /dashboard/chart-data/?type=sales&period=180 HTTP/1.1" 200 171
+INFO 2025-07-22 09:14:19,941 basehttp 34652 27816 "GET /dashboard/chart-data/?type=sales&period=60 HTTP/1.1" 200 218
+INFO 2025-07-22 09:15:42,197 basehttp 34652 27816 "GET /dashboard/ HTTP/1.1" 200 92684
+INFO 2025-07-22 09:15:42,300 basehttp 34652 27816 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:15:42,345 basehttp 34652 32944 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:15:42,363 basehttp 34652 3580 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:15:42,379 basehttp 34652 20052 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:15:44,490 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=60 HTTP/1.1" 200 218
+INFO 2025-07-22 09:15:45,960 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=360 HTTP/1.1" 200 267
+INFO 2025-07-22 09:15:48,162 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=90 HTTP/1.1" 200 298
+INFO 2025-07-22 09:15:50,193 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=180 HTTP/1.1" 200 171
+INFO 2025-07-22 09:15:51,535 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:15:52,508 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=15 HTTP/1.1" 200 268
+INFO 2025-07-22 09:15:54,009 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=30 HTTP/1.1" 200 478
+INFO 2025-07-22 09:15:55,444 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=60 HTTP/1.1" 200 218
+INFO 2025-07-22 09:15:57,196 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=180 HTTP/1.1" 200 171
+INFO 2025-07-22 09:20:14,937 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=180 HTTP/1.1" 200 171
+INFO 2025-07-22 09:20:15,128 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=180 HTTP/1.1" 200 171
+INFO 2025-07-22 09:20:16,140 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=60 HTTP/1.1" 200 218
+INFO 2025-07-22 09:20:16,964 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=15 HTTP/1.1" 200 268
+INFO 2025-07-22 09:20:18,267 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:21:07,601 basehttp 34652 10536 "GET /dashboard/ HTTP/1.1" 302 0
+INFO 2025-07-22 09:21:07,980 basehttp 34652 10536 "GET /accounts/login/?next=/dashboard/ HTTP/1.1" 200 7412
+INFO 2025-07-22 09:21:50,986 basehttp 34652 20052 "GET /inventory/adjustment/ HTTP/1.1" 200 90614
+INFO 2025-07-22 09:21:51,495 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:21:52,355 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 77494
+INFO 2025-07-22 09:21:52,416 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:21:53,083 basehttp 34652 20052 "GET /inventory/adjustment/ HTTP/1.1" 200 90614
+INFO 2025-07-22 09:21:53,145 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:21:54,253 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 77493
+INFO 2025-07-22 09:21:54,302 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:22:56,038 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 77493
+INFO 2025-07-22 09:22:56,129 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:22:56,782 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 77493
+INFO 2025-07-22 09:22:56,831 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:22:57,270 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 77493
+INFO 2025-07-22 09:22:57,310 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:22:57,471 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 77494
+INFO 2025-07-22 09:22:57,515 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:35,544 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:35,591 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:37,891 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:37,935 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:38,296 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:38,342 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:38,531 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:38,571 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:38,715 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:38,763 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:38,880 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:38,924 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:39,050 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78143
+INFO 2025-07-22 09:23:39,089 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:39,363 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:39,412 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:39,636 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:39,687 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:39,782 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:39,829 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:39,910 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:39,952 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:40,053 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78143
+INFO 2025-07-22 09:23:40,094 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:40,196 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:40,243 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:40,344 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78143
+INFO 2025-07-22 09:23:40,390 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:40,487 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:40,525 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:40,632 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:40,680 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:40,780 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:40,821 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:40,924 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:40,964 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:41,085 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:41,124 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:41,226 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:41,265 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:41,380 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:41,425 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:41,526 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:41,565 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:41,678 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:41,724 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:41,820 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:41,857 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:41,979 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78143
+INFO 2025-07-22 09:23:42,029 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:42,132 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78143
+INFO 2025-07-22 09:23:42,174 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:42,292 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:42,329 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:42,446 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:42,490 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:42,596 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:42,643 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:42,753 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:42,793 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:42,916 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:42,962 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:43,068 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:43,114 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:43,235 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:43,281 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:43,365 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:43,410 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:43,518 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:43,557 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:43,675 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78143
+INFO 2025-07-22 09:23:43,716 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:43,837 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:43,877 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:44,000 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:44,039 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:44,134 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:44,175 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:44,277 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:44,323 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:44,444 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78143
+INFO 2025-07-22 09:23:44,488 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:44,589 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:44,629 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:44,748 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78141
+INFO 2025-07-22 09:23:44,794 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:44,921 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78142
+INFO 2025-07-22 09:23:44,961 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:45,071 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78631
+INFO 2025-07-22 09:23:45,115 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:45,229 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78631
+INFO 2025-07-22 09:23:45,273 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:45,390 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78631
+INFO 2025-07-22 09:23:45,425 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:45,551 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78632
+INFO 2025-07-22 09:23:45,589 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:45,684 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78631
+INFO 2025-07-22 09:23:45,722 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:45,848 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78633
+INFO 2025-07-22 09:23:45,893 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:46,006 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78633
+INFO 2025-07-22 09:23:46,045 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:46,139 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78631
+INFO 2025-07-22 09:23:46,177 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:46,294 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78632
+INFO 2025-07-22 09:23:46,337 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:46,425 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78631
+INFO 2025-07-22 09:23:46,462 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:46,588 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78631
+INFO 2025-07-22 09:23:46,625 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:47,572 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78633
+INFO 2025-07-22 09:23:47,609 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:48,132 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78632
+INFO 2025-07-22 09:23:48,171 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:48,366 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78633
+INFO 2025-07-22 09:23:48,407 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:48,555 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78633
+INFO 2025-07-22 09:23:48,592 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:48,731 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78632
+INFO 2025-07-22 09:23:48,773 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:48,881 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78632
+INFO 2025-07-22 09:23:48,924 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:49,011 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78633
+INFO 2025-07-22 09:23:49,055 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:49,162 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78631
+INFO 2025-07-22 09:23:49,205 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:49,300 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78631
+INFO 2025-07-22 09:23:49,339 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:49,481 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78632
+INFO 2025-07-22 09:23:49,520 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:49,594 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78631
+INFO 2025-07-22 09:23:49,636 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:49,770 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78631
+INFO 2025-07-22 09:23:49,805 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:49,940 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78631
+INFO 2025-07-22 09:23:49,977 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:50,089 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78631
+INFO 2025-07-22 09:23:50,125 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:50,249 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78632
+INFO 2025-07-22 09:23:50,306 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:50,417 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78631
+INFO 2025-07-22 09:23:50,453 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:50,593 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78632
+INFO 2025-07-22 09:23:50,642 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:50,745 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78632
+INFO 2025-07-22 09:23:50,792 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:50,927 basehttp 34652 20052 "GET /inventory/ HTTP/1.1" 200 78632
+INFO 2025-07-22 09:23:50,969 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:51,223 basehttp 34652 20052 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:51,268 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:51,301 basehttp 34652 10176 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:51,318 basehttp 34652 26180 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:51,337 basehttp 34652 23148 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:51,476 basehttp 34652 23148 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:51,513 basehttp 34652 23148 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:51,536 basehttp 34652 10176 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:51,555 basehttp 34652 26180 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:51,570 basehttp 34652 20052 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:51,775 basehttp 34652 20052 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:51,819 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:51,847 basehttp 34652 10176 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:51,867 basehttp 34652 23148 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:51,879 basehttp 34652 26180 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:51,983 basehttp 34652 26180 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:52,030 basehttp 34652 26180 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:52,047 basehttp 34652 23148 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:52,065 basehttp 34652 10176 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:52,085 basehttp 34652 20052 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:52,161 basehttp 34652 20052 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:52,204 basehttp 34652 20052 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:52,235 basehttp 34652 23148 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:52,255 basehttp 34652 10176 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:52,271 basehttp 34652 26180 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:52,305 basehttp 34652 23148 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:52,345 basehttp 34652 23148 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:52,378 basehttp 34652 35972 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:52,398 basehttp 34652 3096 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:52,412 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:52,472 basehttp 34652 3096 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:52,511 basehttp 34652 3096 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:52,536 basehttp 34652 35972 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:52,569 basehttp 34652 20052 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:52,590 basehttp 34652 23148 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:52,606 basehttp 34652 3096 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:52,650 basehttp 34652 3096 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:52,678 basehttp 34652 35972 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:52,697 basehttp 34652 8976 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:52,711 basehttp 34652 33308 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:52,753 basehttp 34652 35972 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:52,794 basehttp 34652 35972 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:52,818 basehttp 34652 37892 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:52,834 basehttp 34652 3096 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:52,852 basehttp 34652 8976 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:52,914 basehttp 34652 3096 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:52,956 basehttp 34652 3096 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:52,990 basehttp 34652 37892 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:53,004 basehttp 34652 35972 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:53,020 basehttp 34652 8976 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:53,084 basehttp 34652 35972 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:53,127 basehttp 34652 35972 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:53,145 basehttp 34652 8976 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:53,164 basehttp 34652 37892 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:53,176 basehttp 34652 3096 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:53,251 basehttp 34652 3096 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:53,292 basehttp 34652 3096 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:53,319 basehttp 34652 8976 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:53,336 basehttp 34652 37892 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:53,352 basehttp 34652 35972 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:53,404 basehttp 34652 8976 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:53,445 basehttp 34652 8976 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:53,475 basehttp 34652 35972 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:53,493 basehttp 34652 3096 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:53,507 basehttp 34652 37892 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:53,855 basehttp 34652 37892 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:53,897 basehttp 34652 37892 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:53,916 basehttp 34652 35972 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:53,937 basehttp 34652 3096 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:53,951 basehttp 34652 8976 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:54,035 basehttp 34652 8976 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:54,084 basehttp 34652 8976 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:54,108 basehttp 34652 3096 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:54,134 basehttp 34652 37892 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:54,148 basehttp 34652 35972 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:54,189 basehttp 34652 3096 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:54,237 basehttp 34652 3096 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:54,275 basehttp 34652 37892 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:54,299 basehttp 34652 8976 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:54,325 basehttp 34652 11000 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:54,357 basehttp 34652 37892 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:54,406 basehttp 34652 37892 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:54,440 basehttp 34652 3096 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:54,460 basehttp 34652 8976 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:54,472 basehttp 34652 1896 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:54,518 basehttp 34652 3096 "GET /dashboard/ HTTP/1.1" 200 88023
+INFO 2025-07-22 09:23:54,560 basehttp 34652 3096 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:54,577 basehttp 34652 8976 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:54,598 basehttp 34652 31000 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:54,612 basehttp 34652 37892 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:54,686 basehttp 34652 37892 "GET /dashboard/ HTTP/1.1" 200 88075
+INFO 2025-07-22 09:23:54,727 basehttp 34652 37892 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:54,747 basehttp 34652 8976 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:54,768 basehttp 34652 31000 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:54,785 basehttp 34652 3096 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:54,843 basehttp 34652 31000 "GET /dashboard/ HTTP/1.1" 200 88075
+INFO 2025-07-22 09:23:54,888 basehttp 34652 31000 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:54,905 basehttp 34652 8976 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:54,970 basehttp 34652 3096 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:54,990 basehttp 34652 37892 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:55,852 basehttp 34652 37892 "GET /dashboard/ HTTP/1.1" 200 88075
+INFO 2025-07-22 09:23:55,895 basehttp 34652 37892 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:55,920 basehttp 34652 8976 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:55,949 basehttp 34652 3096 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:55,966 basehttp 34652 31000 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:23:57,188 basehttp 34652 31000 "GET /dashboard/ HTTP/1.1" 200 88075
+INFO 2025-07-22 09:23:57,287 basehttp 34652 31000 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:23:57,308 basehttp 34652 8976 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:23:57,339 basehttp 34652 3096 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:23:57,357 basehttp 34652 37892 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:24:59,129 basehttp 34652 23516 "GET /dashboard/ HTTP/1.1" 200 88944
+INFO 2025-07-22 09:24:59,219 basehttp 34652 23516 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:24:59,248 basehttp 34652 23676 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:24:59,269 basehttp 34652 33400 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:24:59,276 basehttp 34652 40104 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:25:00,616 basehttp 34652 40104 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:25:01,839 basehttp 34652 40104 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:25:08,584 basehttp 34652 40104 "GET /platforms/ HTTP/1.1" 200 79171
+INFO 2025-07-22 09:25:08,604 basehttp 34652 33400 "GET /dashboard/ HTTP/1.1" 200 88944
+INFO 2025-07-22 09:25:08,649 basehttp 34652 33400 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:25:08,678 basehttp 34652 23516 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:25:08,697 basehttp 34652 23676 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:25:08,712 basehttp 34652 32020 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:25:09,425 basehttp 34652 32020 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:25:10,310 basehttp 34652 32020 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:25:10,724 basehttp 34652 32020 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:25:11,220 basehttp 34652 32020 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:26:30,835 basehttp 34652 36120 "GET /products/create/ HTTP/1.1" 200 121235
+INFO 2025-07-22 09:26:30,883 basehttp 34652 36120 "GET /products/create/ HTTP/1.1" 200 121235
+INFO 2025-07-22 09:26:30,957 basehttp 34652 36120 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:26:33,287 basehttp 34652 36120 "GET /products/create/ HTTP/1.1" 200 121235
+INFO 2025-07-22 09:26:33,325 basehttp 34652 36120 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:26:35,437 basehttp 34652 36120 "GET /dashboard/ HTTP/1.1" 200 88944
+INFO 2025-07-22 09:26:35,487 basehttp 34652 36120 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:26:35,518 basehttp 34652 4444 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:26:35,549 basehttp 34652 36608 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:26:35,567 basehttp 34652 41940 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:26:38,269 basehttp 34652 41940 "GET /dashboard/ HTTP/1.1" 200 88944
+INFO 2025-07-22 09:26:38,311 basehttp 34652 41940 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:26:38,334 basehttp 34652 4444 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:26:38,355 basehttp 34652 36120 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:26:38,367 basehttp 34652 36608 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:26:43,293 basehttp 34652 36608 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:09,682 basehttp 34652 36608 "GET /dashboard/ HTTP/1.1" 200 89206
+INFO 2025-07-22 09:28:09,693 basehttp 34652 36608 "GET /static/css/darkmode.css HTTP/1.1" 200 5905
+INFO 2025-07-22 09:28:09,793 basehttp 34652 36608 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:28:09,826 basehttp 34652 4444 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:28:09,843 basehttp 34652 36120 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:09,858 basehttp 34652 41940 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:28:11,372 basehttp 34652 41940 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:11,432 basehttp 34652 41940 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:11,992 basehttp 34652 41940 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:12,055 basehttp 34652 41940 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:13,358 basehttp 34652 41940 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:13,414 basehttp 34652 41940 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:14,229 basehttp 34652 41940 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:14,291 basehttp 34652 41940 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:23,436 basehttp 34652 41940 "GET /dashboard/ HTTP/1.1" 200 83114
+INFO 2025-07-22 09:28:23,446 basehttp 34652 41940 "GET /static/css/darkmode.css HTTP/1.1" 304 0
+INFO 2025-07-22 09:28:23,531 basehttp 34652 41940 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:28:23,558 basehttp 34652 4444 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:28:23,578 basehttp 34652 36120 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:23,597 basehttp 34652 36608 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:28:23,912 basehttp 34652 36608 "GET /dashboard/ HTTP/1.1" 200 83114
+INFO 2025-07-22 09:28:23,957 basehttp 34652 36608 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:28:23,982 basehttp 34652 4444 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:28:24,003 basehttp 34652 41940 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:28:24,010 basehttp 34652 36120 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:24,211 basehttp 34652 36120 "GET /dashboard/ HTTP/1.1" 200 83114
+INFO 2025-07-22 09:28:24,263 basehttp 34652 36120 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:28:24,291 basehttp 34652 4444 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:28:24,309 basehttp 34652 36608 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:28:24,323 basehttp 34652 41940 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:24,416 basehttp 34652 41940 "GET /dashboard/ HTTP/1.1" 200 83114
+INFO 2025-07-22 09:28:24,457 basehttp 34652 41940 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:28:24,477 basehttp 34652 4444 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:28:24,497 basehttp 34652 36608 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:24,512 basehttp 34652 36120 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:28:25,315 basehttp 34652 36120 "GET /dashboard/ HTTP/1.1" 200 83114
+INFO 2025-07-22 09:28:25,366 basehttp 34652 36120 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:28:25,397 basehttp 34652 4444 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:28:25,419 basehttp 34652 36608 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:25,429 basehttp 34652 41940 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:28:31,105 basehttp 34652 41940 "GET /dashboard/ HTTP/1.1" 200 83114
+INFO 2025-07-22 09:28:31,117 basehttp 34652 41940 "GET /static/js/tailwind.min.js HTTP/1.1" 200 291793
+INFO 2025-07-22 09:28:31,119 basehttp 34652 4444 "GET /static/css/darkmode.css HTTP/1.1" 200 5905
+INFO 2025-07-22 09:28:31,119 basehttp 34652 36608 "GET /static/css/inventory-custom.css HTTP/1.1" 200 13537
+INFO 2025-07-22 09:28:31,284 basehttp 34652 41940 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:28:31,318 basehttp 34652 4444 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:28:31,338 basehttp 34652 36608 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+WARNING 2025-07-22 09:28:31,366 log 34652 41940 Not Found: /favicon.ico
+WARNING 2025-07-22 09:28:31,367 basehttp 34652 41940 "GET /favicon.ico HTTP/1.1" 404 4361
+INFO 2025-07-22 09:28:31,383 basehttp 34652 36120 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:28:32,910 basehttp 34652 36120 "GET /dashboard/ HTTP/1.1" 200 83114
+INFO 2025-07-22 09:28:32,956 basehttp 34652 36120 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:28:32,980 basehttp 34652 4444 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:28:32,996 basehttp 34652 41940 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:28:33,012 basehttp 34652 36608 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:33,621 basehttp 34652 36608 "GET /dashboard/ HTTP/1.1" 200 83114
+INFO 2025-07-22 09:28:33,665 basehttp 34652 36608 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:28:33,689 basehttp 34652 4444 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:28:33,710 basehttp 34652 41940 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:33,727 basehttp 34652 36120 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:28:33,909 basehttp 34652 36120 "GET /dashboard/ HTTP/1.1" 200 83114
+INFO 2025-07-22 09:28:33,959 basehttp 34652 36120 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:28:33,985 basehttp 34652 4444 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:28:34,005 basehttp 34652 36608 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:28:34,018 basehttp 34652 41940 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:37,162 basehttp 34652 41940 "GET /dashboard/ HTTP/1.1" 200 83114
+INFO 2025-07-22 09:28:37,176 basehttp 34652 4444 "GET /static/css/darkmode.css HTTP/1.1" 200 5905
+INFO 2025-07-22 09:28:37,176 basehttp 34652 36608 "GET /static/css/inventory-custom.css HTTP/1.1" 200 13537
+INFO 2025-07-22 09:28:37,177 basehttp 34652 41940 "GET /static/js/tailwind.min.js HTTP/1.1" 200 291793
+INFO 2025-07-22 09:28:37,307 basehttp 34652 41940 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:28:37,336 basehttp 34652 4444 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:28:37,365 basehttp 34652 36608 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+WARNING 2025-07-22 09:28:37,383 log 34652 34048 Not Found: /favicon.ico
+WARNING 2025-07-22 09:28:37,383 basehttp 34652 34048 "GET /favicon.ico HTTP/1.1" 404 4361
+INFO 2025-07-22 09:28:37,397 basehttp 34652 36120 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:28:37,787 basehttp 34652 36120 "GET /dashboard/ HTTP/1.1" 200 83114
+INFO 2025-07-22 09:28:37,799 basehttp 34652 36120 "GET /static/js/tailwind.min.js HTTP/1.1" 200 291793
+INFO 2025-07-22 09:28:37,801 basehttp 34652 4444 "GET /static/css/darkmode.css HTTP/1.1" 200 5905
+INFO 2025-07-22 09:28:37,801 basehttp 34652 36608 "GET /static/css/inventory-custom.css HTTP/1.1" 200 13537
+INFO 2025-07-22 09:28:37,993 basehttp 34652 36120 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:28:38,026 basehttp 34652 36608 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+WARNING 2025-07-22 09:28:38,044 log 34652 41940 Not Found: /favicon.ico
+WARNING 2025-07-22 09:28:38,044 basehttp 34652 41940 "GET /favicon.ico HTTP/1.1" 404 4361
+INFO 2025-07-22 09:28:38,073 basehttp 34652 4444 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:38,093 basehttp 34652 34048 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:28:38,896 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:38,955 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:39,645 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:39,707 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:40,325 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:40,396 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:41,506 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:41,568 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:42,184 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:42,243 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:42,781 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:42,851 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:44,493 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:44,559 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:45,190 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:45,256 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:45,875 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:45,949 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:47,521 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:47,587 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:47,827 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:47,899 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:48,220 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:48,277 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:48,733 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:48,799 basehttp 34652 34048 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:52,962 basehttp 34652 34048 "GET /dashboard/ HTTP/1.1" 200 83114
+INFO 2025-07-22 09:28:52,973 basehttp 34652 34048 "GET /static/css/darkmode.css HTTP/1.1" 304 0
+INFO 2025-07-22 09:28:53,063 basehttp 34652 34048 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:28:53,095 basehttp 34652 36608 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:28:53,118 basehttp 34652 36120 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:28:53,131 basehttp 34652 4444 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:53,629 basehttp 34652 4444 "GET /dashboard/ HTTP/1.1" 200 83114
+INFO 2025-07-22 09:28:53,683 basehttp 34652 4444 "GET /notifications/api/ HTTP/1.1" 200 40
+INFO 2025-07-22 09:28:53,719 basehttp 34652 36608 "GET /dashboard/recent-orders/ HTTP/1.1" 200 14
+INFO 2025-07-22 09:28:53,751 basehttp 34652 36120 "GET /dashboard/chart-data/?type=sales&period=7 HTTP/1.1" 200 155
+INFO 2025-07-22 09:28:53,768 basehttp 34652 34048 "GET /dashboard/stats/ HTTP/1.1" 200 370
+INFO 2025-07-22 09:29:02,643 basehttp 34652 34048 "GET /dashboard/ HTTP/1.1" 200 86247
+WARNING 2025-07-22 09:29:02,696 log 34652 16516 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:02,696 basehttp 34652 16516 "GET /ws/notifications/ HTTP/1.1" 404 4379
+INFO 2025-07-22 09:29:02,723 basehttp 34652 34048 "GET /notifications/api/ HTTP/1.1" 200 40
+WARNING 2025-07-22 09:29:02,734 log 34652 6336 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:02,734 basehttp 34652 6336 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:29:05,714 log 34652 19520 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:05,715 basehttp 34652 19520 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:29:05,763 log 34652 40312 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:05,764 basehttp 34652 40312 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:29:09,109 log 34652 10588 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:09,110 basehttp 34652 10588 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:29:09,141 log 34652 23076 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:09,142 basehttp 34652 23076 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:29:13,132 log 34652 41668 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:13,133 basehttp 34652 41668 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:29:13,165 log 34652 40160 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:13,166 basehttp 34652 40160 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:29:17,125 log 34652 37736 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:17,125 basehttp 34652 37736 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:29:17,157 log 34652 40420 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:17,157 basehttp 34652 40420 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:29:21,150 log 34652 18880 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:21,150 basehttp 34652 18880 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:29:21,225 log 34652 31284 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:21,226 basehttp 34652 31284 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:29:25,336 log 34652 39160 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:25,337 basehttp 34652 39160 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:29:25,386 log 34652 23548 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:25,387 basehttp 34652 23548 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:29:29,429 log 34652 11868 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:29,430 basehttp 34652 11868 "GET /ws/notifications/ HTTP/1.1" 404 4379
+WARNING 2025-07-22 09:29:30,045 log 34652 33676 Not Found: /ws/notifications/
+WARNING 2025-07-22 09:29:30,046 basehttp 34652 33676 "GET /ws/notifications/ HTTP/1.1" 404 4379
