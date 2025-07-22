@@ -121,10 +121,20 @@ def _get_default_subject(template_type):
         'order_confirm': '[{{site_name}}] 주문이 확인되었습니다 - {{order_number}}',
         'order_shipped': '[{{site_name}}] 상품이 발송되었습니다 - {{order_number}}',
         'order_delivered': '[{{site_name}}] 상품이 배송완료되었습니다 - {{order_number}}',
+        'order_cancelled': '[{{site_name}}] 주문이 취소되었습니다 - {{order_number}}',
+        'order_refunded': '[{{site_name}}] 환불이 완료되었습니다 - {{order_number}}',
         'password_reset': '[{{site_name}}] 비밀번호 재설정 안내',
         'point_earned': '[{{site_name}}] 포인트가 적립되었습니다',
         'point_expired': '[{{site_name}}] 포인트 만료 예정 안내',
+        'point_used': '[{{site_name}}] 포인트가 사용되었습니다',
         'low_stock': '[{{site_name}}] 재고 부족 알림',
+        'product_restock': '[{{site_name}}] 관심상품이 재입고되었습니다',
+        'cart_abandoned': '[{{site_name}}] 장바구니에 상품이 남아있습니다',
+        'review_request': '[{{site_name}}] 구매하신 상품의 리뷰를 남겨주세요',
+        'coupon_issued': '[{{site_name}}] 쿠폰이 발급되었습니다',
+        'coupon_expiring': '[{{site_name}}] 쿠폰 만료 예정 안내',
+        'membership_upgrade': '[{{site_name}}] 회원등급이 상승했습니다!',
+        'birthday_greeting': '[{{site_name}}] 생일을 축하합니다!',
     }
     return defaults.get(template_type, '')
 
@@ -173,23 +183,97 @@ def _get_default_body(template_type):
 
 감사합니다.
 {{site_name}} 드림''',
+        
+        'order_cancelled': '''안녕하세요 {{user_name}}님,
+
+주문번호 {{order_number}}의 주문이 취소되었습니다.
+
+취소 사유: {{cancel_reason}}
+환불 예정 금액: {{order_total}}원
+
+환불은 영업일 기준 3-5일 이내에 처리됩니다.
+
+문의사항이 있으시면 고객센터로 연락주세요.
+
+감사합니다.
+{{site_name}} 드림''',
+
+        'point_earned': '''안녕하세요 {{user_name}}님,
+
+{{point_amount}} 포인트가 적립되었습니다!
+
+현재 포인트 잔액: {{point_balance}}P
+
+포인트는 다음 구매 시 현금처럼 사용하실 수 있습니다.
+
+감사합니다.
+{{site_name}} 드림''',
+
+        'coupon_issued': '''안녕하세요 {{user_name}}님,
+
+특별한 쿠폰이 발급되었습니다!
+
+쿠폰 코드: {{coupon_code}}
+할인 혜택: {{coupon_discount}}
+유효 기간: {{expire_date}}까지
+
+지금 바로 사용해보세요!
+
+{{site_name}} 드림''',
+
+        'review_request': '''안녕하세요 {{user_name}}님,
+
+최근 구매하신 상품은 만족스러우셨나요?
+
+{{product_name}}
+
+고객님의 소중한 리뷰는 다른 고객님들께 큰 도움이 됩니다.
+리뷰 작성 시 포인트도 적립해드립니다!
+
+[리뷰 작성하기] {{action_url}}
+
+감사합니다.
+{{site_name}} 드림''',
+
+        'birthday_greeting': '''안녕하세요 {{user_name}}님,
+
+생일을 진심으로 축하드립니다! 🎂
+
+특별한 날을 기념하여 생일 쿠폰을 준비했습니다.
+
+쿠폰 코드: {{coupon_code}}
+할인 혜택: {{coupon_discount}}
+
+행복한 하루 보내세요!
+
+{{site_name}} 드림''',
     }
     return defaults.get(template_type, '')
 
 
 def _get_available_variables(template_type):
     """템플릿 타입별 사용 가능한 변수"""
-    common_vars = ['{{site_name}}', '{{user_name}}', '{{user_email}}']
+    common_vars = ['{{site_name}}', '{{user_name}}', '{{user_email}}', '{{current_date}}']
     
     type_specific_vars = {
         'welcome': ['{{welcome_points_amount}}', '{{welcome_points_enabled}}'],
         'order_confirm': ['{{order_number}}', '{{order_date}}', '{{order_total}}', '{{order_items}}'],
         'order_shipped': ['{{order_number}}', '{{tracking_number}}', '{{courier}}', '{{tracking_url}}'],
         'order_delivered': ['{{order_number}}', '{{delivery_date}}'],
+        'order_cancelled': ['{{order_number}}', '{{order_total}}', '{{cancel_reason}}'],
+        'order_refunded': ['{{order_number}}', '{{refund_amount}}', '{{refund_reason}}'],
         'password_reset': ['{{reset_link}}', '{{reset_token}}'],
         'point_earned': ['{{point_amount}}', '{{point_reason}}', '{{point_balance}}'],
         'point_expired': ['{{point_amount}}', '{{expire_date}}', '{{point_balance}}'],
+        'point_used': ['{{point_amount}}', '{{point_balance}}', '{{order_number}}'],
         'low_stock': ['{{product_name}}', '{{product_sku}}', '{{current_stock}}', '{{threshold}}'],
+        'product_restock': ['{{product_name}}', '{{product_url}}', '{{stock_quantity}}'],
+        'cart_abandoned': ['{{cart_items}}', '{{cart_total}}', '{{cart_url}}'],
+        'review_request': ['{{product_name}}', '{{order_number}}', '{{action_url}}'],
+        'coupon_issued': ['{{coupon_code}}', '{{coupon_discount}}', '{{expire_date}}'],
+        'coupon_expiring': ['{{coupon_code}}', '{{coupon_discount}}', '{{expire_date}}', '{{days_until_expire}}'],
+        'membership_upgrade': ['{{old_level}}', '{{new_level}}', '{{benefits}}'],
+        'birthday_greeting': ['{{coupon_code}}', '{{coupon_discount}}', '{{birth_date}}'],
     }
     
     return common_vars + type_specific_vars.get(template_type, [])

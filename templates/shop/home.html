@@ -1,0 +1,123 @@
+{% extends 'shop/base.html' %}
+{% load humanize %}
+{% block title %}홈 - {{ site_name }}{% endblock %}
+
+{% block content %}
+<!-- 히어로 섹션 -->
+<section class="relative h-96 bg-gradient-to-r from-blue-600 to-purple-600">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="relative container mx-auto px-4 h-full flex items-center">
+        <div class="text-white max-w-3xl mx-auto text-center">
+            <h1 class="text-5xl font-bold mb-4">Welcome to {{ site_name }}</h1>
+            <p class="text-xl mb-8">최고의 쇼핑 경험을 제공합니다</p>
+            
+            <!-- 검색 바 -->
+            <form action="{% url 'shop:search' %}" method="get" class="max-w-2xl mx-auto mb-6">
+                <div class="flex">
+                    <input type="text" 
+                           name="q" 
+                           placeholder="상품명, 브랜드, 카테고리 검색..." 
+                           class="flex-1 px-6 py-4 text-gray-900 rounded-l-lg text-lg focus:outline-none"
+                           required>
+                    <button type="submit" 
+                            class="px-8 py-4 bg-yellow-500 text-gray-900 rounded-r-lg font-semibold hover:bg-yellow-400 transition">
+                        <i class="fas fa-search mr-2"></i>검색
+                    </button>
+                </div>
+            </form>
+            
+            <a href="{% url 'shop:product_list' %}" class="inline-block bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+                모든 상품 보기
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- 카테고리 섹션 -->
+<section class="container mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold text-center mb-8">카테고리</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {% for category in categories %}
+        <a href="{% url 'shop:product_list' %}?category={{ category.id }}" 
+           class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition">
+            <div class="text-4xl mb-4 text-blue-600">
+                <i class="fas fa-box"></i>
+            </div>
+            <h3 class="font-semibold">{{ category.name }}</h3>
+        </a>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- 추천 상품 섹션 -->
+<section class="bg-gray-100 py-12">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-8">추천 상품</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {% for product in featured_products %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+                <a href="{% url 'shop:product_detail' product.id %}">
+                    <div class="h-48 bg-gray-200 flex items-center justify-center">
+                        {% with primary_image=product.images.first %}
+                        {% if primary_image %}
+                            <img src="{{ primary_image.image.url }}" alt="{{ product.name }}" class="h-full w-full object-cover">
+                        {% else %}
+                            <i class="fas fa-image text-4xl text-gray-400"></i>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold mb-2 truncate">{{ product.name }}</h3>
+                        <p class="text-2xl font-bold text-blue-600">₩{{ product.effective_price|floatformat:0|intcomma }}</p>
+                        {% if product.discount_price %}
+                        <p class="text-sm text-gray-500 line-through">₩{{ product.selling_price|floatformat:0|intcomma }}</p>
+                        <span class="text-sm text-red-500">{{ product.discount_percentage }}% OFF</span>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- 프로모션 배너 -->
+<section class="container mx-auto px-4 py-12">
+    <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg p-8 text-white text-center">
+        <h2 class="text-3xl font-bold mb-4">신규 회원 특별 혜택</h2>
+        <p class="text-xl mb-6">지금 가입하시면 10% 할인 쿠폰을 드립니다!</p>
+        {% if not user.is_authenticated %}
+        <a href="{% url 'accounts:signup' %}" class="bg-white text-purple-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+            회원가입
+        </a>
+        {% endif %}
+    </div>
+</section>
+
+<!-- 서비스 특징 -->
+<section class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center">
+            <div class="text-4xl text-blue-600 mb-4">
+                <i class="fas fa-shipping-fast"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">빠른 배송</h3>
+            <p class="text-gray-600">주문 후 2-3일 이내 배송</p>
+        </div>
+        <div class="text-center">
+            <div class="text-4xl text-blue-600 mb-4">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">안전한 결제</h3>
+            <p class="text-gray-600">SSL 암호화로 안전한 결제</p>
+        </div>
+        <div class="text-center">
+            <div class="text-4xl text-blue-600 mb-4">
+                <i class="fas fa-undo"></i>
+            </div>
+            <h3 class="text-xl font-semibold mb-2">편리한 반품</h3>
+            <p class="text-gray-600">14일 이내 무료 반품</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

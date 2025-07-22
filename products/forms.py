@@ -182,7 +182,7 @@ class ProductImageForm(forms.ModelForm):
     
     class Meta:
         model = ProductImage
-        fields = ['image', 'alt_text', 'is_primary', 'sort_order']
+        fields = ['image', 'alt_text', 'is_primary', 'image_type', 'sort_order']
         widgets = {
             'image': forms.FileInput(attrs={
                 'class': 'block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100',
@@ -192,6 +192,9 @@ class ProductImageForm(forms.ModelForm):
                 'class': 'w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200',
                 'placeholder': '이미지 설명'
             }),
+            'image_type': forms.Select(attrs={
+                'class': 'w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200'
+            }),
             'sort_order': forms.NumberInput(attrs={
                 'class': 'w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors duration-200',
                 'min': 0
@@ -200,6 +203,38 @@ class ProductImageForm(forms.ModelForm):
                 'class': 'rounded border-gray-300 text-emerald-600 focus:ring-emerald-500'
             })
         }
+    
+    def clean_image(self):
+        """이미지 유효성 검사"""
+        image = self.cleaned_data.get('image')
+        image_type = self.data.get(f'{self.prefix}-image_type', 'gallery')
+        
+        if image:
+            # 대표 이미지와 갤러리 이미지만 크기 제한
+            if image_type in ['primary', 'gallery']:
+                # 파일 크기 제한 (5MB)
+                if image.size > 5 * 1024 * 1024:
+                    raise forms.ValidationError('대표 이미지와 갤러리 이미지는 5MB를 초과할 수 없습니다.')
+                
+                # 이미지 크기 검사
+                try:
+                    img = Image.open(image)
+                    width, height = img.size
+                    
+                    # 너무 작은 이미지 제한
+                    if width < 300 or height < 300:
+                        raise forms.ValidationError('대표 이미지와 갤러리 이미지는 최소 300x300 픽셀 이상이어야 합니다.')
+                    
+                    # 너무 큰 이미지 제한
+                    if width > 4000 or height > 4000:
+                        raise forms.ValidationError('대표 이미지와 갤러리 이미지는 4000x4000 픽셀을 초과할 수 없습니다.')
+                    
+                except Exception:
+                    raise forms.ValidationError('유효한 이미지 파일이 아닙니다.')
+            
+            # 상세 이미지는 제한 없음 (긴 포스터, 홍보지 등 허용)
+            
+        return image
 
 # 상품 이미지 인라인 폼셋
 ProductImageFormSet = inlineformset_factory(

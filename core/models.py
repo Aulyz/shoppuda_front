@@ -229,10 +229,20 @@ class EmailTemplate(models.Model):
         ('order_confirm', '주문 확인'),
         ('order_shipped', '배송 시작'),
         ('order_delivered', '배송 완료'),
+        ('order_cancelled', '주문 취소'),
+        ('order_refunded', '환불 완료'),
         ('password_reset', '비밀번호 재설정'),
         ('point_earned', '포인트 적립'),
         ('point_expired', '포인트 만료 예정'),
+        ('point_used', '포인트 사용'),
         ('low_stock', '재고 부족 알림'),
+        ('product_restock', '재입고 알림'),
+        ('cart_abandoned', '장바구니 이탈'),
+        ('review_request', '리뷰 요청'),
+        ('coupon_issued', '쿠폰 발급'),
+        ('coupon_expiring', '쿠폰 만료 예정'),
+        ('membership_upgrade', '멤버십 등급 상승'),
+        ('birthday_greeting', '생일 축하'),
     ]
     
     template_type = models.CharField(
@@ -254,9 +264,90 @@ class EmailTemplate(models.Model):
         verbose_name='활성화'
     )
     
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='생성일시')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='수정일시')
+    
     class Meta:
         verbose_name = '이메일 템플릿'
         verbose_name_plural = '이메일 템플릿'
     
     def __str__(self):
         return f"{self.get_template_type_display()} - {self.subject}"
+
+
+class EmailTrigger(models.Model):
+    """이메일 자동 발송 트리거 설정"""
+    
+    TRIGGER_EVENTS = [
+        ('user_register', '회원가입 시'),
+        ('order_created', '주문 생성 시'),
+        ('order_paid', '결제 완료 시'),
+        ('order_shipped', '배송 시작 시'),
+        ('order_delivered', '배송 완료 시'),
+        ('order_cancelled', '주문 취소 시'),
+        ('order_refunded', '환불 완료 시'),
+        ('point_earned', '포인트 적립 시'),
+        ('point_expire_soon', '포인트 만료 X일 전'),
+        ('point_used', '포인트 사용 시'),
+        ('cart_abandoned', '장바구니 이탈 X시간 후'),
+        ('review_request', '배송완료 X일 후'),
+        ('coupon_issued', '쿠폰 발급 시'),
+        ('coupon_expire_soon', '쿠폰 만료 X일 전'),
+        ('membership_changed', '멤버십 등급 변경 시'),
+        ('birthday', '생일 당일'),
+        ('product_restock', '관심상품 재입고 시'),
+    ]
+    
+    DELAY_UNITS = [
+        ('minutes', '분'),
+        ('hours', '시간'),
+        ('days', '일'),
+    ]
+    
+    name = models.CharField(max_length=100, verbose_name='트리거 이름')
+    event = models.CharField(max_length=50, choices=TRIGGER_EVENTS, verbose_name='이벤트')
+    email_template = models.ForeignKey(
+        EmailTemplate,
+        on_delete=models.CASCADE,
+        related_name='triggers',
+        verbose_name='이메일 템플릿'
+    )
+    is_active = models.BooleanField(default=True, verbose_name='활성화')
+    
+    # 지연 발송 설정
+    delay_value = models.IntegerField(default=0, verbose_name='지연 시간')
+    delay_unit = models.CharField(
+        max_length=10,
+        choices=DELAY_UNITS,
+        default='minutes',
+        verbose_name='시간 단위'
+    )
+    
+    # 조건 설정 (JSON 형태로 저장)
+    conditions = models.JSONField(
+        default=dict,
+        blank=True,
+        verbose_name='발송 조건',
+        help_text='예: {"min_order_amount": 50000, "membership_level": "gold"}'
+    )
+    
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='생성일시')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='수정일시')
+    
+    class Meta:
+        verbose_name = '이메일 트리거'
+        verbose_name_plural = '이메일 트리거'
+        unique_together = ['event', 'email_template']
+    
+    def __str__(self):
+        return f"{self.name} - {self.get_event_display()}"
+    
+    def get_delay_seconds(self):
+        """지연 시간을 초 단위로 반환"""
+        if self.delay_unit == 'minutes':
+            return self.delay_value * 60
+        elif self.delay_unit == 'hours':
+            return self.delay_value * 3600
+        elif self.delay_unit == 'days':
+            return self.delay_value * 86400
+        return 0

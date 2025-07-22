@@ -1194,6 +1194,10 @@ def handle_product_create(request):
             # 이미지 처리
             process_product_images(product, request.FILES)
             
+            # 디버그: 실제 이미지가 생성되었는지 확인
+            image_count = product.images.count()
+            logger.info(f'Product {product.id} now has {image_count} images')
+            
             return JsonResponse({
                 'success': True,
                 'message': '상품이 성공적으로 등록되었습니다.',
@@ -1211,6 +1215,13 @@ def handle_product_update(request, product):
         with transaction.atomic():
             update_product_fields(product, request.POST)
             product.save()
+            
+            # 기존 이미지 처리
+            process_existing_images(product, request.POST)
+            
+            # 새 이미지 처리
+            if request.FILES:
+                process_product_images(product, request.FILES)
             
             # AJAX 요청이면 JSON 리턴
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
@@ -1395,16 +1406,68 @@ def update_product_fields(product, post_data):
 
 def process_product_images(product, files):
     """상품 이미지 처리"""
-    if 'images' in files:
-        images = files.getlist('images')
-        for index, image in enumerate(images):
-            ProductImage.objects.create(
-                product=product,
-                image=image,
-                alt_text=f'{product.name} 이미지 {index + 1}',
-                is_primary=(index == 0),
-                sort_order=index
-            )
+    try:
+        # 'images' 또는 'new_images' 키로 이미지 찾기
+        images = []
+        if 'images' in files:
+            images = files.getlist('images')
+        elif 'new_images' in files:
+            images = files.getlist('new_images')
+            
+        if images:
+            logger.info(f'Processing {len(images)} images for product {product.name}')
+            
+            for index, image in enumerate(images):
+                # 이미지 파일 검증
+                if image.size > 10 * 1024 * 1024:  # 10MB 제한
+                    logger.warning(f'Image {image.name} is too large: {image.size} bytes')
+                    continue
+                    
+                # 파일 형식 검증
+                if not image.content_type.startswith('image/'):
+                    logger.warning(f'Invalid file type: {image.content_type}')
+                    continue
+                
+                product_image = ProductImage.objects.create(
+                    product=product,
+                    image=image,
+                    alt_text=f'{product.name} 이미지 {index + 1}',
+                    is_primary=(index == 0),
+                    sort_order=index
+                )
+                logger.info(f'Created ProductImage {product_image.id} for product {product.id}')
+        else:
+            logger.info(f'No images found in request for product {product.name}')
+    except Exception as e:
+        logger.error(f'Error processing images for product {product.id}: {str(e)}', exc_info=True)
+
+def process_existing_images(product, post_data):
+    """기존 이미지 처리 (수정/삭제)"""
+    try:
+        # 기존 이미지 처리
+        index = 0
+        while f'existing_image_{index}_id' in post_data:
+            image_id = post_data.get(f'existing_image_{index}_id')
+            if image_id:
+                try:
+                    image = ProductImage.objects.get(id=image_id, product=product)
+                    
+                    # 삭제 확인
+                    if post_data.get(f'existing_image_{index}_delete') == 'true':
+                        image.delete()
+                        logger.info(f'Deleted image {image_id} for product {product.id}')
+                    else:
+                        # 정보 업데이트
+                        image.alt_text = post_data.get(f'existing_image_{index}_alt', image.alt_text)
+                        image.sort_order = int(post_data.get(f'existing_image_{index}_sort', image.sort_order))
+                        image.is_primary = post_data.get(f'existing_image_{index}_primary') == 'true'
+                        image.save()
+                        logger.info(f'Updated image {image_id} for product {product.id}')
+                except ProductImage.DoesNotExist:
+                    logger.warning(f'Image {image_id} not found for product {product.id}')
+            index += 1
+    except Exception as e:
+        logger.error(f'Error processing existing images for product {product.id}: {str(e)}', exc_info=True)
 
 def generate_unique_sku(base_sku):
     """고유한 SKU 생성"""

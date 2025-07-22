@@ -141,3 +141,53 @@ class EmailService:
                     admin_email,
                     context_data
                 )
+    
+    @staticmethod
+    def send_order_cancelled_email(order):
+        """주문 취소 이메일"""
+        context_data = {
+            'user_name': order.customer_name,
+            'user_email': order.customer_email,
+            'order_number': order.order_number,
+            'order_total': f"{order.total_amount:,.0f}",
+            'cancel_reason': order.cancel_reason or '고객 요청',
+        }
+        
+        return EmailService.send_templated_email(
+            'order_cancelled',
+            order.customer_email,
+            context_data
+        )
+    
+    @staticmethod
+    def send_point_earned_email(user, points):
+        """포인트 적립 이메일"""
+        context_data = {
+            'user_name': user.name,
+            'user_email': user.email,
+            'point_amount': f"{points:,}",
+            'point_balance': f"{user.points:,}",
+        }
+        
+        return EmailService.send_templated_email(
+            'point_earned',
+            user.email,
+            context_data
+        )
+    
+    @staticmethod
+    def send_coupon_issued_email(user, coupon):
+        """쿠폰 발급 이메일"""
+        context_data = {
+            'user_name': user.name,
+            'user_email': user.email,
+            'coupon_code': coupon.code,
+            'coupon_discount': f"{coupon.discount_value}{'%' if coupon.discount_type == 'percentage' else '원'}",
+            'expire_date': coupon.expire_date.strftime('%Y-%m-%d'),
+        }
+        
+        return EmailService.send_templated_email(
+            'coupon_issued',
+            user.email,
+            context_data
+        )

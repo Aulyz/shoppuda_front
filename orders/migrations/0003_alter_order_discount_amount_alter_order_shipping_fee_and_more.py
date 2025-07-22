@@ -5,7 +5,7 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("orders", "0002_order_cancelled_date_order_refunded_date"),
+        ("orders", "0001_initial"),
     ]
 
     operations = [

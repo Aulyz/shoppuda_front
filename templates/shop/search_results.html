@@ -1,0 +1,191 @@
+{% extends 'shop/base.html' %}
+{% load humanize %}
+{% block title %}검색 결과: {{ search_query }} - {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <!-- 검색 결과 헤더 -->
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">
+            "{{ search_query }}" 검색 결과
+        </h1>
+        <p class="text-gray-600">
+            총 <span class="font-semibold text-blue-600">{{ total_count }}</span>개의 상품을 찾았습니다.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- 필터 사이드바 -->
+        <div class="lg:col-span-1">
+            <div class="bg-white p-6 rounded-lg shadow-sm">
+                <h3 class="font-semibold text-lg mb-4">카테고리별 결과</h3>
+                
+                {% if categories_with_count %}
+                    <ul class="space-y-2">
+                        {% for item in categories_with_count %}
+                        <li>
+                            <a href="{% url 'shop:search' %}?q={{ search_query }}&category={{ item.category.id }}" 
+                               class="text-gray-700 hover:text-blue-600 flex justify-between items-center">
+                                <span>{{ item.category.name }}</span>
+                                <span class="text-sm text-gray-500">({{ item.count }})</span>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-gray-500 text-sm">카테고리별 결과가 없습니다.</p>
+                {% endif %}
+            </div>
+
+            <!-- 새로운 검색 -->
+            <div class="bg-white p-6 rounded-lg shadow-sm mt-6">
+                <h3 class="font-semibold text-lg mb-4">새로운 검색</h3>
+                <form action="{% url 'shop:search' %}" method="get">
+                    <input type="text" 
+                           name="q" 
+                           value="{{ search_query }}"
+                           placeholder="검색어 입력..." 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 mb-3">
+                    <button type="submit" 
+                            class="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        검색
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 검색 결과 리스트 -->
+        <div class="lg:col-span-3">
+            {% if products %}
+                <!-- 정렬 옵션 -->
+                <div class="flex justify-between items-center mb-6">
+                    <div class="text-sm text-gray-600">
+                        {{ products|length }}개 상품
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm text-gray-600">정렬:</label>
+                        <select onchange="window.location.href=this.value" 
+                                class="border border-gray-300 rounded px-3 py-1 text-sm focus:outline-none focus:border-blue-500">
+                            <option value="?q={{ search_query }}&sort=-created_at" {% if request.GET.sort == '-created_at' or not request.GET.sort %}selected{% endif %}>
+                                최신순
+                            </option>
+                            <option value="?q={{ search_query }}&sort=selling_price" {% if request.GET.sort == 'selling_price' %}selected{% endif %}>
+                                낮은 가격순
+                            </option>
+                            <option value="?q={{ search_query }}&sort=-selling_price" {% if request.GET.sort == '-selling_price' %}selected{% endif %}>
+                                높은 가격순
+                            </option>
+                            <option value="?q={{ search_query }}&sort=name" {% if request.GET.sort == 'name' %}selected{% endif %}>
+                                이름순
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 상품 그리드 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for product in products %}
+                    <div class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition group">
+                        <a href="{% url 'shop:product_detail' product.id %}">
+                            <div class="aspect-w-1 aspect-h-1 bg-gray-200 relative overflow-hidden">
+                                {% with primary_image=product.images.first %}
+                                {% if primary_image %}
+                                    <img src="{{ primary_image.image.url }}" 
+                                         alt="{{ product.name }}" 
+                                         class="w-full h-64 object-cover group-hover:scale-105 transition duration-300">
+                                {% else %}
+                                    <div class="w-full h-64 flex items-center justify-center bg-gray-100">
+                                        <i class="fas fa-image text-4xl text-gray-400"></i>
+                                    </div>
+                                {% endif %}
+                                {% endwith %}
+                                
+                                {% if product.discount_price %}
+                                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-semibold rounded">
+                                    {{ product.discount_percentage }}% OFF
+                                </div>
+                                {% endif %}
+                                
+                                {% if product.stock_quantity <= 5 %}
+                                <div class="absolute top-2 right-2 bg-orange-500 text-white px-2 py-1 text-xs font-semibold rounded">
+                                    재고 {{ product.stock_quantity }}개
+                                </div>
+                                {% endif %}
+                            </div>
+                        </a>
+                        
+                        <div class="p-4">
+                            <a href="{% url 'shop:product_detail' product.id %}" class="block">
+                                <h3 class="font-medium text-gray-800 mb-1 truncate hover:text-blue-600">
+                                    {{ product.name }}
+                                </h3>
+                                {% if product.brand %}
+                                <p class="text-sm text-gray-500 mb-2">{{ product.brand.name }}</p>
+                                {% endif %}
+                                <div class="flex items-center justify-between">
+                                    <div>
+                                        <p class="text-xl font-bold text-blue-600">
+                                            ₩{{ product.effective_price|floatformat:0|intcomma }}
+                                        </p>
+                                        {% if product.discount_price %}
+                                        <p class="text-sm text-gray-500 line-through">
+                                            ₩{{ product.selling_price|floatformat:0|intcomma }}
+                                        </p>
+                                        {% endif %}
+                                    </div>
+                                    {% if user.is_authenticated %}
+                                    <button onclick="addToCart({{ product.id }})" 
+                                            class="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <!-- 검색 결과 없음 -->
+                <div class="bg-white rounded-lg shadow-sm p-12 text-center">
+                    <i class="fas fa-search text-6xl text-gray-300 mb-4"></i>
+                    <h2 class="text-xl font-semibold text-gray-700 mb-2">
+                        검색 결과가 없습니다
+                    </h2>
+                    <p class="text-gray-500 mb-6">
+                        다른 검색어로 다시 시도해보세요.
+                    </p>
+                    <a href="{% url 'shop:product_list' %}" 
+                       class="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                        모든 상품 보기
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if user.is_authenticated %}
+<script>
+function addToCart(productId) {
+    // CSRF 토큰 가져오기
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
+    fetch(`/shop/cart/add/${productId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrftoken,
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'quantity=1'
+    })
+    .then(response => {
+        if (response.ok) {
+            // 장바구니 아이콘 업데이트 (나중에 구현)
+            alert('장바구니에 추가되었습니다.');
+        }
+    });
+}
+</script>
+{% endif %}
+{% endblock %}

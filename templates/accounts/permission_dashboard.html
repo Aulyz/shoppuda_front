@@ -18,7 +18,7 @@
                 </div>
                 <span class="text-sm text-gray-500 dark:text-gray-400">전체 사용자</span>
             </div>
-            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">{{ total_users|default:"0" }}</h3>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">{{ total_users|default:0 }}</h3>
         </div>
 
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
@@ -28,7 +28,7 @@
                 </div>
                 <span class="text-sm text-gray-500 dark:text-gray-400">관리자</span>
             </div>
-            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">{{ total_admins|default:"0" }}</h3>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">{{ total_admins|default:0 }}</h3>
         </div>
 
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
@@ -38,7 +38,7 @@
                 </div>
                 <span class="text-sm text-gray-500 dark:text-gray-400">활성 권한</span>
             </div>
-            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">{{ active_permissions|default:"0" }}</h3>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">{{ active_permissions|default:0 }}</h3>
         </div>
 
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
@@ -48,7 +48,7 @@
                 </div>
                 <span class="text-sm text-gray-500 dark:text-gray-400">만료 예정</span>
             </div>
-            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">{{ expiring_permissions|length|default:"0" }}</h3>
+            <h3 class="text-2xl font-bold text-gray-800 dark:text-white">{{ expiring_permissions|length|default:0 }}</h3>
         </div>
     </div>
 
@@ -176,7 +176,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // 권한 통계 애니메이션
     const counters = document.querySelectorAll('.text-2xl');
     counters.forEach(counter => {
-        const target = parseInt(counter.innerText);
+        const targetText = counter.innerText.trim();
+        const target = parseInt(targetText) || 0;
+        
+        // NaN 체크
+        if (isNaN(target)) {
+            counter.innerText = '0';
+            return;
+        }
+        
         let count = 0;
         const increment = target / 50;
         
@@ -190,7 +198,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
         
-        updateCount();
+        if (target > 0) {
+            updateCount();
+        } else {
+            counter.innerText = '0';
+        }
     });
 });
 </script>

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'channels',
     'notifications',
     'search',
+    'shop',  # 사용자용 쇼핑몰 앱
 
     # Custom tags
     'products.templatetags.product_tags',
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'core.middleware.MaintenanceModeMiddleware',  # 유지보수 모드 미들웨어
+    'core.middleware.AdminAccessMiddleware',  # 관리자 접근 제어 미들웨어
 ]
 
 ROOT_URLCONF = 'shopuda.urls'

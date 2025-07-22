@@ -1,0 +1,234 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ site_name }}{% endblock %}</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="h-full bg-gray-50">
+    <!-- 헤더 -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4" x-data="{ mobileMenuOpen: false, searchOpen: false }">
+            <div class="flex justify-between items-center h-16">
+                <!-- 로고 -->
+                <div class="flex items-center">
+                    <a href="{% url 'shop:home' %}" class="text-2xl font-bold text-blue-600">
+                        {{ site_name }}
+                    </a>
+                </div>
+                
+                <!-- 데스크톱 메뉴 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="{% url 'shop:product_list' %}" class="text-gray-700 hover:text-blue-600 transition">
+                        상품 보기
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 transition">
+                        신상품
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 transition">
+                        베스트
+                    </a>
+                    <a href="#" class="text-gray-700 hover:text-blue-600 transition">
+                        이벤트
+                    </a>
+                </div>
+                
+                <!-- 우측 메뉴 -->
+                <div class="flex items-center space-x-4">
+                    <!-- 검색 -->
+                    <button @click="searchOpen = !searchOpen" class="text-gray-700 hover:text-blue-600">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    
+                    {% if user.is_authenticated %}
+                        <!-- 장바구니 -->
+                        <a href="{% url 'shop:cart' %}" class="text-gray-700 hover:text-blue-600 relative">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                                0
+                            </span>
+                        </a>
+                        
+                        <!-- 사용자 메뉴 -->
+                        <div class="relative" x-data="{ userMenuOpen: false }">
+                            <button @click="userMenuOpen = !userMenuOpen" class="text-gray-700 hover:text-blue-600">
+                                <i class="fas fa-user"></i>
+                            </button>
+                            
+                            <div x-show="userMenuOpen" 
+                                 @click.away="userMenuOpen = false"
+                                 x-transition
+                                 class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2">
+                                {% if user.user_type == 'ADMIN' %}
+                                <a href="{% url 'dashboard:home' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                    <i class="fas fa-tachometer-alt mr-2"></i>관리자 대시보드
+                                </a>
+                                <hr class="my-2">
+                                {% endif %}
+                                <a href="{% url 'shop:mypage' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                    마이페이지
+                                </a>
+                                <a href="{% url 'shop:order_list' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                    주문내역
+                                </a>
+                                <a href="{% url 'shop:wishlist' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                    위시리스트
+                                </a>
+                                <hr class="my-2">
+                                <a href="{% url 'accounts:logout' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                    로그아웃
+                                </a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}" class="text-gray-700 hover:text-blue-600">
+                            로그인
+                        </a>
+                    {% endif %}
+                    
+                    <!-- 모바일 메뉴 버튼 -->
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-gray-700">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 검색 바 -->
+            <div x-show="searchOpen" 
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 transform -translate-y-2"
+                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100 transform translate-y-0"
+                 x-transition:leave-end="opacity-0 transform -translate-y-2"
+                 @click.away="searchOpen = false"
+                 class="absolute left-0 right-0 top-16 bg-white border-b shadow-lg">
+                <div class="container mx-auto px-4 py-4">
+                    <form action="{% url 'shop:search' %}" method="get" class="flex gap-2">
+                        <input type="text" 
+                               name="q" 
+                               placeholder="상품명, 브랜드, 카테고리 검색..." 
+                               class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                               required>
+                        <button type="submit" 
+                                class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                            검색
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- 모바일 메뉴 -->
+            <div x-show="mobileMenuOpen" 
+                 @click.away="mobileMenuOpen = false"
+                 x-transition
+                 class="md:hidden border-t">
+                <div class="py-2">
+                    <a href="{% url 'shop:product_list' %}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        상품 보기
+                    </a>
+                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        신상품
+                    </a>
+                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        베스트
+                    </a>
+                    <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        이벤트
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- 메시지 -->
+    {% if messages %}
+        <div class="container mx-auto px-4 mt-4">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} mb-4 p-4 rounded-lg 
+                    {% if message.tags == 'error' %}bg-red-100 text-red-700{% endif %}
+                    {% if message.tags == 'success' %}bg-green-100 text-green-700{% endif %}
+                    {% if message.tags == 'warning' %}bg-yellow-100 text-yellow-700{% endif %}
+                    {% if message.tags == 'info' %}bg-blue-100 text-blue-700{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <!-- 메인 컨텐츠 -->
+    <main class="min-h-screen">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- 푸터 -->
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">고객센터</h3>
+                    <p class="text-gray-400">1234-5678</p>
+                    <p class="text-gray-400 text-sm">평일 09:00 - 18:00</p>
+                    <p class="text-gray-400 text-sm">주말/공휴일 휴무</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">쇼핑 안내</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">이용안내</a></li>
+                        <li><a href="#" class="hover:text-white">배송안내</a></li>
+                        <li><a href="#" class="hover:text-white">교환/반품</a></li>
+                        <li><a href="#" class="hover:text-white">자주묻는질문</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">회사 정보</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">회사소개</a></li>
+                        <li><a href="#" class="hover:text-white">이용약관</a></li>
+                        <li><a href="#" class="hover:text-white">개인정보처리방침</a></li>
+                        <li><a href="#" class="hover:text-white">사업자정보확인</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">소셜 미디어</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 {{ site_name }}. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

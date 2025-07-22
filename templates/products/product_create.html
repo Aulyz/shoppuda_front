@@ -1163,6 +1163,30 @@ function resizeImage(file, maxWidth = 800, maxHeight = 800, quality = 0.8) {
         img.src = URL.createObjectURL(file);
     });
 }
+
+// CSRF 토큰 가져오기
+function getCsrfToken() {
+    return document.querySelector('[name=csrfmiddlewaretoken]').value;
+}
+
+// 알림 함수들
+function showSuccess(message) {
+    Swal.fire({
+        icon: 'success',
+        title: '성공',
+        text: message,
+        timer: 2000,
+        showConfirmButton: false
+    });
+}
+
+function showError(message) {
+    Swal.fire({
+        icon: 'error',
+        title: '오류',
+        text: message
+    });
+}
 </script>
 
 <!-- 커스텀 CSS -->

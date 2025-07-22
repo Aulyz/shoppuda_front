@@ -51,9 +51,16 @@ def login_view(request):
                 
                 messages.success(request, f'{user.first_name or user.username}님, 환영합니다!')
                 
-                # next 파라미터 처리
-                next_url = request.GET.get('next', 'dashboard:home')
-                return redirect(next_url)
+                # next 파라미터 처리 및 사용자 타입별 리디렉션
+                next_url = request.GET.get('next')
+                if next_url:
+                    return redirect(next_url)
+                else:
+                    # 사용자 타입에 따라 리디렉션
+                    if user.user_type == 'ADMIN':
+                        return redirect('dashboard:home')
+                    else:
+                        return redirect('shop:home')
             else:
                 messages.error(request, '아이디 또는 비밀번호가 올바르지 않습니다.')
         else:
@@ -72,19 +79,22 @@ def logout_view(request):
     """로그아웃 뷰"""
     logout(request)
     messages.success(request, '로그아웃되었습니다.')
-    return redirect('accounts:login')
+    return redirect('shop:home')
 
 
 class SignUpView(CreateView):
     """회원가입 뷰"""
     model = User
     form_class = CustomSignUpForm
-    template_name = 'accounts/signup.html'
+    template_name = 'accounts/user_signup.html'  # 유저용 템플릿 사용
     success_url = reverse_lazy('accounts:login')
     
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('dashboard:home')
+            if request.user.user_type == 'ADMIN':
+                return redirect('dashboard:home')
+            else:
+                return redirect('shop:home')
         return super().dispatch(request, *args, **kwargs)
     
     def form_valid(self, form):

@@ -23,6 +23,30 @@
     
     <!-- Tailwind CSS 4.1 -->
     <script src="{% static 'js/tailwind.min.js' %}"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gray: {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            600: '#4b5563',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827',
+                            950: '#030712',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -35,6 +59,9 @@
     
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
     
     <!-- 재고 관리 커스텀 CSS -->
     <link rel="stylesheet" href="{% static 'css/inventory-custom.css' %}">
@@ -127,7 +154,7 @@
     {% block extra_head %}{% endblock %}
 </head>
 
-<body class="h-full bg-gray-50 dark:bg-gray-900" x-data="baseApp()" x-init="init()">
+<body class="h-full bg-gray-50 dark:bg-gray-900 transition-colors duration-200" x-data="baseApp()" x-init="init()">
     <!-- CSRF Token -->
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
     

@@ -240,6 +240,16 @@ class Product(models.Model):
     def all_images(self):
         """모든 이미지 반환"""
         return self.images.all().order_by('sort_order')
+    
+    @property
+    def gallery_images(self):
+        """갤러리 이미지만 반환"""
+        return self.images.filter(image_type__in=['primary', 'gallery']).order_by('sort_order')
+    
+    @property
+    def detail_images(self):
+        """상세 이미지만 반환"""
+        return self.images.filter(image_type='detail').order_by('sort_order')
 
     @property
     def stock_status(self):
@@ -311,10 +321,18 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     """상품 이미지 모델"""
+    
+    IMAGE_TYPE_CHOICES = [
+        ('primary', '대표 이미지'),
+        ('gallery', '갤러리 이미지'),
+        ('detail', '상세 이미지'),
+    ]
+    
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name='상품')
     image = models.ImageField('이미지', upload_to='products/')
     alt_text = models.CharField('대체 텍스트', max_length=200, blank=True)
     is_primary = models.BooleanField('대표 이미지', default=False)
+    image_type = models.CharField('이미지 타입', max_length=20, choices=IMAGE_TYPE_CHOICES, default='gallery')
     sort_order = models.PositiveIntegerField('정렬 순서', default=0)
     created_at = models.DateTimeField('업로드일', auto_now_add=True)
 
@@ -330,15 +348,19 @@ class ProductImage(models.Model):
         # 첫 번째 이미지는 자동으로 대표 이미지로 설정
         if not self.product.images.exists():
             self.is_primary = True
+            self.image_type = 'primary'
         
         # 대표 이미지 설정 시 다른 이미지들의 대표 이미지 해제
         if self.is_primary:
             self.product.images.exclude(pk=self.pk).update(is_primary=False)
+            self.image_type = 'primary'
         
         super().save(*args, **kwargs)
         
-        # 이미지 최적화
-        self.optimize_image()
+        # 대표 이미지(primary)와 갤러리 이미지(gallery)만 최적화
+        # 상세 이미지(detail)는 원본 그대로 저장
+        if self.image_type in ['primary', 'gallery']:
+            self.optimize_image()
 
     def optimize_image(self):
         """이미지 최적화"""
