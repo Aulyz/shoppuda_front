@@ -189,6 +189,13 @@
         <!-- 구분선 -->
         <div class="my-6 border-t border-gray-200 dark:border-gray-700"></div>
 
+        <!-- 채팅 상담 -->
+        <a href="{% url 'chat:agent_dashboard' %}" 
+           class="nav-item {% if request.resolver_match.namespace == 'chat' %}nav-active{% endif %}">
+            <i class="fas fa-comments w-5 h-5"></i>
+            <span>채팅 상담</span>
+        </a>
+
         <!-- 보고서 -->
         <div x-data="{ open: {% if request.resolver_match.namespace == 'reports' %}true{% else %}false{% endif %} }">
             <button @click="open = !open" 

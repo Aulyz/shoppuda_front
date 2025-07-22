@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+
+{% block title %}채팅 상담 대시보드{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">채팅 상담 대시보드</h1>
+
+    <!-- 오늘의 통계 -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="flex-shrink-0 bg-indigo-100 dark:bg-indigo-900 rounded-lg p-3">
+                    <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                </div>
+                <div class="ml-5">
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">오늘 상담</p>
+                    <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ today_stats.total_sessions }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="flex-shrink-0 bg-green-100 dark:bg-green-900 rounded-lg p-3">
+                    <svg class="w-6 h-6 text-green-600 dark:text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <div class="ml-5">
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">완료된 상담</p>
+                    <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ today_stats.completed_sessions }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <div class="flex items-center">
+                <div class="flex-shrink-0 bg-yellow-100 dark:bg-yellow-900 rounded-lg p-3">
+                    <svg class="w-6 h-6 text-yellow-600 dark:text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                    </svg>
+                </div>
+                <div class="ml-5">
+                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">평균 평점</p>
+                    <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ today_stats.avg_rating|floatformat:1 }}/5.0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- 대기중인 채팅 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+            <div class="px-6 py-4 border-b dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                    대기중인 채팅
+                    <span class="ml-2 bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-300 text-xs px-2 py-1 rounded-full">
+                        {{ waiting_sessions.count }}
+                    </span>
+                </h2>
+            </div>
+            <div class="p-6">
+                <div id="waiting-sessions" class="space-y-4">
+                    {% for session in waiting_sessions %}
+                    <div class="border dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <p class="font-medium text-gray-900 dark:text-white">
+                                    {{ session.customer_name|default:"익명 고객" }}
+                                </p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                    {{ session.subject|default:"상담 요청" }}
+                                </p>
+                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                                    {{ session.created_at|timesince }} 전
+                                </p>
+                            </div>
+                            <button onclick="joinChat('{{ session.id }}')"
+                                    class="px-4 py-2 bg-indigo-600 text-white text-sm rounded-lg hover:bg-indigo-700 transition">
+                                상담 시작
+                            </button>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-gray-500 dark:text-gray-400 text-center py-8">
+                        대기중인 채팅이 없습니다.
+                    </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- 진행중인 내 채팅 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+            <div class="px-6 py-4 border-b dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center">
+                    진행중인 내 채팅
+                    <span class="ml-2 bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300 text-xs px-2 py-1 rounded-full">
+                        {{ my_active_sessions.count }}
+                    </span>
+                </h2>
+            </div>
+            <div class="p-6">
+                <div class="space-y-4">
+                    {% for session in my_active_sessions %}
+                    <div class="border dark:border-gray-700 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
+                                <p class="font-medium text-gray-900 dark:text-white">
+                                    {{ session.customer_name|default:"익명 고객" }}
+                                </p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400">
+                                    {{ session.subject|default:"상담 진행중" }}
+                                </p>
+                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                                    시작: {{ session.started_at|date:"H:i" }}
+                                </p>
+                            </div>
+                            <a href="{% url 'chat:chat_room' session.id %}"
+                               class="px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition">
+                                계속하기
+                            </a>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-gray-500 dark:text-gray-400 text-center py-8">
+                        진행중인 채팅이 없습니다.
+                    </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 추가 기능 링크 -->
+    <div class="mt-8 flex space-x-4">
+        <a href="{% url 'chat:chat_history' %}" 
+           class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+            채팅 이력 조회
+        </a>
+        <a href="{% url 'chat:quick_reply_list' %}" 
+           class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+            빠른 답변 관리
+        </a>
+    </div>
+</div>
+
+<script>
+// WebSocket 연결 (대시보드용)
+let dashboardSocket = null;
+
+function connectDashboardWebSocket() {
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsHost = window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+    dashboardSocket = new WebSocket(`${protocol}//${wsHost}/ws/chat/agent/dashboard/`);
+
+    dashboardSocket.onopen = function(e) {
+        console.log('Dashboard WebSocket connected');
+    };
+
+    dashboardSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        handleDashboardMessage(data);
+    };
+
+    dashboardSocket.onclose = function(e) {
+        console.error('Dashboard WebSocket closed unexpectedly');
+        setTimeout(connectDashboardWebSocket, 1000);
+    };
+}
+
+function handleDashboardMessage(data) {
+    switch(data.type) {
+        case 'new_session':
+            // 새로운 대기 세션 알림
+            showNotification('새로운 상담 요청이 있습니다!');
+            refreshWaitingSessions();
+            break;
+        case 'status_update':
+            // 세션 상태 업데이트
+            refreshWaitingSessions();
+            break;
+    }
+}
+
+function joinChat(sessionId) {
+    // AJAX로 채팅 세션 참여
+    const formData = new FormData();
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    formData.append('csrfmiddlewaretoken', csrfToken);
+    
+    fetch(`/chat/agent/join/${sessionId}/`, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = data.redirect_url;
+        } else {
+            alert(data.error || '채팅 참여에 실패했습니다.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('채팅 참여 중 오류가 발생했습니다.');
+    });
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function refreshWaitingSessions() {
+    // AJAX로 대기 세션 목록 새로고침
+    fetch('{% url "chat:agent_dashboard" %}', {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.text())
+    .then(html => {
+        // DOM 파싱하여 대기 세션 부분만 업데이트
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const newSessions = doc.getElementById('waiting-sessions');
+        if (newSessions) {
+            document.getElementById('waiting-sessions').innerHTML = newSessions.innerHTML;
+        }
+    });
+}
+
+function showNotification(message) {
+    // 브라우저 알림
+    if (Notification.permission === 'granted') {
+        new Notification('Shopuda 채팅 상담', {
+            body: message,
+            icon: '/static/images/logo.png'
+        });
+    }
+    
+    // 사운드 재생 (선택사항)
+    const audio = new Audio('/static/sounds/notification.mp3');
+    audio.play().catch(e => console.error('Audio play failed:', e));
+}
+
+// 초기화
+document.addEventListener('DOMContentLoaded', function() {
+    connectDashboardWebSocket();
+    
+    // 브라우저 알림 권한 요청
+    if ('Notification' in window && Notification.permission === 'default') {
+        Notification.requestPermission();
+    }
+    
+    // 30초마다 대기 세션 새로고침
+    setInterval(refreshWaitingSessions, 30000);
+});
+</script>
+{% endblock %}

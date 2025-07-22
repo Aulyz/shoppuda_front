@@ -13,8 +13,10 @@ User = get_user_model()
 class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.user = self.scope["user"]
+        print(f"NotificationConsumer connect - User: {self.user}")  # 디버깅용
         
         if self.user.is_anonymous:
+            print(f"Rejecting anonymous user")  # 디버깅용
             await self.close()
             return
             
@@ -35,10 +37,11 @@ class NotificationConsumer(AsyncWebsocketConsumer):
     
     async def disconnect(self, close_code):
         # 그룹에서 채널 제거
-        await self.channel_layer.group_discard(
-            self.group_name,
-            self.channel_name
-        )
+        if hasattr(self, 'group_name'):
+            await self.channel_layer.group_discard(
+                self.group_name,
+                self.channel_name
+            )
     
     async def receive(self, text_data):
         """클라이언트로부터 메시지 수신"""

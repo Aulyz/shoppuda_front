@@ -21,8 +21,8 @@
     <meta name="csrf-token" content="{{ csrf_token }}">
     <title>{% block title %}Shopuda ERP{% endblock %}</title>
     
-    <!-- Tailwind CSS 4.1 -->
-    <script src="{% static 'js/tailwind.min.js' %}"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -55,6 +55,7 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     
     <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <!-- SweetAlert2 -->
@@ -406,7 +407,8 @@
         
         function connectWebSocket() {
             const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsUrl = `${protocol}//${window.location.host}/ws/notifications/`;
+            const wsHost = window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+            const wsUrl = `${protocol}//${wsHost}/ws/notifications/`;
             
             notificationSocket = new WebSocket(wsUrl);
             

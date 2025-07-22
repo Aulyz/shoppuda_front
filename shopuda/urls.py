@@ -21,6 +21,7 @@ urlpatterns = [
     path('core/', include('core.urls')),
     path('notifications/', include('notifications.urls')),
     path('search/', include('search.urls')),
+    path('chat/', include('chat.urls')),
     
     # API
     path('api/', include('api.urls')),

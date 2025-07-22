@@ -35,4 +35,5 @@ simplejson
 python-dateutil
 channels
 channels-redis
+daphne
 redis

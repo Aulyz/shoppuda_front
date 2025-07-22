@@ -1,0 +1,565 @@
+{% extends 'base.html' %}
+
+{% block title %}채팅 상담 - {{ session.session_number }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .chat-container {
+        height: calc(100vh - 200px);
+        min-height: 500px;
+    }
+    .messages-container {
+        height: calc(100% - 120px);
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #9ca3af #f3f4f6;
+    }
+    .messages-container::-webkit-scrollbar {
+        width: 8px;
+    }
+    .messages-container::-webkit-scrollbar-track {
+        background: #f3f4f6;
+        border-radius: 4px;
+    }
+    .messages-container::-webkit-scrollbar-thumb {
+        background: #9ca3af;
+        border-radius: 4px;
+    }
+    .messages-container::-webkit-scrollbar-thumb:hover {
+        background: #6b7280;
+    }
+    .message-bubble {
+        max-width: 70%;
+    }
+    .typing-indicator {
+        display: inline-flex;
+        align-items: center;
+    }
+    .typing-indicator span {
+        height: 8px;
+        width: 8px;
+        background-color: #94a3b8;
+        border-radius: 50%;
+        display: inline-block;
+        margin: 0 2px;
+        animation: typing 1.4s infinite;
+    }
+    .typing-indicator span:nth-child(1) {
+        animation-delay: -0.32s;
+    }
+    .typing-indicator span:nth-child(2) {
+        animation-delay: -0.16s;
+    }
+    @keyframes typing {
+        0%, 60%, 100% {
+            transform: translateY(0);
+        }
+        30% {
+            transform: translateY(-10px);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-6">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg chat-container">
+        <!-- Header -->
+        <div class="border-b dark:border-gray-700 px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+                        채팅 상담 - {{ session.session_number }}
+                    </h2>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        {% if session.status == 'waiting' %}
+                            상담원 연결 대기중...
+                        {% elif session.status == 'active' %}
+                            {% if session.agent %}상담원: {{ session.agent.get_full_name|default:session.agent.username }}{% endif %}
+                        {% else %}
+                            상담 종료됨
+                        {% endif %}
+                    </p>
+                </div>
+                {% if session.status == 'active' %}
+                <button onclick="endChat()" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                    상담 종료
+                </button>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div id="messages-container" class="messages-container p-6 space-y-4">
+            {% for message in messages %}
+            {% if message.sender == user %}
+                {% if is_agent and message.sender_type == 'agent' %}
+                    <div class="flex justify-end">
+                {% elif not is_agent and message.sender_type == 'customer' %}
+                    <div class="flex justify-end">
+                {% else %}
+                    <div class="flex justify-start">
+                {% endif %}
+            {% else %}
+                <div class="flex justify-start">
+            {% endif %}
+                <div class="message-bubble">
+                    {% if message.sender_type == 'system' %}
+                    <div class="text-center">
+                        <p class="text-sm text-gray-500 dark:text-gray-400 italic">{{ message.content }}</p>
+                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ message.created_at|date:"H:i" }}</p>
+                    </div>
+                    {% else %}
+                    {% if message.sender == user %}
+                        {% if is_agent and message.sender_type == 'agent' %}
+                            <div class="bg-indigo-600 text-white rounded-lg px-4 py-2">
+                        {% elif not is_agent and message.sender_type == 'customer' %}
+                            <div class="bg-indigo-600 text-white rounded-lg px-4 py-2">
+                        {% else %}
+                            <div class="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg px-4 py-2">
+                        {% endif %}
+                    {% else %}
+                        <div class="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg px-4 py-2">
+                    {% endif %}
+                        {% if message.sender_type == 'agent' %}
+                            {% if message.sender != user or not is_agent %}
+                                <p class="text-xs opacity-75 mb-1">{{ message.sender.get_full_name|default:message.sender.username }}</p>
+                            {% endif %}
+                        {% endif %}
+                        <p class="text-sm">{{ message.content|linebreaks }}</p>
+                    </div>
+                    {% if message.sender == user %}
+                        {% if is_agent and message.sender_type == 'agent' %}
+                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-1 text-right">
+                        {% elif not is_agent and message.sender_type == 'customer' %}
+                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-1 text-right">
+                        {% else %}
+                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                        {% endif %}
+                    {% else %}
+                        <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                    {% endif %}
+                        {{ message.created_at|date:"H:i" }}
+                        {% if message.is_read %}<span class="ml-1">✓✓</span>{% endif %}
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+            
+            <!-- Typing indicator -->
+            <div id="typing-indicator" class="hidden">
+                <div class="flex justify-start">
+                    <div class="message-bubble">
+                        <div class="bg-gray-200 dark:bg-gray-700 rounded-lg px-4 py-2">
+                            <p id="typing-user" class="text-xs opacity-75 mb-1">입력 중...</p>
+                            <div class="typing-indicator">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Replies (for agents) -->
+        {% if is_agent and quick_replies %}
+        <div class="border-t dark:border-gray-700 px-6 py-2">
+            <div class="flex items-center space-x-2 overflow-x-auto">
+                <span class="text-sm text-gray-500 dark:text-gray-400">빠른 답변:</span>
+                {% for reply in quick_replies|slice:":5" %}
+                <button onclick="useQuickReply('{{ reply.id }}', '{{ reply.content|escapejs }}')"
+                        class="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-sm rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 whitespace-nowrap">
+                    {{ reply.title }}
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Input -->
+        <div class="border-t dark:border-gray-700 px-6 py-4">
+            <form id="message-form" class="flex space-x-4">
+                <input type="text" id="message-input" 
+                       class="flex-1 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:ring-indigo-500 focus:border-indigo-500"
+                       placeholder="메시지를 입력하세요..."
+                       {% if session.status == 'closed' %}disabled{% endif %}>
+                <button type="submit" 
+                        class="px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                        {% if session.status == 'closed' %}disabled{% endif %}>
+                    전송
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Rating Modal (shown when chat ends) -->
+    <div id="rating-modal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">상담은 어떠셨나요?</h3>
+            <div class="flex justify-center space-x-2 mb-4">
+                {% for i in "12345" %}
+                <button onclick="setRating({{ i }})" class="rating-star text-3xl text-gray-300 hover:text-yellow-400 transition">
+                    ★
+                </button>
+                {% endfor %}
+            </div>
+            <textarea id="feedback" rows="3" 
+                      class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                      placeholder="추가 의견을 남겨주세요 (선택사항)"></textarea>
+            <div class="mt-4 flex space-x-3">
+                <button onclick="submitRating()" class="flex-1 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                    평가 제출
+                </button>
+                <button onclick="closeRatingModal()" class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+                    건너뛰기
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const sessionId = '{{ session.id }}';
+    const isAgent = {{ is_agent|yesno:"true,false" }};
+    let chatSocket = null;
+    let selectedRating = 0;
+    let typingTimer;
+    let lastActivityTime = Date.now();
+    let inactivityTimer = null;
+
+    // WebSocket 연결
+    function connectWebSocket() {
+        if (!sessionId) {
+            return;
+        }
+        
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsHost = window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+        const wsUrl = `${protocol}//${wsHost}/ws/chat/${sessionId}/`;
+        
+        try {
+            chatSocket = new WebSocket(wsUrl);
+        } catch (error) {
+            console.error('Failed to create WebSocket:', error);
+            return;
+        }
+
+        chatSocket.onopen = function(e) {
+            // 연결 성공
+            resetInactivityTimer();
+        };
+
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            handleWebSocketMessage(data);
+            // 메시지 수신 시 활동 시간 업데이트
+            lastActivityTime = Date.now();
+            resetInactivityTimer();
+        };
+
+        chatSocket.onclose = function(e) {
+            // 재연결 시도
+            chatSocket = null;
+            setTimeout(connectWebSocket, 3000);
+        };
+        
+        chatSocket.onerror = function(e) {
+            console.error('WebSocket error:', e);
+        };
+    }
+
+    // WebSocket 메시지 처리
+    function handleWebSocketMessage(data) {
+        switch(data.type) {
+            case 'message':
+                addMessage(data.data);
+                break;
+            case 'typing':
+                showTypingIndicator(data.data);
+                break;
+            case 'system':
+                addSystemMessage(data.data);
+                break;
+            case 'chat_ended':
+                handleChatEnded();
+                break;
+        }
+    }
+
+    // 메시지 추가
+    function addMessage(message) {
+        const messagesContainer = document.getElementById('messages-container');
+        const messageDiv = document.createElement('div');
+        // 현재 사용자의 메시지인지 확인 (사용자명과 타입 모두 체크)
+        const isOwnMessage = message.sender === '{{ user.username }}' && 
+                           ((isAgent && message.sender_type === 'agent') || (!isAgent && message.sender_type === 'customer'));
+        
+        messageDiv.className = `flex ${isOwnMessage ? 'justify-end' : 'justify-start'}`;
+        messageDiv.innerHTML = `
+            <div class="message-bubble">
+                <div class="${isOwnMessage ? 'bg-indigo-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white'} rounded-lg px-4 py-2">
+                    ${!isOwnMessage && message.sender_type === 'agent' ? `<p class="text-xs opacity-75 mb-1">${message.sender}</p>` : ''}
+                    <p class="text-sm">${message.content}</p>
+                </div>
+                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1 ${isOwnMessage ? 'text-right' : ''}">
+                    ${new Date(message.created_at).toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit'})}
+                </p>
+            </div>
+        `;
+        
+        messagesContainer.appendChild(messageDiv);
+        // 새 메시지가 추가되면 자동으로 맨 아래로 스크롤
+        setTimeout(() => {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }, 100);
+        hideTypingIndicator();
+    }
+
+    // 시스템 메시지 추가
+    function addSystemMessage(data) {
+        const messagesContainer = document.getElementById('messages-container');
+        const messageDiv = document.createElement('div');
+        
+        messageDiv.className = 'flex justify-center';
+        messageDiv.innerHTML = `
+            <div class="message-bubble">
+                <div class="text-center">
+                    <p class="text-sm text-gray-500 dark:text-gray-400 italic">${data.content}</p>
+                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                        ${new Date(data.created_at).toLocaleTimeString('ko-KR', {hour: '2-digit', minute: '2-digit'})}
+                    </p>
+                </div>
+            </div>
+        `;
+        
+        messagesContainer.appendChild(messageDiv);
+        // 시스템 메시지도 자동 스크롤
+        setTimeout(() => {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }, 100);
+    }
+
+    // 타이핑 표시
+    function showTypingIndicator(data) {
+        if (data.user !== '{{ user.username }}') {
+            const indicator = document.getElementById('typing-indicator');
+            const typingUser = document.getElementById('typing-user');
+            if (data.is_typing) {
+                if (typingUser) {
+                    typingUser.textContent = data.user + '님이 입력 중...';
+                }
+                indicator.classList.remove('hidden');
+                // 메시지 컨테이너 스크롤
+                const messagesContainer = document.getElementById('messages-container');
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            } else {
+                indicator.classList.add('hidden');
+            }
+        }
+    }
+
+    function hideTypingIndicator() {
+        document.getElementById('typing-indicator').classList.add('hidden');
+    }
+
+    // 메시지 전송
+    document.getElementById('message-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const input = document.getElementById('message-input');
+        const message = input.value.trim();
+        
+        if (message && chatSocket && chatSocket.readyState === WebSocket.OPEN) {
+            chatSocket.send(JSON.stringify({
+                'type': 'message',
+                'content': message
+            }));
+            input.value = '';
+        }
+    });
+
+    // 타이핑 감지
+    document.getElementById('message-input').addEventListener('input', function() {
+        clearTimeout(typingTimer);
+        
+        if (chatSocket && chatSocket.readyState === WebSocket.OPEN) {
+            chatSocket.send(JSON.stringify({
+                'type': 'typing',
+                'is_typing': true
+            }));
+        }
+        
+        typingTimer = setTimeout(() => {
+            if (chatSocket && chatSocket.readyState === WebSocket.OPEN) {
+                chatSocket.send(JSON.stringify({
+                    'type': 'typing',
+                    'is_typing': false
+                }));
+            }
+        }, 1000);
+    });
+
+    // 채팅 종료
+    function endChat() {
+        if (confirm('정말 상담을 종료하시겠습니까?')) {
+            if (chatSocket && chatSocket.readyState === WebSocket.OPEN) {
+                chatSocket.send(JSON.stringify({
+                    'type': 'end_chat'
+                }));
+            }
+        }
+    }
+
+    // 채팅 종료 처리
+    function handleChatEnded() {
+        document.getElementById('message-input').disabled = true;
+        document.querySelector('button[type="submit"]').disabled = true;
+        
+        // 경고 비활성화
+        isWarningEnabled = false;
+        
+        // 고객인 경우 평가 모달 표시
+        if (!isAgent) {
+            document.getElementById('rating-modal').classList.remove('hidden');
+        }
+    }
+
+    // 평가 설정
+    function setRating(rating) {
+        selectedRating = rating;
+        const stars = document.querySelectorAll('.rating-star');
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.classList.add('text-yellow-400');
+                star.classList.remove('text-gray-300');
+            } else {
+                star.classList.remove('text-yellow-400');
+                star.classList.add('text-gray-300');
+            }
+        });
+    }
+
+    // 평가 제출
+    function submitRating() {
+        if (selectedRating > 0 && chatSocket && chatSocket.readyState === WebSocket.OPEN) {
+            const feedback = document.getElementById('feedback').value;
+            chatSocket.send(JSON.stringify({
+                'type': 'rating',
+                'rating': selectedRating,
+                'feedback': feedback
+            }));
+        }
+        closeRatingModal();
+    }
+
+    // 평가 모달 닫기
+    function closeRatingModal() {
+        document.getElementById('rating-modal').classList.add('hidden');
+    }
+
+    // 빠른 답변 사용 (상담원용)
+    function useQuickReply(replyId, content) {
+        document.getElementById('message-input').value = content;
+        
+        // 사용 횟수 업데이트
+        fetch('{% url "chat:update_quick_reply_usage" %}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `id=${replyId}`
+        });
+    }
+
+    // 비활성 타이머 관리
+    function resetInactivityTimer() {
+        if (!isAgent) {  // 고객만 적용
+            clearTimeout(inactivityTimer);
+            inactivityTimer = setTimeout(function() {
+                // 5분(300초) 동안 활동이 없으면 자동 종료
+                if (Date.now() - lastActivityTime > 300000) {
+                    handleInactivityTimeout();
+                }
+            }, 300000);  // 5분
+        }
+    }
+    
+    function handleInactivityTimeout() {
+        if (chatSocket && chatSocket.readyState === WebSocket.OPEN) {
+            chatSocket.send(JSON.stringify({
+                'type': 'end_chat',
+                'reason': 'inactivity'
+            }));
+        }
+        alert('5분 이상 응답이 없어 채팅이 자동으로 종료되었습니다.');
+        window.location.href = '/';
+    }
+    
+    // 페이지 새로고침 감지
+    let isWarningEnabled = !isAgent && sessionId;
+    console.log('Warning enabled:', isWarningEnabled, 'isAgent:', isAgent, 'sessionId:', sessionId);
+    
+    window.onbeforeunload = function(e) {
+        // 고객이고 채팅이 활성화되어 있을 때
+        if (isWarningEnabled) {
+            const message = '채팅이 진행 중입니다. 페이지를 떠나면 채팅이 종료됩니다.';
+            e = e || window.event;
+            if (e) {
+                e.returnValue = message;
+            }
+            return message;
+        }
+    };
+    
+    // 페이지 떠날 때 처리
+    window.addEventListener('unload', function() {
+        if (!isAgent && chatSocket && chatSocket.readyState === WebSocket.OPEN) {
+            // 동기적으로 전송하기 위해 navigator.sendBeacon 사용
+            const data = JSON.stringify({
+                'type': 'end_chat',
+                'reason': 'page_unload'
+            });
+            
+            // WebSocket이 아직 열려있으면 메시지 전송
+            try {
+                chatSocket.send(data);
+            } catch (e) {
+                console.error('Failed to send unload message:', e);
+            }
+        }
+    });
+    
+    // 초기화
+    document.addEventListener('DOMContentLoaded', function() {
+        // WebSocket 연결이 없으면 연결 시도
+        if (!chatSocket) {
+            connectWebSocket();
+        }
+        
+        // 메시지 컨테이너 스크롤을 맨 아래로
+        const messagesContainer = document.getElementById('messages-container');
+        if (messagesContainer) {
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        // 사용자 활동 감지
+        document.addEventListener('click', function() {
+            lastActivityTime = Date.now();
+            resetInactivityTimer();
+        });
+        
+        document.addEventListener('keypress', function() {
+            lastActivityTime = Date.now();
+            resetInactivityTimer();
+        });
+    });
+    
+    // 페이지 로드 시 즉시 연결 시도
+    if (sessionId && !chatSocket) {
+        connectWebSocket();
+    }
+</script>
+{% endblock %}

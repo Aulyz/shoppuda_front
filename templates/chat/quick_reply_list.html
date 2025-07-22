@@ -1,0 +1,252 @@
+{% extends 'base.html' %}
+
+{% block title %}빠른 답변 관리{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="mb-8 flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">빠른 답변 관리</h1>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                채팅 상담 시 자주 사용하는 답변을 관리합니다.
+            </p>
+        </div>
+        <button onclick="openAddModal()"
+                class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+            새 답변 추가
+        </button>
+    </div>
+
+    <!-- 빠른 답변 목록 -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead class="bg-gray-50 dark:bg-gray-900">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        제목
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        카테고리
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        내용
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        사용 횟수
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        상태
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                        작업
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                {% for reply in quick_replies %}
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                        {{ reply.title }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                        {{ reply.category|default:"-" }}
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                        <div class="max-w-xs truncate">
+                            {{ reply.content }}
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                        {{ reply.usage_count }}회
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        {% if reply.is_active %}
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                활성
+                            </span>
+                        {% else %}
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                비활성
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <button onclick="editReply({{ reply.id }}, '{{ reply.title|escapejs }}', '{{ reply.content|escapejs }}', '{{ reply.category|escapejs }}')"
+                                class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 mr-3">
+                            수정
+                        </button>
+                        <button onclick="toggleActive({{ reply.id }}, {{ reply.is_active|yesno:'false,true' }})"
+                                class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300">
+                            {% if reply.is_active %}비활성화{% else %}활성화{% endif %}
+                        </button>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
+                        등록된 빠른 답변이 없습니다.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 카테고리별 통계 -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">카테고리별 분포</h3>
+            <div class="space-y-2">
+                {% regroup quick_replies by category as category_list %}
+                {% for category in category_list %}
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">
+                        {{ category.grouper|default:"미분류" }}
+                    </span>
+                    <span class="text-sm font-medium text-gray-900 dark:text-white">
+                        {{ category.list|length }}개
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">가장 많이 사용된 답변</h3>
+            <div class="space-y-2">
+                {% for reply in quick_replies|slice:":5" %}
+                <div class="flex justify-between items-center">
+                    <span class="text-sm text-gray-600 dark:text-gray-400 truncate mr-2">
+                        {{ reply.title }}
+                    </span>
+                    <span class="text-sm font-medium text-gray-900 dark:text-white">
+                        {{ reply.usage_count }}회
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">통계</h3>
+            <dl class="space-y-2">
+                <div class="flex justify-between">
+                    <dt class="text-sm text-gray-600 dark:text-gray-400">전체 답변</dt>
+                    <dd class="text-sm font-medium text-gray-900 dark:text-white">{{ quick_replies|length }}개</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-sm text-gray-600 dark:text-gray-400">활성 답변</dt>
+                    <dd class="text-sm font-medium text-gray-900 dark:text-white">
+                        {{ quick_replies|dictsort:"is_active"|last|length }}개
+                    </dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-sm text-gray-600 dark:text-gray-400">총 사용 횟수</dt>
+                    <dd class="text-sm font-medium text-gray-900 dark:text-white">
+                        {% load mathfilters %}
+                        {{ quick_replies|length|mul:0 }}회
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<!-- 추가/수정 모달 -->
+<div id="quick-reply-modal" class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
+    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-lg w-full mx-4">
+        <h3 id="modal-title" class="text-lg font-semibold text-gray-900 dark:text-white mb-4">새 빠른 답변 추가</h3>
+        <form id="quick-reply-form">
+            {% csrf_token %}
+            <input type="hidden" id="reply-id" value="">
+            <div class="space-y-4">
+                <div>
+                    <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        제목 <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="title" name="title" required
+                           class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+                </div>
+                <div>
+                    <label for="category" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        카테고리
+                    </label>
+                    <input type="text" id="category" name="category"
+                           class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                           placeholder="예: 인사말, 배송안내, 교환/반품">
+                </div>
+                <div>
+                    <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        내용 <span class="text-red-500">*</span>
+                    </label>
+                    <textarea id="content" name="content" rows="4" required
+                              class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"></textarea>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end space-x-3">
+                <button type="button" onclick="closeModal()"
+                        class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+                    취소
+                </button>
+                <button type="submit"
+                        class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                    저장
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function openAddModal() {
+    document.getElementById('modal-title').textContent = '새 빠른 답변 추가';
+    document.getElementById('reply-id').value = '';
+    document.getElementById('title').value = '';
+    document.getElementById('category').value = '';
+    document.getElementById('content').value = '';
+    document.getElementById('quick-reply-modal').classList.remove('hidden');
+}
+
+function editReply(id, title, content, category) {
+    document.getElementById('modal-title').textContent = '빠른 답변 수정';
+    document.getElementById('reply-id').value = id;
+    document.getElementById('title').value = title;
+    document.getElementById('category').value = category || '';
+    document.getElementById('content').value = content;
+    document.getElementById('quick-reply-modal').classList.remove('hidden');
+}
+
+function closeModal() {
+    document.getElementById('quick-reply-modal').classList.add('hidden');
+}
+
+// 폼 제출
+document.getElementById('quick-reply-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const replyId = document.getElementById('reply-id').value;
+    
+    fetch('{% url "chat:add_quick_reply" %}', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            closeModal();
+            location.reload();
+        } else {
+            alert(data.error || '저장에 실패했습니다.');
+        }
+    });
+});
+
+function toggleActive(id, currentStatus) {
+    if (confirm(currentStatus ? '이 답변을 활성화하시겠습니까?' : '이 답변을 비활성화하시겠습니까?')) {
+        // TODO: AJAX로 상태 변경 API 호출
+        location.reload();
+    }
+}
+</script>
+{% endblock %}

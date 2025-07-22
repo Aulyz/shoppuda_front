@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+
+{% block title %}채팅 상세 - {{ session.session_number }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- 헤더 -->
+    <div class="mb-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+                    채팅 상세 - {{ session.session_number }}
+                </h1>
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                    {{ session.created_at|date:"Y년 m월 d일 H:i" }} 시작
+                </p>
+            </div>
+            <a href="{% url 'chat:chat_history' %}"
+               class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+                목록으로
+            </a>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- 채팅 내용 -->
+        <div class="lg:col-span-2 space-y-6">
+            <!-- 세션 정보 -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">세션 정보</h2>
+                <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">고객</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white">
+                            {% if session.customer %}
+                                {{ session.customer.get_full_name|default:session.customer.username }}
+                            {% else %}
+                                {{ session.customer_name|default:"익명" }}
+                            {% endif %}
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">상담원</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white">
+                            {% if session.agent %}
+                                {{ session.agent.get_full_name|default:session.agent.username }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">이메일</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white">
+                            {{ session.customer_email|default:"-" }}
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">전화번호</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white">
+                            {{ session.customer_phone|default:"-" }}
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">주제</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white">
+                            {{ session.subject|default:"-" }}
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">상태</dt>
+                        <dd class="mt-1">
+                            {% if session.status == 'waiting' %}
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                                    대기중
+                                </span>
+                            {% elif session.status == 'active' %}
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                    진행중
+                                </span>
+                            {% else %}
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                    종료
+                                </span>
+                            {% endif %}
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">소요 시간</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-white">
+                            {% if session.started_at and session.ended_at %}
+                                {{ session.ended_at|timeuntil:session.started_at }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">평점</dt>
+                        <dd class="mt-1">
+                            {% if session.rating %}
+                                <span class="text-yellow-500">
+                                    {% for i in "12345" %}
+                                        {% if i|add:0 <= session.rating %}★{% else %}☆{% endif %}
+                                    {% endfor %}
+                                </span>
+                                ({{ session.rating }}/5)
+                            {% else %}
+                                -
+                            {% endif %}
+                        </dd>
+                    </div>
+                </dl>
+                {% if session.feedback %}
+                <div class="mt-4 pt-4 border-t dark:border-gray-700">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">고객 피드백</dt>
+                    <dd class="mt-1 text-sm text-gray-900 dark:text-white">
+                        {{ session.feedback }}
+                    </dd>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- 채팅 메시지 -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">채팅 내용</h2>
+                <div class="space-y-4 max-h-96 overflow-y-auto">
+                    {% for message in messages %}
+                    <div class="{% if message.sender_type == 'system' %}text-center{% endif %}">
+                        {% if message.sender_type == 'system' %}
+                            <p class="text-sm text-gray-500 dark:text-gray-400 italic">
+                                {{ message.content }}
+                            </p>
+                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                                {{ message.created_at|date:"H:i:s" }}
+                            </p>
+                        {% else %}
+                            <div class="flex {% if message.sender_type == 'agent' %}justify-end{% endif %}">
+                                <div class="max-w-xs lg:max-w-md">
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <span class="text-xs font-medium text-gray-500 dark:text-gray-400">
+                                            {% if message.sender_type == 'customer' %}
+                                                고객
+                                            {% else %}
+                                                {{ message.sender.get_full_name|default:message.sender.username|default:"상담원" }}
+                                            {% endif %}
+                                        </span>
+                                        <span class="text-xs text-gray-400 dark:text-gray-500">
+                                            {{ message.created_at|date:"H:i:s" }}
+                                        </span>
+                                    </div>
+                                    <div class="{% if message.sender_type == 'agent' %}bg-indigo-600 text-white{% else %}bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white{% endif %} rounded-lg px-4 py-2">
+                                        <p class="text-sm">{{ message.content|linebreaks }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- 메모 섹션 -->
+        <div class="space-y-6">
+            <!-- 메모 추가 -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">메모 추가</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="space-y-4">
+                        <div>
+                            <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                메모 내용
+                            </label>
+                            <textarea id="content" name="content" rows="4" required
+                                      class="w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                                      placeholder="이 채팅에 대한 메모를 작성하세요..."></textarea>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" id="is_important" name="is_important"
+                                   class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                            <label for="is_important" class="ml-2 block text-sm text-gray-900 dark:text-white">
+                                중요 메모로 표시
+                            </label>
+                        </div>
+                        <button type="submit"
+                                class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
+                            메모 추가
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- 기존 메모 목록 -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">메모 이력</h2>
+                <div class="space-y-4">
+                    {% for note in notes %}
+                    <div class="border dark:border-gray-700 rounded-lg p-4 {% if note.is_important %}border-yellow-400 dark:border-yellow-600{% endif %}">
+                        {% if note.is_important %}
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 mb-2">
+                            중요
+                        </span>
+                        {% endif %}
+                        <p class="text-sm text-gray-900 dark:text-white">{{ note.content|linebreaks }}</p>
+                        <div class="mt-2 flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                            <span>{{ note.agent.get_full_name|default:note.agent.username }}</span>
+                            <span>{{ note.created_at|date:"Y-m-d H:i" }}</span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        아직 메모가 없습니다.
+                    </p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

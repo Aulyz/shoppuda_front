@@ -14,6 +14,7 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
+    'daphne',  # ASGI server - 맨 위에 위치해야 함
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'notifications',
     'search',
     'shop',  # 사용자용 쇼핑몰 앱
+    'chat',  # 실시간 채팅 상담 앱
 
     # Custom tags
     'products.templatetags.product_tags',
@@ -306,15 +308,7 @@ STOCK_ALERT_RECIPIENTS = ['shopuda@naver.com']
 # Channels 설정
 ASGI_APPLICATION = 'shopuda.asgi.application'
 
-# Redis 설정 (채널 레이어용)
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('0.0.0.0', 6379)],
-        },
-    },
-}
+# Redis 설정 (채널 레이어용) - 개발 환경에서는 InMemoryChannelLayer 사용
 
 NOTIFICATION_SETTINGS = {
     'BATCH_SIZE': 100,  # 한 번에 처리할 알림 수

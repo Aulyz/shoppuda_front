@@ -190,14 +190,14 @@ python manage.py createsuperuser
 7. SSL 인증서 적용
 
 ## 최근 주요 업데이트
-### 2024년 7월
+### 2024년 1월
 - 사용자용 쇼핑몰 기능 추가
 - URL 구조 개선 (관리자/사용자 분리)
 - 이메일 템플릿 시스템 확장
 - 이메일 자동 발송 트리거 기능 추가
 - 접근 제어 미들웨어 구현
 
-### 2025년 7월
+### 2025년 1월 22일
 - **상품 목록 페이지 (`shop/product_list.html`) 구현**
   - 완전 반응형 디자인 (모바일/태블릿/데스크톱 최적화)
   - 계층적 카테고리 시스템 (상위 카테고리 선택 시 하위 카테고리 포함)
@@ -207,12 +207,83 @@ python manage.py createsuperuser
   - 할인율 배지 표시
   - 장바구니 빠른 추가 기능
 
+- **시스템 설정 동적 적용**
+  - `core.context_processors.system_settings` 수정
+  - 사이트 이름, 태그라인, 로고를 모든 템플릿에서 사용 가능
+  - `{{ site_name }}`, `{{ site_tagline }}`, `{{ site_logo_url }}` 변수 제공
+
+- **사용자 전용 회원가입 페이지**
+  - `templates/accounts/user_signup.html` 생성
+  - 관리자 대시보드 요소 완전 제거
+  - `shop/base.html` 템플릿 상속
+
+- **통합 검색 기능**
+  - `shop.views.search` 뷰 추가
+  - 헤더 및 홈페이지 검색바 구현
+  - 상품명, 설명, 브랜드, 카테고리, SKU 검색 지원
+  - `templates/shop/search_results.html` 검색 결과 페이지
+
+- **상품 상세 페이지**
+  - `templates/shop/product_detail.html` 생성
+  - 이미지 갤러리 (Alpine.js 활용)
+  - 탭 기반 정보 표시
+  - 관련 상품 추천 섹션
+
+- **상품 이미지 시스템 개선**
+  - `ProductImage` 모델에 `image_type` 필드 추가
+  - 이미지 타입: primary(대표), gallery(갤러리), detail(상세)
+  - 대표 이미지만 크기 제한 (800x800px, 2MB)
+  - 상세 이미지는 제한 없음 (긴 홍보물 지원)
+  - `ProductImageForm` 조건부 검증 로직 추가
+
+- **데이터베이스 문제 해결**
+  - orders 앱 마이그레이션 충돌 해결
+  - `0004_merge_20250122_1100.py` 병합 마이그레이션 생성
+  - django_session 테이블 수동 생성
+  - reports, core 관련 테이블 생성
+  - `create_superuser.py` 스크립트로 관리자 계정 생성
+
+- **실시간 채팅 상담 시스템 구현**
+  - `chat` 앱 생성 및 5개 모델 설계 (ChatSession, ChatMessage, ChatNote, ChatQuickReply, ChatStatistics)
+  - WebSocket 기반 실시간 통신 (`consumers.py`)
+  - 고객용 채팅 인터페이스 및 위젯
+  - 상담원용 대시보드 및 관리 기능
+  - 채팅 메시지 수정 불가 보안 정책 적용
+  - 상담원 전용 메모 기능
+  - 빠른 답변 템플릿 시스템
+
+- **회원가입 중복확인 버그 수정**
+  - `accounts.views.check_username` 로그인 제한 해제
+  - `accounts.views.check_email` 로그인 제한 해제 및 조건부 처리
+
+- **채팅 시스템 개선 (추가 작업)**
+  - 채팅 위젯을 팝업 형태로 변경
+    - `templates/chat/widget.html` 수정
+    - `chat.views.start_chat_ajax` 뷰 추가
+    - AJAX를 통한 채팅 세션 생성
+  - WebSocket 연결 안정성 개선
+    - 페이지 로드 시 즉시 연결
+    - 재연결 로직 개선
+  - 메시지 발신자 구분 개선
+    - `sender_type`과 `sender` 모두 확인
+    - 관리자/고객 메시지 정확히 구분
+  - 사용자 경험 개선
+    - 5분 비활성 시 자동 종료
+    - 페이지 이탈 시 경고 메시지
+    - 입력중 표시 기능
+    - 자동 스크롤 및 커스텀 스크롤바
+  - 알림 기능
+    - 새 채팅 시작 시 관리자 알림
+    - 상대방 종료 시 시스템 메시지
+
 ## 추가 참고사항
 - 모든 금액은 원(₩) 단위로 저장
 - 날짜/시간은 한국 시간대(KST) 기준
 - 파일 업로드 크기 제한: 10MB
 - 세션 타임아웃: 30분
-- 프로젝트 총 코드: 약 51,000줄
-  - Python: 약 21,000줄
-  - HTML: 약 26,000줄
+- 프로젝트 총 코드: 약 55,000줄
+  - Python: 약 23,000줄
+  - HTML: 약 28,000줄
   - JS/CSS: 약 4,000줄
+- 앱 개수: 14개 (chat 앱 추가)
+- 모델 개수: 45개 이상

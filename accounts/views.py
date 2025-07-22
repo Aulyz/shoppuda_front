@@ -298,7 +298,6 @@ def point_history_view(request):
     return render(request, 'accounts/point_history.html', context)
 
 
-@login_required
 def check_username(request):
     """아이디 중복 확인 API"""
     username = request.GET.get('username', '')
@@ -321,7 +320,6 @@ def check_username(request):
     })
 
 
-@login_required
 def check_email(request):
     """이메일 중복 확인 API"""
     email = request.GET.get('email', '')
@@ -332,8 +330,12 @@ def check_email(request):
             'message': '올바른 이메일 형식이 아닙니다.'
         })
     
-    # 본인의 이메일은 제외
-    if User.objects.filter(email=email).exclude(pk=request.user.pk).exists():
+    # 로그인한 사용자인 경우 본인의 이메일은 제외
+    query = User.objects.filter(email=email)
+    if request.user.is_authenticated:
+        query = query.exclude(pk=request.user.pk)
+    
+    if query.exists():
         return JsonResponse({
             'available': False,
             'message': '이미 사용 중인 이메일입니다.'
