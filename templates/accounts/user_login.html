@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - Shopuda ERP</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Pretendard Font -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+    
+    <style>
+        body {
+            font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
+        }
+        
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        /* Form Input Style */
+        .form-input {
+            width: 100%;
+            padding-left: 2.5rem;
+            padding-right: 0.75rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-radius: 0.375rem;
+            background-color: rgba(67, 56, 202, 0.4);
+            color: white;
+            border: none;
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: rgb(209, 213, 219);
+        }
+
+        .form-input:focus {
+            outline: 2px solid rgb(99, 102, 241);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-300 via-purple-300 to-indigo-400">
+    <!-- CSRF Token -->
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    
+    <div class="absolute -z-10 inset-0 bg-black/20 backdrop-blur-lg"></div>
+
+    <div class="relative w-full max-w-sm">
+        <div class="relative z-10 flex flex-col items-center bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg px-8 pt-14 pb-8 fade-in-up">
+            <!-- 프로필 아이콘 -->
+            <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 bg-indigo-900 flex items-center justify-center rounded-full shadow-lg border-white z-30">
+                <i class="fas fa-user text-3xl text-white"></i>
+            </div>
+
+            <!-- 타이틀 -->
+            <div class="mt-8 text-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">로그인</h2>
+                <p class="text-sm text-gray-600 mt-2">Shopuda ERP에 오신 것을 환영합니다</p>
+            </div>
+
+            <!-- 메시지 표시 -->
+            {% if messages %}
+                {% for message in messages %}
+                <div class="w-full mb-4 p-3 rounded-lg text-sm text-center
+                           {% if message.tags == 'success' %}bg-green-100 text-green-800
+                           {% elif message.tags == 'error' %}bg-red-100 text-red-800
+                           {% else %}bg-blue-100 text-blue-800{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- 로그인 폼 -->
+            <form method="POST" class="w-full flex flex-col gap-4 z-30">
+                {% csrf_token %}
+                
+                <!-- 아이디 -->
+                <div class="relative">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-indigo-900">
+                        <i class="fas fa-user w-5 h-5"></i>
+                    </span>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        {% for error in form.username.errors %}
+                            <p class="mt-1 text-xs text-red-500">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <!-- 비밀번호 -->
+                <div class="relative">
+                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-indigo-900">
+                        <i class="fas fa-lock w-5 h-5"></i>
+                    </span>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        {% for error in form.password.errors %}
+                            <p class="mt-1 text-xs text-red-500">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+                <!-- 체크박스와 링크 -->
+                <div class="flex items-center justify-between text-xs text-gray-700">
+                    <label class="flex items-center gap-1">
+                        <input type="checkbox" class="accent-indigo-600"/>
+                        <span class="text-gray-800">아이디 기억하기</span>
+                    </label>
+                    <a href="#" class="text-indigo-900 hover:underline opacity-80">비밀번호 찾기</a>
+                </div>
+
+                <!-- 로그인 버튼 -->
+                <button type="submit" class="w-full mt-2 py-3 rounded-2xl bg-indigo-900/85 text-white font-semibold tracking-widest shadow hover:bg-indigo-800 transition">
+                    LOGIN
+                </button>
+
+                <!-- 회원가입 버튼 -->
+                <a href="{% url 'accounts:user_signup' %}">
+                    <button type="button" class="w-full py-3 text-indigo-900 rounded-2xl border-2 border-indigo-900/60 font-semibold tracking-widest shadow hover:bg-indigo-800 hover:text-white transition">
+                        회원가입
+                    </button>
+                </a>
+            </form>
+
+            <!-- 하단 그림자 효과 -->
+            <div class="absolute left-1/2 -bottom-6 -translate-x-1/2 w-2/3 h-7 bg-white/10 rounded-b-2xl shadow-lg blur-md z-10"></div>
+        </div>
+    </div>
+</body>
+</html>

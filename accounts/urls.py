@@ -5,10 +5,14 @@ from . import views_admin
 app_name = 'accounts'
 
 urlpatterns = [
-    # 인증 관련
+    # 관리자 인증 관련
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('signup/', views.SignUpView.as_view(), name='signup'),
+    
+    # 사용자 인증 관련
+    path('user/login/', views.user_login_view, name='user_login'),
+    path('user/signup/', views.UserSignUpView.as_view(), name='user_signup'),
     
     # 프로필 관련
     path('profile/', views.profile_view, name='profile'),

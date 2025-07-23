@@ -1,0 +1,470 @@
+{% extends 'shop/base.html' %}
+{% load humanize %}
+
+{% block title %}마이페이지 - {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-8">마이페이지</h1>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <!-- 사이드바 -->
+        <div class="lg:col-span-1">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <!-- 프로필 정보 -->
+                <div class="text-center mb-6">
+                    {% if user.profile_image %}
+                        <img src="{{ user.profile_image.url }}" 
+                             alt="프로필 이미지" 
+                             class="w-24 h-24 rounded-full mx-auto mb-4 object-cover">
+                    {% else %}
+                        <div class="w-24 h-24 rounded-full bg-gray-200 mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-user text-3xl text-gray-400"></i>
+                        </div>
+                    {% endif %}
+                    <h2 class="text-xl font-semibold">{{ user.get_full_name|default:user.username }}</h2>
+                    <p class="text-gray-600">{{ user.email }}</p>
+                    
+                    <!-- 회원 등급 -->
+                    <div class="mt-3">
+                        <span class="inline-block px-3 py-1 text-sm font-semibold rounded-full
+                            {% if user.membership_level == 'DIAMOND' %}bg-purple-100 text-purple-800{% endif %}
+                            {% if user.membership_level == 'PLATINUM' %}bg-gray-100 text-gray-800{% endif %}
+                            {% if user.membership_level == 'GOLD' %}bg-yellow-100 text-yellow-800{% endif %}
+                            {% if user.membership_level == 'SILVER' %}bg-gray-100 text-gray-600{% endif %}
+                            {% if user.membership_level == 'BRONZE' %}bg-orange-100 text-orange-800{% endif %}">
+                            {{ user.get_membership_level_display }}
+                        </span>
+                    </div>
+                </div>
+                
+                <!-- 메뉴 -->
+                <nav class="space-y-2">
+                    <a href="#profile" class="block px-4 py-2 rounded hover:bg-gray-100 text-gray-700 font-medium">
+                        <i class="fas fa-user-circle mr-2"></i>회원정보
+                    </a>
+                    <a href="#orders" class="block px-4 py-2 rounded hover:bg-gray-100 text-gray-700">
+                        <i class="fas fa-shopping-bag mr-2"></i>주문내역
+                    </a>
+                    <a href="#points" class="block px-4 py-2 rounded hover:bg-gray-100 text-gray-700">
+                        <i class="fas fa-coins mr-2"></i>포인트
+                    </a>
+                    <a href="#addresses" class="block px-4 py-2 rounded hover:bg-gray-100 text-gray-700">
+                        <i class="fas fa-map-marker-alt mr-2"></i>배송지 관리
+                    </a>
+                    <a href="#wishlist" class="block px-4 py-2 rounded hover:bg-gray-100 text-gray-700">
+                        <i class="fas fa-heart mr-2"></i>위시리스트
+                    </a>
+                    <a href="#reviews" class="block px-4 py-2 rounded hover:bg-gray-100 text-gray-700">
+                        <i class="fas fa-star mr-2"></i>상품후기
+                    </a>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- 메인 컨텐츠 -->
+        <div class="lg:col-span-3">
+            <!-- 요약 정보 카드 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <!-- 총 주문 금액 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">총 구매 금액</p>
+                            <p class="text-2xl font-bold text-blue-600">₩{{ user.total_purchase_amount|floatformat:0|intcomma }}</p>
+                        </div>
+                        <i class="fas fa-won-sign text-3xl text-blue-100"></i>
+                    </div>
+                </div>
+                
+                <!-- 포인트 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">사용 가능 포인트</p>
+                            <p class="text-2xl font-bold text-green-600">{{ user.points|intcomma }}P</p>
+                        </div>
+                        <i class="fas fa-coins text-3xl text-green-100"></i>
+                    </div>
+                </div>
+                
+                <!-- 주문 횟수 -->
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-gray-600 text-sm">총 주문 횟수</p>
+                            <p class="text-2xl font-bold text-purple-600">{{ user.purchase_count }}회</p>
+                        </div>
+                        <i class="fas fa-shopping-cart text-3xl text-purple-100"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 회원정보 섹션 -->
+            <div id="profile" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold mb-6">회원정보</h3>
+                
+                <form method="post" action="{% url 'shop:update_profile' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- 기본 정보 -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">아이디</label>
+                            <input type="text" value="{{ user.username }}" class="w-full px-3 py-2 border rounded-lg bg-gray-100" disabled>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">이메일</label>
+                            <input type="email" name="email" value="{{ user.email }}" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">이름</label>
+                            <input type="text" name="first_name" value="{{ user.first_name }}" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">성</label>
+                            <input type="text" name="last_name" value="{{ user.last_name }}" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">전화번호</label>
+                            <input type="tel" name="phone_number" value="{{ user.phone_number|default:'' }}" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">생년월일</label>
+                            <input type="date" name="birth_date" value="{{ user.birth_date|date:'Y-m-d'|default:'' }}" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">성별</label>
+                            <select name="gender" class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                                <option value="">선택하세요</option>
+                                <option value="M" {% if user.gender == 'M' %}selected{% endif %}>남성</option>
+                                <option value="F" {% if user.gender == 'F' %}selected{% endif %}>여성</option>
+                                <option value="O" {% if user.gender == 'O' %}selected{% endif %}>기타</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">가입일</label>
+                            <input type="text" value="{{ user.created_at|date:'Y년 m월 d일' }}" class="w-full px-3 py-2 border rounded-lg bg-gray-100" disabled>
+                        </div>
+                    </div>
+                    
+                    <!-- 주소 정보 -->
+                    <div class="mt-6">
+                        <h4 class="text-lg font-medium mb-4">기본 주소</h4>
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">우편번호</label>
+                                    <div class="flex gap-2">
+                                        <input type="text" id="postal_code" name="postal_code" value="{{ user.postal_code|default:'' }}" 
+                                               class="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" readonly>
+                                        <button type="button" onclick="openDaumPostcode()" 
+                                                class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                                            주소 찾기
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">주소</label>
+                                <input type="text" id="address" name="address" value="{{ user.address|default:'' }}" 
+                                       class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" readonly>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">상세주소</label>
+                                <input type="text" name="detail_address" value="{{ user.detail_address|default:'' }}" 
+                                       class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 마케팅 동의 -->
+                    <div class="mt-6">
+                        <label class="flex items-center">
+                            <input type="checkbox" name="marketing_agreed" {% if user.marketing_agreed %}checked{% endif %} 
+                                   class="mr-2 rounded">
+                            <span class="text-sm text-gray-700">마케팅 정보 수신 동의 (이메일, SMS)</span>
+                        </label>
+                    </div>
+                    
+                    <!-- 저장 버튼 -->
+                    <div class="mt-6 flex justify-end">
+                        <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                            정보 수정
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- 비밀번호 변경 -->
+                <div class="mt-6 pt-6 border-t">
+                    <a href="{% url 'shop:password_change' %}" class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-key mr-2"></i>비밀번호 변경
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 최근 주문 내역 -->
+            <div id="orders" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-semibold">최근 주문 내역</h3>
+                    <a href="{% url 'shop:order_list' %}" class="text-blue-600 hover:text-blue-800 text-sm">
+                        전체보기 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                {% if recent_orders %}
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">주문번호</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">주문일시</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">결제금액</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">상태</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">상세</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                {% for order in recent_orders %}
+                                    <tr>
+                                        <td class="px-4 py-4 whitespace-nowrap text-sm">{{ order.order_number }}</td>
+                                        <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-600">
+                                            {{ order.created_at|date:'Y.m.d H:i' }}
+                                        </td>
+                                        <td class="px-4 py-4 whitespace-nowrap text-sm font-medium">
+                                            ₩{{ order.total_amount|floatformat:0|intcomma }}
+                                        </td>
+                                        <td class="px-4 py-4 whitespace-nowrap">
+                                            <span class="px-2 py-1 text-xs font-semibold rounded-full
+                                                {% if order.status == 'PENDING' %}bg-yellow-100 text-yellow-800{% endif %}
+                                                {% if order.status == 'PAID' %}bg-blue-100 text-blue-800{% endif %}
+                                                {% if order.status == 'PROCESSING' %}bg-purple-100 text-purple-800{% endif %}
+                                                {% if order.status == 'SHIPPED' %}bg-indigo-100 text-indigo-800{% endif %}
+                                                {% if order.status == 'DELIVERED' %}bg-green-100 text-green-800{% endif %}
+                                                {% if order.status == 'CANCELLED' %}bg-red-100 text-red-800{% endif %}
+                                                {% if order.status == 'REFUNDED' %}bg-gray-100 text-gray-800{% endif %}">
+                                                {{ order.get_status_display }}
+                                            </span>
+                                        </td>
+                                        <td class="px-4 py-4 whitespace-nowrap text-sm">
+                                            <a href="{% url 'shop:order_detail' order.pk %}" 
+                                               class="text-blue-600 hover:text-blue-800">
+                                                보기
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-gray-600 text-center py-8">아직 주문 내역이 없습니다.</p>
+                {% endif %}
+            </div>
+            
+            <!-- 포인트 내역 -->
+            <div id="points" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-semibold mb-6">포인트 내역</h3>
+                
+                <div class="bg-blue-50 rounded-lg p-4 mb-6">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-700">사용 가능 포인트</span>
+                        <span class="text-2xl font-bold text-blue-600">{{ user.points|intcomma }}P</span>
+                    </div>
+                </div>
+                
+                {% if user.point_histories.exists %}
+                    <div class="space-y-3">
+                        {% for history in user.point_histories.all|slice:":5" %}
+                            <div class="flex justify-between items-center py-3 border-b">
+                                <div>
+                                    <p class="font-medium">{{ history.description }}</p>
+                                    <p class="text-sm text-gray-600">{{ history.created_at|date:'Y.m.d H:i' }}</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="font-medium
+                                        {% if history.point_type == 'EARN' %}text-green-600{% else %}text-red-600{% endif %}">
+                                        {% if history.point_type == 'EARN' %}+{% else %}-{% endif %}{{ history.amount|intcomma }}P
+                                    </p>
+                                    <p class="text-sm text-gray-600">잔액: {{ history.balance|intcomma }}P</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-gray-600 text-center py-8">포인트 내역이 없습니다.</p>
+                {% endif %}
+            </div>
+            
+            <!-- 배송지 관리 -->
+            <div id="addresses" class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-semibold">배송지 관리</h3>
+                    <button type="button" onclick="openAddressModal()" 
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm">
+                        <i class="fas fa-plus mr-2"></i>배송지 추가
+                    </button>
+                </div>
+                
+                {% if user.shipping_addresses.exists %}
+                    <div class="space-y-4">
+                        {% for address in user.shipping_addresses.all %}
+                            <div class="border rounded-lg p-4 {% if address.is_default %}border-blue-500{% endif %}">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="font-medium">
+                                            {{ address.nickname }}
+                                            {% if address.is_default %}
+                                                <span class="ml-2 text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">기본 배송지</span>
+                                            {% endif %}
+                                        </h4>
+                                        <p class="text-gray-600 mt-1">{{ address.recipient_name }} | {{ address.phone_number }}</p>
+                                        <p class="text-gray-600">{{ address.address }} {{ address.detail_address }}</p>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button type="button" onclick="editAddress({{ address.id }})" 
+                                                class="text-blue-600 hover:text-blue-800 text-sm">
+                                            수정
+                                        </button>
+                                        <form method="post" action="{% url 'shop:delete_address' address.id %}" class="inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="text-red-600 hover:text-red-800 text-sm"
+                                                    onclick="return confirm('이 배송지를 삭제하시겠습니까?')">
+                                                삭제
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-gray-600 text-center py-8">등록된 배송지가 없습니다.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 배송지 추가/수정 모달 -->
+<div id="addressModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white rounded-lg max-w-md w-full p-6">
+            <h3 class="text-xl font-semibold mb-4">배송지 추가</h3>
+            <form id="addressForm" method="post" action="{% url 'shop:add_address' %}">
+                {% csrf_token %}
+                <input type="hidden" name="address_id" id="address_id">
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">배송지 별칭</label>
+                        <input type="text" name="nickname" required 
+                               class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">수령인</label>
+                        <input type="text" name="recipient_name" required 
+                               class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">전화번호</label>
+                        <input type="tel" name="phone_number" required 
+                               class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">우편번호</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="modal_postal_code" name="postal_code" required 
+                                   class="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" readonly>
+                            <button type="button" onclick="openDaumPostcodeModal()" 
+                                    class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+                                주소 찾기
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">주소</label>
+                        <input type="text" id="modal_address" name="address" required 
+                               class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" readonly>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">상세주소</label>
+                        <input type="text" name="detail_address" required 
+                               class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                    </div>
+                    
+                    <div>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="is_default" class="mr-2 rounded">
+                            <span class="text-sm text-gray-700">기본 배송지로 설정</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="mt-6 flex justify-end gap-2">
+                    <button type="button" onclick="closeAddressModal()" 
+                            class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                        취소
+                    </button>
+                    <button type="submit" 
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        저장
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Daum 우편번호 API -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+function openDaumPostcode() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            document.getElementById('postal_code').value = data.zonecode;
+            document.getElementById('address').value = data.roadAddress;
+        }
+    }).open();
+}
+
+function openDaumPostcodeModal() {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            document.getElementById('modal_postal_code').value = data.zonecode;
+            document.getElementById('modal_address').value = data.roadAddress;
+        }
+    }).open();
+}
+
+function openAddressModal() {
+    document.getElementById('addressModal').classList.remove('hidden');
+}
+
+function closeAddressModal() {
+    document.getElementById('addressModal').classList.add('hidden');
+    document.getElementById('addressForm').reset();
+    document.getElementById('address_id').value = '';
+}
+
+function editAddress(addressId) {
+    // AJAX로 주소 정보 가져와서 모달에 채우기
+    // 여기서는 간단히 모달만 열기
+    openAddressModal();
+    document.getElementById('address_id').value = addressId;
+}
+</script>
+{% endblock %}

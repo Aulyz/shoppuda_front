@@ -158,12 +158,39 @@ def add_to_cart(request, product_id):
 
 
 @login_required
-def remove_from_cart(request, item_id):
+def update_cart_item(request, product_id):
+    """장바구니 수량 업데이트"""
+    if request.method == 'POST':
+        product = get_object_or_404(Product, id=product_id, status='ACTIVE')
+        cart = request.session.get('cart', {})
+        
+        quantity = int(request.POST.get('quantity', 1))
+        
+        # 재고 확인
+        if quantity > product.stock_quantity:
+            messages.error(request, f'재고가 부족합니다. 현재 재고: {product.stock_quantity}개')
+            return redirect('shop:cart')
+        
+        if quantity > 0:
+            cart[str(product_id)] = quantity
+            request.session['cart'] = cart
+            messages.success(request, '수량이 변경되었습니다.')
+        else:
+            if str(product_id) in cart:
+                del cart[str(product_id)]
+                request.session['cart'] = cart
+                messages.success(request, '상품이 장바구니에서 제거되었습니다.')
+    
+    return redirect('shop:cart')
+
+
+@login_required
+def remove_from_cart(request, product_id):
     """장바구니에서 제거"""
     cart = request.session.get('cart', {})
     
-    if str(item_id) in cart:
-        del cart[str(item_id)]
+    if str(product_id) in cart:
+        del cart[str(product_id)]
         request.session['cart'] = cart
         messages.success(request, '상품이 장바구니에서 제거되었습니다.')
     
@@ -213,10 +240,195 @@ def mypage(request):
 
 
 @login_required
+def update_profile(request):
+    """프로필 업데이트"""
+    if request.method == 'POST':
+        user = request.user
+        
+        # 기본 정보 업데이트
+        user.email = request.POST.get('email', user.email)
+        user.first_name = request.POST.get('first_name', '')
+        user.last_name = request.POST.get('last_name', '')
+        
+        # 추가 정보 업데이트
+        from accounts.models import User
+        if hasattr(user, 'phone_number'):
+            user.phone_number = request.POST.get('phone_number', '')
+            user.birth_date = request.POST.get('birth_date') or None
+            user.gender = request.POST.get('gender', '')
+            user.postal_code = request.POST.get('postal_code', '')
+            user.address = request.POST.get('address', '')
+            user.detail_address = request.POST.get('detail_address', '')
+            user.marketing_agreed = request.POST.get('marketing_agreed') == 'on'
+        
+        user.save()
+        messages.success(request, '회원정보가 수정되었습니다.')
+    
+    return redirect('shop:mypage')
+
+
+@login_required
+def add_address(request):
+    """배송지 추가"""
+    if request.method == 'POST':
+        from accounts.models import ShippingAddress
+        
+        address_id = request.POST.get('address_id')
+        if address_id:
+            # 수정
+            address = get_object_or_404(ShippingAddress, id=address_id, user=request.user)
+        else:
+            # 추가
+            address = ShippingAddress(user=request.user)
+        
+        address.nickname = request.POST.get('nickname')
+        address.recipient_name = request.POST.get('recipient_name')
+        address.phone_number = request.POST.get('phone_number')
+        address.postal_code = request.POST.get('postal_code')
+        address.address = request.POST.get('address')
+        address.detail_address = request.POST.get('detail_address')
+        address.is_default = request.POST.get('is_default') == 'on'
+        address.save()
+        
+        messages.success(request, '배송지가 저장되었습니다.')
+    
+    return redirect('shop:mypage')
+
+
+@login_required
+def delete_address(request, address_id):
+    """배송지 삭제"""
+    if request.method == 'POST':
+        from accounts.models import ShippingAddress
+        address = get_object_or_404(ShippingAddress, id=address_id, user=request.user)
+        address.delete()
+        messages.success(request, '배송지가 삭제되었습니다.')
+    
+    return redirect('shop:mypage')
+
+
+@login_required
+def password_change(request):
+    """비밀번호 변경"""
+    if request.method == 'POST':
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+        
+        # 현재 비밀번호 확인
+        if not request.user.check_password(current_password):
+            messages.error(request, '현재 비밀번호가 올바르지 않습니다.')
+            return redirect('shop:password_change')
+        
+        # 새 비밀번호 확인
+        if new_password != confirm_password:
+            messages.error(request, '새 비밀번호가 일치하지 않습니다.')
+            return redirect('shop:password_change')
+        
+        # 비밀번호 길이 확인
+        if len(new_password) < 8:
+            messages.error(request, '비밀번호는 8자 이상이어야 합니다.')
+            return redirect('shop:password_change')
+        
+        # 비밀번호 변경
+        request.user.set_password(new_password)
+        request.user.save()
+        
+        # 세션 업데이트 (로그아웃 방지)
+        from django.contrib.auth import update_session_auth_hash
+        update_session_auth_hash(request, request.user)
+        
+        messages.success(request, '비밀번호가 변경되었습니다.')
+        return redirect('shop:mypage')
+    
+    from core.models import SystemSettings
+    context = {
+        'site_name': SystemSettings.get_settings().site_name
+    }
+    return render(request, 'accounts/user_password_change.html', context)
+
+
+@login_required
 def wishlist(request):
     """위시리스트"""
-    # 구현 예정
-    return render(request, 'shop/wishlist.html')
+    from .models import Wishlist
+    
+    wishlist_items = Wishlist.objects.filter(user=request.user).select_related('product')
+    
+    context = {
+        'wishlist_items': wishlist_items,
+    }
+    return render(request, 'shop/wishlist.html', context)
+
+
+@login_required
+def toggle_wishlist(request, product_id):
+    """위시리스트 추가/삭제 토글"""
+    from django.http import JsonResponse
+    from .models import Wishlist
+    
+    if request.method == 'POST':
+        product = get_object_or_404(Product, id=product_id, status='ACTIVE')
+        
+        # 위시리스트에 있는지 확인
+        wishlist_item, created = Wishlist.objects.get_or_create(
+            user=request.user,
+            product=product
+        )
+        
+        if not created:
+            # 이미 있으면 삭제
+            wishlist_item.delete()
+            is_wishlisted = False
+            message = '위시리스트에서 제거되었습니다.'
+        else:
+            # 없으면 추가됨
+            is_wishlisted = True
+            message = '위시리스트에 추가되었습니다.'
+        
+        # 현재 위시리스트 개수
+        wishlist_count = Wishlist.objects.filter(user=request.user).count()
+        
+        return JsonResponse({
+            'success': True,
+            'is_wishlisted': is_wishlisted,
+            'message': message,
+            'wishlist_count': wishlist_count
+        })
+    
+    return JsonResponse({'success': False, 'message': '잘못된 요청입니다.'})
+
+
+@login_required
+def cancel_order(request, pk):
+    """주문 취소"""
+    if request.method == 'POST':
+        from django.http import JsonResponse
+        from django.utils import timezone
+        
+        order = get_object_or_404(Order, pk=pk, user=request.user)
+        
+        # 취소 가능한 상태인지 확인
+        if order.status not in ['PENDING', 'CONFIRMED']:
+            return JsonResponse({
+                'success': False,
+                'message': '현재 상태에서는 주문을 취소할 수 없습니다.'
+            })
+        
+        # 주문 취소 처리
+        order.status = 'CANCELLED'
+        order.cancelled_date = timezone.now()
+        order.save()
+        
+        # 재고 복구
+        for item in order.items.all():
+            item.product.stock_quantity += item.quantity
+            item.product.save()
+        
+        messages.success(request, '주문이 취소되었습니다.')
+        return JsonResponse({'success': True})
+    
+    return JsonResponse({'success': False, 'message': '잘못된 요청입니다.'})
 
 
 def search(request):

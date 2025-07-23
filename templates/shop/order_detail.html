@@ -1,0 +1,295 @@
+{% extends 'shop/base.html' %}
+{% load humanize %}
+
+{% block title %}주문 상세 - {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- 뒤로가기 버튼 -->
+        <div class="mb-6">
+            <a href="{% url 'shop:order_list' %}" class="inline-flex items-center text-blue-600 hover:text-blue-800">
+                <i class="fas fa-arrow-left mr-2"></i>주문내역으로 돌아가기
+            </a>
+        </div>
+
+        <!-- 주문 정보 헤더 -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mb-6">
+            <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">주문번호: {{ order.order_number }}</h1>
+                        <p class="text-gray-600 mt-1">주문일시: {{ order.order_date|date:'Y년 m월 d일 H:i' }}</p>
+                    </div>
+                    <span class="px-4 py-2 text-sm font-semibold rounded-full
+                        {% if order.status == 'PENDING' %}bg-yellow-100 text-yellow-800{% endif %}
+                        {% if order.status == 'CONFIRMED' %}bg-blue-100 text-blue-800{% endif %}
+                        {% if order.status == 'PROCESSING' %}bg-purple-100 text-purple-800{% endif %}
+                        {% if order.status == 'SHIPPED' %}bg-indigo-100 text-indigo-800{% endif %}
+                        {% if order.status == 'DELIVERED' %}bg-green-100 text-green-800{% endif %}
+                        {% if order.status == 'CANCELLED' %}bg-red-100 text-red-800{% endif %}
+                        {% if order.status == 'REFUNDED' %}bg-gray-100 text-gray-800{% endif %}">
+                        {{ order.get_status_display }}
+                    </span>
+                </div>
+            </div>
+
+            <!-- 주문 진행 상태 -->
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-8">
+                    <div class="flex-1 text-center">
+                        <div class="w-10 h-10 mx-auto rounded-full {% if order.status != 'CANCELLED' and order.status != 'REFUNDED' %}bg-green-500{% else %}bg-gray-300{% endif %} flex items-center justify-center text-white">
+                            <i class="fas fa-check text-sm"></i>
+                        </div>
+                        <p class="text-sm mt-2 {% if order.status != 'CANCELLED' and order.status != 'REFUNDED' %}text-green-600 font-medium{% else %}text-gray-400{% endif %}">주문접수</p>
+                    </div>
+                    
+                    <div class="flex-1 border-t-2 {% if order.status in 'CONFIRMED,PROCESSING,SHIPPED,DELIVERED' %}border-green-500{% else %}border-gray-300{% endif %}"></div>
+                    
+                    <div class="flex-1 text-center">
+                        <div class="w-10 h-10 mx-auto rounded-full {% if order.status in 'CONFIRMED,PROCESSING,SHIPPED,DELIVERED' %}bg-green-500{% else %}bg-gray-300{% endif %} flex items-center justify-center text-white">
+                            {% if order.status in 'CONFIRMED,PROCESSING,SHIPPED,DELIVERED' %}
+                                <i class="fas fa-check text-sm"></i>
+                            {% endif %}
+                        </div>
+                        <p class="text-sm mt-2 {% if order.status in 'CONFIRMED,PROCESSING,SHIPPED,DELIVERED' %}text-green-600 font-medium{% else %}text-gray-400{% endif %}">결제완료</p>
+                    </div>
+                    
+                    <div class="flex-1 border-t-2 {% if order.status in 'PROCESSING,SHIPPED,DELIVERED' %}border-green-500{% else %}border-gray-300{% endif %}"></div>
+                    
+                    <div class="flex-1 text-center">
+                        <div class="w-10 h-10 mx-auto rounded-full {% if order.status in 'PROCESSING,SHIPPED,DELIVERED' %}bg-green-500{% else %}bg-gray-300{% endif %} flex items-center justify-center text-white">
+                            {% if order.status in 'PROCESSING,SHIPPED,DELIVERED' %}
+                                <i class="fas fa-check text-sm"></i>
+                            {% endif %}
+                        </div>
+                        <p class="text-sm mt-2 {% if order.status in 'PROCESSING,SHIPPED,DELIVERED' %}text-green-600 font-medium{% else %}text-gray-400{% endif %}">상품준비</p>
+                    </div>
+                    
+                    <div class="flex-1 border-t-2 {% if order.status in 'SHIPPED,DELIVERED' %}border-green-500{% else %}border-gray-300{% endif %}"></div>
+                    
+                    <div class="flex-1 text-center">
+                        <div class="w-10 h-10 mx-auto rounded-full {% if order.status in 'SHIPPED,DELIVERED' %}bg-green-500{% else %}bg-gray-300{% endif %} flex items-center justify-center text-white">
+                            {% if order.status in 'SHIPPED,DELIVERED' %}
+                                <i class="fas fa-check text-sm"></i>
+                            {% endif %}
+                        </div>
+                        <p class="text-sm mt-2 {% if order.status in 'SHIPPED,DELIVERED' %}text-green-600 font-medium{% else %}text-gray-400{% endif %}">배송중</p>
+                    </div>
+                    
+                    <div class="flex-1 border-t-2 {% if order.status == 'DELIVERED' %}border-green-500{% else %}border-gray-300{% endif %}"></div>
+                    
+                    <div class="flex-1 text-center">
+                        <div class="w-10 h-10 mx-auto rounded-full {% if order.status == 'DELIVERED' %}bg-green-500{% else %}bg-gray-300{% endif %} flex items-center justify-center text-white">
+                            {% if order.status == 'DELIVERED' %}
+                                <i class="fas fa-check text-sm"></i>
+                            {% endif %}
+                        </div>
+                        <p class="text-sm mt-2 {% if order.status == 'DELIVERED' %}text-green-600 font-medium{% else %}text-gray-400{% endif %}">배송완료</p>
+                    </div>
+                </div>
+
+                <!-- 배송 정보 -->
+                {% if order.status in 'SHIPPED,DELIVERED' and order.tracking_number %}
+                    <div class="bg-blue-50 rounded-lg p-4 mb-6">
+                        <h3 class="font-medium text-blue-900 mb-2">배송 정보</h3>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm text-blue-700">
+                                    <span class="font-medium">택배사:</span> {{ order.shipping_method|default:"CJ대한통운" }}
+                                </p>
+                                <p class="text-sm text-blue-700">
+                                    <span class="font-medium">송장번호:</span> {{ order.tracking_number }}
+                                </p>
+                            </div>
+                            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm">
+                                배송조회 <i class="fas fa-external-link-alt ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 주문 상품 정보 -->
+        <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mb-6">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-semibold text-gray-900">주문 상품 정보</h2>
+            </div>
+            <div class="p-6">
+                {% for item in order.items.all %}
+                    <div class="flex items-start gap-4 {% if not forloop.last %}border-b pb-4 mb-4{% endif %}">
+                        <!-- 상품 이미지 -->
+                        <div class="w-24 h-24 flex-shrink-0">
+                            {% if item.product.get_primary_image %}
+                                <img src="{{ item.product.get_primary_image.image.url }}" 
+                                     alt="{{ item.product.name }}"
+                                     class="w-full h-full object-cover rounded-lg">
+                            {% else %}
+                                <div class="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-image text-gray-400"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- 상품 정보 -->
+                        <div class="flex-1">
+                            <h3 class="font-medium text-gray-900">
+                                <a href="{% url 'shop:product_detail' item.product.pk %}" 
+                                   class="hover:text-blue-600">
+                                    {{ item.product.name }}
+                                </a>
+                            </h3>
+                            {% if item.product.brand %}
+                                <p class="text-sm text-gray-600">{{ item.product.brand.name }}</p>
+                            {% endif %}
+                            <p class="text-sm text-gray-600 mt-2">
+                                단가: ₩{{ item.unit_price|floatformat:0|intcomma }} × {{ item.quantity }}개
+                            </p>
+                        </div>
+                        
+                        <!-- 금액 -->
+                        <div class="text-right">
+                            <p class="font-semibold text-lg">₩{{ item.total_price|floatformat:0|intcomma }}</p>
+                            {% if order.status == 'DELIVERED' %}
+                                <button class="mt-2 text-sm text-blue-600 hover:text-blue-800">
+                                    리뷰 작성
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- 배송지 정보 -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-lg font-semibold text-gray-900">배송지 정보</h2>
+                </div>
+                <div class="p-6 space-y-3">
+                    <div>
+                        <p class="text-sm text-gray-600">받는분</p>
+                        <p class="font-medium">{{ order.customer_name }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">연락처</p>
+                        <p class="font-medium">{{ order.customer_phone }}</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">배송주소</p>
+                        <p class="font-medium">
+                            ({{ order.shipping_zipcode }}) {{ order.shipping_address }}
+                        </p>
+                    </div>
+                    {% if order.notes %}
+                        <div>
+                            <p class="text-sm text-gray-600">배송메모</p>
+                            <p class="font-medium">{{ order.notes }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- 결제 정보 -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-lg font-semibold text-gray-900">결제 정보</h2>
+                </div>
+                <div class="p-6 space-y-3">
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">상품금액</span>
+                        <span>₩{{ order.total_amount|add:-order.shipping_fee|add:order.discount_amount|floatformat:0|intcomma }}</span>
+                    </div>
+                    {% if order.discount_amount > 0 %}
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">할인금액</span>
+                            <span class="text-red-600">-₩{{ order.discount_amount|floatformat:0|intcomma }}</span>
+                        </div>
+                    {% endif %}
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">배송비</span>
+                        <span>₩{{ order.shipping_fee|floatformat:0|intcomma }}</span>
+                    </div>
+                    <div class="pt-3 border-t">
+                        <div class="flex justify-between">
+                            <span class="font-semibold text-lg">총 결제금액</span>
+                            <span class="font-semibold text-lg text-blue-600">₩{{ order.total_amount|floatformat:0|intcomma }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 액션 버튼 -->
+        <div class="mt-6 flex justify-center gap-3">
+            {% if order.status == 'DELIVERED' %}
+                <button class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    <i class="fas fa-redo mr-2"></i>재구매하기
+                </button>
+                <button class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
+                    <i class="fas fa-exchange-alt mr-2"></i>교환/반품 신청
+                </button>
+            {% elif order.status in 'PENDING,CONFIRMED' %}
+                <button onclick="cancelOrder('{{ order.pk }}')" 
+                        class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                    <i class="fas fa-times mr-2"></i>주문 취소
+                </button>
+            {% endif %}
+            <button onclick="window.print()" 
+                    class="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">
+                <i class="fas fa-print mr-2"></i>주문서 출력
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+function cancelOrder(orderId) {
+    if (confirm('정말 주문을 취소하시겠습니까?\n취소 후에는 복구할 수 없습니다.')) {
+        // AJAX로 주문 취소 요청
+        fetch(`/shop/orders/${orderId}/cancel/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('주문이 취소되었습니다.');
+                location.href = '{% url "shop:order_list" %}';
+            } else {
+                alert(data.message || '주문 취소에 실패했습니다.');
+            }
+        })
+        .catch(error => {
+            alert('주문 취소 중 오류가 발생했습니다.');
+        });
+    }
+}
+</script>
+
+<!-- 인쇄용 스타일 -->
+<style>
+@media print {
+    header, footer, .no-print {
+        display: none !important;
+    }
+    
+    .container {
+        max-width: 100% !important;
+    }
+    
+    .shadow-sm {
+        box-shadow: none !important;
+    }
+    
+    button {
+        display: none !important;
+    }
+}
+</style>
+{% endblock %}

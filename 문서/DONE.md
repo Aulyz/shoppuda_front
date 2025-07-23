@@ -76,3 +76,51 @@
 - check_username 함수에서 @login_required 데코레이터 제거
 - check_email 함수에서 @login_required 데코레이터 제거
 - 로그인 여부에 따른 조건부 처리 추가
+
+## 사용자 전용 장바구니 페이지
+**완료일**: 2025-07-23
+- templates/shop/cart.html 생성
+- 세션 기반 장바구니 시스템
+- 수량 변경 기능 (update_cart_item 뷰 추가)
+- 장바구니 상품별 소계 및 전체 합계 표시
+- 빈 장바구니 상태 처리
+- 반응형 디자인 적용
+
+## 사용자 마이페이지 완전 구현
+**완료일**: 2025-07-23
+- templates/shop/mypage.html 생성
+- 사용자 정보 표시 및 수정 기능
+- 회원 등급 및 포인트 표시
+- 최근 주문 내역 표시
+- 포인트 내역 표시
+- 배송지 관리 (추가/수정/삭제)
+- Daum 우편번호 API 연동
+- update_profile, add_address, delete_address 뷰 추가
+
+## 사용자/관리자 인증 시스템 분리
+**완료일**: 2025-07-23
+- 사용자 전용 로그인 페이지 (user_login.html)
+- 사용자 전용 비밀번호 변경 페이지 (user_password_change.html)
+- 관리자 패널 접근 차단 미들웨어 강화
+- URL 패턴 분리 (/accounts/user/login/, /accounts/user/signup/)
+- 사용자 타입별 리다이렉션 처리
+
+## 주문 관리 시스템 구현
+**완료일**: 2025-07-23
+- templates/shop/order_list.html 생성
+- templates/shop/order_detail.html 생성
+- 주문 상태별 표시 및 진행 상황 시각화
+- 주문 취소 기능 (cancel_order 뷰)
+- 송장번호 표시 및 배송 추적
+- 주문서 인쇄 기능
+- 반응형 디자인 적용
+
+## 위시리스트 시스템 구현
+**완료일**: 2025-07-23
+- Wishlist 모델 생성 (shop/models.py)
+- templates/shop/wishlist.html 생성
+- 위시리스트 토글 기능 (toggle_wishlist 뷰)
+- AJAX 기반 실시간 업데이트
+- 장바구니 추가 및 바로구매 기능
+- 전체 삭제 기능
+- 토스트 알림 시스템

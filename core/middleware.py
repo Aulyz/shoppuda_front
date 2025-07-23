@@ -61,51 +61,37 @@ class AdminAccessMiddleware:
             return self.get_response(request)
             
         # 로그인 관련 URL은 제외
-        if request.path in ['/accounts/login/', '/accounts/logout/', '/accounts/signup/']:
+        if request.path in ['/accounts/login/', '/accounts/logout/', '/accounts/signup/', 
+                           '/accounts/user/login/', '/accounts/user/signup/']:
             return self.get_response(request)
         
-        # 사용자가 로그인한 경우
-        if request.user.is_authenticated:
-            is_admin = request.user.user_type == 'ADMIN'
-            
-            # 관리자 전용 경로 목록
-            admin_paths = [
-                '/dashboard/',
-                '/products/',
-                '/orders/',
-                '/inventory/',
-                '/platforms/',
-                '/reports/',
-                '/core/',
-                '/notifications/',
-                '/search/',
-            ]
-            
-            # 일반 사용자가 관리자 페이지 접근 시도
-            is_admin_path = any(request.path.startswith(path) for path in admin_paths)
-            
-            if not is_admin and is_admin_path:
-                messages.error(request, '관리자 권한이 필요합니다.')
-                return redirect('shop:home')
-        else:
-            # 비로그인 사용자가 관리자 페이지 접근 시도
-            admin_paths = [
-                '/dashboard/',
-                '/products/',
-                '/orders/',
-                '/inventory/',
-                '/platforms/',
-                '/reports/',
-                '/core/',
-                '/notifications/',
-                '/search/',
-            ]
-            
-            is_admin_path = any(request.path.startswith(path) for path in admin_paths)
-            
-            if is_admin_path:
+        # 관리자 전용 경로 목록 (Django admin 포함)
+        admin_paths = [
+            '/admin/',  # Django 관리자 패널
+            '/dashboard/',
+            '/products/',
+            '/orders/',
+            '/inventory/',
+            '/platforms/',
+            '/reports/',
+            '/core/',
+            '/notifications/',
+            '/search/',
+        ]
+        
+        # 현재 경로가 관리자 경로인지 확인
+        is_admin_path = any(request.path.startswith(path) for path in admin_paths)
+        
+        if is_admin_path:
+            # 로그인하지 않은 경우
+            if not request.user.is_authenticated:
                 messages.warning(request, '로그인이 필요합니다.')
                 return redirect(f"{reverse('accounts:login')}?next={request.path}")
+            
+            # 로그인했지만 관리자/직원이 아닌 경우
+            if request.user.user_type not in ['ADMIN', 'STAFF']:
+                messages.error(request, '관리자 권한이 필요합니다.')
+                return redirect('shop:home')
         
         response = self.get_response(request)
         return response

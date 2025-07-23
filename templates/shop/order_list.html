@@ -1,0 +1,223 @@
+{% extends 'shop/base.html' %}
+{% load humanize %}
+
+{% block title %}주문내역 - {{ site_name }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-6xl mx-auto">
+        <!-- 페이지 헤더 -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">주문내역</h1>
+            <p class="text-gray-600 mt-2">주문하신 상품의 배송 상태를 확인하실 수 있습니다.</p>
+        </div>
+
+        {% if orders %}
+            <!-- 주문 내역 리스트 -->
+            <div class="space-y-6">
+                {% for order in orders %}
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                        <!-- 주문 헤더 -->
+                        <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                                <div>
+                                    <div class="flex items-center gap-4">
+                                        <h3 class="font-semibold text-lg">주문번호: {{ order.order_number }}</h3>
+                                        <span class="px-3 py-1 text-xs font-semibold rounded-full
+                                            {% if order.status == 'PENDING' %}bg-yellow-100 text-yellow-800{% endif %}
+                                            {% if order.status == 'CONFIRMED' %}bg-blue-100 text-blue-800{% endif %}
+                                            {% if order.status == 'PROCESSING' %}bg-purple-100 text-purple-800{% endif %}
+                                            {% if order.status == 'SHIPPED' %}bg-indigo-100 text-indigo-800{% endif %}
+                                            {% if order.status == 'DELIVERED' %}bg-green-100 text-green-800{% endif %}
+                                            {% if order.status == 'CANCELLED' %}bg-red-100 text-red-800{% endif %}
+                                            {% if order.status == 'REFUNDED' %}bg-gray-100 text-gray-800{% endif %}">
+                                            {{ order.get_status_display }}
+                                        </span>
+                                    </div>
+                                    <p class="text-sm text-gray-600 mt-1">
+                                        주문일시: {{ order.order_date|date:'Y년 m월 d일 H:i' }}
+                                    </p>
+                                </div>
+                                <a href="{% url 'shop:order_detail' order.pk %}" 
+                                   class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm">
+                                    상세보기
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- 주문 상품 목록 -->
+                        <div class="p-6">
+                            {% for item in order.items.all %}
+                                <div class="flex items-center gap-4 {% if not forloop.last %}border-b pb-4 mb-4{% endif %}">
+                                    <!-- 상품 이미지 -->
+                                    <div class="w-20 h-20 flex-shrink-0">
+                                        {% if item.product.get_primary_image %}
+                                            <img src="{{ item.product.get_primary_image.image.url }}" 
+                                                 alt="{{ item.product.name }}"
+                                                 class="w-full h-full object-cover rounded-lg">
+                                        {% else %}
+                                            <div class="w-full h-full bg-gray-200 rounded-lg flex items-center justify-center">
+                                                <i class="fas fa-image text-gray-400"></i>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- 상품 정보 -->
+                                    <div class="flex-1">
+                                        <h4 class="font-medium text-gray-900">{{ item.product.name }}</h4>
+                                        {% if item.product.brand %}
+                                            <p class="text-sm text-gray-600">{{ item.product.brand.name }}</p>
+                                        {% endif %}
+                                        <p class="text-sm text-gray-600 mt-1">
+                                            ₩{{ item.unit_price|floatformat:0|intcomma }} × {{ item.quantity }}개
+                                        </p>
+                                    </div>
+                                    
+                                    <!-- 금액 -->
+                                    <div class="text-right">
+                                        <p class="font-semibold">₩{{ item.total_price|floatformat:0|intcomma }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            
+                            <!-- 주문 요약 -->
+                            <div class="mt-6 pt-4 border-t">
+                                <div class="flex justify-between items-center">
+                                    <div class="space-y-1">
+                                        <p class="text-sm text-gray-600">
+                                            상품 {{ order.items.count }}개
+                                        </p>
+                                        {% if order.shipping_fee > 0 %}
+                                            <p class="text-sm text-gray-600">
+                                                배송비: ₩{{ order.shipping_fee|floatformat:0|intcomma }}
+                                            </p>
+                                        {% endif %}
+                                        {% if order.discount_amount > 0 %}
+                                            <p class="text-sm text-red-600">
+                                                할인: -₩{{ order.discount_amount|floatformat:0|intcomma }}
+                                            </p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm text-gray-600">총 결제금액</p>
+                                        <p class="text-xl font-bold text-blue-600">
+                                            ₩{{ order.total_amount|floatformat:0|intcomma }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 배송 정보 -->
+                            {% if order.status in 'SHIPPED,DELIVERED' and order.tracking_number %}
+                                <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <p class="text-sm font-medium text-blue-900">송장번호</p>
+                                            <p class="text-sm text-blue-700">{{ order.tracking_number }}</p>
+                                        </div>
+                                        <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                                            배송조회 <i class="fas fa-external-link-alt ml-1"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            
+                            <!-- 주문 액션 버튼 -->
+                            <div class="mt-6 flex gap-3">
+                                {% if order.status == 'DELIVERED' %}
+                                    <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm">
+                                        <i class="fas fa-edit mr-2"></i>리뷰 작성
+                                    </button>
+                                    <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm">
+                                        <i class="fas fa-redo mr-2"></i>교환/반품 신청
+                                    </button>
+                                {% elif order.status in 'PENDING,CONFIRMED' %}
+                                    <button onclick="cancelOrder('{{ order.pk }}')" 
+                                            class="px-4 py-2 bg-red-100 text-red-700 rounded-lg hover:bg-red-200 transition text-sm">
+                                        <i class="fas fa-times mr-2"></i>주문 취소
+                                    </button>
+                                {% endif %}
+                                <button onclick="window.print()" 
+                                        class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm">
+                                    <i class="fas fa-print mr-2"></i>주문서 출력
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- 페이지네이션 -->
+            {% if is_paginated %}
+                <div class="mt-8 flex justify-center">
+                    <nav class="flex items-center gap-2">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}" 
+                               class="px-3 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
+                                <i class="fas fa-chevron-left"></i>
+                            </a>
+                        {% endif %}
+                        
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <span class="px-4 py-2 bg-blue-600 text-white rounded-lg">{{ num }}</span>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <a href="?page={{ num }}" 
+                                   class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
+                                    {{ num }}
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" 
+                               class="px-3 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        {% endif %}
+                    </nav>
+                </div>
+            {% endif %}
+        {% else %}
+            <!-- 주문 내역이 없을 때 -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-16 text-center">
+                <i class="fas fa-shopping-bag text-6xl text-gray-300 mb-4"></i>
+                <h2 class="text-2xl font-semibold text-gray-700 mb-2">주문 내역이 없습니다</h2>
+                <p class="text-gray-600 mb-8">아직 주문하신 상품이 없습니다.</p>
+                <a href="{% url 'shop:product_list' %}" 
+                   class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition">
+                    쇼핑하러 가기
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function cancelOrder(orderId) {
+    if (confirm('정말 주문을 취소하시겠습니까?\n취소 후에는 복구할 수 없습니다.')) {
+        // AJAX로 주문 취소 요청
+        fetch(`/shop/orders/${orderId}/cancel/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('주문이 취소되었습니다.');
+                location.reload();
+            } else {
+                alert(data.message || '주문 취소에 실패했습니다.');
+            }
+        })
+        .catch(error => {
+            alert('주문 취소 중 오류가 발생했습니다.');
+        });
+    }
+}
+</script>
+{% endblock %}

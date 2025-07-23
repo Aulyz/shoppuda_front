@@ -531,6 +531,15 @@ ReportSchedule                ReportBookmark
 3. **Notification**: created_at 기준 월별 파티셔닝
 4. **PointHistory**: created_at 기준 연도별 파티셔닝
 
+## 14. shop (쇼핑몰)
+
+### Wishlist
+- id (BigAutoField): PK
+- user (ForeignKey): 사용자 
+- product (ForeignKey): 상품
+- created_at (DateTimeField): 추가일시
+- unique_together: ['user', 'product']
+
 ## 보안 고려사항
 1. **민감 정보 암호화**: api_key, api_secret 등
 2. **개인정보 마스킹**: 로그 및 보고서에서 개인정보 마스킹

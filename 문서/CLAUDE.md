@@ -276,14 +276,53 @@ python manage.py createsuperuser
     - 새 채팅 시작 시 관리자 알림
     - 상대방 종료 시 시스템 메시지
 
+### 2025년 1월 23일
+- **사용자 전용 장바구니 시스템**
+  - `templates/shop/cart.html` 구현
+  - 세션 기반 장바구니 (로그인 필수)
+  - 수량 변경 기능 (`shop.views.update_cart_item`)
+  - 실시간 소계 및 합계 계산
+  - 빈 장바구니 상태 처리
+
+- **마이페이지 완전 구현**
+  - `templates/shop/mypage.html` 생성
+  - 회원정보 수정 (`shop.views.update_profile`)
+  - 회원 등급 및 포인트 시스템 표시
+  - 배송지 관리 기능 (`add_address`, `delete_address`)
+  - Daum 우편번호 API 연동
+  - 최근 주문 내역 및 포인트 내역 표시
+
+- **사용자/관리자 인증 분리**
+  - 사용자 전용 로그인 (`accounts/user_login.html`)
+  - 사용자 전용 비밀번호 변경 (`accounts/user_password_change.html`)
+  - URL 패턴 분리 (`/accounts/user/login/`, `/accounts/user/signup/`)
+  - `AdminAccessMiddleware` 강화 (Django admin 포함 차단)
+  - 사용자 타입별 자동 리다이렉션
+
+- **주문 관리 시스템**
+  - `templates/shop/order_list.html` - 주문 목록
+  - `templates/shop/order_detail.html` - 주문 상세
+  - 주문 진행 상태 시각화 (5단계 프로그레스)
+  - 주문 취소 기능 (`shop.views.cancel_order`)
+  - 송장번호 및 배송 추적
+  - 주문서 인쇄 기능 (인쇄용 CSS)
+
+- **위시리스트 시스템**
+  - `Wishlist` 모델 생성 (`shop/models.py`)
+  - `templates/shop/wishlist.html` 구현
+  - 위시리스트 토글 (`shop.views.toggle_wishlist`)
+  - AJAX 기반 실시간 업데이트
+  - 장바구니 추가 및 바로구매 연동
+  - 토스트 알림 시스템
+
 ## 추가 참고사항
 - 모든 금액은 원(₩) 단위로 저장
 - 날짜/시간은 한국 시간대(KST) 기준
 - 파일 업로드 크기 제한: 10MB
 - 세션 타임아웃: 30분
-- 프로젝트 총 코드: 약 55,000줄
-  - Python: 약 23,000줄
-  - HTML: 약 28,000줄
+- 프로젝트 총 코드: 약 60,000줄
+  - Python: 약 25,000줄
+  - HTML: 약 31,000줄
   - JS/CSS: 약 4,000줄
 - 앱 개수: 14개 (chat 앱 추가)
-- 모델 개수: 45개 이상
+- 모델 개수: 46개 (Wishlist 추가)

@@ -16,7 +16,7 @@ User = get_user_model()
 
 
 def login_view(request):
-    """로그인 뷰"""
+    """관리자 로그인 뷰"""
     if request.user.is_authenticated:
         return redirect('dashboard:home')
     
@@ -24,6 +24,69 @@ def login_view(request):
         print(f"POST data: {request.POST}")  # Debug
         form = CustomLoginForm(request, data=request.POST)
         print(f"Form is valid: {form.is_valid()}")  # Debug
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            remember_me = form.cleaned_data.get('remember_me')
+            
+            # 이메일로도 로그인 가능하도록 처리
+            user = None
+            if '@' in username:
+                try:
+                    user_obj = User.objects.get(email=username)
+                    user = authenticate(request, username=user_obj.username, password=password)
+                except User.DoesNotExist:
+                    pass
+            else:
+                user = authenticate(request, username=username, password=password)
+            
+            if user is not None:
+                # 관리자가 아닌 경우 사용자 로그인 페이지로 리다이렉트
+                if user.user_type not in ['ADMIN', 'STAFF']:
+                    logout(request)
+                    messages.error(request, '관리자 권한이 필요합니다.')
+                    return redirect('accounts:user_login')
+                
+                login(request, user)
+                
+                # Remember me 처리
+                if not remember_me:
+                    request.session.set_expiry(0)
+                else:
+                    request.session.set_expiry(1209600)  # 2주
+                
+                messages.success(request, f'{user.first_name or user.username}님, 환영합니다!')
+                
+                # next 파라미터 처리
+                next_url = request.GET.get('next')
+                if next_url:
+                    return redirect(next_url)
+                else:
+                    return redirect('dashboard:home')
+            else:
+                messages.error(request, '아이디 또는 비밀번호가 올바르지 않습니다.')
+        else:
+            # 폼 에러 메시지 추가
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{field}: {error}')
+            messages.error(request, '입력한 정보를 다시 확인해주세요.')
+    else:
+        form = CustomLoginForm()
+    
+    return render(request, 'accounts/login.html', {'form': form})
+
+
+def user_login_view(request):
+    """사용자 로그인 뷰"""
+    if request.user.is_authenticated:
+        if request.user.user_type in ['ADMIN', 'STAFF']:
+            return redirect('dashboard:home')
+        else:
+            return redirect('shop:home')
+    
+    if request.method == 'POST':
+        form = CustomLoginForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
@@ -57,22 +120,24 @@ def login_view(request):
                     return redirect(next_url)
                 else:
                     # 사용자 타입에 따라 리디렉션
-                    if user.user_type == 'ADMIN':
+                    if user.user_type in ['ADMIN', 'STAFF']:
                         return redirect('dashboard:home')
                     else:
                         return redirect('shop:home')
             else:
                 messages.error(request, '아이디 또는 비밀번호가 올바르지 않습니다.')
         else:
-            # 폼 에러 메시지 추가
-            for field, errors in form.errors.items():
-                for error in errors:
-                    messages.error(request, f'{field}: {error}')
             messages.error(request, '입력한 정보를 다시 확인해주세요.')
     else:
         form = CustomLoginForm()
     
-    return render(request, 'accounts/login.html', {'form': form})
+    # 사용자 전용 로그인 템플릿 사용
+    from core.models import SystemSettings
+    context = {
+        'form': form,
+        'site_name': SystemSettings.get_settings().site_name
+    }
+    return render(request, 'accounts/user_login.html', context)
 
 
 def logout_view(request):
@@ -83,15 +148,28 @@ def logout_view(request):
 
 
 class SignUpView(CreateView):
-    """회원가입 뷰"""
+    """관리자 회원가입 뷰 (사용 안함)"""
     model = User
     form_class = CustomSignUpForm
-    template_name = 'accounts/user_signup.html'  # 유저용 템플릿 사용
+    template_name = 'accounts/signup.html'
     success_url = reverse_lazy('accounts:login')
     
     def dispatch(self, request, *args, **kwargs):
+        # 관리자 회원가입은 막음
+        messages.error(request, '관리자 회원가입은 시스템 관리자에게 문의하세요.')
+        return redirect('accounts:login')
+
+
+class UserSignUpView(CreateView):
+    """사용자 회원가입 뷰"""
+    model = User
+    form_class = CustomSignUpForm
+    template_name = 'accounts/user_signup.html'
+    success_url = reverse_lazy('accounts:user_login')
+    
+    def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            if request.user.user_type == 'ADMIN':
+            if request.user.user_type in ['ADMIN', 'STAFF']:
                 return redirect('dashboard:home')
             else:
                 return redirect('shop:home')
