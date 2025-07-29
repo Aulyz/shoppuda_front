@@ -305,7 +305,7 @@
             </div>
             
             <!-- 배송지 관리 -->
-            <div id="addresses" class="bg-white rounded-lg shadow-lg p-6">
+            <div id="addresses" class="bg-white rounded-lg shadow-lg p-6 mb-8">
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-xl font-semibold">배송지 관리</h3>
                     <button type="button" onclick="openAddressModal()" 
@@ -348,6 +348,102 @@
                     </div>
                 {% else %}
                     <p class="text-gray-600 text-center py-8">등록된 배송지가 없습니다.</p>
+                {% endif %}
+            </div>
+            
+            <!-- 위시리스트 -->
+            <div id="wishlist" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-semibold">위시리스트</h3>
+                    <a href="{% url 'shop:wishlist' %}" class="text-blue-600 hover:text-blue-800 text-sm">
+                        전체보기 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                {% if user.wishlists.exists %}
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        {% for wishlist in user.wishlists.all|slice:":8" %}
+                            <div class="relative">
+                                <a href="{% url 'shop:product_detail' wishlist.product.pk %}" class="block">
+                                    {% if wishlist.product.thumbnail %}
+                                        <img src="{{ wishlist.product.thumbnail.url }}" 
+                                             alt="{{ wishlist.product.name }}"
+                                             class="w-full h-32 object-cover rounded-lg">
+                                    {% else %}
+                                        <div class="w-full h-32 bg-gray-200 rounded-lg flex items-center justify-center">
+                                            <i class="fas fa-image text-gray-400 text-2xl"></i>
+                                        </div>
+                                    {% endif %}
+                                    <h4 class="mt-2 text-sm font-medium line-clamp-2">{{ wishlist.product.name }}</h4>
+                                    <p class="text-sm text-blue-600 font-semibold">₩{{ wishlist.product.price|floatformat:0|intcomma }}</p>
+                                </a>
+                                <button type="button" onclick="removeFromWishlist({{ wishlist.product.pk }})"
+                                        class="absolute top-2 right-2 bg-white rounded-full p-1 shadow-md hover:bg-gray-100">
+                                    <i class="fas fa-heart text-red-500"></i>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-8">
+                        <i class="fas fa-heart text-4xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-600">위시리스트가 비어있습니다.</p>
+                        <p class="text-gray-500 text-sm mt-2">마음에 드는 상품을 찜해보세요!</p>
+                        <a href="{% url 'shop:product_list' %}" 
+                           class="inline-block mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                            상품 둘러보기
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+            
+            <!-- 상품후기 -->
+            <div id="reviews" class="bg-white rounded-lg shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-semibold">작성 가능한 상품후기</h3>
+                    <a href="#" class="text-blue-600 hover:text-blue-800 text-sm">
+                        내 후기 전체보기 <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                
+                {% if delivered_orders %}
+                    <div class="space-y-4">
+                        {% for order in delivered_orders %}
+                            {% for item in order.items.all|slice:":1" %}
+                                <div class="border rounded-lg p-4 flex items-center justify-between">
+                                    <div class="flex items-center gap-4">
+                                        {% if item.product.thumbnail %}
+                                            <img src="{{ item.product.thumbnail.url }}" 
+                                                 alt="{{ item.product.name }}"
+                                                 class="w-16 h-16 object-cover rounded">
+                                        {% else %}
+                                            <div class="w-16 h-16 bg-gray-200 rounded flex items-center justify-center">
+                                                <i class="fas fa-image text-gray-400"></i>
+                                            </div>
+                                        {% endif %}
+                                        <div>
+                                            <h4 class="font-medium">{{ item.product.name }}</h4>
+                                            <p class="text-sm text-gray-600">구매일: {{ order.created_at|date:'Y.m.d' }}</p>
+                                        </div>
+                                    </div>
+                                    <button type="button" onclick="writeReview({{ item.product.pk }}, {{ order.pk }})"
+                                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm">
+                                        후기 작성
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="text-center py-8">
+                        <i class="fas fa-star text-4xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-600">상품 주문내역이 없습니다.</p>
+                        <p class="text-gray-500 text-sm mt-2">상품을 구매하고 후기를 작성해보세요!</p>
+                        <a href="{% url 'shop:product_list' %}" 
+                           class="inline-block mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                            쇼핑하러 가기
+                        </a>
+                    </div>
                 {% endif %}
             </div>
         </div>
@@ -466,5 +562,43 @@ function editAddress(addressId) {
     openAddressModal();
     document.getElementById('address_id').value = addressId;
 }
+
+function removeFromWishlist(productId) {
+    if (confirm('위시리스트에서 삭제하시겠습니까?')) {
+        // AJAX로 위시리스트에서 제거
+        fetch(`/shop/wishlist/toggle/${productId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('삭제 중 오류가 발생했습니다.');
+            }
+        });
+    }
+}
+
+function writeReview(productId, orderId) {
+    // 리뷰 작성 페이지로 이동 (추후 구현)
+    alert('리뷰 작성 기능은 준비 중입니다.');
+    // window.location.href = `/shop/review/write/${productId}/?order=${orderId}`;
+}
+
+// 페이지 로드 시 URL 해시에 따라 해당 섹션으로 스크롤
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.location.hash) {
+        const targetId = window.location.hash.substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+});
 </script>
 {% endblock %}

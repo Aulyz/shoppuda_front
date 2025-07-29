@@ -121,19 +121,37 @@
             @apply block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:focus:ring-blue-400 dark:focus:border-blue-400;
         }
 
-        /* 로딩 스피너 */
+        /* 로딩 스피너 - GIF로 대체 */
         .loading-spinner {
-            border: 3px solid #f3f4f6;
-            border-top: 3px solid #3b82f6;
-            border-radius: 50%;
+            background-image: url('/media/system/Lodding Logo.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
             width: 40px;
             height: 40px;
-            animation: spin 1s linear infinite;
+            display: inline-block;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        
+        /* 큰 로딩 스피너 */
+        .loading-spinner-lg {
+            background-image: url('/media/system/Lodding Logo.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 64px;
+            height: 64px;
+            display: inline-block;
+        }
+        
+        /* 작은 로딩 스피너 */
+        .loading-spinner-sm {
+            background-image: url('/media/system/Lodding Logo.gif');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 24px;
+            height: 24px;
+            display: inline-block;
         }
 
         /* 알림 스타일 */
@@ -163,7 +181,8 @@
     <div x-show="loading" x-cloak 
          class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-50 flex items-center justify-center">
         <div class="bg-white dark:bg-gray-800 rounded-xl p-8 text-center shadow-2xl">
-            <div class="loading-spinner mx-auto mb-4"></div>
+            <img src="/media/system/Logo_background_transparent.png" alt="Logo" class="w-24 h-24 mx-auto mb-4">
+            <img src="/media/system/Lodding Logo.gif" alt="Loading" class="w-16 h-16 mx-auto mb-4">
             <p class="text-lg font-medium">처리 중입니다...</p>
             <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">잠시만 기다려주세요</p>
         </div>
@@ -448,6 +467,15 @@
                     if (typeof WebSocket !== 'undefined') {
                         connectWebSocket();
                     }
+                    
+                    // 전역 로딩 함수 등록
+                    window.showGlobalLoading = () => {
+                        this.loading = true;
+                    };
+                    
+                    window.hideGlobalLoading = () => {
+                        this.loading = false;
+                    };
                 },
                 
                 showLoading() {

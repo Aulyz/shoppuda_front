@@ -232,9 +232,16 @@ def mypage(request):
     user = request.user
     recent_orders = Order.objects.filter(user=user).order_by('-created_at')[:5]
     
+    # 배송 완료된 주문 중 후기 작성 가능한 주문
+    delivered_orders = Order.objects.filter(
+        user=user, 
+        status='DELIVERED'
+    ).prefetch_related('items__product').order_by('-created_at')[:3]
+    
     context = {
         'user': user,
         'recent_orders': recent_orders,
+        'delivered_orders': delivered_orders,
     }
     return render(request, 'shop/mypage.html', context)
 
