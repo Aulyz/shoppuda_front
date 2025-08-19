@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}쿠폰 발급{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">개별 쿠폰 발급</h1>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="space-y-4">
+                <div>
+                    <label for="id_coupon" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        쿠폰 선택
+                    </label>
+                    {{ form.coupon }}
+                    {% if form.coupon.errors %}
+                        <p class="mt-1 text-sm text-red-600">{{ form.coupon.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label for="id_user" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        사용자 선택
+                    </label>
+                    {{ form.user }}
+                    {% if form.user.errors %}
+                        <p class="mt-1 text-sm text-red-600">{{ form.user.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                {% if form.non_field_errors %}
+                <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                    <p class="text-sm text-red-800 dark:text-red-200">
+                        {{ form.non_field_errors.0 }}
+                    </p>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="mt-6 flex justify-end space-x-3">
+                <a href="{% url 'coupons:admin_list' %}" 
+                   class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
+                    취소
+                </a>
+                <button type="submit" 
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    발급
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// Select2 또는 자동완성 기능 추가 (옵션)
+document.addEventListener('DOMContentLoaded', function() {
+    // 쿠폰과 사용자 선택에 검색 기능 추가
+    const couponSelect = document.getElementById('id_coupon');
+    const userSelect = document.getElementById('id_user');
+    
+    // 클래스 추가로 스타일링
+    if (couponSelect) {
+        couponSelect.classList.add('mt-1', 'block', 'w-full', 'rounded-md', 'border-gray-300', 
+                                  'dark:border-gray-600', 'dark:bg-gray-700', 'dark:text-white',
+                                  'shadow-sm', 'focus:border-blue-500', 'focus:ring-blue-500');
+    }
+    
+    if (userSelect) {
+        userSelect.classList.add('mt-1', 'block', 'w-full', 'rounded-md', 'border-gray-300',
+                                'dark:border-gray-600', 'dark:bg-gray-700', 'dark:text-white', 
+                                'shadow-sm', 'focus:border-blue-500', 'focus:ring-blue-500');
+    }
+});
+</script>
+{% endblock %}

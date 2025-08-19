@@ -1,0 +1,290 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+
+{% block title %}추천 상품 관리 - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <!-- 헤더 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm mb-6">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">추천 상품 관리</h1>
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">메인 페이지에 표시될 추천 상품을 관리합니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 현재 추천 상품 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm mb-6">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">현재 추천 상품</h2>
+            </div>
+            
+            {% if featured_products %}
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <thead class="bg-gray-50 dark:bg-gray-700">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    순서
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    이미지
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    상품명
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    가격
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    재고
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    상태
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    등록일
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                    작업
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700" 
+                               id="sortable-featured">
+                            {% for featured in featured_products %}
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" 
+                                data-id="{{ featured.id }}">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <i class="fas fa-grip-vertical text-gray-400 mr-2 cursor-move"></i>
+                                        <span class="inline-flex items-center justify-center w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-full text-sm font-medium text-gray-900 dark:text-white">
+                                            {{ featured.order }}
+                                        </span>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if featured.product.images.first %}
+                                    <img src="{{ featured.product.images.first.image.url }}" 
+                                         alt="{{ featured.product.name }}"
+                                         class="h-12 w-12 object-cover rounded-lg">
+                                    {% else %}
+                                    <div class="h-12 w-12 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-image text-gray-400"></i>
+                                    </div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm font-medium text-gray-900 dark:text-white">
+                                        {{ featured.product.name }}
+                                    </div>
+                                    <div class="text-xs text-gray-500 dark:text-gray-400">
+                                        SKU: {{ featured.product.sku }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900 dark:text-white">
+                                        ₩{{ featured.product.price|floatformat:0|intcomma }}
+                                    </div>
+                                    {% if featured.product.discount_price %}
+                                    <div class="text-xs text-red-600 dark:text-red-400">
+                                        ₩{{ featured.product.discount_price|floatformat:0|intcomma }}
+                                    </div>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm text-gray-900 dark:text-white">
+                                        {{ featured.product.stock_quantity }}개
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    {% if featured.is_active %}
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                        활성화
+                                    </span>
+                                    {% else %}
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                        비활성화
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                                    {{ featured.created_at|date:"Y-m-d" }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <form method="post" action="{% url 'shop:admin_featured_delete' featured.pk %}" 
+                                          class="inline-block"
+                                          onsubmit="return confirm('정말 추천 상품에서 제거하시겠습니까?');">
+                                        {% csrf_token %}
+                                        <button type="submit" 
+                                                class="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300"
+                                                title="제거">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="px-6 py-8 text-center">
+                    <i class="fas fa-star text-4xl text-gray-300 dark:text-gray-600 mb-3"></i>
+                    <p class="text-gray-500 dark:text-gray-400">추천 상품이 없습니다.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- 상품 추가 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">추천 상품 추가</h2>
+            </div>
+            
+            <div class="p-6">
+                <form method="post" action="{% url 'shop:admin_featured_add' %}" class="mb-6">
+                    {% csrf_token %}
+                    <div class="flex items-end space-x-3">
+                        <div class="flex-1">
+                            <label for="product_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                상품 선택
+                            </label>
+                            <select name="product_id" id="product_id" required
+                                    class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                                <option value="">상품을 선택하세요</option>
+                                {% for product in available_products %}
+                                <option value="{{ product.id }}">
+                                    {{ product.name }} (재고: {{ product.stock_quantity }}개, 가격: ₩{{ product.price|floatformat:0|intcomma }})
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="w-32">
+                            <label for="order" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                순서
+                            </label>
+                            <input type="number" name="order" id="order" value="0" min="0"
+                                   class="block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        </div>
+                        <button type="submit" 
+                                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-plus mr-2"></i>
+                            추가
+                        </button>
+                    </div>
+                </form>
+
+                {% if not available_products %}
+                <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <i class="fas fa-exclamation-triangle text-yellow-400"></i>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-yellow-700 dark:text-yellow-300">
+                                추가 가능한 상품이 없습니다. 모든 활성 상품이 이미 추천 상품으로 등록되었거나, 등록 가능한 상품이 없습니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- 안내 메시지 -->
+        <div class="mt-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-info-circle text-blue-400"></i>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-blue-800 dark:text-blue-200">추천 상품 관리 안내</h3>
+                    <div class="mt-2 text-sm text-blue-700 dark:text-blue-300">
+                        <ul class="list-disc list-inside space-y-1">
+                            <li>추천 상품은 메인 페이지의 "추천 상품" 섹션에 표시됩니다.</li>
+                            <li>드래그 앤 드롭으로 순서를 변경할 수 있습니다.</li>
+                            <li>최대 12개까지 추천 상품으로 등록할 수 있습니다.</li>
+                            <li>재고가 없거나 비활성화된 상품은 자동으로 표시되지 않습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% load static %}
+<!-- Sortable.js for drag and drop -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script>
+// 드래그 앤 드롭 기능
+document.addEventListener('DOMContentLoaded', function() {
+    const sortableTable = document.getElementById('sortable-featured');
+    
+    if (sortableTable) {
+        new Sortable(sortableTable, {
+            handle: '.fa-grip-vertical',
+            animation: 150,
+            onEnd: function(evt) {
+                // 순서 변경 후 서버에 전송
+                const items = [];
+                const rows = sortableTable.querySelectorAll('tr');
+                
+                rows.forEach((row, index) => {
+                    const id = row.getAttribute('data-id');
+                    if (id) {
+                        items.push({
+                            id: id,
+                            order: index
+                        });
+                        // UI 업데이트
+                        const orderBadge = row.querySelector('.rounded-full');
+                        if (orderBadge) {
+                            orderBadge.textContent = index;
+                        }
+                    }
+                });
+                
+                // AJAX로 순서 저장
+                fetch("{% url 'shop:admin_featured_reorder' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({ items: items })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // 성공 메시지 표시 (선택사항)
+                        console.log('순서가 변경되었습니다.');
+                    }
+                });
+            }
+        });
+    }
+});
+
+// CSRF 토큰 가져오기
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+{% endblock %}

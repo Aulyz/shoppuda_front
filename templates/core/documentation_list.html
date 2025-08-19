@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}프로젝트 문서 - {{ block.super }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .doc-card {
+        transition: all 0.3s ease;
+    }
+    .doc-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .doc-icon {
+        width: 48px;
+        height: 48px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 max-w-6xl">
+    <!-- 헤더 -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                    📚 프로젝트 문서
+                </h1>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Shopuda ERP 프로젝트의 기술 문서 및 가이드
+                </p>
+            </div>
+            <div class="flex gap-2">
+                <a href="{% url 'dashboard:home' %}" 
+                   class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition">
+                    <i class="fas fa-arrow-left mr-2"></i>대시보드로
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 문서 목록 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for doc in documents %}
+        <div class="doc-card bg-white dark:bg-gray-800 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300">
+            <a href="{% url 'core:documentation_view' doc.name %}" class="block p-6">
+                <div class="flex items-start gap-4">
+                    <div class="doc-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-semibold text-gray-900 dark:text-white mb-1">
+                            {{ doc.title }}
+                        </h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                            {{ doc.name }}
+                        </p>
+                        <div class="flex items-center gap-4 text-xs text-gray-400">
+                            <span>
+                                <i class="fas fa-file-archive mr-1"></i>
+                                {{ doc.size }}
+                            </span>
+                            <span>
+                                <i class="fas fa-clock mr-1"></i>
+                                {{ doc.modified|date:"Y-m-d" }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <div class="border-t dark:border-gray-700 px-6 py-3 bg-gray-50 dark:bg-gray-900/50">
+                <div class="flex items-center justify-between">
+                    <a href="{% url 'core:documentation_view' doc.name %}" 
+                       class="text-sm text-blue-600 dark:text-blue-400 hover:underline">
+                        <i class="fas fa-eye mr-1"></i>보기
+                    </a>
+                    <a href="{% url 'core:documentation_view' doc.name %}?format=raw" 
+                       class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                       target="_blank">
+                        <i class="fas fa-code mr-1"></i>Raw
+                    </a>
+                    <a href="{% url 'core:documentation_download' doc.name %}" 
+                       class="text-sm text-green-600 dark:text-green-400 hover:underline">
+                        <i class="fas fa-download mr-1"></i>다운로드
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full">
+            <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6 text-center">
+                <i class="fas fa-folder-open text-4xl text-yellow-500 mb-3"></i>
+                <p class="text-gray-600 dark:text-gray-400">
+                    문서가 없습니다.
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- 정보 섹션 -->
+    <div class="mt-8 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
+        <h3 class="font-semibold text-blue-900 dark:text-blue-100 mb-2">
+            <i class="fas fa-info-circle mr-2"></i>문서 정보
+        </h3>
+        <ul class="text-sm text-blue-800 dark:text-blue-200 space-y-1">
+            <li>• 이 페이지는 관리자만 접근 가능합니다</li>
+            <li>• 프로젝트의 ./문서 디렉토리에 있는 .md 파일들을 표시합니다</li>
+            <li>• Markdown 형식으로 작성된 문서를 HTML로 렌더링하여 보여줍니다</li>
+            <li>• Raw 버튼을 클릭하면 원본 Markdown 텍스트를 볼 수 있습니다</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // 문서 검색 기능 (추후 구현 가능)
+    function searchDocuments(query) {
+        // 검색 로직 구현
+    }
+</script>
+{% endblock %}

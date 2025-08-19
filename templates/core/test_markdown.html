@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown 테스트</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 라이트 모드 */
+        .markdown-body {
+            color: #24292f;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .markdown-body h1 {
+            font-size: 2em;
+            font-weight: 600;
+            padding-bottom: 0.3em;
+            border-bottom: 1px solid #d1d9e0;
+            margin-bottom: 16px;
+        }
+        
+        .markdown-body h2 {
+            font-size: 1.5em;
+            font-weight: 600;
+            padding-bottom: 0.3em;
+            border-bottom: 1px solid #d1d9e0;
+            margin-bottom: 16px;
+        }
+        
+        .markdown-body h3 {
+            font-size: 1.25em;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .markdown-body ul {
+            list-style-type: disc;
+            padding-left: 2em;
+            margin-bottom: 16px;
+        }
+        
+        .markdown-body li {
+            margin-bottom: 0.25em;
+        }
+        
+        .markdown-body code {
+            padding: 0.2em 0.4em;
+            background-color: rgba(175,184,193,0.2);
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 85%;
+        }
+        
+        .markdown-body pre {
+            background-color: #f6f8fa;
+            padding: 16px;
+            border-radius: 6px;
+            overflow: auto;
+            margin-bottom: 16px;
+        }
+        
+        .markdown-body pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        .markdown-body strong {
+            font-weight: 600;
+        }
+        
+        .markdown-body a {
+            color: #0969da;
+            text-decoration: none;
+        }
+        
+        .markdown-body a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 다크 모드 */
+        .dark .markdown-body {
+            color: #ffffff !important;
+        }
+        
+        .dark .markdown-body * {
+            color: #ffffff !important;
+        }
+        
+        .dark .markdown-body h1,
+        .dark .markdown-body h2 {
+            border-bottom-color: #30363d;
+        }
+        
+        .dark .markdown-body code {
+            background-color: rgba(110,118,129,0.4);
+            color: #58a6ff !important;
+        }
+        
+        .dark .markdown-body pre {
+            background-color: #161b22;
+        }
+        
+        .dark .markdown-body a {
+            color: #58a6ff !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 p-8">
+    <button onclick="toggleDarkMode()" class="mb-4 px-4 py-2 bg-blue-500 text-white rounded">
+        다크모드 토글
+    </button>
+    
+    <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow">
+        <div class="markdown-body">
+            <h1>Shopuda ERP 프로젝트 가이드</h1>
+            
+            <h2>프로젝트 개요</h2>
+            <p><strong>Shopuda ERP</strong>는 Django 기반의 전자상거래 통합 관리 시스템입니다.</p>
+            
+            <h2>핵심 기능</h2>
+            <h3>관리자 기능</h3>
+            <ul>
+                <li>🛍️ <strong>다중 플랫폼 통합</strong>: 쿠팡 등 여러 온라인 마켓플레이스 통합 관리</li>
+                <li>📦 <strong>재고 관리</strong>: 실시간 재고 추적, 자동 알림, 재고 이동 관리</li>
+                <li>📋 <strong>주문 처리</strong>: 주문 접수, 처리, 배송 관리 및 상태 추적</li>
+            </ul>
+            
+            <h3>기술 스택</h3>
+            <p>백엔드: <code>Django 5.x</code>, <code>Celery</code>, <code>Redis</code></p>
+            
+            <pre><code>project/
+├── accounts/          # 사용자 계정 및 권한 관리
+├── api/              # REST API 엔드포인트
+├── core/             # 핵심 시스템 기능
+└── dashboard/        # 관리자 메인 대시보드</code></pre>
+            
+            <p>더 자세한 정보는 <a href="#">여기</a>를 참조하세요.</p>
+        </div>
+    </div>
+    
+    <script>
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+    </script>
+</body>
+</html>

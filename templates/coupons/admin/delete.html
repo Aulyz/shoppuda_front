@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}쿠폰 삭제 확인{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">쿠폰 삭제</h1>
+        
+        <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4 mb-6">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-red-800 dark:text-red-200">
+                        주의: 이 작업은 되돌릴 수 없습니다.
+                    </h3>
+                    <div class="mt-2 text-sm text-red-700 dark:text-red-300">
+                        <p>다음 쿠폰을 삭제하시겠습니까?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 mb-6">
+            <dl class="space-y-2">
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">쿠폰명</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white font-semibold">{{ object.name }}</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">쿠폰 코드</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white font-mono">{{ object.code }}</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">발급 수량</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white">{{ object.issued_quantity }}개</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">사용 횟수</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white">{{ object.used_count }}회</dd>
+                </div>
+            </dl>
+        </div>
+
+        {% if object.issued_quantity > 0 %}
+        <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-6">
+            <p class="text-sm text-yellow-800 dark:text-yellow-200">
+                <strong>경고:</strong> 이 쿠폰은 이미 {{ object.issued_quantity }}명의 사용자에게 발급되었습니다.
+                삭제하면 발급된 쿠폰도 모두 무효화됩니다.
+            </p>
+        </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="flex justify-end space-x-3">
+                <a href="{% url 'coupons:admin_detail' object.pk %}" 
+                   class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
+                    취소
+                </a>
+                <button type="submit" 
+                        class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                    삭제 확인
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

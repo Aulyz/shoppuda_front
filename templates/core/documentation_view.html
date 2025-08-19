@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} - 문서{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* 사이드바 목차 스타일 */
+    .toc-sidebar {
+        position: sticky;
+        top: 80px;
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+    }
+    .toc-sidebar::-webkit-scrollbar { width: 6px; }
+    .toc-sidebar::-webkit-scrollbar-thumb { background: #888; border-radius: 3px; }
+    .toc-sidebar::-webkit-scrollbar-thumb:hover { background: #555; }
+
+    /* 목차 */
+    .toc-list { list-style: none; padding: 0; margin: 0; }
+    .toc-link { display: block; padding: 0.375rem 0.75rem; color: #4b5563; text-decoration: none; border-radius: 0.25rem; }
+    .dark .toc-link { color: #d1d5db; }
+    .toc-link:hover { background-color: #f3f4f6; color: #2563eb; }
+    .dark .toc-link:hover { background-color: #1f2937; color: #60a5fa; }
+    .toc-link.active { font-weight: bold; color: #2563eb; }
+    .dark .toc-link.active { color: #60a5fa; }
+
+    /* 마크다운 콘텐츠 */
+    .markdown-content {
+        font-family: system-ui, sans-serif;
+        font-size: 16px;
+        line-height: 1.75;
+        color: #1f2937;
+    }
+    .dark .markdown-content { color: #e5e7eb; } /* 다크모드 글자색 */
+
+    .markdown-content p { margin-bottom: 1rem; }
+    .markdown-content ul,
+    .markdown-content ol {
+        margin-bottom: 1rem;
+        padding-left: 2rem;
+    }
+    .markdown-content a { color: #2563eb; text-decoration: underline; }
+    .dark .markdown-content a { color: #93c5fd; }
+    .markdown-content a:hover { color: #1d4ed8; }
+    .dark .markdown-content a:hover { color: #bfdbfe; }
+
+    /* 제목 스타일 */
+    .markdown-content h1, .markdown-content h2, .markdown-content h3,
+    .markdown-content h4, .markdown-content h5, .markdown-content h6 {
+        font-weight: bold;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+    .markdown-content h1 { font-size: 2rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.3rem; }
+    .dark .markdown-content h1 { border-bottom-color: #374151; }
+    .markdown-content h2 { font-size: 1.75rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.3rem; }
+    .dark .markdown-content h2 { border-bottom-color: #374151; }
+    .markdown-content h3 { font-size: 1.5rem; }
+    .markdown-content h4 { font-size: 1.25rem; }
+    .markdown-content h5 { font-size: 1.125rem; }
+    .markdown-content h6 { font-size: 1rem; }
+
+    /* 코드 블록 */
+    .markdown-content code {
+        background-color: #f3f4f6;
+        padding: 0.125rem 0.25rem;
+        border-radius: 0.25rem;
+        font-family: monospace;
+        font-size: 0.875rem;
+        color: #dc2626;
+    }
+    .dark .markdown-content code {
+        background-color: #374151;
+        color: #93c5fd;
+    }
+    .markdown-content pre {
+        background-color: #1f2937;
+        color: #e5e7eb;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+    }
+    .dark .markdown-content pre { background-color: #111827; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 max-w-7xl">
+    <!-- 헤더 -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 mb-6">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="{% url 'core:documentation_list' %}" 
+                   class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fas fa-arrow-left text-xl"></i>
+                </a>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-900 dark:text-white">{{ title }}</h1>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ filename }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex gap-6">
+        <!-- 목차 -->
+        <aside class="hidden lg:block w-72 flex-shrink-0">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 toc-sidebar">
+                <h3 class="text-sm font-semibold text-gray-900 dark:text-white mb-4 uppercase tracking-wider">📑 목차</h3>
+                <nav id="toc-container">
+                    <p class="text-sm text-gray-500 dark:text-gray-400">목차가 없습니다.</p>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- 문서 내용 -->
+        <main class="flex-1 min-w-0">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-8">
+                <div class="markdown-content">
+                    {{ content|safe }}
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // 서버에서 전달된 toc_items를 사용해 목차 생성
+    const tocItems = [
+        {% for item in toc_items %}
+        { level: {{ item.level }}, title: "{{ item.title|escapejs }}", id: "{{ item.id }}" }
+        {% if not forloop.last %},{% endif %}
+        {% endfor %}
+    ];
+
+    function generateTOC() {
+        const container = document.getElementById("toc-container");
+        if (!tocItems.length) {
+            container.innerHTML = '<p class="text-sm text-gray-500 dark:text-gray-400">목차가 없습니다.</p>';
+            return;
+        }
+        let html = '<ul class="toc-list">';
+        tocItems.forEach(item => {
+            html += `<li><a href="#${item.id}" class="toc-link toc-h${item.level}">${item.title}</a></li>`;
+        });
+        html += '</ul>';
+        container.innerHTML = html;
+    }
+
+    // 스크롤 시 현재 섹션 하이라이트
+    window.addEventListener("scroll", () => {
+        const sections = document.querySelectorAll(".markdown-content h1[id], .markdown-content h2[id], .markdown-content h3[id], .markdown-content h4[id], .markdown-content h5[id], .markdown-content h6[id]");
+        let current = "";
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (scrollY >= sectionTop - 120) {
+                current = section.getAttribute("id");
+            }
+        });
+        document.querySelectorAll(".toc-link").forEach(link => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === "#" + current) {
+                link.classList.add("active");
+            }
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", generateTOC);
+</script>
+{% endblock %}

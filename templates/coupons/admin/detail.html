@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}쿠폰 상세 - {{ coupon.name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- 헤더 -->
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900 dark:text-white">쿠폰 상세</h1>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ coupon.code }}</p>
+        </div>
+        <div class="flex space-x-2">
+            <a href="{% url 'coupons:admin_edit' coupon.pk %}" 
+               class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                수정
+            </a>
+            <form method="post" action="{% url 'coupons:admin_toggle_active' coupon.pk %}" class="inline">
+                {% csrf_token %}
+                <button type="submit" 
+                        class="px-4 py-2 {% if coupon.is_active %}bg-yellow-600 hover:bg-yellow-700{% else %}bg-green-600 hover:bg-green-700{% endif %} text-white rounded-lg">
+                    {% if coupon.is_active %}비활성화{% else %}활성화{% endif %}
+                </button>
+            </form>
+            <a href="{% url 'coupons:admin_duplicate' coupon.pk %}" 
+               class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+                복제
+            </a>
+            <a href="{% url 'coupons:admin_list' %}" 
+               class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
+                목록
+            </a>
+        </div>
+    </div>
+
+    <!-- 쿠폰 정보 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <!-- 기본 정보 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">기본 정보</h2>
+            <dl class="space-y-3">
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">쿠폰명</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white">{{ coupon.name }}</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">쿠폰 코드</dt>
+                    <dd class="text-sm font-mono text-gray-900 dark:text-white">{{ coupon.code }}</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">할인 타입</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white">{{ coupon.get_discount_type_display }}</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">할인 값</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white">
+                        {% if coupon.discount_type == 'PERCENTAGE' %}
+                            {{ coupon.discount_value }}%
+                        {% elif coupon.discount_type == 'FIXED' %}
+                            {{ coupon.discount_value|floatformat:0 }}원
+                        {% else %}
+                            무료 배송
+                        {% endif %}
+                    </dd>
+                </div>
+                {% if coupon.max_discount_amount %}
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">최대 할인 금액</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white">{{ coupon.max_discount_amount|floatformat:0 }}원</dd>
+                </div>
+                {% endif %}
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">최소 주문 금액</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white">{{ coupon.min_order_amount|floatformat:0 }}원</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">상태</dt>
+                    <dd class="text-sm">
+                        {% if coupon.is_valid %}
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">유효</span>
+                        {% else %}
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-800">무효</span>
+                        {% endif %}
+                        {% if coupon.is_active %}
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">활성</span>
+                        {% else %}
+                            <span class="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">비활성</span>
+                        {% endif %}
+                    </dd>
+                </div>
+            </dl>
+        </div>
+
+        <!-- 사용 조건 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">사용 조건</h2>
+            <dl class="space-y-3">
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">유효 기간</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white">
+                        {{ coupon.valid_from|date:"Y-m-d H:i" }} ~ {{ coupon.valid_to|date:"Y-m-d H:i" }}
+                    </dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">발급 타입</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white">{{ coupon.get_issue_type_display }}</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">총 발급 수량</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white">
+                        {% if coupon.total_quantity %}
+                            {{ coupon.total_quantity }}개
+                        {% else %}
+                            무제한
+                        {% endif %}
+                    </dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">사용자별 사용 제한</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white">{{ coupon.usage_limit_per_user }}회</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">전체 사용 제한</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white">
+                        {% if coupon.usage_limit_total %}
+                            {{ coupon.usage_limit_total }}회
+                        {% else %}
+                            무제한
+                        {% endif %}
+                    </dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">중복 사용</dt>
+                    <dd class="text-sm text-gray-900 dark:text-white">
+                        {% if coupon.is_stackable %}
+                            가능
+                        {% else %}
+                            불가능
+                        {% endif %}
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+
+    <!-- 통계 -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">사용 통계</h2>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div class="text-center">
+                <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ stats.issued_count }}</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">발급 수량</p>
+            </div>
+            <div class="text-center">
+                <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ stats.used_count }}</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">사용 횟수</p>
+            </div>
+            <div class="text-center">
+                <p class="text-2xl font-bold text-gray-900 dark:text-white">
+                    {% if stats.remaining_quantity is not None %}
+                        {{ stats.remaining_quantity }}
+                    {% else %}
+                        ∞
+                    {% endif %}
+                </p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">남은 수량</p>
+            </div>
+            <div class="text-center">
+                <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ stats.usage_rate|floatformat:1 }}%</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">사용률</p>
+            </div>
+            <div class="text-center">
+                <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ stats.total_discount|floatformat:0 }}원</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">총 할인 금액</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 발급 내역 -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">최근 발급 내역</h2>
+            <a href="{% url 'coupons:admin_issued_list' %}?coupon={{ coupon.id }}" 
+               class="text-sm text-blue-600 hover:text-blue-700">전체 보기 →</a>
+        </div>
+        {% if issued_coupons %}
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead class="bg-gray-50 dark:bg-gray-700">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">사용자</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">발급일</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">만료일</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">상태</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    {% for user_coupon in issued_coupons %}
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                            {{ user_coupon.user.username }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                            {{ user_coupon.issued_at|date:"Y-m-d H:i" }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                            {{ user_coupon.expires_at|date:"Y-m-d H:i" }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if user_coupon.status == 'ISSUED' %}
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                    발급됨
+                                </span>
+                            {% elif user_coupon.status == 'USED' %}
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                    사용됨
+                                </span>
+                            {% elif user_coupon.status == 'EXPIRED' %}
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
+                                    만료됨
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-sm text-gray-500 dark:text-gray-400">아직 발급 내역이 없습니다.</p>
+        {% endif %}
+    </div>
+
+    <!-- 활동 로그 -->
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">활동 로그</h2>
+        {% if logs %}
+        <div class="space-y-2">
+            {% for log in logs %}
+            <div class="flex items-center justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+                <div class="flex items-center">
+                    <span class="text-sm font-medium text-gray-900 dark:text-white">
+                        {{ log.get_action_display }}
+                    </span>
+                    {% if log.user %}
+                    <span class="ml-2 text-sm text-gray-500 dark:text-gray-400">by {{ log.user.username }}</span>
+                    {% endif %}
+                </div>
+                <span class="text-xs text-gray-500 dark:text-gray-400">{{ log.created_at|date:"Y-m-d H:i" }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-sm text-gray-500 dark:text-gray-400">활동 로그가 없습니다.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

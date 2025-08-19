@@ -1,0 +1,395 @@
+{% load humanize %}
+{% load systemSettings %}
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% get_site_name %}{% endblock %}</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Athor JS Library -->
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body class="h-full bg-gray-50">
+    <!-- 로그인 카드-->
+    <div id="login-modal"
+        class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/30 backdrop-blur-[4px] transition-all duration-300 hidden"
+        style="min-height:100vh;">
+        <div id="login-modal-card" class="flex flex-col md:flex-row w-full max-w-md md:max-w-3xl h-auto md:h-[410px] rounded-2xl overflow-hidden shadow-xl mx-4 md:mx-0 bg-transparent
+                opacity-0 scale-95 transition-all duration-300">
+            <!-- 왼쪽 -->
+            <div
+                class="flex-1 min-w-0 bg-white/60 backdrop-blur-lg flex flex-col justify-center px-6 py-10 md:px-14 md:py-12">
+                <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-8 text-center tracking-wider">SHOPPUDA</h2>
+                <form method="post" action="{% url 'accounts:user_login' %}">
+                    {% csrf_token %}
+                    <div class="mb-5">
+                        <input type="text" name="username" placeholder="ID" required
+                            class="w-full py-2 px-4 rounded-lg bg-white/80 border-none outline-none focus:ring-2 focus:ring-[#A3D8CA] text-gray-700 placeholder-[#b9b9b9] placeholder:text-xs transition" />
+                    </div>
+                    <div class="mb-8">
+                        <input type="password" name="password" placeholder="PW" required
+                            class="w-full py-2 px-4 rounded-lg bg-white/80 border-none outline-none focus:ring-2 focus:ring-[#A3D8CA] text-gray-700 placeholder-[#b9b9b9] placeholder:text-xs transition" />
+                    </div>
+                    <button type="submit"
+                        class="w-full py-2 rounded-full bg-gradient-to-r from-[#B6E1FB] to-[#A3D8CA] text-[#284B63] font-semibold text-base tracking-wide hover:bg-opacity-90 transition shadow">
+                        LOGIN
+                    </button>
+                </form>
+                <p class="text-xs text-gray-500 mt-4 text-center">
+                    <a href="#" class="hover:underline">Forgot Password?</a>
+                </p>
+                <p class="text-xs text-gray-500 mt-4 text-center">
+                    <a href="{% url 'accounts:user_signup' %}" class="hover:underline">Sign Up?</a>
+                </p>
+            </div>
+            <!-- 오른쪽 카드 -->
+            <div class="hidden md:flex flex-1 items-center justify-center bg-white">
+                <div class="p-14">
+                    <img src="{% get_site_logo %}" alt=".Logo">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="mobile-menu-overlay" class="hidden fixed inset-0 bg-black/20 z-40 md:hidden"></div>
+
+    <!-- Header -->
+    <header class="w-full bg-white/70 backdrop-blur-sm fixed top-0 left-0 z-50 shadow-sm border-b border-gray-100">
+        <div class="w-full max-w-6xl mx-auto flex items-center justify-between px-2 md:px-10 py-3 md:py-6">
+            <!-- 로고 -->
+            <div class="flex items-center">
+                <img src="{% get_site_logo %}" alt="Logo" class="w-6 h-6 mr-1">
+                <span class="block font-semibold text-base md:text-lg leading-tight tracking-tight"
+                    style="font-family:serif;">
+                    <a href="{% url 'shop:home' %}">SHOPPUDA</a>
+                </span>
+            </div>
+
+            <!-- 데스크탑 메뉴 -->
+            <nav id="desktop-menu"
+                class="hidden md:flex items-center space-x-5 md:space-x-7 text-xs md:text-sm font-normal">
+                <ul class="flex justify-center space-x-3 md:space-x-8 text-gray-700 font-medium">
+                    <li><a href="{% url 'shop:home' %}" class="m-1 md:m-2 font-bold hover:text-black">HOME</a></li>
+                    <li><a href="{% url 'shop:product_list' %}" class="m-1 md:m-2 font-bold hover:text-black">상품목록</a></li>
+                    <li><a href="{% url 'shop:product_list' %}?featured=true" class="m-1 md:m-2 font-bold hover:text-black">베스트</a></li>
+                    <li><a href="{% url 'shop:product_list' %}?sort=-created_at" class="m-1 md:m-2 font-bold hover:text-black">신상품</a></li>
+                    <li><a href="{% url 'shop:product_list' %}?discount=true" class="m-1 md:m-2 font-bold hover:text-black">이벤트</a></li>
+                    <li><a href="{% url 'shop:product_list' %}" class="m-1 md:m-2 font-bold hover:text-black">FAQ</a></li>
+                </ul>
+            </nav>
+
+            <!-- 우측 버튼 그룹 -->
+            <div class="flex items-center space-x-2 md:space-x-3">
+                <!-- 장바구니/Cart 아이콘 -->
+                <a href="{% url 'shop:cart' %}" class="ml-1 block">
+                    <svg class="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <circle cx="9" cy="21" r="1" />
+                        <circle cx="20" cy="21" r="1" />
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                    </svg>
+                </a>
+                {% if user.is_authenticated %}
+                <button onclick="openLoginModal()"
+                    class="px-2 md:px-4 py-1 bg-white rounded shadow-sm border font-medium text-xs md:text-sm hover:bg-gray-100 transition whitespace-nowrap">
+                    마이페이지
+                </button>
+                {% else %}
+                <button onclick="openLoginModal()"
+                    class="px-2 md:px-4 py-1 bg-white rounded shadow-sm border font-medium text-xs md:text-sm hover:bg-gray-100 transition whitespace-nowrap">
+                    로그인
+                </button>
+                {% endif %}
+                <!-- 햄버거 버튼 (모바일) -->
+                <button id="menu-toggle" class="block md:hidden ml-2 p-2" aria-label="모바일 메뉴 열기/닫기">
+                    <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+
+        <!-- 모바일 메뉴 -->
+        <nav id="mobile-menu"
+            class="hidden fixed left-0 w-full bg-white/70 backdrop-blur-sm border-t shadow-sm z-50 md:hidden" style="">
+            <ul class="flex flex-col px-4 py-2 space-y-1 text-sm text-center">
+                <li><a href="{% url 'shop:home' %}" class="p-2 font-bold hover:bg-white/30 block">HOME</a></li>
+                <li><a href="{% url 'shop:product_list' %}" class="p-2 font-bold hover:bg-white/30 block">상품목록</a></li>
+                <li><a href="{% url 'shop:product_list' %}?featured=true" class="p-2 font-bold hover:bg-white/30 block">베스트</a></li>
+                <li><a href="{% url 'shop:product_list' %}?sort=-created_at" class="p-2 font-bold hover:bg-white/30 block">신상품</a></li>
+                <li><a href="{% url 'shop:product_list' %}?discount=true" class="p-2 font-bold hover:bg-white/30 block">이벤트</a></li>
+                <li><a href="{% url 'shop:product_list' %}" class="p-2 font-bold hover:bg-white/30 block">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer class="relative bg-[#CBDCEB] pt-8 pb-6 text-[#003161]">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap text-left lg:text-left">
+                <div class="w-full lg:w-6/12 px-4">
+                    <h4 class="text-3xl fonat-semibold ">HELLO WORLD!</h4>
+                    <h5 class="text-lg mt-0 mb-2 ">
+                        Find us on any of these platforms, we respond 1-2 business days.
+                    </h5>
+
+                    <!-- 링크버튼 -->
+                    <div class="mt-6 lg:mb-0 mb-6">
+                        <button
+                            class="bg-white shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                            type="button">
+                            <i class="fab fa-twitter"></i>
+                        </button>
+                        <button
+                            class="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                            type="button">
+                            <i class="fab fa-facebook-square"></i>
+                        </button>
+                        <button
+                            class="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                            type="button">
+                            <i class="fab fa-dribbble"></i>
+                        </button>
+                        <button
+                            class="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                            type="button">
+                            <i class="fab fa-github"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 우측 -->
+                <div class="w-full lg:w-6/12 px-4">
+                    <div class="flex flex-wrap items-top mb-6">
+                        <div class="w-full lg:w-4/12 px-4 ml-auto">
+                            <span class="block uppercase text-sm font-semibold mb-2">사장님들</span>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a class="font-semibold block pb-2 text-sm" href="{% url 'shop:product_list' %}">사1</a>
+                                </li>
+                                <li>
+                                    <a class="font-semibold block pb-2 text-sm" href="{% url 'shop:product_list' %}">팀1</a>
+                                </li>
+                                <li>
+                                    <a class="font-semibold block pb-2 text-sm" href="{% url 'shop:product_list' %}">대1</a>
+                                </li>
+                                <li>
+                                    <a class="font-semibold block pb-2 text-sm" href="{% url 'shop:product_list' %}">노예1</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="w-full lg:w-4/12 px-4">
+                            <span class="block uppercase text-sm font-semibold mb-2">노예들</span>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <a class="font-semibold block pb-2 text-sm" href="{% url 'shop:product_list' %}">박민우</a>
+                                </li>
+                                <li>
+                                    <a class="font-semibold block pb-2 text-sm" href="{% url 'shop:product_list' %}">박민우</a>
+                                </li>
+                                <li>
+                                    <a class="font-semibold block pb-2 text-sm" href="{% url 'shop:product_list' %}">박민우</a>
+                                </li>
+                                <li>
+                                    <a class="font-semibold block pb-2 text-sm" href="{% url 'shop:product_list' %}">박민우</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-6 border-[#608BC1]">
+            <div class="flex flex-wrap items-center md:justify-between justify-center">
+                <div class="w-full md:w-4/12 px-4 mx-auto text-center">
+                    <div class="text-sm font-semibold py-1">
+                        Copyright © <span id="get-current-year">2025</span><a
+                            href="https://www.creative-tim.com/product/notus-js" class="" target="_blank"> by
+                            <a href="{% url 'shop:home' %}" class="">SHOPPUDA</a>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- 위로가기 버튼 -->
+    <button id="scrollToTopBtn" style="display:none;"
+        class="fixed w-12 h-12 bottom-8 right-8 bg-white/80 rounded-full p-3 border-2 border-gray-500 shadow-lg hover:bg-gray-300 transition z-30"
+        aria-label="">
+        ↑
+    </button>
+
+    <!-- 채팅 위젯 -->
+    {% include 'chat/widget.html' %}
+
+    {% block extra_js %}{% endblock %}
+    <script>
+        function openLoginModal() {
+            const modal = document.getElementById('login-modal');
+            const card = document.getElementById('login-modal-card');
+            modal.classList.remove('hidden');
+            card.classList.remove('opacity-100', 'scale-100');
+            card.classList.add('opacity-0', 'scale-95');
+            requestAnimationFrame(() => {
+                card.classList.remove('opacity-0', 'scale-95');
+                card.classList.add('opacity-100', 'scale-100');
+            });
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById('login-modal');
+            const card = document.getElementById('login-modal-card');
+            card.classList.remove('opacity-100', 'scale-100');
+            card.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // 오버레이 클릭시
+        document.getElementById('login-modal').addEventListener('click', function (e) {
+            if (e.target === this) closeLoginModal();
+        });
+
+        // ESC키로도
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeLoginModal();
+        });
+        const menuToggleBtn = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const overlay = document.getElementById('mobile-menu-overlay');
+
+        // 메뉴 열기 함수
+        function openMenu() {
+            mobileMenu.classList.add('open');
+            mobileMenu.classList.remove('hidden');
+            overlay.classList.remove('hidden');
+        }
+
+        // 메뉴 닫기 함수
+        function closeMenu() {
+            mobileMenu.classList.remove('open');
+            setTimeout(() => {
+                mobileMenu.classList.add('hidden');
+            }, 400); // CSS transition 시간과 일치시킵니다.
+            overlay.classList.add('hidden');
+        }
+
+        // 토글 함수
+        function toggleMenu() {
+            if (mobileMenu.classList.contains('open')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        }
+
+        // 햄버거 버튼 클릭
+        menuToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMenu();
+        });
+
+        // 오버레이(배경) 클릭 시 닫기
+        overlay.addEventListener('click', closeMenu);
+
+        // 메뉴 내 a 태그 클릭 시 닫기 (필요시 사용)
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                closeMenu();
+            }
+        });
+
+        // ESC 키 누르면 닫기
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+                closeMenu();
+            }
+        });
+
+        const sections = document.querySelectorAll('section');
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+        const leftBack = document.getElementById('leftBack');
+
+        let isScrolling = false;
+
+        window.addEventListener('wheel', (e) => {
+            if (isScrolling) return;
+
+            // 아래로 스크롤 시에만
+            if (e.deltaY > 30) {
+                const scrollY = window.scrollY;
+
+                for (let i = 0; i < sections.length; i++) {
+                    const secTop = sections[i].offsetTop;
+                    const secBottom = secTop + sections[i].offsetHeight;
+
+                    if (scrollY >= secTop && scrollY < secBottom) {
+                        const nextIndex = i + 1;
+
+                        if (nextIndex < sections.length) {
+                            isScrolling = true;
+
+                            window.scrollTo({
+                                top: sections[nextIndex].offsetTop,
+                                behavior: 'smooth'
+                            });
+
+                            // 현재 섹션이 1번(인덱스 0)이고 → 2번(인덱스 1)으로 내려갈 때만 애니메이션 실행
+                            if (i === 0 && nextIndex === 1) {
+                                setTimeout(() => {
+                                    leftBack.classList.add('slide-down');
+                                }, 300);
+                            }
+
+                            setTimeout(() => {
+                                isScrolling = false;
+                            }, 700);
+
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+
+
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY >= sections[1].offsetTop) {
+                scrollToTopBtn.style.display = 'block';
+            } else {
+                scrollToTopBtn.style.display = 'none';
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}대량 쿠폰 발급{% endblock %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">대량 쿠폰 발급</h1>
+        
+        <form method="post" x-data="{ targetType: 'ALL' }">
+            {% csrf_token %}
+            
+            <div class="space-y-6">
+                <!-- 쿠폰 선택 -->
+                <div>
+                    <label for="id_coupon" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        쿠폰 선택
+                    </label>
+                    {{ form.coupon }}
+                    {% if form.coupon.errors %}
+                        <p class="mt-1 text-sm text-red-600">{{ form.coupon.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                
+                <!-- 대상 타입 선택 -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        발급 대상
+                    </label>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="radio" name="target_type" value="ALL" 
+                                   x-model="targetType"
+                                   class="mr-2 text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-gray-900 dark:text-white">전체 사용자</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="target_type" value="MEMBERSHIP" 
+                                   x-model="targetType"
+                                   class="mr-2 text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-gray-900 dark:text-white">회원 등급별</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="target_type" value="SPECIFIC" 
+                                   x-model="targetType"
+                                   class="mr-2 text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-gray-900 dark:text-white">특정 사용자</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="target_type" value="NEW" 
+                                   x-model="targetType"
+                                   class="mr-2 text-blue-600 focus:ring-blue-500">
+                            <span class="text-sm text-gray-900 dark:text-white">신규 가입자</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 회원 등급 선택 (MEMBERSHIP 선택시) -->
+                <div x-show="targetType === 'MEMBERSHIP'" x-transition>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        회원 등급 선택
+                    </label>
+                    <div class="space-y-2">
+                        <label class="flex items-center">
+                            <input type="checkbox" name="membership_levels" value="BRONZE" 
+                                   class="mr-2 text-blue-600 rounded focus:ring-blue-500">
+                            <span class="text-sm text-gray-900 dark:text-white">브론즈</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="membership_levels" value="SILVER" 
+                                   class="mr-2 text-blue-600 rounded focus:ring-blue-500">
+                            <span class="text-sm text-gray-900 dark:text-white">실버</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="membership_levels" value="GOLD" 
+                                   class="mr-2 text-blue-600 rounded focus:ring-blue-500">
+                            <span class="text-sm text-gray-900 dark:text-white">골드</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="membership_levels" value="PLATINUM" 
+                                   class="mr-2 text-blue-600 rounded focus:ring-blue-500">
+                            <span class="text-sm text-gray-900 dark:text-white">플래티넘</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" name="membership_levels" value="DIAMOND" 
+                                   class="mr-2 text-blue-600 rounded focus:ring-blue-500">
+                            <span class="text-sm text-gray-900 dark:text-white">다이아몬드</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 특정 사용자 선택 (SPECIFIC 선택시) -->
+                <div x-show="targetType === 'SPECIFIC'" x-transition>
+                    <label for="id_specific_users" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        사용자 선택 (다중 선택 가능)
+                    </label>
+                    {{ form.specific_users }}
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                        Ctrl(Cmd) + 클릭으로 여러 사용자를 선택할 수 있습니다.
+                    </p>
+                </div>
+                
+                <!-- 신규 가입자 기준 (NEW 선택시) -->
+                <div x-show="targetType === 'NEW'" x-transition>
+                    <label for="id_days_since_join" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        최근 가입 일수
+                    </label>
+                    <input type="number" name="days_since_join" id="id_days_since_join" 
+                           value="7" min="1" max="365"
+                           class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                        최근 N일 이내 가입한 사용자에게 발급됩니다.
+                    </p>
+                </div>
+                
+                {% if form.non_field_errors %}
+                <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                    <p class="text-sm text-red-800 dark:text-red-200">
+                        {{ form.non_field_errors.0 }}
+                    </p>
+                </div>
+                {% endif %}
+                
+                <!-- 주의사항 -->
+                <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+                    <h3 class="text-sm font-medium text-yellow-800 dark:text-yellow-200">주의사항</h3>
+                    <ul class="mt-2 text-sm text-yellow-700 dark:text-yellow-300 list-disc list-inside">
+                        <li>이미 해당 쿠폰을 보유한 사용자는 제외됩니다.</li>
+                        <li>사용자별 발급 제한을 초과한 경우 발급되지 않습니다.</li>
+                        <li>대량 발급은 취소할 수 없으니 신중하게 진행해주세요.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-6 flex justify-end space-x-3">
+                <a href="{% url 'coupons:admin_list' %}" 
+                   class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
+                    취소
+                </a>
+                <button type="submit" 
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    발급 시작
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Select 요소 스타일링
+    const selects = document.querySelectorAll('select');
+    selects.forEach(select => {
+        select.classList.add('mt-1', 'block', 'w-full', 'rounded-md', 'border-gray-300',
+                           'dark:border-gray-600', 'dark:bg-gray-700', 'dark:text-white',
+                           'shadow-sm', 'focus:border-blue-500', 'focus:ring-blue-500');
+    });
+    
+    // 다중 선택 select에 대한 추가 설정
+    const specificUsers = document.getElementById('id_specific_users');
+    if (specificUsers) {
+        specificUsers.setAttribute('multiple', 'multiple');
+        specificUsers.setAttribute('size', '10');
+    }
+});
+</script>
+{% endblock %}

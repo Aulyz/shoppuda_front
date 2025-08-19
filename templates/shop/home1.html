@@ -1,0 +1,337 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load systemSettings %}
+
+{% block title %}홈 - {% get_site_name %}{% endblock %}
+
+{% block extra_css %}
+<style>
+    body { font-family: 'Pretendard', system-ui, -apple-system, sans-serif; }
+
+    #mobile-menu {
+        max-height: 0;                 
+        overflow: hidden;            
+        transition: max-height 0.4s cubic-bezier(.4,0,.2,1);
+        top:65px;
+    }
+
+    #mobile-menu.open {
+        max-height: 500px;           
+    }
+
+    .bg-slide {
+        position: absolute;      
+        top: 0; left: 0; 
+        width: 100vw; 
+        height: 100vh;
+        background-size: cover; 
+        background-position: center;
+        z-index: -1;        
+        transition: opacity 1.5s linear;
+        opacity: 0;
+    }
+    .bg-slide.active {
+        opacity: 1;
+    }
+
+    #leftBack {
+        transform: translateY(-50px);
+        opacity: 0;
+        transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+
+    #leftBack.slide-down {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    .slide-transition {
+        transition: transform 0.5s ease, opacity 0.5s ease, top 0.5s ease;
+        will-change: transform, opacity, top;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- 1. 배경 이미지 부분 -->
+<section class="relative w-full h-screen flex flex-col justify-center items-center overflow-hidden">
+    <div id="bg1" class="bg-slide absolute"></div>
+    <div id="bg2" class="bg-slide absolute"></div>
+
+    <!-- 메인 텍스트 -->
+    <div class="z-10 flex flex-col items-center justify-center h-full">
+        <h2 class="text-2xl md:text-3xl tracking-widest font-light text-white mb-4 uppercase">Welcome to</h2>
+        <div class="text-center">
+            <div class="text-xs text-white mb-1 tracking-widest">{% get_site_tagline %}</div>
+            <h1 class="text-3xl md:text-5xl font-semibold text-white mb-3">{% get_site_name %}</h1>
+            <a href="{% url 'shop:product_list' %}" class="mt-2 px-6 py-2 bg-white/80 text-gray-900 rounded-full hover:bg-white font-medium shadow-md inline-block">
+                모든 상품 보기
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- 2. 베스트 상품 -->
+<section class="relative w-full h-screen flex flex-col justify-center items-center overflow-hidden">
+    <div class="flex min-h-screen w-full relative">
+        <!-- 왼쪽 -->
+        <div id="leftBack" class="relative flex flex-col justify-center items-start bg-[#7C93C3] w-2/5 p-16 z-10">
+            <div class="ml-10">
+                <h1 class="text-5xl font-light mb-8 font-bold text-white">{% get_site_name %}</h1>
+                <p class="mb-4 text-white/80">
+                    <span class="text-[#16325B] font-medium">고객</span>과 고객의 <span class="text-[#16325B] font-medium">고객</span>까지 만족시키는<br>
+                    다양한 상품 제공을 약속합니다.
+                </p>
+                <div class="flex items-center mb-8 gap-2">
+                    <a href="{% url 'shop:product_list' %}" class="text-white/50 hover:text-[#16325B] text-sm">상품 보러가기</a>
+                    <a href="{% url 'shop:product_list' %}" class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xl">
+                        <i class="fas fa-arrow-right text-gray-700"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 오른쪽 사진 슬라이더 -->
+        <div class="flex-grow flex items-center justify-start relative -ml-60 overflow-visible z-20 -translate-y-8">
+            <div id="image-slider" class="flex gap-6 ml-20" style="position: relative; height: 300px; width: 1350px; overflow: visible;">
+                <!-- 이미지 슬라이더 컴포넌트 (JS에서 채움) -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 3. 특별 혜택 -->
+<section class="relative w-full h-screen flex flex-col justify-center items-center overflow-hidden">
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // 배경 이미지 슬라이더
+    const images = [
+        "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1500&q=80",
+        "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1500&q=80",
+        "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1500&q=80"
+    ];
+    let now = 0, next = 1;
+    const bg1 = document.getElementById('bg1');
+    const bg2 = document.getElementById('bg2');
+
+    function showImages() {
+        bg1.style.backgroundImage = `url(${images[now]})`;
+        bg1.classList.add('active');
+        bg2.classList.remove('active');
+        setInterval(() => {
+            bg2.style.backgroundImage = `url(${images[next]})`;
+            bg2.classList.add('active');   
+            setTimeout(() => {
+                bg1.style.backgroundImage = `url(${images[next]})`;
+                bg1.classList.add('active');
+                bg2.classList.remove('active');
+                now = next;
+                next = (next + 1) % images.length;
+            }, 1500);
+        }, 4000);
+    }
+    showImages();
+
+    // 베스트 상품 슬라이더
+    const bestProducts = [
+        {% for product in best_products %}
+        {
+            src: "{% if product.images.first %}{{ product.images.first.image.url }}{% else %}https://via.placeholder.com/400x300?text={{ product.name|urlencode }}{% endif %}",
+            alt: "{{ product.name|escapejs }}",
+            label: "{{ product.name|truncatechars:20|escapejs }}",
+            url: "{% url 'shop:product_detail' product.id %}"
+        }{% if not forloop.last %},{% endif %}
+        {% empty %}
+        // 베스트 상품이 없을 경우 기본 이미지
+        { 
+            src: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80", 
+            alt: "샘플 상품 1", 
+            label: "샘플 상품 1", 
+            url: "{% url 'shop:product_list' %}" 
+        },
+        { 
+            src: "https://images.unsplash.com/photo-1511391403515-35b46d46df0c?auto=format&fit=crop&w=400&q=80", 
+            alt: "샘플 상품 2", 
+            label: "샘플 상품 2", 
+            url: "{% url 'shop:product_list' %}" 
+        },
+        { 
+            src: "https://images.unsplash.com/photo-1454023492550-5696b31c6b47?auto=format&fit=crop&w=400&q=80", 
+            alt: "샘플 상품 3", 
+            label: "샘플 상품 3", 
+            url: "{% url 'shop:product_list' %}" 
+        },
+        { 
+            src: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80", 
+            alt: "샘플 상품 4", 
+            label: "샘플 상품 4", 
+            url: "{% url 'shop:product_list' %}" 
+        }
+        {% endfor %}
+    ];
+
+    // 최소 4개 상품 보장
+    while (bestProducts.length < 4 && bestProducts.length > 0) {
+        bestProducts.push(bestProducts[0]);
+    }
+
+    // 이미지 인덱스 초기값
+    let firstIdx = 0;
+    let secondIdx = 1;
+    let thirdIdx = 2;
+
+    const container = document.getElementById('image-slider');
+    const positions = [0, 450, 900]; // x축 
+
+    function createImageDiv(imageData, positionIdx) {
+        const div = document.createElement('div');
+        div.style.position = 'absolute';
+        div.style.top = '0';  // y 위치는 나중에 동적으로 처리
+        div.style.left = '0';
+        div.style.width = '435px';
+        div.style.height = '300px';
+        div.style.borderRadius = '1rem';
+        div.style.overflow = 'hidden';
+        div.style.boxShadow = '0 10px 15px rgba(0,0,0,0.3)';
+        div.style.backgroundColor = '#1f2937';
+        div.style.zIndex = '10';
+        div.classList.add('slide-transition');
+
+        div.innerHTML = `
+            <a href="${imageData.url}">
+                <img src="${imageData.src}" alt="${imageData.alt}" class="w-full h-full object-cover opacity-70" />
+            </a>
+            <div class="absolute bottom-4 right-6 text-white text-lg font-semibold">${imageData.label}</div>
+        `;
+        div.style.transform = `translateX(${positions[positionIdx]}px)`;
+
+        if (positionIdx === 0) div.style.zIndex = '20';
+
+        return div;
+    }
+
+    // 현재 보여지는 DOM 변수
+    let firstDiv, secondDiv, thirdDiv;
+
+    // y 위치 갱신 함수: Image 1 인덱스 홀/짝에 따라 y 위치 다르게 설정
+    function updateVerticalPositions() {
+        if (!firstDiv || !secondDiv || !thirdDiv) return;
+        const isOdd = firstIdx % 2 === 1;
+
+        if (isOdd) {
+            // 홀수면 Image 1, Image 3 위로 -20px, Image 2는 기본 top 0
+            firstDiv.style.top = '-20px';
+            secondDiv.style.top = '0px';
+            thirdDiv.style.top = '-20px';
+        } else {
+            // 짝수면 Image 2 위로 -20px, Image 1/3 기본 0px
+            firstDiv.style.top = '0px';
+            secondDiv.style.top = '-20px';
+            thirdDiv.style.top = '0px';
+        }
+    }
+
+    function initialRender() {
+        if (!container || bestProducts.length === 0) return;
+        container.innerHTML = '';
+        firstDiv = createImageDiv(bestProducts[firstIdx], 0);
+        secondDiv = createImageDiv(bestProducts[secondIdx], 1);
+        thirdDiv = createImageDiv(bestProducts[thirdIdx], 2);
+
+        container.style.position = 'relative';
+        container.style.height = '300px';
+        container.style.width = '1350px';
+
+        container.appendChild(firstDiv);
+        container.appendChild(secondDiv);
+        container.appendChild(thirdDiv);
+
+        updateVerticalPositions();  // 초기 y 위치 설정
+    }
+
+    function slideImages() {
+        if (!container || bestProducts.length === 0) return;
+        const newIdx = (thirdIdx + 1) % bestProducts.length;
+
+        // 1. 슬라이드 시작 전에 각 이미지 y 위치 미리 계산하여 설정
+        const isOdd = firstIdx % 2 === 1;
+        if (isOdd) {
+            firstDiv.style.top = '-20px'; 
+            secondDiv.style.top = '0px'; 
+            thirdDiv.style.top = '-20px';  
+        } else {
+            firstDiv.style.top = '0px';   
+            secondDiv.style.top = '-20px'; 
+            thirdDiv.style.top = '0px';    
+        }
+
+        // 2. Image 1 슬라이드 아웃 (왼쪽으로 이동)
+        firstDiv.style.transitionDelay = '0s';
+        firstDiv.style.transform = 'translateX(-450px)';
+        firstDiv.style.opacity = '0';
+
+        // 3. Image 2 슬라이드 이동 (좌측 0 위치)
+        secondDiv.style.transitionDelay = '0.15s';
+        secondDiv.style.transform = 'translateX(0)';
+        secondDiv.style.zIndex = '20';
+        secondDiv.style.opacity = '1';
+
+        // 4. Image 3 슬라이드 이동 (중앙 450px 위치)
+        thirdDiv.style.transitionDelay = '0s';
+        thirdDiv.style.transform = 'translateX(450px)';
+        thirdDiv.style.opacity = '1';
+
+        // 5. 새 이미지 생성, 오른쪽 끝(900px), y 위치 미리 설정 (홀짝에 맞게)
+        const newDiv = createImageDiv(bestProducts[newIdx], 2);
+        newDiv.style.top = isOdd ? '-20px' : '0px';
+        newDiv.style.transform = 'translateX(900px)';
+        newDiv.style.opacity = '0';
+        newDiv.style.transition = 'opacity 0.6s ease 0.4s, top 0.5s ease 0.4s';
+        container.appendChild(newDiv);
+
+        requestAnimationFrame(() => {
+            newDiv.style.opacity = '1';
+            if(isOdd){
+                newDiv.style.top = '0px';
+            }
+            else{
+                newDiv.style.top = '-20px';
+            }
+        });
+
+        setTimeout(() => {
+            container.removeChild(firstDiv);
+
+            firstDiv = secondDiv;
+            secondDiv = thirdDiv;
+            thirdDiv = newDiv;
+
+            requestAnimationFrame(() => {
+                [firstDiv, secondDiv, thirdDiv].forEach((div, idx) => {
+                    div.style.transition = '';      
+                    div.style.transitionDelay = '0s';
+                    div.style.opacity = '1';
+                    div.style.zIndex = idx === 0 ? '20' : '10';
+                    div.style.transform = `translateX(${positions[idx]}px)`;
+                    // top은 이미 슬라이드 시작 전에 설정했으므로 여기서는 변경하지 않음
+                });
+            });
+
+            firstIdx = secondIdx;
+            secondIdx = thirdIdx;
+            thirdIdx = newIdx;
+        }, 700);  
+    }
+
+    // DOM이 로드된 후 실행
+    document.addEventListener('DOMContentLoaded', function() {
+        if (bestProducts.length > 0) {
+            initialRender();
+            setInterval(slideImages, 6000);
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}쿠폰 등록{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">쿠폰 등록</h1>
+        
+        <!-- 쿠폰 등록 폼 -->
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            
+            <div>
+                <label for="id_code" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    쿠폰 코드
+                </label>
+                <div class="mt-1 relative">
+                    <input type="text" 
+                           name="code" 
+                           id="id_code"
+                           required
+                           placeholder="쿠폰 코드를 입력하세요"
+                           class="appearance-none block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white text-lg font-mono uppercase"
+                           style="letter-spacing: 2px;">
+                </div>
+                {% if form.code.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.code.errors.0 }}</p>
+                {% endif %}
+                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                    * 대소문자 구분 없이 입력 가능합니다.
+                </p>
+            </div>
+            
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-red-800 dark:text-red-200">
+                            {{ form.non_field_errors.0 }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- 버튼 -->
+            <div class="flex justify-between">
+                <a href="{% url 'coupons:my_list' %}" 
+                   class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
+                    취소
+                </a>
+                <button type="submit" 
+                        class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    등록하기
+                </button>
+            </div>
+        </form>
+        
+        <!-- 안내 사항 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+            <h3 class="text-sm font-medium text-gray-900 dark:text-white mb-3">쿠폰 등록 안내</h3>
+            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                <li class="flex items-start">
+                    <svg class="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    쿠폰 코드는 영문 대소문자와 숫자로 구성되어 있습니다.
+                </li>
+                <li class="flex items-start">
+                    <svg class="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    한 번 등록한 쿠폰은 재등록할 수 없습니다.
+                </li>
+                <li class="flex items-start">
+                    <svg class="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    쿠폰마다 사용 조건과 유효기간이 다를 수 있습니다.
+                </li>
+                <li class="flex items-start">
+                    <svg class="h-5 w-5 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    등록된 쿠폰은 '내 쿠폰함'에서 확인할 수 있습니다.
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const codeInput = document.getElementById('id_code');
+    
+    // 자동 대문자 변환
+    codeInput.addEventListener('input', function(e) {
+        e.target.value = e.target.value.toUpperCase();
+    });
+    
+    // 공백 제거
+    codeInput.addEventListener('blur', function(e) {
+        e.target.value = e.target.value.replace(/\s/g, '');
+    });
+});
+</script>
+{% endblock %}

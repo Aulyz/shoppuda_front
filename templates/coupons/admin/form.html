@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - {{ block.super }}{% endblock %}
+
+{% block extra_head %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .select2-container--default .select2-selection--multiple {
+        background-color: white;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        min-height: 42px;
+    }
+    .dark .select2-container--default .select2-selection--multiple {
+        background-color: #374151;
+        border-color: #4b5563;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 max-w-4xl">
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ title }}</h1>
+        <nav class="mt-2">
+            <a href="{% url 'coupons:admin_list' %}" class="text-blue-600 hover:text-blue-800 dark:text-blue-400">
+                <i class="fas fa-arrow-left mr-2"></i>쿠폰 목록으로
+            </a>
+        </nav>
+    </div>
+
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+        
+        <!-- 기본 정보 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">기본 정보</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        쿠폰 코드
+                    </label>
+                    {{ form.code }}
+                    <p class="mt-1 text-sm text-gray-500">비워두면 자동으로 생성됩니다</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        발급 타입 <span class="text-red-500">*</span>
+                    </label>
+                    {{ form.issue_type }}
+                </div>
+                
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        쿠폰명 <span class="text-red-500">*</span>
+                    </label>
+                    {{ form.name }}
+                </div>
+                
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        설명
+                    </label>
+                    {{ form.description }}
+                </div>
+            </div>
+        </div>
+
+        <!-- 할인 설정 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">할인 설정</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        할인 타입 <span class="text-red-500">*</span>
+                    </label>
+                    {{ form.discount_type }}
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        할인 값 <span class="text-red-500">*</span>
+                    </label>
+                    {{ form.discount_value }}
+                    <p class="mt-1 text-sm text-gray-500">정액: 원 단위, 정률: % 단위</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        최대 할인 금액
+                    </label>
+                    {{ form.max_discount_amount }}
+                    <p class="mt-1 text-sm text-gray-500">정률 할인 시 최대 할인 금액</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        최소 주문 금액
+                    </label>
+                    {{ form.min_order_amount }}
+                </div>
+                
+                <div class="md:col-span-2">
+                    <label class="flex items-center">
+                        {{ form.exclude_sale_items }}
+                        <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                            세일 상품 제외
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- 적용 대상 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">적용 대상</h2>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        적용 카테고리
+                    </label>
+                    {{ form.applicable_categories }}
+                    <p class="mt-1 text-sm text-gray-500">비워두면 모든 카테고리에 적용됩니다</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        적용 상품
+                    </label>
+                    {{ form.applicable_products }}
+                    <p class="mt-1 text-sm text-gray-500">비워두면 모든 상품에 적용됩니다</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        대상 회원 등급
+                    </label>
+                    <div class="space-y-2">
+                        {{ form.target_membership_levels }}
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        특정 사용자
+                    </label>
+                    {{ form.target_users }}
+                </div>
+            </div>
+        </div>
+
+        <!-- 발급/사용 제한 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">발급/사용 제한</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        총 발급 수량
+                    </label>
+                    {{ form.total_quantity }}
+                    <p class="mt-1 text-sm text-gray-500">비워두면 무제한</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        전체 사용 제한
+                    </label>
+                    {{ form.usage_limit_total }}
+                    <p class="mt-1 text-sm text-gray-500">비워두면 무제한</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        사용자별 사용 제한
+                    </label>
+                    {{ form.usage_limit_per_user }}
+                </div>
+            </div>
+        </div>
+
+        <!-- 유효 기간 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">유효 기간</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        유효 시작일 <span class="text-red-500">*</span>
+                    </label>
+                    {{ form.valid_from }}
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        유효 종료일 <span class="text-red-500">*</span>
+                    </label>
+                    {{ form.valid_to }}
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        발급 후 유효 일수
+                    </label>
+                    {{ form.days_valid_after_issue }}
+                    <p class="mt-1 text-sm text-gray-500">개인 쿠폰 발급 시 사용</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 기타 설정 -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">기타 설정</h2>
+            
+            <div class="space-y-3">
+                <label class="flex items-center">
+                    {{ form.is_active }}
+                    <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                        활성 상태
+                    </span>
+                </label>
+                
+                <label class="flex items-center">
+                    {{ form.is_stackable }}
+                    <span class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+                        다른 쿠폰과 중복 사용 가능
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <!-- 폼 오류 표시 -->
+        {% if form.errors %}
+        <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+            <h3 class="text-sm font-medium text-red-800 dark:text-red-300 mb-2">오류가 발생했습니다:</h3>
+            <ul class="list-disc list-inside text-sm text-red-700 dark:text-red-400">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <li>{{ field }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- 제출 버튼 -->
+        <div class="flex justify-end space-x-3">
+            <a href="{% url 'coupons:admin_list' %}" 
+               class="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+                취소
+            </a>
+            <button type="submit" 
+                    class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                {% if form.instance.pk %}수정{% else %}생성{% endif %}
+            </button>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.select2').select2({
+        placeholder: '선택하세요',
+        allowClear: true,
+        width: '100%'
+    });
+});
+</script>
+{% endblock %}

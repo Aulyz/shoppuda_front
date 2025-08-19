@@ -1,0 +1,178 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}사용 가능한 쿠폰{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">사용 가능한 쿠폰 선택</h1>
+        
+        {% if request.GET.amount %}
+        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-6">
+            <p class="text-sm text-blue-800 dark:text-blue-200">
+                주문 금액: <span class="font-bold">{{ request.GET.amount|floatformat:0 }}원</span>
+            </p>
+        </div>
+        {% endif %}
+        
+        <!-- 쿠폰 목록 -->
+        <div class="space-y-4">
+            {% for user_coupon in available_coupons %}
+            <div class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:shadow-lg transition-shadow cursor-pointer coupon-item"
+                 data-coupon-id="{{ user_coupon.id }}"
+                 data-discount-amount="{{ user_coupon.calculated_discount|default:0 }}">
+                
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <!-- 쿠폰 정보 -->
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+                            {{ user_coupon.coupon.name }}
+                        </h3>
+                        
+                        <div class="flex items-center space-x-4 mb-2">
+                            <span class="text-xl font-bold text-blue-600">
+                                {% if user_coupon.coupon.discount_type == 'PERCENTAGE' %}
+                                    {{ user_coupon.coupon.discount_value|floatformat:0 }}% 할인
+                                {% elif user_coupon.coupon.discount_type == 'FIXED' %}
+                                    {{ user_coupon.coupon.discount_value|floatformat:0 }}원 할인
+                                {% else %}
+                                    무료 배송
+                                {% endif %}
+                            </span>
+                            
+                            {% if user_coupon.calculated_discount %}
+                            <span class="text-sm text-green-600 font-medium">
+                                → {{ user_coupon.calculated_discount|floatformat:0 }}원 할인 적용
+                            </span>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- 사용 조건 -->
+                        <div class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+                            {% if user_coupon.coupon.min_order_amount > 0 %}
+                            <p>• 최소 주문 금액: {{ user_coupon.coupon.min_order_amount|floatformat:0 }}원</p>
+                            {% endif %}
+                            
+                            {% if user_coupon.coupon.max_discount_amount %}
+                            <p>• 최대 할인: {{ user_coupon.coupon.max_discount_amount|floatformat:0 }}원</p>
+                            {% endif %}
+                            
+                            <p>• 유효기간: {{ user_coupon.expires_at|date:"Y.m.d" }}까지</p>
+                            
+                            {% if user_coupon.coupon.exclude_sale_items %}
+                            <p class="text-red-600">• 세일 상품 제외</p>
+                            {% endif %}
+                        </div>
+                        
+                        {% if user_coupon.coupon.description %}
+                        <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">
+                            {{ user_coupon.coupon.description }}
+                        </p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- 선택 버튼 -->
+                    <div class="ml-4">
+                        <button type="button" 
+                                onclick="selectCoupon({{ user_coupon.id }}, '{{ user_coupon.coupon.name }}', {{ user_coupon.calculated_discount|default:0 }})"
+                                class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            선택
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-8">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                </svg>
+                <p class="mt-2 text-gray-500 dark:text-gray-400">사용 가능한 쿠폰이 없습니다.</p>
+                <a href="{% url 'coupons:claim' %}" 
+                   class="mt-4 inline-block text-blue-600 hover:text-blue-700">
+                    쿠폰 등록하기 →
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- 쿠폰 미사용 선택 -->
+        {% if available_coupons %}
+        <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+            <button type="button" 
+                    onclick="selectCoupon(null, null, 0)"
+                    class="w-full px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
+                쿠폰 사용 안함
+            </button>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+function selectCoupon(couponId, couponName, discountAmount) {
+    // 부모 창이 있는 경우 (팝업으로 열린 경우)
+    if (window.opener) {
+        if (couponId) {
+            window.opener.applyCoupon(couponId, couponName, discountAmount);
+        } else {
+            window.opener.removeCoupon();
+        }
+        window.close();
+    } 
+    // iframe으로 열린 경우
+    else if (window.parent !== window) {
+        if (couponId) {
+            window.parent.postMessage({
+                type: 'coupon_selected',
+                couponId: couponId,
+                couponName: couponName,
+                discountAmount: discountAmount
+            }, '*');
+        } else {
+            window.parent.postMessage({
+                type: 'coupon_removed'
+            }, '*');
+        }
+    }
+    // 일반 페이지로 열린 경우
+    else {
+        if (couponId) {
+            // 쿠폰 정보를 세션 스토리지에 저장
+            sessionStorage.setItem('selectedCoupon', JSON.stringify({
+                id: couponId,
+                name: couponName,
+                discount: discountAmount
+            }));
+            alert('쿠폰이 선택되었습니다: ' + couponName);
+        } else {
+            sessionStorage.removeItem('selectedCoupon');
+            alert('쿠폰 선택이 취소되었습니다.');
+        }
+        
+        // 이전 페이지로 돌아가기
+        if (document.referrer) {
+            window.location.href = document.referrer;
+        } else {
+            window.location.href = '/';
+        }
+    }
+}
+
+// 쿠폰 아이템 클릭 시 선택
+document.addEventListener('DOMContentLoaded', function() {
+    const couponItems = document.querySelectorAll('.coupon-item');
+    couponItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            // 버튼 클릭은 제외
+            if (e.target.tagName !== 'BUTTON') {
+                const button = this.querySelector('button');
+                if (button) {
+                    button.click();
+                }
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
