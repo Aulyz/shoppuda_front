@@ -8,3 +8,7 @@ venv/
 logs/
 *.log
 django.log
+
+# Documentation
+문서/
+*.md
