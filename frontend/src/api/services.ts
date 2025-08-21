@@ -68,22 +68,45 @@ export const authService = {
 // ====================== 상품 서비스 ======================
 
 export const productService = {
-  // 상품 목록 조회
+  // 상품 목록 조회 (임시 Mock 데이터)
   getProducts: async (filters?: ProductFilters): Promise<PaginatedResponse<Product>> => {
-    const params = new URLSearchParams()
-    
-    if (filters) {
-      Object.entries(filters).forEach(([key, value]) => {
-        if (value !== undefined && value !== null && value !== '') {
-          params.append(key, value.toString())
-        }
-      })
-    }
-    
-    const response = await apiClient.get<PaginatedResponse<Product>>(
-      `/shop/products/?${params.toString()}`
-    )
-    return response.data
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const mockProducts: Product[] = [
+          {
+            id: "1",
+            sku: "PROD001",
+            name: "프리미엄 무선 이어폰",
+            slug: "premium-wireless-earphones",
+            description: "고급 무선 이어폰입니다.",
+            brand: { id: 1, name: "Apple", code: "APPLE", is_active: true },
+            category: { id: 2, name: "전자제품", slug: "electronics", parent: null, is_active: true, sort_order: 2 },
+            status: 'ACTIVE',
+            price: 129000,
+            selling_price: 129000,
+            discount_price: 89000,
+            stock_quantity: 50,
+            min_stock_level: 10,
+            is_featured: true,
+            is_digital: false,
+            images: [{ id: 1, image: "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=400&h=400&fit=crop", alt_text: "이어폰", is_primary: true, sort_order: 1 }],
+            tags: [],
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+            rating: 4.8,
+            review_count: 324,
+            is_new: true
+          }
+        ]
+        
+        resolve({
+          results: mockProducts,
+          count: mockProducts.length,
+          next: null,
+          previous: null
+        })
+      }, 100)
+    })
   },
 
   // 상품 상세 조회
@@ -92,20 +115,22 @@ export const productService = {
     return response.data
   },
 
-  // 추천 상품 조회
+  // 추천 상품 조회 (임시 Mock 데이터)
   getFeaturedProducts: async (limit = 8): Promise<Product[]> => {
-    const response = await apiClient.get<PaginatedResponse<Product>>(
-      `/shop/products/?featured=true&page_size=${limit}`
-    )
-    return response.data.results
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve([])
+      }, 100)
+    })
   },
 
-  // 신상품 조회
+  // 신상품 조회 (임시 Mock 데이터)
   getNewProducts: async (limit = 6): Promise<Product[]> => {
-    const response = await apiClient.get<PaginatedResponse<Product>>(
-      `/shop/products/?new=true&page_size=${limit}`
-    )
-    return response.data.results
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve([])
+      }, 100)
+    })
   },
 
   // 상품 검색 자동완성
@@ -120,10 +145,20 @@ export const productService = {
 // ====================== 카테고리 & 브랜드 서비스 ======================
 
 export const categoryService = {
-  // 카테고리 목록 조회
+  // 카테고리 목록 조회 (임시 Mock 데이터)
   getCategories: async (): Promise<Category[]> => {
-    const response = await apiClient.get<ApiResponse<Category[]>>('/shop/categories/')
-    return response.data.data || response.data
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve([
+          { id: 1, name: "의류", slug: "clothing", parent: null, is_active: true, sort_order: 1, product_count: 245 },
+          { id: 2, name: "전자제품", slug: "electronics", parent: null, is_active: true, sort_order: 2, product_count: 156 },
+          { id: 3, name: "화장품", slug: "cosmetics", parent: null, is_active: true, sort_order: 3, product_count: 89 },
+          { id: 4, name: "가전제품", slug: "appliances", parent: null, is_active: true, sort_order: 4, product_count: 67 },
+          { id: 5, name: "도서", slug: "books", parent: null, is_active: true, sort_order: 5, product_count: 234 },
+          { id: 6, name: "스포츠", slug: "sports", parent: null, is_active: true, sort_order: 6, product_count: 123 }
+        ])
+      }, 100)
+    })
   },
 
   // 카테고리 상세 조회
@@ -134,10 +169,17 @@ export const categoryService = {
 }
 
 export const brandService = {
-  // 브랜드 목록 조회
+  // 브랜드 목록 조회 (임시 Mock 데이터)
   getBrands: async (): Promise<Brand[]> => {
-    const response = await apiClient.get<ApiResponse<Brand[]>>('/shop/brands/')
-    return response.data.data || response.data
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve([
+          { id: 1, name: "Apple", code: "APPLE", description: "Apple Inc.", is_active: true },
+          { id: 2, name: "Samsung", code: "SAMSUNG", description: "Samsung Electronics", is_active: true },
+          { id: 3, name: "Nike", code: "NIKE", description: "Nike Inc.", is_active: true }
+        ])
+      }, 100)
+    })
   },
 
   // 브랜드 상세 조회
@@ -150,10 +192,25 @@ export const brandService = {
 // ====================== 배너 서비스 ======================
 
 export const bannerService = {
-  // 메인 배너 조회
+  // 메인 배너 조회 (임시 Mock 데이터)
   getMainBanners: async (): Promise<Banner[]> => {
-    const response = await apiClient.get<ApiResponse<Banner[]>>('/shop/banners/')
-    return response.data.data || response.data
+    // TODO: 실제 API 연동 시 교체
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve([
+          {
+            id: 1,
+            title: "신상품 특가 할인",
+            subtitle: "최대 50% 할인된 가격으로 만나보세요",
+            image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&h=600&fit=crop",
+            link: "/products",
+            button_text: "지금 쇼핑하기",
+            is_active: true,
+            order: 1
+          }
+        ])
+      }, 100)
+    })
   }
 }
 
