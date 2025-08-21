@@ -44,14 +44,14 @@ env.bak/
 venv.bak/
 
 # Frontend (Node.js)
-#frontend/node_modules/
-#frontend/dist/
-#frontend/build/
-#frontend/.vite/
-#frontend/.cache/
-#frontend/npm-debug.log*
-#frontend/yarn-error.log*
-#frontend/coverage/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+frontend/.cache/
+frontend/npm-debug.log*
+frontend/yarn-error.log*
+frontend/coverage/
 
 # IDE/Editor
 .vscode/
