@@ -8,6 +8,22 @@ import Cart from './pages/Cart.tsx'
 import Login from './pages/Login.tsx'
 import SignUp from './pages/SignUp.tsx'
 import MyPage from './pages/MyPage.tsx'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      // v5에서 추가된 옵션
+      gcTime: 10 * 60 * 1000, // 10 minutes (기존 cacheTime)
+    },
+    mutations: {
+      retry: 1,
+    },
+  },
+})
 
 function App() {
   return (
