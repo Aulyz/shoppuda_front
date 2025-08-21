@@ -68,45 +68,23 @@ export const authService = {
 // ====================== 상품 서비스 ======================
 
 export const productService = {
-  // 상품 목록 조회 (임시 Mock 데이터)
+  // 상품 목록 조회
   getProducts: async (filters?: ProductFilters): Promise<PaginatedResponse<Product>> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const mockProducts: Product[] = [
-          {
-            id: "1",
-            sku: "PROD001",
-            name: "프리미엄 무선 이어폰",
-            slug: "premium-wireless-earphones",
-            description: "고급 무선 이어폰입니다.",
-            brand: { id: 1, name: "Apple", code: "APPLE", is_active: true },
-            category: { id: 2, name: "전자제품", slug: "electronics", parent: null, is_active: true, sort_order: 2 },
-            status: 'ACTIVE',
-            price: 129000,
-            selling_price: 129000,
-            discount_price: 89000,
-            stock_quantity: 50,
-            min_stock_level: 10,
-            is_featured: true,
-            is_digital: false,
-            images: [{ id: 1, image: "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=400&h=400&fit=crop", alt_text: "이어폰", is_primary: true, sort_order: 1 }],
-            tags: [],
-            created_at: new Date().toISOString(),
-            updated_at: new Date().toISOString(),
-            rating: 4.8,
-            review_count: 324,
-            is_new: true
-          }
-        ]
-        
-        resolve({
-          results: mockProducts,
-          count: mockProducts.length,
-          next: null,
-          previous: null
-        })
-      }, 100)
-    })
+    const params = new URLSearchParams()
+    
+    if (filters) {
+      Object.entries(filters).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          params.append(key, value.toString())
+        }
+      })
+    }
+    
+    // shop/ 접두사 제거 - Django URLs에서 shop/products/로 되어있음
+    const response = await apiClient.get<PaginatedResponse<Product>>(
+      `/shop/products/?${params.toString()}`
+    )
+    return response.data
   },
 
   // 상품 상세 조회
@@ -115,28 +93,26 @@ export const productService = {
     return response.data
   },
 
-  // 추천 상품 조회 (임시 Mock 데이터)
+  // 추천 상품 조회 (임시로 일반 상품 목록 사용)
   getFeaturedProducts: async (limit = 8): Promise<Product[]> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve([])
-      }, 100)
-    })
+    const response = await apiClient.get<PaginatedResponse<Product>>(
+      `/shop/products/?page_size=${limit}`
+    )
+    return response.data.results
   },
 
-  // 신상품 조회 (임시 Mock 데이터)
+  // 신상품 조회 (임시로 일반 상품 목록 사용)
   getNewProducts: async (limit = 6): Promise<Product[]> => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve([])
-      }, 100)
-    })
+    const response = await apiClient.get<PaginatedResponse<Product>>(
+      `/shop/products/?page_size=${limit}`
+    )
+    return response.data.results
   },
 
   // 상품 검색 자동완성
   searchSuggestions: async (query: string): Promise<SearchSuggestion[]> => {
     const response = await apiClient.get<ApiResponse<SearchSuggestion[]>>(
-      `/shop/search/suggestions/?q=${encodeURIComponent(query)}`
+      `/products/search/?q=${encodeURIComponent(query)}`
     )
     return response.data.data || []
   }
@@ -145,7 +121,7 @@ export const productService = {
 // ====================== 카테고리 & 브랜드 서비스 ======================
 
 export const categoryService = {
-  // 카테고리 목록 조회 (임시 Mock 데이터)
+  // 카테고리 목록 조회 (임시 Mock 데이터 - API 엔드포인트 없음)
   getCategories: async (): Promise<Category[]> => {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -163,13 +139,13 @@ export const categoryService = {
 
   // 카테고리 상세 조회
   getCategory: async (id: number): Promise<Category> => {
-    const response = await apiClient.get<Category>(`/shop/categories/${id}/`)
-    return response.data
+    // TODO: 실제 API 구현 시 수정
+    throw new Error('Category detail API not implemented yet')
   }
 }
 
 export const brandService = {
-  // 브랜드 목록 조회 (임시 Mock 데이터)
+  // 브랜드 목록 조회 (임시 Mock 데이터 - API 엔드포인트 없음)
   getBrands: async (): Promise<Brand[]> => {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -184,17 +160,16 @@ export const brandService = {
 
   // 브랜드 상세 조회
   getBrand: async (id: number): Promise<Brand> => {
-    const response = await apiClient.get<Brand>(`/shop/brands/${id}/`)
-    return response.data
+    // TODO: 실제 API 구현 시 수정
+    throw new Error('Brand detail API not implemented yet')
   }
 }
 
 // ====================== 배너 서비스 ======================
 
 export const bannerService = {
-  // 메인 배너 조회 (임시 Mock 데이터)
+  // 메인 배너 조회 (임시 Mock 데이터 - API 엔드포인트 없음)
   getMainBanners: async (): Promise<Banner[]> => {
-    // TODO: 실제 API 연동 시 교체
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve([
