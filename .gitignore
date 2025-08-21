@@ -115,6 +115,7 @@ celerybeat.pid
 # Static files (운영환경에서 수집되는 파일들)
 staticfiles/
 static_collected/
+static/react/
 
 # Media files (업로드된 파일들 - 일단 보류)
 #media/uploads/
