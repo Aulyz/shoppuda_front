@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosInstance, AxiosResponse } from 'axios'
 import toast from 'react-hot-toast'
 
 // API 기본 설정
@@ -42,9 +42,10 @@ export const tokenManager = {
 
 // Request 인터셉터
 apiClient.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config) => {
     const token = tokenManager.getAccessToken()
-    if (token && config.headers) {
+    if (token) {
+      config.headers = config.headers || {}
       config.headers.Authorization = `Bearer ${token}`
     }
     return config
