@@ -85,17 +85,20 @@ export const useLogout = () => {
 export const useCurrentUser = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
-  return useQuery({
+  const queryResult = useQuery({
     queryKey: ['currentUser'],
     queryFn: () => authService.getProfile(),
     enabled: isAuthenticated,
     staleTime: 5 * 60 * 1000, // 5분
     retry: false,
-    onError: () => {
-      // 사용자 정보 조회 실패 시 로그아웃 처리
-      useAuthStore.getState().clearAuth()
-    }
   })
+
+  // 사용자 정보 조회 실패 시 로그아웃 처리
+  if (queryResult.isError) {
+    useAuthStore.getState().clearAuth()
+  }
+
+  return queryResult
 }
 
 // 프로필 수정 훅

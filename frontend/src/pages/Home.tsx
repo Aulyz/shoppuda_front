@@ -1,308 +1,243 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { 
-  HeartIcon, 
-  StarIcon, 
-  GiftIcon, 
-  TruckIcon, 
-  TagIcon,
-  ArrowUpIcon 
-} from '@heroicons/react/24/outline';
-import { 
-  HeartIcon as HeartSolidIcon,
-  StarIcon as StarSolidIcon 
-} from '@heroicons/react/24/solid';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { ArrowRightIcon } from '@heroicons/react/24/outline'
+import { useFeaturedProducts, useProducts } from '../hooks/useApi'
+import { apiUtils } from '../api/services'
+import { Product } from '../types/api'
 
-// 타입 정의
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  rating: number;
-  reviewCount: number;
-  badge?: 'BEST' | 'NEW' | 'SALE';
-  isLiked?: boolean;
-}
+const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+  const discountPercentage = product.discount_price 
+    ? apiUtils.calculateDiscountPercentage(product.selling_price, product.discount_price)
+    : 0
 
-interface Category {
-  id: number;
-  name: string;
-  icon: string;
-  color: string;
+  return (
+    <Link 
+      to={`/products/${product.id}`}
+      className="group block bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-lg transition-all duration-200 overflow-hidden border border-gray-200 dark:border-gray-700"
+    >
+      <div className="aspect-square overflow-hidden bg-gray-100 dark:bg-gray-700">
+        {product.primary_image ? (
+          <img
+            src={apiUtils.getImageUrl(product.primary_image.image)}
+            alt={product.name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-gray-400">
+            <span>이미지 없음</span>
+          </div>
+        )}
+      </div>
+      
+      <div className="p-4">
+        <h3 className="font-medium text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+          {product.name}
+        </h3>
+        
+        <div className="flex items-center justify-between">
+          <div className="space-y-1">
+            {product.discount_price ? (
+              <div className="flex items-center space-x-2">
+                <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                  {apiUtils.formatPrice(product.discount_price)}
+                </span>
+                <span className="text-sm text-red-500 bg-red-50 dark:bg-red-900/20 px-1.5 py-0.5 rounded">
+                  {discountPercentage}%
+                </span>
+              </div>
+            ) : (
+              <span className="text-lg font-bold text-gray-900 dark:text-white">
+                {apiUtils.formatPrice(product.selling_price)}
+              </span>
+            )}
+            
+            {product.discount_price && (
+              <div className="text-sm text-gray-500 dark:text-gray-400 line-through">
+                {apiUtils.formatPrice(product.selling_price)}
+              </div>
+            )}
+          </div>
+        </div>
+        
+        {product.stock_quantity <= 10 && product.stock_quantity > 0 && (
+          <div className="mt-2 text-sm text-orange-600 dark:text-orange-400">
+            재고 {product.stock_quantity}개 남음
+          </div>
+        )}
+        
+        {product.stock_quantity === 0 && (
+          <div className="mt-2 text-sm text-red-600 dark:text-red-400">
+            품절
+          </div>
+        )}
+      </div>
+    </Link>
+  )
 }
 
 const Home: React.FC = () => {
-  // 샘플 데이터
-  const categories: Category[] = [
-    { id: 1, name: '의류', icon: 'fas fa-tshirt', color: 'from-purple-400 to-purple-600' },
-    { id: 2, name: '디지털', icon: 'fas fa-mobile-alt', color: 'from-blue-400 to-blue-600' },
-    { id: 3, name: '생활용품', icon: 'fas fa-home', color: 'from-green-400 to-green-600' },
-    { id: 4, name: '뷰티', icon: 'fas fa-gem', color: 'from-pink-400 to-pink-600' },
-    { id: 5, name: '주방용품', icon: 'fas fa-utensils', color: 'from-orange-400 to-orange-600' },
-    { id: 6, name: '스포츠', icon: 'fas fa-dumbbell', color: 'from-red-400 to-red-600' },
-  ];
-
-  const bestProducts: Product[] = [
-    {
-      id: 1,
-      name: '클라리엘 스니커즈',
-      price: 89000,
-      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop',
-      rating: 4.8,
-      reviewCount: 24,
-      badge: 'BEST',
-    },
-    {
-      id: 2,
-      name: '클라리엘 딥클린 세탁세제',
-      price: 12000,
-      image: 'https://images.unsplash.com/photo-1556742400-b0abe8276b57?w=300&h=300&fit=crop',
-      rating: 4.6,
-      reviewCount: 18,
-      badge: 'NEW',
-    },
-    {
-      id: 3,
-      name: '클리어린 주방세제',
-      price: 8900,
-      originalPrice: 12000,
-      image: 'https://images.unsplash.com/photo-1556909114-4b729e2b4d65?w=300&h=300&fit=crop',
-      rating: 4.9,
-      reviewCount: 31,
-      badge: 'SALE',
-    },
-    {
-      id: 4,
-      name: '우드 수납함 세트',
-      price: 25000,
-      image: 'https://images.unsplash.com/photo-1586823633818-cbf8e6c9c85c?w=300&h=300&fit=crop',
-      rating: 4.7,
-      reviewCount: 15,
-    },
-  ];
-
-  const formatPrice = (price: number): string => {
-    return new Intl.NumberFormat('ko-KR').format(price) + '원';
-  };
-
-  const getBadgeColor = (badge: string): string => {
-    switch (badge) {
-      case 'BEST': return 'bg-red-500';
-      case 'NEW': return 'bg-green-500';
-      case 'SALE': return 'bg-orange-500';
-      default: return 'bg-gray-500';
-    }
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  // API를 통해 추천 상품 가져오기
+  const { data: featuredProducts, isLoading: featuredLoading, error: featuredError } = useFeaturedProducts(8)
+  
+  // 신상품 가져오기 (최신 상품 6개)
+  const { data: newProductsData, isLoading: newProductsLoading, error: newProductsError } = useProducts({
+    page_size: 6,
+    ordering: '-created_at'
+  })
+  
+  const newProducts = newProductsData?.results || []
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* 상단 공지 배너 */}
-      <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white text-center py-2 text-sm">
-        <GiftIcon className="inline w-4 h-4 mr-2" />
-        첫 구매 고객을 위한 3,000원 할인 쿠폰 증정!
-        <button className="ml-4 text-xs underline hover:no-underline">
-          자세히보기
-        </button>
-      </div>
-
-      {/* 히어로 섹션 */}
-      <section className="relative h-96 bg-gradient-to-r from-purple-600 to-blue-600 flex items-center justify-center text-white overflow-hidden">
-        <div className="text-center z-10">
-          <h1 className="text-5xl font-bold mb-4 animate-fade-in-up">
-            새로운 쇼핑 경험
-          </h1>
-          <p className="text-xl mb-8">
-            Shopuda에서 만나는 특별한 상품들
-          </p>
-          <Link
-            to="/products"
-            className="inline-block bg-white text-purple-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg"
-          >
-            지금 쇼핑하기
-          </Link>
-        </div>
-        
-        {/* 플로팅 요소들 */}
-        <div className="absolute top-20 left-10 animate-bounce">
-          <div className="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-            <StarSolidIcon className="w-8 h-8 text-yellow-300" />
-          </div>
-        </div>
-        <div className="absolute bottom-20 right-10 animate-bounce delay-1000">
-          <div className="w-20 h-20 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-            <GiftIcon className="w-8 h-8 text-pink-300" />
-          </div>
-        </div>
-      </section>
-
-      {/* 카테고리 섹션 */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
-            카테고리
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                to={`/products?category=${category.id}`}
-                className="text-center group cursor-pointer p-4 rounded-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-lg"
-              >
-                <div className={`w-16 h-16 bg-gradient-to-br ${category.color} rounded-full mx-auto mb-3 flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                  <i className={`${category.icon} text-white text-2xl`}></i>
-                </div>
-                <span className="text-sm font-medium text-gray-700 group-hover:text-purple-600 transition-colors">
-                  {category.name}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 베스트 상품 섹션 */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">
-              베스트 셀러
-            </h2>
-            <p className="text-gray-600">
-              가장 많이 팔린 인기 상품들을 만나보세요
+    <div className="min-h-screen">
+      {/* Hero 섹션 */}
+      <section className="relative bg-gradient-to-r from-blue-600 to-purple-700 text-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+              Shopuda와 함께하는
+              <br />
+              <span className="text-yellow-300">스마트 쇼핑</span>
+            </h1>
+            <p className="text-xl sm:text-2xl mb-8 text-blue-100">
+              다양한 플랫폼의 상품을 한곳에서 비교하고 구매하세요
             </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {bestProducts.map((product) => (
-              <div
-                key={product.id}
-                className="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl group"
-              >
-                <div className="relative">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  
-                  {/* 배지 */}
-                  {product.badge && (
-                    <div className={`absolute top-2 left-2 ${getBadgeColor(product.badge)} text-white px-2 py-1 rounded text-xs font-bold`}>
-                      {product.badge}
-                    </div>
-                  )}
-                  
-                  {/* 찜하기 버튼 */}
-                  <button className="absolute top-2 right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-md hover:bg-gray-100 transition-colors">
-                    {product.isLiked ? (
-                      <HeartSolidIcon className="w-5 h-5 text-red-500" />
-                    ) : (
-                      <HeartIcon className="w-5 h-5 text-gray-400 hover:text-red-500" />
-                    )}
-                  </button>
-                </div>
-                
-                <div className="p-4">
-                  <Link to={`/products/${product.id}`}>
-                    <h3 className="font-semibold text-gray-800 mb-2 text-sm hover:text-purple-600 transition-colors">
-                      {product.name}
-                    </h3>
-                  </Link>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex flex-col">
-                      <span className="text-lg font-bold text-purple-600">
-                        {formatPrice(product.price)}
-                      </span>
-                      {product.originalPrice && (
-                        <span className="text-sm text-gray-400 line-through">
-                          {formatPrice(product.originalPrice)}
-                        </span>
-                      )}
-                    </div>
-                    
-                    <div className="flex items-center text-xs">
-                      <StarSolidIcon className="w-4 h-4 text-yellow-400" />
-                      <span className="ml-1 text-gray-600">
-                        {product.rating} ({product.reviewCount})
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
             <Link
               to="/products"
-              className="inline-block bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+              className="inline-flex items-center px-8 py-4 bg-white text-blue-600 rounded-full text-lg font-semibold hover:bg-blue-50 transition-colors duration-200"
             >
-              더 많은 상품 보기
+              쇼핑 시작하기
+              <ArrowRightIcon className="ml-2 h-5 w-5" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 특별 이벤트 섹션 */}
-      <section className="py-16 bg-gradient-to-r from-purple-600 to-blue-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">특별 이벤트</h2>
-          <p className="text-xl mb-8">
-            지금 진행 중인 다양한 이벤트 쿠폰을 만나보세요
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-6 transition-all duration-300 hover:-translate-y-2 hover:bg-opacity-30">
-              <GiftIcon className="w-12 h-12 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">첫 구매 할인</h3>
-              <p className="mb-4">신규 회원 3,000원 할인</p>
-              <button className="bg-white text-purple-600 px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                쿠폰 받기
-              </button>
-            </div>
-            
-            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-6 transition-all duration-300 hover:-translate-y-2 hover:bg-opacity-30">
-              <TruckIcon className="w-12 h-12 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">무료 배송</h3>
-              <p className="mb-4">5만원 이상 구매 시</p>
-              <button className="bg-white text-purple-600 px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                자세히보기
-              </button>
-            </div>
-            
-            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-lg p-6 transition-all duration-300 hover:-translate-y-2 hover:bg-opacity-30">
-              <TagIcon className="w-12 h-12 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">계절 세일</h3>
-              <p className="mb-4">선택 상품 최대 50% 할인</p>
-              <button className="bg-white text-purple-600 px-4 py-2 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-                세일 보기
-              </button>
-            </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        {/* 추천 상품 섹션 */}
+        <section className="mb-16">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              추천 상품
+            </h2>
+            <Link 
+              to="/products"
+              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium flex items-center"
+            >
+              더 보기
+              <ArrowRightIcon className="ml-1 h-4 w-4" />
+            </Link>
           </div>
-        </div>
-      </section>
+          
+          {featuredLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[...Array(8)].map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg mb-4"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-20"></div>
+                </div>
+              ))}
+            </div>
+          ) : featuredError ? (
+            <div className="text-center py-12">
+              <div className="text-red-500 mb-2">상품을 불러오는 중 오류가 발생했습니다</div>
+              <p className="text-gray-600 dark:text-gray-400">잠시 후 다시 시도해주세요</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {featuredProducts?.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
+        </section>
 
-      {/* 플로팅 버튼 */}
-      <div className="fixed bottom-6 right-6 space-y-3 z-50">
-        <button className="w-12 h-12 bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 transition-colors flex items-center justify-center">
-          <i className="fab fa-whatsapp text-xl"></i>
-        </button>
-        <button
-          onClick={scrollToTop}
-          className="w-12 h-12 bg-purple-500 text-white rounded-full shadow-lg hover:bg-purple-600 transition-colors flex items-center justify-center"
-        >
-          <ArrowUpIcon className="w-6 h-6" />
-        </button>
+        {/* 신상품 섹션 */}
+        <section className="mb-16">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
+              신상품
+            </h2>
+            <Link 
+              to="/products?ordering=-created_at"
+              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium flex items-center"
+            >
+              더 보기
+              <ArrowRightIcon className="ml-1 h-4 w-4" />
+            </Link>
+          </div>
+          
+          {newProductsLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="aspect-square bg-gray-200 dark:bg-gray-700 rounded-lg mb-4"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-20"></div>
+                </div>
+              ))}
+            </div>
+          ) : newProductsError ? (
+            <div className="text-center py-12">
+              <div className="text-red-500 mb-2">신상품을 불러오는 중 오류가 발생했습니다</div>
+              <p className="text-gray-600 dark:text-gray-400">잠시 후 다시 시도해주세요</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {newProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
+        </section>
+
+        {/* 특징 섹션 */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+            <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              검증된 판매자
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400">
+              신뢰할 수 있는 판매자들과만 거래하세요
+            </p>
+          </div>
+          
+          <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+            <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              최저가 보장
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400">
+              다양한 플랫폼의 가격을 비교하여 최저가를 제공합니다
+            </p>
+          </div>
+          
+          <div className="text-center p-6 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+            <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+              빠른 배송
+            </h3>
+            <p className="text-gray-600 dark:text-gray-400">
+              전국 어디든 빠르고 안전한 배송 서비스
+            </p>
+          </div>
+        </section>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
