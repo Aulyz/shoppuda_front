@@ -1,10 +1,11 @@
+// frontend/src/App.tsx
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Toaster } from 'react-hot-toast'
 import Layout from './components/Layout'
 import Home from './pages/Home'
-import Products from './pages/Products'  // ← ProductList를 Products로 변경
+import Products from './pages/Products'
 import ProductDetail from './pages/ProductDetail'
 import Cart from './pages/Cart'
 import Login from './pages/Login'
@@ -16,8 +17,8 @@ const queryClient = new QueryClient({
     queries: {
       refetchOnWindowFocus: false,
       retry: 1,
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      gcTime: 10 * 60 * 1000, // 10 minutes (기존 cacheTime)
+      staleTime: 5 * 60 * 1000,
+      gcTime: 10 * 60 * 1000,
     },
     mutations: {
       retry: 1,
@@ -32,7 +33,7 @@ function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/products" element={<Products />} />  {/* ← ProductList를 Products로 */}
+            <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<ProductDetail />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/login" element={<Login />} />
@@ -40,22 +41,9 @@ function App() {
             <Route path="/mypage" element={<MyPage />} />
           </Routes>
         </Layout>
-        <Toaster 
-          position="top-right"
-          toastOptions={{
-            duration: 3000,
-            style: {
-              background: '#363636',
-              color: '#fff',
-            },
-          }}
-        />
+        <Toaster position="top-right" />
       </BrowserRouter>
-      
-      {/* 개발 환경에서만 DevTools 표시 */}
-      {import.meta.env.DEV && (
-        <ReactQueryDevtools initialIsOpen={false} />
-      )}
+      {import.meta.env.DEV && <ReactQueryDevtools />}
     </QueryClientProvider>
   )
 }
