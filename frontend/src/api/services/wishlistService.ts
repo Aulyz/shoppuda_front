@@ -1,6 +1,6 @@
 // src/api/services/wishlistService.ts - 위시리스트 서비스
 import apiClient from '../config'
-import { WishlistItem } from '../types'
+import { WishlistItem } from '../../types/api'
 
 export const wishlistService = {
   // 위시리스트 조회 - Django의 /shop/wishlist/ 사용

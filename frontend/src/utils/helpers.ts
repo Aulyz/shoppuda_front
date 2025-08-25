@@ -180,8 +180,8 @@ export const throttle = <T extends (...args: any[]) => any>(
   };
 };
 
-// 로컬 스토리지 헬퍼
-export const localStorage = {
+// 로컬 스토리지 헬퍼 (renamed to avoid conflict with global localStorage)
+export const localStorageHelper = {
   get: <T>(key: string, defaultValue: T): T => {
     try {
       const item = window.localStorage.getItem(key);
@@ -216,8 +216,8 @@ export const localStorage = {
   }
 };
 
-// 세션 스토리지 헬퍼
-export const sessionStorage = {
+// 세션 스토리지 헬퍼 (renamed to avoid conflict with global sessionStorage)
+export const sessionStorageHelper = {
   get: <T>(key: string, defaultValue: T): T => {
     try {
       const item = window.sessionStorage.getItem(key);

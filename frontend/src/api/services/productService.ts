@@ -4,10 +4,8 @@ import {
   Product, 
   ProductDetail, 
   ProductFilters, 
-  PaginatedResponse,
-  Category,
-  Brand
-} from '../types'
+  PaginatedResponse
+} from '../../types/api'
 
 export const productService = {
   // 상품 목록 조회 - Django의 /shop/products/ 사용

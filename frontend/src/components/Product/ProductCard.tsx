@@ -10,7 +10,7 @@ import {
   HeartIcon as HeartSolidIcon,
   StarIcon as StarSolidIcon 
 } from '@heroicons/react/24/solid';
-import { Product } from '../../types';
+import { Product } from '../../types/api';
 import { formatPrice, calculateDiscountPercentage } from '../../utils/helpers';
 
 interface ProductCardProps {
@@ -39,8 +39,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const [imageError, setImageError] = useState(false);
 
   const primaryImage = product.images?.find(img => img.is_primary) || product.images?.[0];
-  const hasDiscount = product.sale_price && product.sale_price < product.price;
-  const discountPercentage = hasDiscount ? calculateDiscountPercentage(product.price, product.sale_price!) : 0;
+  const hasDiscount = product.discount_price && product.discount_price < product.selling_price;
+  const discountPercentage = hasDiscount ? calculateDiscountPercentage(product.selling_price, product.discount_price!) : 0;
 
   const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -51,7 +51,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     setIsLoading(true);
     try {
       if (onAddToCart) {
-        await onAddToCart(product.id);
+        await onAddToCart(parseInt(product.id));
       }
     } catch (error) {
       console.error('장바구니 추가 오류:', error);
@@ -68,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     
     if (onToggleWishlist) {
       try {
-        await onToggleWishlist(product.id);
+        await onToggleWishlist(parseInt(product.id));
       } catch (error) {
         setIsLiked(isLiked); // 실패 시 원상복구
         console.error('찜하기 오류:', error);
@@ -81,7 +81,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     e.stopPropagation();
     
     if (onQuickView) {
-      onQuickView(product.id);
+      onQuickView(parseInt(product.id));
     }
   };
 
@@ -232,10 +232,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </h3>
 
           {/* 평점 및 리뷰 수 */}
-          {product.review_count > 0 && (
+          {(product.review_count && product.review_count > 0) && (
             <div className="flex items-center mb-2">
               <div className="flex items-center">
-                {renderStars(product.rating_average)}
+                {renderStars(product.average_rating || 0)}
               </div>
               <span className="text-xs text-gray-500 ml-2">
                 ({product.review_count})
@@ -249,21 +249,21 @@ const ProductCard: React.FC<ProductCardProps> = ({
               {hasDiscount ? (
                 <>
                   <span className="text-lg font-bold text-purple-600">
-                    {formatPrice(product.sale_price!)}
+                    {formatPrice(product.discount_price!)}
                   </span>
                   <span className="text-sm text-gray-400 line-through">
-                    {formatPrice(product.price)}
+                    {formatPrice(product.selling_price)}
                   </span>
                 </>
               ) : (
                 <span className="text-lg font-bold text-purple-600">
-                  {formatPrice(product.price)}
+                  {formatPrice(product.selling_price)}
                 </span>
               )}
             </div>
 
             {/* 무료배송 표시 */}
-            {product.price >= 50000 && (
+            {product.selling_price >= 50000 && (
               <span className="text-xs text-green-600 font-medium">
                 무료배송
               </span>

@@ -1,6 +1,6 @@
 // src/api/services/orderService.ts - 주문 서비스
 import apiClient from '../config'
-import { Order, PaginatedResponse } from '../types'
+import { Order, PaginatedResponse } from '../../types/api'
 
 export const orderService = {
   // 주문 목록 조회 - Django의 /shop/orders/ 사용

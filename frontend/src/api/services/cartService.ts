@@ -1,6 +1,6 @@
 // src/api/services/cartService.ts - 장바구니 서비스
 import apiClient from '../config'
-import { Cart, CartAddRequest } from '../types'
+import { Cart } from '../../types/api'
 
 export const cartService = {
   // 장바구니 조회 - Django의 /shop/cart/ 사용

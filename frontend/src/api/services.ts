@@ -2,35 +2,29 @@
 
 import apiClient, { tokenManager } from './config'
 import {
-  ApiResponse,
   PaginatedResponse,
   LoginRequest,
-  LoginResponse,
+  JWTTokenResponse,
   RegisterRequest,
   User,
   Product,
   ProductDetail,
   ProductFilters,
-  Category,
-  Brand,
-  Banner,
-  SearchSuggestion,
   Cart,
-  CartItem,
-  CartAddRequest,
-  CartUpdateRequest,
   WishlistItem,
   WishlistToggleResponse,
   ShippingAddress,
-  Order
-} from '../types/api'  // 경로 수정
+  Order,
+  Category,
+  Brand
+} from '../types/api'
 
 // ====================== 인증 서비스 ======================
 
 export const authService = {
   // 로그인 - Django의 /accounts/user/login/ 사용
-  login: async (credentials: LoginRequest): Promise<LoginResponse> => {
-    const response = await apiClient.post<LoginResponse>('/accounts/user/login/', credentials)
+  login: async (credentials: LoginRequest): Promise<JWTTokenResponse> => {
+    const response = await apiClient.post<JWTTokenResponse>('/accounts/user/login/', credentials)
     const { access, refresh, user } = response.data
     
     // 토큰 저장

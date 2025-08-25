@@ -15,7 +15,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartSolidIcon, StarIcon as StarSolidIcon } from '@heroicons/react/24/solid'
 import { productService } from '../api/services'
-import { Product } from '../api/types'
+import { Product } from '../types/api'
 import toast from 'react-hot-toast'
 
 const ProductDetail: React.FC = () => {
@@ -133,7 +133,7 @@ const ProductDetail: React.FC = () => {
             
             {/* 상품 뱃지 */}
             <div className="absolute top-4 left-4 flex flex-col space-y-2">
-              {product.is_new && (
+              {/* TODO: Add is_new field to ProductDetail type */ false && (
                 <span className="px-3 py-1 bg-green-500 text-white text-sm font-bold rounded-md">
                   NEW
                 </span>
@@ -213,7 +213,7 @@ const ProductDetail: React.FC = () => {
                   <StarSolidIcon
                     key={star}
                     className={`w-5 h-5 ${
-                      star <= Math.round(product.rating || 0)
+                      star <= Math.round(product.average_rating || 0)
                         ? 'text-yellow-400'
                         : 'text-gray-300 dark:text-gray-600'
                     }`}

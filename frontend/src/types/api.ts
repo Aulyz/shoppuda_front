@@ -1,4 +1,4 @@
-// API 타입 정의
+// API 타입 정의 (consolidated and enhanced)
 
 // ================== 기본 응답 타입 ==================
 export interface ApiResponse<T = any> {

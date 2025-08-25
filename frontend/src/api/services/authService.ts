@@ -5,7 +5,7 @@ import {
   JWTTokenResponse, 
   RegisterRequest, 
   User 
-} from '../types'
+} from '../../types/api'
 
 export const authService = {
   // 로그인 - Django의 /accounts/user/login/ 엔드포인트 사용
